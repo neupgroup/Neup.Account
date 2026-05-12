@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
 import {
     Card,
     CardHeader,
@@ -24,20 +23,16 @@ function AccountsPageSkeleton() {
                 <Skeleton className="h-9 w-1/2" />
                 <Skeleton className="h-5 w-2/3 mt-2" />
             </div>
-            <div className="space-y-4">
-                <Skeleton className="h-7 w-1/4" />
-                <Skeleton className="h-5 w-1/2" />
-                <Card>
-                    <CardContent className="pt-6">
-                        <Skeleton className="h-10 w-full" />
-                    </CardContent>
-                </Card>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {[...Array(4)].map((_, i) => (
+                    <Skeleton key={i} className="h-36 rounded-xl" />
+                ))}
             </div>
         </div>
     )
 }
 
-const otherManagementItems = [
+const managementItems = [
     {
         href: "/manage/accounts",
         label: "Accounts",
@@ -45,9 +40,9 @@ const otherManagementItems = [
         icon: Users,
         permission: "root.account.view"
     },
-    { 
-        href: "/manage/requests", 
-        label: "Requests", 
+    {
+        href: "/manage/requests",
+        label: "Requests",
         description: "Review and act on pending user requests.",
         icon: List,
         permission: "root.requests.view"
@@ -59,9 +54,9 @@ const otherManagementItems = [
         icon: AppWindow,
         permission: "root.app.view"
     },
-    { 
-        href: "/manage/config", 
-        label: "Configurations", 
+    {
+        href: "/manage/config",
+        label: "Configurations",
         description: "Manage payment settings and footer social accounts.",
         icon: Terminal,
         permission: "root.payment_config.view"
@@ -71,7 +66,6 @@ const otherManagementItems = [
 export default function ManagePage() {
     const { permissions, loading: sessionLoading } = useSession();
     const [permissionState, setPermissionState] = useState<'loading' | 'granted' | 'denied'>('loading');
-    const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -81,15 +75,6 @@ export default function ManagePage() {
         fetchData();
     }, [])
 
-    const handleSearch = (e: React.FormEvent) => {
-        e.preventDefault();
-        const searchTerm = searchQuery.trim();
-        if (searchTerm) {
-            NProgress.start();
-            redirectInApp(router, `/manage/accounts?q=${encodeURIComponent(searchTerm)}`);
-        }
-    }
-    
     if (permissionState === 'loading' || sessionLoading) {
         return <AccountsPageSkeleton />;
     }
@@ -97,11 +82,11 @@ export default function ManagePage() {
     if (permissionState === 'denied') {
         return (
             <div className="grid gap-8">
-                 <PrimaryHeader 
+                <PrimaryHeader
                     title="Account Management"
                     description="Manage account roles, permissions, and view account statistics."
-                 />
-                 <Alert variant="destructive">
+                />
+                <Alert variant="destructive">
                     <Ban className="h-4 w-4" />
                     <AlertTitle>Permission Denied</AlertTitle>
                     <AlertDescription>
@@ -112,45 +97,23 @@ export default function ManagePage() {
         )
     }
 
-    const visibleItems = otherManagementItems.filter(item => 
+    const visibleItems = managementItems.filter(item =>
         !item.permission || permissions?.includes(item.permission)
     );
-    
+
     return (
         <div className="grid gap-8">
-            <PrimaryHeader 
+            <PrimaryHeader
                 title="Account Management"
                 description="Manage account roles, permissions, and view account statistics."
             />
 
-            <div className="grid gap-4">
-                <TertiaryHeader
-                    title="Find User"
-                    description="Search for a user by name, ID, or type to view their details and manage their account."
-                />
-                <Card>
-                    <CardContent className="pt-6">
-                        <form onSubmit={handleSearch} className="flex items-center gap-2">
-                            <Input 
-                                placeholder="Search for an account..." 
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
-                            <Button type="submit" size="icon">
-                                <Search className="h-4 w-4" />
-                            </Button>
-                        </form>
-                    </CardContent>
-                </Card>
-            </div>
-
             {visibleItems.length > 0 && (
                 <div className="space-y-6">
-                    <TertiaryHeader 
+                    <TertiaryHeader
                         title="System Tools"
-                        description="Access other administrative tools and system configurations."
+                        description="Access administrative tools and system configurations."
                     />
-
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                         {visibleItems.map((item) => (
                             <FlowLink key={item.href} href={item.href}>

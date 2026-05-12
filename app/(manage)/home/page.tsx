@@ -9,6 +9,7 @@ import { getActiveAccountId } from '@/core/auth/verify';
 import { NotificationsCard } from '@/components/dashboard/notifications-card';
 import { ManageStatsCard } from '@/components/dashboard/manage-stats-card';
 import { FindUserCard } from '@/components/dashboard/find-user-card';
+import { SystemToolsCard } from '@/components/dashboard/system-tools-card';
 
 export default async function HomePage() {
     const accountId = await getActiveAccountId();
@@ -31,6 +32,7 @@ export default async function HomePage() {
             {canViewBilling && <BillingCard />}
             <ManageStatsCard />
             {canFindUser && <FindUserCard />}
+            <SystemToolsCard />
         </div>
     )
 }
