@@ -1,95 +1,82 @@
 import { notFound } from 'next/navigation';
 import { BackButton } from '@/components/ui/back-button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { checkPermissions } from '@/services/user';
-import { getManagedApplications } from '@/services/applications/manage';
-import { updateManagedApplicationStatusFromForm } from '@/services/applications/form-actions';
-
-const statusOptions = ['development', 'active', 'rejected', 'blocked'] as const;
-
-type AppStatus = (typeof statusOptions)[number];
-
-function badgeVariant(status: string) {
-  if (status === 'active') return 'default';
-  if (status === 'blocked') return 'destructive';
-  return 'secondary';
-}
+import { getApps } from '@/services/applications/manage';
+import { FlowLink } from '@/components/ui/flow-link';
+import { AppWindow } from '@/components/icons';
 
 export default async function ManageApplicationsPage() {
-  const isRootAppManager = await checkPermissions(['root.app.view']);
-  const isBrandManager = await checkPermissions(['linked_accounts.brand.manager']);
+    const isRootAppManager = await checkPermissions(['root.app.view']);
+    const isBrandManager   = await checkPermissions(['linked_accounts.brand.manager']);
 
-  if (!isRootAppManager && !isBrandManager) {
-    notFound();
-  }
+    if (!isRootAppManager && !isBrandManager) {
+        notFound();
+    }
 
-  const applications = await getManagedApplications();
+    const applications = await getApps();
 
-  return (
-    <div className="grid gap-8">
-      <BackButton href="/manage" />
+    return (
+        <div className="grid gap-8">
+            <BackButton href="/manage" />
 
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Manage Applications</h1>
-        <p className="text-muted-foreground">
-          Review applications and update lifecycle status to active, rejected, blocked, or development.
-        </p>
-      </div>
+            <div>
+                <h1 className="text-3xl font-bold tracking-tight">Applications</h1>
+                <p className="text-muted-foreground">
+                    All applications registered on the platform.
+                </p>
+            </div>
 
-      {applications.length === 0 ? (
-        <Card>
-          <CardHeader>
-            <CardTitle>No applications</CardTitle>
-            <CardDescription>
-              No applications are currently available in your management scope.
-            </CardDescription>
-          </CardHeader>
-        </Card>
-      ) : (
-        <div className="grid gap-4">
-          {applications.map((app) => {
-            const currentStatus = (app.status || 'development') as AppStatus;
+            {applications.length === 0 ? (
+                <p className="text-sm text-muted-foreground py-8 text-center">
+                    No applications found.
+                </p>
+            ) : (
+                <div>
+                    {applications.map((app, i) => {
+                        const isFirst = i === 0;
+                        const isLast  = i === applications.length - 1;
 
-            return (
-              <Card key={app.id}>
-                <CardHeader className="pb-3">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                      <CardTitle className="text-xl">{app.name}</CardTitle>
-                      <CardDescription>
-                        ID: {app.id}
-                      </CardDescription>
-                    </div>
-                    <Badge variant={badgeVariant(currentStatus)}>{currentStatus}</Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <form
-                    action={updateManagedApplicationStatusFromForm}
-                    className="flex flex-wrap items-center gap-3"
-                  >
-                    <input type="hidden" name="appId" value={app.id} />
-                    <select
-                      name="status"
-                      defaultValue={currentStatus}
-                      className="h-10 rounded-md border border-input bg-background px-3 py-2 text-sm"
-                    >
-                      {statusOptions.map((status) => (
-                        <option key={status} value={status}>
-                          {status}
-                        </option>
-                      ))}
-                    </select>
-                    <Button type="submit">Update Status</Button>
-                  </form>
-                </CardContent>
-              </Card>
-            );
-          })}
+                        const roundingClass =
+                            isFirst && isLast ? 'rounded-lg'
+                            : isFirst          ? 'rounded-t-lg'
+                            : isLast           ? 'rounded-b-lg'
+                            : '';
+
+                        return (
+                            <FlowLink key={app.id} href={`/data/applications/${app.id}`}>
+                                <div
+                                    className={`
+                                        flex items-center gap-4 px-4 py-3.5
+                                        border border-border bg-card
+                                        hover:bg-accent/40 transition-colors
+                                        ${roundingClass}
+                                        ${!isFirst ? '-mt-px' : ''}
+                                    `}
+                                >
+                                    {/* Icon */}
+                                    <div className="h-9 w-9 rounded-md bg-muted flex items-center justify-center shrink-0 text-muted-foreground">
+                                        <AppWindow className="h-4 w-4" />
+                                    </div>
+
+                                    {/* Name + ID */}
+                                    <div className="flex-1 min-w-0">
+                                        <p className="font-medium truncate leading-tight">{app.name}</p>
+                                        <p className="text-xs text-muted-foreground font-mono truncate">{app.id}</p>
+                                    </div>
+
+                                    {/* Party badge */}
+                                    {app.party && (
+                                        <Badge variant="outline" className="text-xs capitalize shrink-0">
+                                            {app.party === 'first' ? '1st party' : '3rd party'}
+                                        </Badge>
+                                    )}
+                                </div>
+                            </FlowLink>
+                        );
+                    })}
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 }
