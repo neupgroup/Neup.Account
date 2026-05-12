@@ -62,6 +62,7 @@ export const navItems = {
         { href: "/manage", label: "Dashboard", description: "Admin dashboard — accounts, apps, and system overview." },
         { href: "/manage/requests", label: "Requests", description: "Review and act on pending user requests." },
         { href: "/manage/applications", label: "Applications", description: "Approve, reject, block, or activate applications." },
+        { href: "/manage/accounts/cleanup", label: "Cleanup", description: "Delete expired guest accounts and their associated data." },
         { href: "/manage/config", label: "Configurations", description: "Manage payment settings and footer social accounts." },
     ],
     accountNav: [
@@ -100,4 +101,5 @@ export const allPermissionsMap: Record<string, string[]> = {
     "Blocked Users": ['people.block_list.view', 'people.restrict_list.view'],
     // Management nav — "Dashboard" is the admin home, distinct from user "Home"
     "Dashboard": ["root.dashboard.view"],
+    "Cleanup": ["root.account.delete"],
 };

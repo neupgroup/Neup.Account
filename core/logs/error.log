@@ -2615,3 +2615,39 @@ Message: Error: Cookies can only be modified in a Server Action or Route Handler
     at async resolveGuestAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:588:9)
     at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:645:5)
 --------------------------------------------------------------------------------
+[2026-05-12T15:12:02.023Z] [database] [auto] [deleteAllExpiredGuestAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.deleteMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+--------------------------------------------------------------------------------
+[2026-05-12T15:12:50.036Z] [database] [auto] [deleteAllExpiredGuestAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.deleteMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+--------------------------------------------------------------------------------
+[2026-05-12T15:12:53.959Z] [database] [auto] [deleteExpiredGuestAccount: 398783ad-9435-46db-91d6-b51e84fad750] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.deleteMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+--------------------------------------------------------------------------------
