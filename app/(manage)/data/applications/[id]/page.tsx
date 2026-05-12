@@ -8,7 +8,6 @@ import { getApplicationDetailsForViewerV2 } from '@/services/applications/manage
 import { deleteManagedApplicationFromDetailsPage } from '@/services/applications/form-actions';
 import { getSilentSsoOrigins } from '@/services/applications/manage';
 import { AppWindow, Building, BarChart, Share2, ExternalLink, ChevronRight, type LucideIcon } from '@/components/icons';
-
 type ApplicationDetailPageProps = {
   params: Promise<{ id: string }>;
 };
@@ -73,8 +72,6 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
 
   const accessItems = details.hasUsedApp ? details.accessedData : details.configuredAccess;
   const termsTitle = details.hasUsedApp ? 'Terms agreed by user' : 'Terms to agree before using app';
-  const authFlowPreviewUrl = `/auth/sign?appId=${encodeURIComponent(details.id)}&authenticatesTo=${encodeURIComponent(`/data/applications/${details.id}`)}`;
-
   const connectedAtFormatted = details.connectedAt
     ? new Date(details.connectedAt).toLocaleDateString(undefined, {
         year: 'numeric',
@@ -137,30 +134,6 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
           </CardContent>
         </Card>
       )}
-
-      {/* Builder info */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Builder</CardTitle>
-        </CardHeader>
-        <CardContent className="text-sm">
-          <span className="text-muted-foreground">Application ID: </span>
-          <code className="rounded bg-muted px-2 py-1 text-xs">{details.id}</code>
-        </CardContent>
-      </Card>
-
-      {/* Auth server preview */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Auth Server</CardTitle>
-          <CardDescription>Preview how the sign flow will look for this application.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Button asChild>
-            <FlowLink href={authFlowPreviewUrl}>Preview Sign Flow</FlowLink>
-          </Button>
-        </CardContent>
-      </Card>
 
       {/* Data access */}
       <Card>
