@@ -43,7 +43,7 @@ export type AccountBasics = {
     status: string | null;
     isVerified: boolean;
     accountType: string;
-    lastActive: Date | null;
+    lastActivityAt: Date | null;
     neupId: string | null;
 };
 
@@ -236,15 +236,16 @@ export async function getAllAccountsPaginated(params: {
             ];
         }
 
-        // Build orderBy
-        const orderByMap: Record<AccountSortKey, object> = {
-            oldest:      { createdAt: 'asc' },
-            name_asc:    { displayName: 'asc' },
-            name_desc:   { displayName: 'desc' },
-            last_active: { lastActive: 'desc' },
-            newest:      { createdAt: 'desc' },
+        // Build orderBy — last_active sorts by activity table, handled post-fetch
+        const orderByMap: Record<Exclude<AccountSortKey, 'last_active'>, object> = {
+            oldest:   { createdAt: 'asc' },
+            name_asc: { displayName: 'asc' },
+            name_desc:{ displayName: 'desc' },
+            newest:   { createdAt: 'desc' },
         };
-        const orderBy = orderByMap[sort] ?? { createdAt: 'desc' };
+        const orderBy = sort !== 'last_active'
+            ? (orderByMap[sort as Exclude<AccountSortKey, 'last_active'>] ?? { createdAt: 'desc' })
+            : { createdAt: 'desc' }; // will re-sort after activity lookup
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const whereArg = where as any;
@@ -254,8 +255,8 @@ export async function getAllAccountsPaginated(params: {
             prisma.account.findMany({
                 where: whereArg,
                 orderBy,
-                skip: (page - 1) * pageSize,
-                take: pageSize,
+                skip: sort !== 'last_active' ? (page - 1) * pageSize : 0,
+                take:  sort !== 'last_active' ? pageSize : undefined,
                 select: {
                     id: true,
                     displayName: true,
@@ -263,7 +264,6 @@ export async function getAllAccountsPaginated(params: {
                     status: true,
                     isVerified: true,
                     accountType: true,
-                    lastActive: true,
                     neupIds: {
                         where: { isPrimary: true },
                         select: { neupId: true },
@@ -273,16 +273,41 @@ export async function getAllAccountsPaginated(params: {
             }),
         ]);
 
-        const accounts = rows.map((a) => ({
+        // Fetch the most recent activity timestamp for each account in one query
+        const accountIds = rows.map((r) => r.id);
+        const latestActivities = accountIds.length > 0
+            ? await prisma.activity.groupBy({
+                by: ['targetAccountId'],
+                where: { targetAccountId: { in: accountIds } },
+                _max: { timestamp: true },
+            })
+            : [];
+
+        const activityMap = new Map<string, Date | null>(
+            latestActivities.map((a) => [a.targetAccountId, a._max.timestamp]),
+        );
+
+        let accounts = rows.map((a) => ({
             id: a.id,
             displayName: a.displayName,
             displayImage: a.displayImage,
             status: a.status,
             isVerified: a.isVerified,
             accountType: a.accountType,
-            lastActive: a.lastActive,
+            lastActivityAt: activityMap.get(a.id) ?? null,
             neupId: a.neupIds[0]?.neupId ?? null,
         }));
+
+        // For last_active sort: sort by activity timestamp then paginate in memory
+        if (sort === 'last_active') {
+            accounts.sort((a, b) => {
+                if (!a.lastActivityAt && !b.lastActivityAt) return 0;
+                if (!a.lastActivityAt) return 1;
+                if (!b.lastActivityAt) return -1;
+                return b.lastActivityAt.getTime() - a.lastActivityAt.getTime();
+            });
+            accounts = accounts.slice((page - 1) * pageSize, page * pageSize);
+        }
 
         return {
             accounts,
@@ -395,7 +420,6 @@ export async function getAccessableBrandAccounts(accountId: string): Promise<Acc
                 status: true,
                 isVerified: true,
                 accountType: true,
-                lastActive: true,
                 neupIds: {
                     where: { isPrimary: true },
                     select: { neupId: true },
@@ -418,7 +442,7 @@ export async function getAccessableBrandAccounts(accountId: string): Promise<Acc
                 status: a.status,
                 isVerified: a.isVerified,
                 accountType: a.accountType,
-                lastActive: a.lastActive,
+                lastActivityAt: null,
                 neupId: a.neupIds[0]?.neupId ?? null,
             }));
     } catch (error) {

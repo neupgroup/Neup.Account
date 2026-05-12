@@ -16,7 +16,6 @@ model Account {
   isVerified        Boolean                 @default(false)
   details           Json?
   createdAt         DateTime                @default(now())
-  lastActive        DateTime?               @map("last_active")
   linkedAccountId   String?                 @map("linked_account_id")
 
   brandProfile      AccountTypeBrand?
