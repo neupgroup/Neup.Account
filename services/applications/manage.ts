@@ -1033,3 +1033,203 @@ export async function getApplicationDetailsForViewerV2(appId: string): Promise<A
     return null;
   }
 }
+
+
+// ---------------------------------------------------------------------------
+// Meta update (owner — name, description, icon, website only, no status)
+// ---------------------------------------------------------------------------
+
+const updateAppMetaSchema = z.object({
+  appId: z.string().min(1),
+  name: z.string().trim().min(1, 'Name is required.').max(120, 'Name must be 120 characters or fewer.'),
+  description: z.string().trim().max(1000, 'Description must be 1000 characters or fewer.').optional().or(z.literal('')),
+  icon: z.string().trim().max(50).optional().or(z.literal('')),
+  website: z
+    .string()
+    .trim()
+    .max(500, 'Website must be 500 characters or fewer.')
+    .refine(
+      (val) => !val || val === '' || (() => { try { new URL(val); return true; } catch { return false; } })(),
+      { message: 'Website must be a valid URL.' },
+    )
+    .optional()
+    .or(z.literal('')),
+});
+
+/**
+ * Function updateAppMeta.
+ *
+ * Allows the application owner to update name, description, icon, and website.
+ * Does NOT touch status — that goes through the publication request flow.
+ */
+export async function updateAppMeta(
+  input: z.infer<typeof updateAppMetaSchema>,
+): Promise<{ success: boolean; error?: string; fieldErrors?: Record<string, string> }> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) return { success: false, error: 'Not signed in.' };
+
+  const parsed = updateAppMetaSchema.safeParse(input);
+  if (!parsed.success) {
+    const fieldErrors: Record<string, string> = {};
+    for (const [field, messages] of Object.entries(parsed.error.flatten().fieldErrors)) {
+      fieldErrors[field] = messages?.[0] ?? 'Invalid value.';
+    }
+    return { success: false, fieldErrors };
+  }
+
+  const { appId, name, description, icon, website } = parsed.data;
+
+  const canEdit = await isApplicationOwnerForAccount(accountId, appId);
+  if (!canEdit) return { success: false, error: 'Only the application owner can edit metadata.' };
+
+  try {
+    await prisma.application.update({
+      where: { id: appId },
+      data: {
+        name,
+        description: description || null,
+        icon: icon || null,
+        website: website || null,
+      },
+    });
+    revalidatePath('/data/applications');
+    revalidatePath(`/data/applications/${appId}`);
+    revalidatePath(`/data/applications/${appId}/meta`);
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `updateAppMeta:${appId}`);
+    return { success: false, error: 'Failed to save. Please try again.' };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Publication request + status log
+// ---------------------------------------------------------------------------
+
+export type AppStatusLogEntry = {
+  id: string;
+  action: string;
+  status: string;
+  timestamp: string;
+  actor: string;
+};
+
+/**
+ * Function getAppStatusLog.
+ *
+ * Returns activity log entries for this application scoped to status changes
+ * and publication events. Accessible to the app owner and root viewers.
+ */
+export async function getAppStatusLog(appId: string): Promise<AppStatusLogEntry[]> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) return [];
+
+  const isRootViewer = await checkPermissions(['root.app.view']);
+  const isOwner = await isApplicationOwnerForAccount(accountId, appId);
+  if (!isRootViewer && !isOwner) return [];
+
+  try {
+    const rows = await prisma.activity.findMany({
+      where: {
+        targetAccountId: appId,
+      },
+      orderBy: { timestamp: 'desc' },
+      take: 50,
+    });
+
+    return rows.map((row) => ({
+      id: row.id,
+      action: row.action,
+      status: row.status,
+      timestamp: new Date(row.timestamp).toLocaleString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+      actor: row.actorAccountId,
+    }));
+  } catch (error) {
+    await logError('database', error, `getAppStatusLog:${appId}`);
+    return [];
+  }
+}
+
+/**
+ * Function requestAppPublication.
+ *
+ * Owner submits a request to publish the application (move from development → pending review).
+ * Creates an activity log entry and sets a bridge record to track the pending request.
+ * Actual approval/rejection is done by a root user via updateManagedApplicationStatus.
+ */
+export async function requestAppPublication(
+  appId: string,
+): Promise<{ success: boolean; error?: string }> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) return { success: false, error: 'Not signed in.' };
+
+  const isOwner = await isApplicationOwnerForAccount(accountId, appId);
+  if (!isOwner) return { success: false, error: 'Only the application owner can request publication.' };
+
+  try {
+    const app = await prisma.application.findUnique({
+      where: { id: appId },
+      select: { status: true },
+    });
+
+    if (!app) return { success: false, error: 'Application not found.' };
+    if (app.status === 'active') return { success: false, error: 'Application is already active.' };
+    if (app.status === 'blocked') return { success: false, error: 'Blocked applications cannot request publication.' };
+
+    // Check if a pending request already exists
+    const existing = await prisma.applicationBridge.findFirst({
+      where: { appId, type: 'publicationRequest', value: 'pending' },
+    });
+    if (existing) return { success: false, error: 'A publication request is already pending.' };
+
+    await prisma.$transaction(async (tx) => {
+      // Mark the request as pending in the bridge table
+      await tx.applicationBridge.create({
+        data: { appId, type: 'publicationRequest', value: 'pending' },
+      });
+
+      // Log the event against the app ID as the target
+      await tx.activity.create({
+        data: {
+          targetAccountId: appId,
+          actorAccountId: accountId,
+          action: 'Publication requested by owner.',
+          status: 'Pending',
+          ip: 'system',
+          timestamp: new Date(),
+        },
+      });
+    });
+
+    revalidatePath(`/data/applications/${appId}/status`);
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `requestAppPublication:${appId}`);
+    return { success: false, error: 'Failed to submit publication request.' };
+  }
+}
+
+/**
+ * Function getAppPublicationRequestStatus.
+ *
+ * Returns whether a pending publication request exists for this app.
+ */
+export async function getAppPublicationRequestStatus(
+  appId: string,
+): Promise<'none' | 'pending'> {
+  try {
+    const record = await prisma.applicationBridge.findFirst({
+      where: { appId, type: 'publicationRequest', value: 'pending' },
+      select: { id: true },
+    });
+    return record ? 'pending' : 'none';
+  } catch {
+    return 'none';
+  }
+}

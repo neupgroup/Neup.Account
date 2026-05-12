@@ -8,7 +8,6 @@ import { getApplicationDetailsForViewerV2 } from '@/services/applications/manage
 import { deleteManagedApplicationFromDetailsPage } from '@/services/applications/form-actions';
 import { getSilentSsoOrigins } from '@/services/applications/manage';
 import { AppWindow, Building, BarChart, Share2, ExternalLink, ChevronRight, type LucideIcon } from '@/components/icons';
-import { ApplicationInfoEditForm } from '@/app/(manage)/data/applications/_components/application-info-edit-form';
 
 type ApplicationDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -122,18 +121,6 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
           <FlowLink href="/data/applications">Back</FlowLink>
         </Button>
       </div>
-
-      {/* Root edit form — only for root viewers */}
-      {details.isRootViewer && (
-        <ApplicationInfoEditForm
-          appId={details.id}
-          initialName={details.name}
-          initialDescription={details.description}
-          initialIcon={details.icon}
-          initialWebsite={details.website}
-          initialStatus={details.status ?? 'development'}
-        />
-      )}
 
       {/* Connection info — shown when user has an ApplicationConnection */}
       {connectedAtFormatted && (
@@ -285,6 +272,28 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
           <div className="grid gap-3">
             <h2 className="text-xl font-semibold tracking-tight">Manage Application</h2>
             <div className="overflow-hidden rounded-2xl border bg-card">
+              <FlowLink
+                href={`/data/applications/${id}/meta`}
+                className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
+              >
+                <div className="min-w-0">
+                  <p className="font-medium">General Info</p>
+                  <p className="text-sm text-muted-foreground">Edit name, description, icon, and website.</p>
+                </div>
+                <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+              </FlowLink>
+
+              <FlowLink
+                href={`/data/applications/${id}/status`}
+                className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
+              >
+                <div className="min-w-0">
+                  <p className="font-medium">Status</p>
+                  <p className="text-sm text-muted-foreground">Request publication and view the activity log.</p>
+                </div>
+                <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+              </FlowLink>
+
               <FlowLink
                 href={`/data/applications/${id}/capability`}
                 className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
