@@ -14,6 +14,7 @@ import {
   type ApplicationEndpointConfig,
   type ApplicationPolicyEntry,
   type ManagedApplication,
+  type ApplicationDetailsV2,
 } from '@/services/applications/types';
 
 const createApplicationSchema = z.object({
@@ -932,5 +933,103 @@ export async function removeSilentSsoOrigin(input: {
   } catch (error) {
     await logError('database', error, `removeSilentSsoOrigin:${input.appId}`);
     return { success: false, error: 'Failed to remove origin.' };
+  }
+}
+
+
+/**
+ * Function getApplicationDetailsForViewerV2.
+ *
+ * Role-aware detail loader. Root users (root.app.view) can view any application.
+ * Regular users can view apps they have an authzAccountAccessGrant for OR an
+ * ApplicationConnection to. appSecret is never returned.
+ */
+export async function getApplicationDetailsForViewerV2(appId: string): Promise<ApplicationDetailsV2 | null> {
+  const activeAccountId = await getActiveAccountId();
+  if (!activeAccountId) return null;
+
+  const personalAccountId = await getPersonalAccountId();
+
+  try {
+    const isRootViewer = await checkPermissions(['root.app.view']);
+
+    const application = await prisma.application.findUnique({
+      where: { id: appId },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        icon: true,
+        website: true,
+        status: true,
+        isInternal: true,
+        details: true,
+        policies: true,
+        endpoints: true,
+      },
+    });
+
+    if (!application) return null;
+
+    // Non-root users must have explicit access
+    if (!isRootViewer) {
+      const access = await resolveApplicationAccessForAccount(activeAccountId, appId);
+      // Also allow if they have an ApplicationConnection
+      const connection = personalAccountId
+        ? await prisma.applicationConnection.findUnique({
+            where: { accountId_appId: { accountId: personalAccountId, appId } },
+            select: { accountId: true },
+          })
+        : null;
+      if (!access.canView && !connection) return null;
+    }
+
+    // Fetch connection info for the personal account
+    const connectionRow = personalAccountId
+      ? await prisma.applicationConnection.findUnique({
+          where: { accountId_appId: { accountId: personalAccountId, appId } },
+          select: { connectedAt: true },
+        })
+      : null;
+
+    const [canDelete, accessForAccount] = await Promise.all([
+      isApplicationOwnerForAccount(activeAccountId, appId),
+      resolveApplicationAccessForAccount(activeAccountId, appId),
+    ]);
+
+    // Resolve accessed data from authz grants (same as original)
+    const appSessions = personalAccountId
+      ? await prisma.authzAccountAccessGrant.findMany({
+          where: { targetAccountId: personalAccountId, appId },
+          select: { roleId: true },
+        })
+      : [];
+
+    const configuredAccess = normalizeAccess((application as any).details?.access ?? []);
+    const policies = normalizePolicies(application.policies);
+    const endpoints = normalizeEndpoints(application.endpoints);
+    const accessedData = Array.from(new Set(appSessions.map((row) => row.roleId)));
+
+    return {
+      id: application.id,
+      name: application.name,
+      description: application.description || undefined,
+      icon: application.icon || undefined,
+      website: application.website || undefined,
+      status: application.status || undefined,
+      isInternal: application.isInternal,
+      connectedAt: connectionRow?.connectedAt?.toISOString() ?? undefined,
+      configuredAccess,
+      accessedData,
+      hasUsedApp: appSessions.length > 0,
+      policies,
+      endpoints,
+      canEdit: accessForAccount.canEdit,
+      isRootViewer,
+      canDelete,
+    };
+  } catch (error) {
+    await logError('database', error, `getApplicationDetailsForViewerV2:${appId}`);
+    return null;
   }
 }

@@ -1,54 +1,15 @@
 import { FlowLink } from '@/components/ui/flow-link';
-import { getApplicationsPageData, type FlatAppItem } from '@/services/applications/form-actions';
-import { Button } from '@/components/ui/button';
-import { AppWindow, Building, BarChart, Share2, ChevronRight, type LucideIcon } from '@/components/icons';
-
-function iconFor(appIcon?: string): LucideIcon {
-  const appIconMap: Record<string, LucideIcon> = {
-    'app-window': AppWindow,
-    building: Building,
-    'bar-chart': BarChart,
-    'share-2': Share2,
-  };
-
-  return appIcon ? (appIconMap[appIcon] || AppWindow) : AppWindow;
-}
-
-function SingleList({ apps }: { apps: FlatAppItem[] }) {
-  return (
-    <div className="overflow-hidden rounded-2xl border bg-card">
-      {apps.map((app) => (
-        <FlowLink
-          key={`${app.source}:${app.id}`}
-          href={`/data/applications/${app.id}`}
-          className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
-        >
-          <div className="flex min-w-0 items-center gap-3">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border bg-muted/40">
-              {(() => {
-                const Icon = iconFor(app.icon);
-                return <Icon className="h-5 w-5 text-muted-foreground" />;
-              })()}
-            </div>
-            <div className="min-w-0">
-              <p className="truncate text-base font-medium leading-6">{app.name}</p>
-              <p className="truncate text-sm text-muted-foreground">
-                @{app.slug || app.id}
-              </p>
-            </div>
-          </div>
-          <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-        </FlowLink>
-      ))}
-    </div>
-  );
-}
+import { getApplicationsPageDataV2 } from '@/services/applications/form-actions';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { AlertTriangle } from '@/components/icons';
+import { Suspense } from 'react';
+import { ApplicationsPillView } from './_components/applications-pill-view';
 
 export default async function ApplicationsPage() {
-  const { allApplications, canCreateApplication } = await getApplicationsPageData();
+  const { sections, canCreateApplication, hasPartialError } = await getApplicationsPageDataV2();
 
   return (
-    <div className="grid gap-8">
+    <div className="grid gap-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Applications</h1>
@@ -56,18 +17,21 @@ export default async function ApplicationsPage() {
             Manage your applications and connected application access.
           </p>
         </div>
-        {canCreateApplication ? (
-          <Button asChild>
-            <FlowLink href="/data/applications/add">Create Application</FlowLink>
-          </Button>
-        ) : null}
       </div>
 
-      {allApplications.length > 0 ? (
-        <SingleList apps={allApplications} />
-      ) : (
-        <p className="text-sm text-muted-foreground">No applications connected yet.</p>
+      {hasPartialError && (
+        <Alert variant="destructive">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertTitle>Partial load</AlertTitle>
+          <AlertDescription>
+            Some application data could not be loaded. The sections below may be incomplete.
+          </AlertDescription>
+        </Alert>
       )}
+
+      <Suspense fallback={null}>
+        <ApplicationsPillView sections={sections} canCreateApplication={canCreateApplication} />
+      </Suspense>
     </div>
   );
 }

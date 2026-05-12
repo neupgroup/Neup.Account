@@ -61,7 +61,7 @@ export const navItems = {
     managementNav: [
         { href: "/manage", label: "Dashboard", description: "Admin dashboard — accounts, apps, and system overview." },
         { href: "/manage/requests", label: "Requests", description: "Review and act on pending user requests." },
-        { href: "/manage/applications", label: "Applications", description: "Approve, reject, block, or activate applications." },
+        { href: "/data/applications?mode=root", label: "Applications", description: "Approve, reject, block, or activate applications." },
         { href: "/manage/accounts/cleanup", label: "Cleanup", description: "Delete expired guest accounts and their associated data." },
         { href: "/manage/config", label: "Configurations", description: "Manage payment settings and footer social accounts." },
     ],

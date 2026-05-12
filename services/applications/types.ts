@@ -53,3 +53,42 @@ export type ManagedApplication = {
   endpoints: ApplicationEndpointConfig;
   authzWebhookUrl: string | null;
 };
+
+// FlatAppItem — one entry in a section of the applications list page.
+export type FlatAppItem = {
+  id: string;
+  name: string;
+  slug?: string;
+  icon?: string;
+  source: 'managed' | 'connected' | 'root';
+  status?: string;      // populated for Root section entries
+  connectedAt?: string; // ISO string, populated for Using section entries
+};
+
+// ApplicationSection — one named group on the list page.
+export type ApplicationSection = {
+  label: 'Using' | 'Development' | 'Root';
+  apps: FlatAppItem[];
+  error?: boolean; // true when this section failed to load
+};
+
+// ApplicationDetailsV2 — full detail payload for the detail page.
+// appSecret is intentionally excluded.
+export type ApplicationDetailsV2 = {
+  id: string;
+  name: string;
+  description?: string;
+  icon?: string;
+  website?: string;
+  status?: string;
+  isInternal: boolean;
+  connectedAt?: string;       // ISO string — present when user has an ApplicationConnection
+  configuredAccess: ApplicationAccessField[];
+  accessedData: string[];
+  hasUsedApp: boolean;
+  policies: ApplicationPolicyEntry[];
+  endpoints: ApplicationEndpointConfig;
+  canEdit: boolean;           // true for app owner/developer
+  isRootViewer: boolean;      // true when root.app.view permission held
+  canDelete: boolean;         // true for app owner
+};

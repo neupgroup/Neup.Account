@@ -73,7 +73,7 @@ const otherManagementItems = [
         permission: "root.requests.view"
     },
     {
-        href: "/manage/applications",
+        href: "/data/applications?mode=root",
         label: "Applications",
         description: "Approve, reject, block, or activate applications.",
         icon: AppWindow,
