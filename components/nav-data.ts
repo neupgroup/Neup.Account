@@ -63,7 +63,7 @@ export const navItems = {
         { href: "/manage/requests", label: "Requests", description: "Review and act on pending user requests." },
         { href: "/data/applications?mode=root", label: "Applications", description: "Approve, reject, block, or activate applications." },
         { href: "/manage/accounts/cleanup", label: "Cleanup", description: "Delete expired guest accounts and their associated data." },
-        { href: "/manage/config", label: "Configurations", description: "Manage payment settings and footer social accounts." },
+        { href: "/config", label: "Configurations", description: "Manage payment settings and footer social accounts." },
     ],
     accountNav: [
         { href: "/auth/start", label: "Switch Account", description: "Switch between different NeupID accounts." },

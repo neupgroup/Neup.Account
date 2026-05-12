@@ -1,27 +1,5 @@
-import { notFound } from 'next/navigation';
-import { BackButton } from '@/components/ui/back-button';
-import { checkPermissions } from '@/services/user';
-import { getSiteLogoUrl } from '@/services/manage/site/logo';
-import { AppLogoForm } from './app-logo-form.client';
+import { redirect } from 'next/navigation';
 
-export default async function ConfigAppPage() {
-  const canView = await checkPermissions(['root.payment_config.view']);
-  if (!canView) {
-    notFound();
-  }
-
-  const initialSiteLogoUrl = await getSiteLogoUrl();
-
-  return (
-    <div className="grid gap-8">
-      <BackButton href="/manage/config" />
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">App Settings</h1>
-        <p className="text-muted-foreground">
-          Update the site logo used in the header and other application surfaces.
-        </p>
-      </div>
-      <AppLogoForm initialSiteLogoUrl={initialSiteLogoUrl} />
-    </div>
-  );
+export default function ManageConfigAppRedirect() {
+  redirect('/config/app');
 }

@@ -67,7 +67,8 @@ export async function updateSiteLogoUrl(
     }
 
     revalidatePath('/manage/config');
-    revalidatePath('/manage/config/app');
+    revalidatePath('/config');
+    revalidatePath('/config/app');
     revalidatePath('/');
 
     return { success: true, siteLogoUrl: validation.data.siteLogoUrl };

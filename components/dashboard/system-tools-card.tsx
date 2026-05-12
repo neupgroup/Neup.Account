@@ -29,7 +29,7 @@ const managementItems = [
         permission: 'root.app.view',
     },
     {
-        href: '/manage/config',
+        href: '/config',
         label: 'Configurations',
         description: 'Manage payment settings and footer social accounts.',
         icon: Terminal,

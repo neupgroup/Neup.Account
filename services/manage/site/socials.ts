@@ -90,7 +90,7 @@ export async function addSocialLink(formData: FormData): Promise<{
         }
 
         revalidatePath('/manage/site/socials');
-        revalidatePath('/manage/config/socials');
+        revalidatePath('/config/socials');
         return {success: true, newLink};
     } catch (error: any) {
         await logError('database', error, 'addSocialLink');
@@ -129,7 +129,7 @@ export async function toggleSocialLinkVisibility(id: string, isVisible: boolean)
         }
 
         revalidatePath('/manage/site/socials');
-        revalidatePath('/manage/config/socials');
+        revalidatePath('/config/socials');
         return {success: true};
     } catch (error) {
         await logError('database', error, `toggleSocialLinkVisibility: ${id}`);
@@ -163,7 +163,7 @@ export async function deleteSocialLink(id: string): Promise<{ success: boolean; 
         }
 
         revalidatePath('/manage/site/socials');
-        revalidatePath('/manage/config/socials');
+        revalidatePath('/config/socials');
         return {success: true};
     } catch (error) {
         await logError('database', error, `deleteSocialLink: ${id}`);
