@@ -10,6 +10,7 @@ export type UserStats = {
     totalUsers: number;
     activeUsers: number;
     signedUpToday: number;
+    permissionsDefined: number;
 };
 
 /**
@@ -137,21 +138,27 @@ export async function getAccessibleAccounts(): Promise<AccessibleAccount[]> {
  */
 export async function getUserStats(): Promise<UserStats> {
     const canView = await checkPermissions(['root.dashboard.view']);
-    if (!canView) return { totalUsers: 0, activeUsers: 0, signedUpToday: 0 };
+    if (!canView) return { totalUsers: 0, activeUsers: 0, signedUpToday: 0, permissionsDefined: 0 };
 
     try {
         const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-        const [totalUsers, signedUpToday] = await Promise.all([
+        const [totalUsers, signedUpToday, permissionsDefined] = await Promise.all([
             prisma.account.count(),
             prisma.account.count({
                 where: { createdAt: { gte: twentyFourHoursAgo } },
             }),
+            prisma.authzRole.count({
+                where: {
+                    appId: 'neup.account',
+                    NOT: { id: { startsWith: 'account.custom.' } },
+                },
+            }),
         ]);
         const activeUsers = Math.floor(totalUsers * 0.8);
-        return { totalUsers, activeUsers, signedUpToday };
+        return { totalUsers, activeUsers, signedUpToday, permissionsDefined };
     } catch (error) {
         await logError('database', error, 'getUserStats');
-        return { totalUsers: 0, activeUsers: 0, signedUpToday: 0 };
+        return { totalUsers: 0, activeUsers: 0, signedUpToday: 0, permissionsDefined: 0 };
     }
 }
 

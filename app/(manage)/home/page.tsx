@@ -7,6 +7,8 @@ import { SettingsCard } from '@/components/dashboard/settings-card';
 import { WarningDisplay } from '@/components/warning-display';
 import { getActiveAccountId } from '@/core/auth/verify';
 import { NotificationsCard } from '@/components/dashboard/notifications-card';
+import { ManageStatsCard } from '@/components/dashboard/manage-stats-card';
+import { FindUserCard } from '@/components/dashboard/find-user-card';
 
 export default async function HomePage() {
     const accountId = await getActiveAccountId();
@@ -14,9 +16,10 @@ export default async function HomePage() {
       notFound();
     }
 
-    const [canViewNotifications, canViewBilling] = await Promise.all([
+    const [canViewNotifications, canViewBilling, canFindUser] = await Promise.all([
         checkPermissions(['notification.read']),
         checkPermissions(['payment.subscriptions.show']),
+        checkPermissions(['root.account.view']),
     ]);
     
     return (
@@ -26,6 +29,8 @@ export default async function HomePage() {
             {canViewNotifications && <NotificationsCard />}
             <SettingsCard />
             {canViewBilling && <BillingCard />}
+            <ManageStatsCard />
+            {canFindUser && <FindUserCard />}
         </div>
     )
 }
