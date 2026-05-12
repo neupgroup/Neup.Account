@@ -385,6 +385,7 @@ model AuthzRole {
   grants      AuthzAccountAccessGrant[]
   assetsGrants AuthzAssetsAccessGrant[]
 
+  @@unique([name, appId], map: "authz_role_name_app_id_key")
   @@map("authz_role")
 }
 

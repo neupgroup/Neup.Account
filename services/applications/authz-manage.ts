@@ -157,6 +157,18 @@ export async function createAppRole(input: {
 
   const name = input.name.trim();
   if (!name) return { success: false, error: 'Role name is required.' };
+  if (!/^[a-z0-9._]+$/.test(name)) {
+    return { success: false, error: 'Role name may only contain lowercase letters, numbers, dots (.) and underscores (_).' };
+  }
+
+  // Enforce uniqueness: one role per name per app
+  const existing = await prisma.authzRole.findFirst({
+    where: { name, appId: input.appId },
+    select: { id: true },
+  });
+  if (existing) {
+    return { success: false, error: `A role named "${name}" already exists for this application.` };
+  }
 
   try {
     const role = await prisma.$transaction(async (tx) => {

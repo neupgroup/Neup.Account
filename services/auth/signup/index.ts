@@ -11,6 +11,7 @@ import { getAuthRequest, extendAuthRequest } from '../auth-request';
 import { getAuthTimeoutError } from '../timeout';
 import { verifyPassword } from '../password';
 import { makeSession } from '../session';
+import { assignDefaultRole } from '../assignDefaultRole';
 import {
   nameSchema,
   demographicsSchema,
@@ -501,6 +502,9 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
     });
 
     const accountId = account.id;
+
+    // Assign the default role so the account has baseline permissions immediately
+    await assignDefaultRole(accountId);
 
     await logActivity(
       accountId,
