@@ -69,7 +69,21 @@ export function DashboardNav() {
 
     }, [permissions, isManaging, profile, loading]);
 
-
+    // Find the single active item: the one with the longest href that matches the current path
+    const activeHref = useMemo(() => {
+        if (!navConfig) return null;
+        const allItems = navConfig.flatMap(section => section.items);
+        const matchingItems = allItems.filter(item => {
+            if (item.href === '/home') {
+                return pathname === '/home' || pathname === '/';
+            }
+            return pathname === item.href || pathname.startsWith(item.href + '/');
+        });
+        if (matchingItems.length === 0) return null;
+        return matchingItems.reduce((longest, item) =>
+            item.href.length > longest.href.length ? item : longest
+        ).href;
+    }, [navConfig, pathname]);
 
     if (loading || !navConfig) {
         return (
@@ -96,9 +110,7 @@ export function DashboardNav() {
                     )}
                      <div className="flex flex-col gap-1">
                         {section.items.map((item) => {
-                             const isActive = item.href === '/home' 
-                                ? pathname === item.href || pathname === '/'
-                                : pathname.startsWith(item.href);
+                            const isActive = item.href === activeHref;
                             return (
                                 <FlowLink
                                     key={item.href}
