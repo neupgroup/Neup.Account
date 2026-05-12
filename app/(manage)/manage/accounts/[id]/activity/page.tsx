@@ -2,13 +2,6 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-    CardDescription
-} from "@/components/ui/card"
 import { BackButton } from "@/components/ui/back-button";
 import { ActivityList } from "./activity-list";
 import { getAccountBasics, type AccountBasics } from "@/services/manage/accounts";
@@ -42,15 +35,7 @@ export default function UserActivityPage() {
                     {description ?? `Recent activity log for account ID: ${params.id}.`}
                 </p>
             </div>
-            <Card>
-                <CardHeader>
-                    <CardTitle>Recent Activity</CardTitle>
-                    <CardDescription>Last known activities for this user account.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <ActivityList accountId={params.id} />
-                </CardContent>
-            </Card>
+            <ActivityList accountId={params.id} />
         </div>
     )
 }
