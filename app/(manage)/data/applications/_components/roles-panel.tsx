@@ -1,0 +1,255 @@
+'use client';
+
+import { useState } from 'react';
+import { useToast } from '@/core/hooks/use-toast';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import {
+  createAppRole,
+  deleteAppRole,
+  updateAppRoleCapabilities,
+  pushAuthzToWebhook,
+  type AppCapability,
+  type AppRole,
+} from '@/services/applications/authz-manage';
+
+type Props = {
+  appId: string;
+  initialRoles: AppRole[];
+  capabilities: AppCapability[];
+  hasWebhook: boolean;
+};
+
+export function RolesPanel({ appId, initialRoles, capabilities, hasWebhook }: Props) {
+  const { toast } = useToast();
+  const [roles, setRoles] = useState<AppRole[]>(initialRoles);
+  const [newRoleName, setNewRoleName] = useState('');
+  const [newRoleDesc, setNewRoleDesc] = useState('');
+  const [newRoleScope, setNewRoleScope] = useState('');
+  const [newRoleCapIds, setNewRoleCapIds] = useState<string[]>([]);
+  const [rolePending, setRolePending] = useState(false);
+  const [editingRoleId, setEditingRoleId] = useState<string | null>(null);
+  const [editingCapIds, setEditingCapIds] = useState<string[]>([]);
+  const [editPending, setEditPending] = useState(false);
+  const [pushPending, setPushPending] = useState(false);
+
+  const handleAddRole = async () => {
+    const name = newRoleName.trim();
+    if (!name) return;
+    setRolePending(true);
+    const result = await createAppRole({
+      appId,
+      name,
+      description: newRoleDesc || undefined,
+      scope: newRoleScope || undefined,
+      capabilityIds: newRoleCapIds,
+    });
+    setRolePending(false);
+    if (!result.success || !result.role) {
+      toast({ variant: 'destructive', title: 'Failed', description: result.error || 'Could not create role.' });
+      return;
+    }
+    setRoles((prev) => [...prev, result.role!]);
+    setNewRoleName('');
+    setNewRoleDesc('');
+    setNewRoleScope('');
+    setNewRoleCapIds([]);
+    toast({ title: 'Role created' });
+  };
+
+  const handleDeleteRole = async (roleId: string) => {
+    const result = await deleteAppRole({ appId, roleId });
+    if (!result.success) {
+      toast({ variant: 'destructive', title: 'Failed', description: result.error || 'Could not delete role.' });
+      return;
+    }
+    setRoles((prev) => prev.filter((r) => r.id !== roleId));
+    toast({ title: 'Role deleted' });
+  };
+
+  const handleSaveRoleCapabilities = async () => {
+    if (!editingRoleId) return;
+    setEditPending(true);
+    const result = await updateAppRoleCapabilities({ appId, roleId: editingRoleId, capabilityIds: editingCapIds });
+    setEditPending(false);
+    if (!result.success) {
+      toast({ variant: 'destructive', title: 'Failed', description: result.error || 'Could not update role.' });
+      return;
+    }
+    setRoles((prev) =>
+      prev.map((r) =>
+        r.id === editingRoleId
+          ? { ...r, capabilities: capabilities.filter((c) => editingCapIds.includes(c.id)) }
+          : r
+      )
+    );
+    setEditingRoleId(null);
+    setEditingCapIds([]);
+    toast({ title: 'Role updated' });
+  };
+
+  const handlePush = async () => {
+    setPushPending(true);
+    const result = await pushAuthzToWebhook(appId);
+    setPushPending(false);
+    if (!result.success) {
+      toast({ variant: 'destructive', title: 'Push failed', description: result.error || 'Could not push data.' });
+      return;
+    }
+    if (result.pushed === 0) {
+      toast({ title: 'Nothing to push', description: 'No role-capability mappings exist yet.' });
+      return;
+    }
+    toast({ title: 'Pushed', description: `${result.pushed} role-capability mapping${result.pushed === 1 ? '' : 's'} sent to webhook.` });
+  };
+
+  return (
+    <div className="grid gap-6">
+      {/* Existing roles */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Roles</CardTitle>
+          <CardDescription>
+            Group capabilities into roles. Roles are assigned to accounts via access grants.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {roles.length > 0 ? (
+            <div className="space-y-3">
+              {roles.map((role) => (
+                <div key={role.id} className="rounded-md border p-4 space-y-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-medium">{role.name}</p>
+                      {role.description && (
+                        <p className="text-xs text-muted-foreground">{role.description}</p>
+                      )}
+                      {role.scope && (
+                        <Badge variant="outline" className="mt-1 text-xs">{role.scope}</Badge>
+                      )}
+                    </div>
+                    <div className="flex gap-2 shrink-0">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => { setEditingRoleId(role.id); setEditingCapIds(role.capabilities.map((c) => c.id)); }}
+                      >
+                        Edit capabilities
+                      </Button>
+                      <Button type="button" variant="ghost" size="sm" onClick={() => handleDeleteRole(role.id)}>
+                        Remove
+                      </Button>
+                    </div>
+                  </div>
+
+                  {editingRoleId === role.id ? (
+                    <div className="space-y-3 pt-2 border-t">
+                      <p className="text-xs font-medium text-muted-foreground">Select capabilities</p>
+                      {capabilities.length === 0 ? (
+                        <p className="text-xs text-muted-foreground">No capabilities defined yet.</p>
+                      ) : (
+                        <div className="grid gap-2 sm:grid-cols-2">
+                          {capabilities.map((cap) => (
+                            <label key={cap.id} className="flex items-center gap-2 text-sm rounded-md border px-3 py-2 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={editingCapIds.includes(cap.id)}
+                                onChange={() =>
+                                  setEditingCapIds((prev) =>
+                                    prev.includes(cap.id) ? prev.filter((id) => id !== cap.id) : [...prev, cap.id]
+                                  )
+                                }
+                              />
+                              <span>{cap.name}</span>
+                            </label>
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex gap-2 justify-end">
+                        <Button type="button" variant="ghost" size="sm" onClick={() => { setEditingRoleId(null); setEditingCapIds([]); }}>
+                          Cancel
+                        </Button>
+                        <Button type="button" size="sm" onClick={handleSaveRoleCapabilities} disabled={editPending}>
+                          {editPending ? 'Saving...' : 'Save'}
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    role.capabilities.length > 0 ? (
+                      <div className="flex flex-wrap gap-1">
+                        {role.capabilities.map((cap) => (
+                          <Badge key={cap.id} variant="secondary" className="text-xs">{cap.name}</Badge>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-xs text-muted-foreground">No capabilities assigned.</p>
+                    )
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">No roles yet.</p>
+          )}
+
+          {/* Add new role */}
+          <div className="rounded-md border p-4 space-y-3">
+            <p className="text-sm font-medium">Add role</p>
+            <Input value={newRoleName} onChange={(e) => setNewRoleName(e.target.value)} placeholder="Role name, e.g. viewer" />
+            <Input value={newRoleDesc} onChange={(e) => setNewRoleDesc(e.target.value)} placeholder="Description (optional)" />
+            <Input value={newRoleScope} onChange={(e) => setNewRoleScope(e.target.value)} placeholder="Scope (optional)" />
+            {capabilities.length > 0 && (
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">Assign capabilities</p>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {capabilities.map((cap) => (
+                    <label key={cap.id} className="flex items-center gap-2 text-sm rounded-md border px-3 py-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={newRoleCapIds.includes(cap.id)}
+                        onChange={() =>
+                          setNewRoleCapIds((prev) =>
+                            prev.includes(cap.id) ? prev.filter((id) => id !== cap.id) : [...prev, cap.id]
+                          )
+                        }
+                      />
+                      <span>{cap.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="flex justify-end">
+              <Button type="button" onClick={handleAddRole} disabled={rolePending || !newRoleName.trim()}>
+                {rolePending ? 'Adding...' : 'Add Role'}
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Push to webhook */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Push to Application</CardTitle>
+          <CardDescription>
+            Send all current role-capability mappings to the registered webhook endpoint.
+            {!hasWebhook && ' No webhook URL is configured — set one in the application settings first.'}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <p className="text-sm text-muted-foreground">
+            Pushes every <code className="rounded bg-muted px-1 py-0.5 text-xs">authz_role_capability</code> record
+            for this app to the webhook as individual <code className="rounded bg-muted px-1 py-0.5 text-xs">insert</code> operations.
+          </p>
+          <Button type="button" onClick={handlePush} disabled={pushPending || !hasWebhook}>
+            {pushPending ? 'Pushing...' : 'Push All to App'}
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

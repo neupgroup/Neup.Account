@@ -5,12 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getApplicationDetailsForViewerV2 } from '@/services/applications/manage';
-import { getAppCapabilities, getAppRoles } from '@/services/applications/authz-manage';
-import { getAuthzWebhookUrl } from '@/services/applications/authz-webhook';
 import { deleteManagedApplicationFromDetailsPage } from '@/services/applications/form-actions';
 import { getSilentSsoOrigins } from '@/services/applications/manage';
-import { AppWindow, Building, BarChart, Share2, ExternalLink, type LucideIcon } from '@/components/icons';
-import { AuthzManagementPanel } from '@/app/(manage)/data/applications/_components/authz-management-panel';
+import { AppWindow, Building, BarChart, Share2, ExternalLink, ChevronRight, type LucideIcon } from '@/components/icons';
 import { ApplicationInfoEditForm } from '@/app/(manage)/data/applications/_components/application-info-edit-form';
 
 type ApplicationDetailPageProps = {
@@ -74,9 +71,6 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
   const deleteAction = deleteManagedApplicationFromDetailsPage.bind(null, id);
 
   const silentSsoOrigins = details.canDelete ? await getSilentSsoOrigins(id) : [];
-  const [capabilities, roles, webhookUrl] = details.canDelete
-    ? await Promise.all([getAppCapabilities(id), getAppRoles(id), getAuthzWebhookUrl(id)])
-    : [[], [], null];
 
   const accessItems = details.hasUsedApp ? details.accessedData : details.configuredAccess;
   const termsTitle = details.hasUsedApp ? 'Terms agreed by user' : 'Terms to agree before using app';
@@ -288,35 +282,58 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
       {/* Owner-only sections */}
       {details.canDelete && (
         <>
-          <div>
-            <h2 className="text-xl font-semibold tracking-tight">Roles &amp; Permissions</h2>
-            <p className="text-sm text-muted-foreground">
-              Define capabilities and roles for this application, then push them to the receiving app via webhook.
-            </p>
-          </div>
-          <AuthzManagementPanel
-            appId={id}
-            initialCapabilities={capabilities}
-            initialRoles={roles}
-            hasWebhook={Boolean(webhookUrl)}
-          />
+          <div className="grid gap-3">
+            <h2 className="text-xl font-semibold tracking-tight">Manage Application</h2>
+            <div className="overflow-hidden rounded-2xl border bg-card">
+              <FlowLink
+                href={`/data/applications/${id}/capability`}
+                className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
+              >
+                <div className="min-w-0">
+                  <p className="font-medium">Capabilities</p>
+                  <p className="text-sm text-muted-foreground">Define individual permissions this application can assign.</p>
+                </div>
+                <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+              </FlowLink>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Silent SSO Origins</CardTitle>
-              <CardDescription>
-                Trusted origins allowed to silently authenticate users via the NeupID iframe bridge.
-                {silentSsoOrigins.length > 0
-                  ? ` ${silentSsoOrigins.length} origin${silentSsoOrigins.length === 1 ? '' : 's'} registered.`
-                  : ' No origins registered yet.'}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button variant="outline" asChild>
-                <Link href={`/data/applications/${id}/silent-sso-origins`}>Manage Origins</Link>
-              </Button>
-            </CardContent>
-          </Card>
+              <FlowLink
+                href={`/data/applications/${id}/roles`}
+                className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
+              >
+                <div className="min-w-0">
+                  <p className="font-medium">Roles</p>
+                  <p className="text-sm text-muted-foreground">Group capabilities into roles for access grants.</p>
+                </div>
+                <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+              </FlowLink>
+
+              <FlowLink
+                href={`/data/applications/${id}/access`}
+                className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
+              >
+                <div className="min-w-0">
+                  <p className="font-medium">Access &amp; Permissions</p>
+                  <p className="text-sm text-muted-foreground">Manage your account's access to this application.</p>
+                </div>
+                <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+              </FlowLink>
+
+              <FlowLink
+                href={`/data/applications/${id}/silent-sso-origins`}
+                className="group flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-muted/40 sm:px-5"
+              >
+                <div className="min-w-0">
+                  <p className="font-medium">Silent SSO Origins</p>
+                  <p className="text-sm text-muted-foreground">
+                    {silentSsoOrigins.length > 0
+                      ? `${silentSsoOrigins.length} origin${silentSsoOrigins.length === 1 ? '' : 's'} registered.`
+                      : 'Trusted origins for the NeupID iframe bridge.'}
+                  </p>
+                </div>
+                <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+              </FlowLink>
+            </div>
+          </div>
 
           <Card className="border-destructive">
             <CardHeader>
@@ -332,6 +349,22 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
             </CardContent>
           </Card>
         </>
+      )}
+
+      {/* Non-owner: access management link */}
+      {!details.canDelete && (
+        <div className="overflow-hidden rounded-2xl border bg-card">
+          <FlowLink
+            href={`/data/applications/${id}/access`}
+            className="group flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-muted/40 sm:px-5"
+          >
+            <div className="min-w-0">
+              <p className="font-medium">Access &amp; Permissions</p>
+              <p className="text-sm text-muted-foreground">Manage your account's access to this application.</p>
+            </div>
+            <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+          </FlowLink>
+        </div>
       )}
     </div>
   );
