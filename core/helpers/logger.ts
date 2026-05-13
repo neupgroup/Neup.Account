@@ -10,7 +10,7 @@ import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 
-type LogType = 'ai' | 'database' | 'validation' | 'auth' | 'unknown';
+type LogType = 'ai' | 'database' | 'validation' | 'auth' | 'unknown' | 'webhook';
 type ReportType = 'auto' | 'submitted';
 
 export async function logError(

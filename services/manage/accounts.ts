@@ -349,7 +349,6 @@ export async function getAllAccounts(): Promise<AccountBasics[]> {
                 status: true,
                 isVerified: true,
                 accountType: true,
-                lastActive: true,
                 neupIds: {
                     where: { isPrimary: true },
                     select: { neupId: true },
@@ -366,7 +365,7 @@ export async function getAllAccounts(): Promise<AccountBasics[]> {
             status: a.status,
             isVerified: a.isVerified,
             accountType: a.accountType,
-            lastActive: a.lastActive,
+            lastActivityAt: null,
             neupId: a.neupIds[0]?.neupId ?? null,
         }));
     } catch (error) {
@@ -475,7 +474,6 @@ export async function getAccountBasics(accountId: string): Promise<AccountBasics
                 status: true,
                 isVerified: true,
                 accountType: true,
-                lastActive: true,
                 neupIds: {
                     where: { isPrimary: true },
                     select: { neupId: true },
@@ -493,7 +491,7 @@ export async function getAccountBasics(accountId: string): Promise<AccountBasics
             status: account.status,
             isVerified: account.isVerified,
             accountType: account.accountType,
-            lastActive: account.lastActive,
+            lastActivityAt: null,
             neupId: account.neupIds[0]?.neupId ?? null,
         };
     } catch (error) {
@@ -573,7 +571,6 @@ export async function getAccessableAccountsWithCapabilities(
                     status: true,
                     isVerified: true,
                     accountType: true,
-                    lastActive: true,
                 },
             }),
             // Fetch all grants for this accessor across all owner accounts in one query
@@ -636,7 +633,7 @@ export async function getAccessableAccountsWithCapabilities(
                 status: a.status,
                 isVerified: a.isVerified,
                 accountType: a.accountType,
-                lastActive: a.lastActive,
+                lastActivityAt: null,
                 neupId: null,
                 capabilities: Array.from(ownerCapMap.get(a.id) ?? []),
             }));
@@ -673,7 +670,6 @@ export async function getAccessableBrandAccountsWithCapabilities(
                     status: true,
                     isVerified: true,
                     accountType: true,
-                    lastActive: true,
                 },
             }),
             prisma.authzAccountAccessGrant.findMany({
@@ -737,7 +733,7 @@ export async function getAccessableBrandAccountsWithCapabilities(
                 status: a.status,
                 isVerified: a.isVerified,
                 accountType: a.accountType,
-                lastActive: a.lastActive,
+                lastActivityAt: null,
                 neupId: null,
                 capabilities: Array.from(ownerCapMap.get(a.id) ?? []),
             }));

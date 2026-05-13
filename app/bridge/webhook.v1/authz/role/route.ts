@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/core/helpers/prisma';
+import { Prisma } from '../../../../../prisma/generated/client/client';
 import { logError } from '@/core/helpers/logger';
 
 export const dynamic = 'force-dynamic';
@@ -80,7 +81,9 @@ async function handleRoleCapability(operation: Operation, body: WebhookBody): Pr
           roleId: d.roleId as string,
           capabilityId: d.capabilityId as string,
           scope: (d.scope as string) ?? null,
-          denormalizedCapability: d.denormalizedCapability ?? null,
+          denormalizedCapability: d.denormalizedCapability !== undefined && d.denormalizedCapability !== null
+            ? d.denormalizedCapability as Prisma.InputJsonValue
+            : Prisma.JsonNull,
           roleName: (d.roleName as string) ?? null,
         },
         select: { id: true },
@@ -98,9 +101,13 @@ async function handleRoleCapability(operation: Operation, body: WebhookBody): Pr
           ...(d.roleId !== undefined && { roleId: d.roleId as string }),
           ...(d.capabilityId !== undefined && { capabilityId: d.capabilityId as string }),
           ...(d.scope !== undefined && { scope: d.scope as string | null }),
-          ...(d.denormalizedCapability !== undefined && { denormalizedCapability: d.denormalizedCapability }),
+          ...(d.denormalizedCapability !== undefined && {
+            denormalizedCapability: d.denormalizedCapability !== null
+              ? d.denormalizedCapability as Prisma.InputJsonValue
+              : Prisma.JsonNull,
+          }),
           ...(d.roleName !== undefined && { roleName: d.roleName as string | null }),
-        },
+        } as Prisma.AuthzRoleCapabilityUncheckedUpdateInput,
       });
       return ok({ ok: true });
     }

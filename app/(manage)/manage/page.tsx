@@ -47,8 +47,8 @@ function StatusDot({ status }: { status: string | null }) {
 }
 
 function AccountRow({ acc, isFirst, isLast }: { acc: AccountBasics; isFirst: boolean; isLast: boolean }) {
-    const lastActive = acc.lastActive
-        ? new Date(acc.lastActive).toLocaleString(undefined, {
+    const lastActive = acc.lastActivityAt
+        ? new Date(acc.lastActivityAt).toLocaleString(undefined, {
               dateStyle: 'medium',
               timeStyle: 'short',
           })
