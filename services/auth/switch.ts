@@ -29,10 +29,15 @@ export async function switchActiveAccount(account: StoredAccount) {
     const result = await switchToAccountAction(account);
     if(result.success) {
         await logActivity(account.aid, `Switched to account: ${account.neupId}`, 'Success', undefined, undefined);
+        const switched = await prisma.account.findUnique({
+            where: { id: account.aid },
+            select: { displayName: true },
+        });
+        const label = switched?.displayName || account.neupId || account.aid;
         await makeNotification({
             recipient_id: account.aid,
             action: 'informative.switch',
-            message: 'You switched to this account.',
+            message: `You switched to ${label}.`,
         });
     }
     return result;
@@ -55,10 +60,15 @@ export async function switchActiveAccountByNeupId(neupId: string) {
         await logActivity('self', `Switched account by NeupID: ${neupId}`, 'Success', undefined, undefined);
 
         if (matchedNeupId?.accountId) {
+            const switched = await prisma.account.findUnique({
+                where: { id: matchedNeupId.accountId },
+                select: { displayName: true },
+            });
+            const label = switched?.displayName || neupId;
             await makeNotification({
                 recipient_id: matchedNeupId.accountId,
                 action: 'informative.switch',
-                message: `You switched to this account using NeupID ${neupId}.`,
+                message: `You switched to ${label}.`,
             });
         }
     }
@@ -186,10 +196,15 @@ export async function switchToBrand(brandId: string) {
     const result = await switchToBrandAction(brandId);
 
     if (result.success) {
+        const brand = await prisma.account.findUnique({
+            where: { id: brandId },
+            select: { displayName: true },
+        });
+        const label = brand?.displayName || brandId;
         await makeNotification({
             recipient_id: personalAccountId,
             action: 'informative.switch',
-            message: `You switched context to brand ${brandId}.`,
+            message: `You switched to ${label}.`,
         });
     }
 
@@ -228,10 +243,15 @@ export async function switchToDependent(dependentId: string) {
     const result = await switchToDependentAction(dependentId);
 
     if (result.success) {
+        const dependent = await prisma.account.findUnique({
+            where: { id: dependentId },
+            select: { displayName: true },
+        });
+        const label = dependent?.displayName || dependentId;
         await makeNotification({
             recipient_id: personalAccountId,
             action: 'informative.switch',
-            message: `You switched context to dependent ${dependentId}.`,
+            message: `You switched to ${label}.`,
         });
     }
 
@@ -260,10 +280,15 @@ export async function switchToDelegated(accountId: string) {
     const result = await switchToDelegatedAction(accountId);
 
     if (result.success) {
+        const delegated = await prisma.account.findUnique({
+            where: { id: accountId },
+            select: { displayName: true },
+        });
+        const label = delegated?.displayName || accountId;
         await makeNotification({
             recipient_id: personalAccountId,
             action: 'informative.switch',
-            message: `You switched context to delegated account ${accountId}.`,
+            message: `You switched to ${label}.`,
         });
     }
 
@@ -279,10 +304,15 @@ export async function switchToPersonal() {
 
     const { accountId } = await getSessionCookies();
     if (accountId) {
+        const personal = await prisma.account.findUnique({
+            where: { id: accountId },
+            select: { displayName: true },
+        });
+        const label = personal?.displayName || 'your personal account';
         await makeNotification({
             recipient_id: accountId,
             action: 'informative.switch',
-            message: 'You switched context back to personal account.',
+            message: `You switched to ${label}.`,
         });
     }
 }

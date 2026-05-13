@@ -242,7 +242,7 @@ export async function expireSession(input: ExpireSessionInput): Promise<ExpireSe
 		await makeNotification({
 			recipient_id: aid,
 			action: 'informative.logout',
-			message: 'You recently logged out from a device.',
+			message: 'You logged out from a device.',
 		});
 
 		return { success: true };
@@ -285,7 +285,7 @@ export async function makeSession(input: MakeSessionInput): Promise<MakeSessionR
 		await makeNotification({
 			recipient_id: accountId,
 			action: 'informative.login',
-			message: 'You recently signed in from a new device.',
+			message: 'You signed in from a new device.',
 		});
 
 		return { success: true };
