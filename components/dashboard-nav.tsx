@@ -36,7 +36,6 @@ export function DashboardNav() {
             : navItems.accountNav;
 
         const visibleNeupIdNav = navItemsWithPerms(navItems.neupIdNav);
-        const visibleManagementNav = navItemsWithPerms(navItems.managementNav);
         const visibleAccountNav = navItemsWithPerms(accountNavItems);
         
         const primaryNeupId = profile?.neupIdPrimary ? `@${profile.neupIdPrimary}` : 'Neup.Account';
@@ -56,9 +55,6 @@ export function DashboardNav() {
         } else {
             if (visibleNeupIdNav.length > 0) {
                 config.push({ title: primaryNeupId, items: visibleNeupIdNav });
-            }
-            if (visibleManagementNav.length > 0) {
-                config.push({ title: "Manage", items: visibleManagementNav });
             }
             if (visibleAccountNav.length > 0) {
                 config.push({ title: "Account", items: visibleAccountNav });
