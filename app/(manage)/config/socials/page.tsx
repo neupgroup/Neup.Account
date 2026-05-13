@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { BackButton } from '@/components/ui/back-button';
 import { checkPermissions } from '@/services/user';
 import { getSocialLinks } from '@/services/manage/site/socials';
-import { SocialLinksManager } from '../../manage/site/socials/social-links-manager';
+import { SocialLinksManager } from './social-links-manager';
 
 export default async function ConfigSocialsPage() {
   const canView = await checkPermissions(['root.payment_config.view']);
