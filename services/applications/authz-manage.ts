@@ -71,6 +71,9 @@ export async function createAppCapability(input: {
 
   const name = input.name.trim();
   if (!name) return { success: false, error: 'Capability name is required.' };
+  if (!/^[a-z0-9._-]+$/.test(name)) {
+    return { success: false, error: 'Capability name may only contain lowercase letters, numbers, dots (.), underscores (_), and hyphens (-).' };
+  }
 
   try {
     const record = await prisma.authzCapability.create({
