@@ -12,7 +12,7 @@ import crypto from 'crypto';
 import { z } from 'zod';
 import { createNotification } from '../notifications';
 import { setSessionCookies } from '@/core/helpers/cookies';
-import { warningReasons } from '@/app/(manage)/manage/accounts/[id]/forms';
+import { warningReasons } from '@/app/(manage)/manage/[id]/forms';
 import type { UserProfile } from '@/services/user';
 
 
