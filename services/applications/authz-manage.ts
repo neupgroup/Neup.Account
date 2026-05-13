@@ -94,6 +94,41 @@ export async function createAppCapability(input: {
   }
 }
 
+export async function updateAppCapability(input: {
+  appId: string;
+  capabilityId: string;
+  name: string;
+  description?: string;
+  scope?: string;
+}): Promise<{ success: boolean; capability?: AppCapability; error?: string }> {
+  const auth = await assertOwner(input.appId);
+  if ('error' in auth) return { success: false, error: auth.error };
+
+  const name = input.name.trim();
+  if (!name) return { success: false, error: 'Capability name is required.' };
+  if (!/^[a-z0-9._-]+$/.test(name)) {
+    return { success: false, error: 'Capability name may only contain lowercase letters, numbers, dots (.), underscores (_), and hyphens (-).' };
+  }
+
+  try {
+    const record = await prisma.authzCapability.update({
+      where: { id: input.capabilityId },
+      data: {
+        name,
+        description: input.description?.trim() || null,
+        scope: input.scope?.trim() || null,
+      },
+      select: { id: true, name: true, description: true, scope: true },
+    });
+
+    revalidatePath(`/data/applications/${input.appId}`);
+    return { success: true, capability: record };
+  } catch (error) {
+    await logError('database', error, `updateAppCapability:${input.appId}`);
+    return { success: false, error: 'Failed to update capability.' };
+  }
+}
+
 export async function deleteAppCapability(input: {
   appId: string;
   capabilityId: string;

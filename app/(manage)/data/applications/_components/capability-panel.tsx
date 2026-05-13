@@ -5,9 +5,29 @@ import { useToast } from '@/core/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Plus, ChevronRight, ChevronDown } from '@/components/icons';
+import { Plus, ChevronRight } from '@/components/icons';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
+} from '@/components/ui/dialog';
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from '@/components/ui/alert-dialog';
 import {
   createAppCapability,
+  updateAppCapability,
   deleteAppCapability,
   type AppCapability,
 } from '@/services/applications/authz-manage';
@@ -20,16 +40,43 @@ type Props = {
 export function CapabilityPanel({ appId, initialCapabilities }: Props) {
   const { toast } = useToast();
   const [capabilities, setCapabilities] = useState<AppCapability[]>(initialCapabilities);
-  const [expanded, setExpanded] = useState(false);
-  const [name, setName] = useState('');
-  const [desc, setDesc] = useState('');
-  const [scope, setScope] = useState('');
-  const [pending, setPending] = useState(false);
+
+  // Add dialog
+  const [addOpen, setAddOpen] = useState(false);
+  const [addName, setAddName] = useState('');
+  const [addDesc, setAddDesc] = useState('');
+  const [addScope, setAddScope] = useState('');
+  const [addPending, setAddPending] = useState(false);
+
+  // Edit dialog
+  const [editTarget, setEditTarget] = useState<AppCapability | null>(null);
+  const [editName, setEditName] = useState('');
+  const [editDesc, setEditDesc] = useState('');
+  const [editScope, setEditScope] = useState('');
+  const [editPending, setEditPending] = useState(false);
+
+  // Remove dialog
+  const [removeTarget, setRemoveTarget] = useState<AppCapability | null>(null);
+  const [removePending, setRemovePending] = useState(false);
 
   const isValidName = (value: string) => /^[a-z0-9._-]+$/.test(value.trim());
 
+  const openEdit = (cap: AppCapability) => {
+    setEditTarget(cap);
+    setEditName(cap.name);
+    setEditDesc(cap.description ?? '');
+    setEditScope(cap.scope ?? '');
+  };
+
+  const closeEdit = () => {
+    setEditTarget(null);
+    setEditName('');
+    setEditDesc('');
+    setEditScope('');
+  };
+
   const handleAdd = async () => {
-    const trimmed = name.trim();
+    const trimmed = addName.trim();
     if (!trimmed) return;
     if (!isValidName(trimmed)) {
       toast({
@@ -39,129 +86,244 @@ export function CapabilityPanel({ appId, initialCapabilities }: Props) {
       });
       return;
     }
-    setPending(true);
+    setAddPending(true);
     const result = await createAppCapability({
       appId,
       name: trimmed,
-      description: desc || undefined,
-      scope: scope || undefined,
+      description: addDesc || undefined,
+      scope: addScope || undefined,
     });
-    setPending(false);
+    setAddPending(false);
     if (!result.success || !result.capability) {
       toast({ variant: 'destructive', title: 'Failed', description: result.error || 'Could not create capability.' });
       return;
     }
     setCapabilities((prev) => [...prev, result.capability!]);
-    setName('');
-    setDesc('');
-    setScope('');
-    setExpanded(false);
+    setAddName('');
+    setAddDesc('');
+    setAddScope('');
+    setAddOpen(false);
     toast({ title: 'Capability created' });
   };
 
-  const handleDelete = async (capabilityId: string) => {
-    const result = await deleteAppCapability({ appId, capabilityId });
+  const handleEdit = async () => {
+    if (!editTarget) return;
+    const trimmed = editName.trim();
+    if (!trimmed) return;
+    if (!isValidName(trimmed)) {
+      toast({
+        variant: 'destructive',
+        title: 'Invalid name',
+        description: 'Capability name may only contain lowercase letters, numbers, dots (.), underscores (_), and hyphens (-).',
+      });
+      return;
+    }
+    setEditPending(true);
+    const result = await updateAppCapability({
+      appId,
+      capabilityId: editTarget.id,
+      name: trimmed,
+      description: editDesc || undefined,
+      scope: editScope || undefined,
+    });
+    setEditPending(false);
+    if (!result.success || !result.capability) {
+      toast({ variant: 'destructive', title: 'Failed', description: result.error || 'Could not update capability.' });
+      return;
+    }
+    setCapabilities((prev) => prev.map((c) => c.id === editTarget.id ? result.capability! : c));
+    closeEdit();
+    toast({ title: 'Capability updated' });
+  };
+
+  const handleRemoveConfirm = async () => {
+    if (!removeTarget) return;
+    setRemovePending(true);
+    const result = await deleteAppCapability({ appId, capabilityId: removeTarget.id });
+    setRemovePending(false);
     if (!result.success) {
       toast({ variant: 'destructive', title: 'Failed', description: result.error || 'Could not delete capability.' });
       return;
     }
-    setCapabilities((prev) => prev.filter((c) => c.id !== capabilityId));
-    toast({ title: 'Capability deleted' });
+    setCapabilities((prev) => prev.filter((c) => c.id !== removeTarget.id));
+    setRemoveTarget(null);
+    toast({ title: 'Capability removed' });
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border bg-card">
-      {/* Create row */}
-      <button
-        type="button"
-        onClick={() => setExpanded((v) => !v)}
-        className="group flex w-full items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 sm:px-5"
-      >
-        <div className="flex min-w-0 items-center gap-3">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-dashed bg-muted/20">
-            <Plus className="h-5 w-5 text-muted-foreground" />
-          </div>
-          <p className="truncate text-base font-medium leading-6 text-muted-foreground">
-            New Permission
-          </p>
-        </div>
-        {expanded
-          ? <ChevronDown className="h-5 w-5 shrink-0 text-muted-foreground" />
-          : <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-        }
-      </button>
-
-      {/* Expanded create form */}
-      {expanded && (
-        <div className="border-b px-4 py-4 space-y-3 sm:px-5">
-          <Input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Name, e.g. orders.read"
-          />
-          <Input
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-            placeholder="Description (optional)"
-          />
-          <Input
-            value={scope}
-            onChange={(e) => setScope(e.target.value)}
-            placeholder="Scope (optional), e.g. portfolio"
-          />
-          <div className="flex justify-end gap-2">
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => { setExpanded(false); setName(''); setDesc(''); setScope(''); }}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="button"
-              size="sm"
-              onClick={handleAdd}
-              disabled={pending || !name.trim() || !isValidName(name)}
-            >
-              {pending ? 'Adding...' : 'Add'}
-            </Button>
-          </div>
-        </div>
-      )}
-
-      {/* Capability rows */}
-      {capabilities.length > 0 ? (
-        capabilities.map((cap) => (
-          <div
-            key={cap.id}
-            className="flex items-center justify-between gap-4 border-b px-4 py-4 last:border-b-0 sm:px-5"
-          >
-            <div className="min-w-0">
-              <p className="truncate text-base font-medium leading-6">{cap.name}</p>
-              {cap.description && (
-                <p className="truncate text-sm text-muted-foreground">{cap.description}</p>
-              )}
-              {cap.scope && (
-                <Badge variant="outline" className="mt-1 text-xs">{cap.scope}</Badge>
-              )}
+    <>
+      {/* Main list */}
+      <div className="overflow-hidden rounded-2xl border bg-card">
+        {/* Add row */}
+        <button
+          type="button"
+          onClick={() => setAddOpen(true)}
+          className="group flex w-full items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 sm:px-5"
+        >
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-dashed bg-muted/20">
+              <Plus className="h-5 w-5 text-muted-foreground" />
             </div>
+            <p className="truncate text-base font-medium leading-6 text-muted-foreground">
+              New Permission
+            </p>
+          </div>
+          <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+        </button>
+
+        {/* Capability rows */}
+        {capabilities.length > 0 ? (
+          capabilities.map((cap) => (
+            <div
+              key={cap.id}
+              className="group flex items-center justify-between gap-4 border-b px-4 py-4 last:border-b-0 transition-colors hover:bg-muted/40 sm:px-5"
+            >
+              <button
+                type="button"
+                className="min-w-0 flex-1 text-left"
+                onClick={() => openEdit(cap)}
+              >
+                <p className="truncate text-base font-medium leading-6">{cap.name}</p>
+                {cap.description && (
+                  <p className="truncate text-sm text-muted-foreground">{cap.description}</p>
+                )}
+                {cap.scope && (
+                  <Badge variant="outline" className="mt-1 text-xs">{cap.scope}</Badge>
+                )}
+              </button>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="shrink-0 text-muted-foreground"
+                onClick={() => setRemoveTarget(cap)}
+              >
+                Remove
+              </Button>
+            </div>
+          ))
+        ) : (
+          <div className="px-4 py-8 text-center text-sm text-muted-foreground sm:px-5">
+            No permissions defined yet.
+          </div>
+        )}
+      </div>
+
+      {/* Add dialog */}
+      <Dialog
+        open={addOpen}
+        onOpenChange={(open) => {
+          setAddOpen(open);
+          if (!open) { setAddName(''); setAddDesc(''); setAddScope(''); }
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>New Permission</DialogTitle>
+            <DialogDescription>
+              Use lowercase letters, numbers, dots, underscores, or hyphens — e.g.{' '}
+              <code className="rounded bg-muted px-1 py-0.5 text-xs">orders.read</code>.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <Input
+              value={addName}
+              onChange={(e) => setAddName(e.target.value)}
+              placeholder="Name, e.g. orders.read"
+              autoFocus
+            />
+            <Input
+              value={addDesc}
+              onChange={(e) => setAddDesc(e.target.value)}
+              placeholder="Description (optional)"
+            />
+            <Input
+              value={addScope}
+              onChange={(e) => setAddScope(e.target.value)}
+              placeholder="Scope (optional), e.g. portfolio"
+            />
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="button" variant="outline">Cancel</Button>
+            </DialogClose>
             <Button
               type="button"
-              variant="ghost"
-              size="sm"
-              className="shrink-0 text-muted-foreground"
-              onClick={() => handleDelete(cap.id)}
+              onClick={handleAdd}
+              disabled={addPending || !addName.trim() || !isValidName(addName)}
             >
-              Remove
+              {addPending ? 'Adding...' : 'Add'}
             </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit dialog */}
+      <Dialog open={!!editTarget} onOpenChange={(open) => { if (!open) closeEdit(); }}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Permission</DialogTitle>
+            <DialogDescription>
+              Update the name, description, or scope of this capability.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <Input
+              value={editName}
+              onChange={(e) => setEditName(e.target.value)}
+              placeholder="Name, e.g. orders.read"
+              autoFocus
+            />
+            <Input
+              value={editDesc}
+              onChange={(e) => setEditDesc(e.target.value)}
+              placeholder="Description (optional)"
+            />
+            <Input
+              value={editScope}
+              onChange={(e) => setEditScope(e.target.value)}
+              placeholder="Scope (optional), e.g. portfolio"
+            />
           </div>
-        ))
-      ) : (
-        <div className="px-4 py-8 text-center text-sm text-muted-foreground sm:px-5">
-          No permissions defined yet.
-        </div>
-      )}
-    </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="button" variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button
+              type="button"
+              onClick={handleEdit}
+              disabled={editPending || !editName.trim() || !isValidName(editName)}
+            >
+              {editPending ? 'Saving...' : 'Save'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Remove confirm dialog */}
+      <AlertDialog
+        open={!!removeTarget}
+        onOpenChange={(open) => { if (!open) setRemoveTarget(null); }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remove permission?</AlertDialogTitle>
+            <AlertDialogDescription>
+              <strong>{removeTarget?.name}</strong> will be permanently removed. Any roles that include this capability will lose it.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={removePending}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={handleRemoveConfirm}
+              disabled={removePending}
+            >
+              {removePending ? 'Removing...' : 'Remove'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }
