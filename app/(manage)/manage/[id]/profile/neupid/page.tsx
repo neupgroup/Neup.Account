@@ -110,7 +110,7 @@ export default function RootUserNeupidPage() {
 
     return (
         <div className="space-y-8">
-            <BackButton href={`/manage/accounts/${resolvedParams.id}/profile`} />
+            <BackButton href={`/manage/${resolvedParams.id}/profile`} />
              <PrimaryHeader
                 title="NeupID Management"
                 description={`Manage unique identifiers for @${userNeupId}.`}

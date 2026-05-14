@@ -18,7 +18,7 @@ export function FindUserCard() {
         const searchTerm = searchQuery.trim();
         if (searchTerm) {
             NProgress.start();
-            redirectInApp(router, `/manage/accounts?q=${encodeURIComponent(searchTerm)}`);
+            redirectInApp(router, `/manage?q=${encodeURIComponent(searchTerm)}`);
         }
     };
 

@@ -212,7 +212,7 @@ export async function updateAccountRoles(accountId: string, roleIds: string[]): 
         });
 
         await logActivity(accountId, `Roles updated by admin ${adminId}: [${roleIds.join(', ')}]`, 'Success', undefined, adminId);
-        revalidatePath(`/manage/accounts/${accountId}/permissions`);
+        revalidatePath(`/manage/${accountId}/permissions`);
         return { success: true };
     } catch (error) {
         await logError('database', error, `updateAccountRoles:${accountId}`);
@@ -266,7 +266,7 @@ export async function updateUserPermissions(accountId: string, newPermissionIds:
 
         const adminId = await getPersonalAccountId() ?? '';
         await logActivity(accountId, `Permissions updated by root user ${adminId}`, 'Success', undefined, adminId);
-        revalidatePath(`/manage/accounts/${accountId}/permissions`);
+        revalidatePath(`/manage/${accountId}/permissions`);
         return { success: true };
     } catch (e) {
         await logError('database', e, `updateUserPermissions: ${accountId}`);

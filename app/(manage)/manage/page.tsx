@@ -61,7 +61,7 @@ function AccountRow({ acc, isFirst, isLast }: { acc: AccountBasics; isFirst: boo
         : '';
 
     return (
-        <FlowLink href={`/manage/accounts/${acc.id}`}>
+        <FlowLink href={`/manage/${acc.id}`}>
             <div
                 className={`
                     flex items-center gap-4 px-4 py-3.5

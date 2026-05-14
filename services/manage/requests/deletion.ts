@@ -132,7 +132,7 @@ export async function approveAccountDeletion(
         const result = await deleteUserAccount(accountId);
         if (result.success) {
             revalidatePath('/manage/requests/deletion');
-             revalidatePath(`/manage/accounts/${accountId}`);
+             revalidatePath(`/manage/${accountId}`);
             return { success: true };
         } else {
             return { success: false, error: result.error };
@@ -178,7 +178,7 @@ export async function cancelAccountDeletion(
 
         await logActivity(accountId, 'Account Deletion Cancelled by Admin', 'Success', undefined, adminId);
         revalidatePath('/manage/requests/deletion');
-        revalidatePath(`/manage/accounts/${accountId}/deletion`);
+        revalidatePath(`/manage/${accountId}/deletion`);
         return { success: true };
     } catch (error) {
         await logError('database', error, `cancelAccountDeletion: ${accountId}`);
@@ -230,7 +230,7 @@ export async function requestAccountDeletionByAdmin(accountId: string, data: z.i
         });
 
         await logActivity(accountId, "Account Deletion Requested by Admin", "Alert", undefined, adminId);
-        revalidatePath(`/manage/accounts/${accountId}/deletion`);
+        revalidatePath(`/manage/${accountId}/deletion`);
         return { success: true };
 
     } catch (error) {

@@ -57,7 +57,7 @@ export function DeletionManager({ accountId }: { accountId: string }) {
             const result = await approveAccountDeletion(accountId);
             if(result.success) {
                 toast({ title: 'Success', description: 'Account has been permanently deleted.', className: 'bg-accent text-accent-foreground' });
-                redirectInApp(router, '/manage/list');
+                redirectInApp(router, '/manage');
             } else {
                 toast({ variant: 'destructive', title: 'Error', description: result.error });
             }

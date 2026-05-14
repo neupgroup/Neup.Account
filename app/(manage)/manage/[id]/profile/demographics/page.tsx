@@ -128,7 +128,7 @@ export default function RootUserDemographicsPage() {
 
     return (
          <div className="space-y-8">
-            <BackButton href={`/manage/accounts/${params.id}/profile`} />
+            <BackButton href={`/manage/${params.id}/profile`} />
             <PrimaryHeader
                 title="Demographics"
                 description={`Update gender and date of birth for @${profile.neupIdPrimary}.`}

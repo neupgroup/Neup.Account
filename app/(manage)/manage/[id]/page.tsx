@@ -15,19 +15,19 @@ const accountManagementFeatures = (accountId: string) => [
     icon: UserCircle,
     title: 'Profile Information',
     description: 'View and manage user profile details.',
-    href: `/manage/accounts/${accountId}/profile`,
+    href: `/manage/${accountId}/profile`,
   },
   {
     icon: ShieldCheck,
     title: 'Permissions',
     description: 'Assign or restrict permission sets for this user.',
-    href: `/manage/accounts/${accountId}/permissions`,
+    href: `/manage/${accountId}/permissions`,
   },
   {
     icon: History,
     title: 'Account Activity',
     description: 'View a log of recent actions performed on this account.',
-    href: `/manage/accounts/${accountId}/activity`,
+    href: `/manage/${accountId}/activity`,
   },
 ];
 
@@ -36,25 +36,25 @@ const adminActions = (accountId: string) => [
         icon: ShieldCheck,
         title: 'Verification',
         description: 'Manage the user\'s verified status.',
-        href: `/manage/accounts/${accountId}/verification`,
+        href: `/manage/${accountId}/verification`,
     },
     {
         icon: Ban,
         title: 'Bans & Warnings',
         description: 'Send warnings, block access, or take other admin actions.',
-        href: `/manage/accounts/${accountId}/notice`,
+        href: `/manage/${accountId}/notice`,
     },
     {
         icon: Trash2,
         title: 'Deletion',
         description: 'Manage the account deletion process.',
-        href: `/manage/accounts/${accountId}/deletion`,
+        href: `/manage/${accountId}/deletion`,
     },
     {
         icon: Gem,
         title: 'Neup.Pro',
         description: 'Activate or deactivate the user\'s Pro subscription.',
-        href: `/manage/accounts/${accountId}/pro`,
+        href: `/manage/${accountId}/pro`,
     }
 ]
 
@@ -76,7 +76,7 @@ export default async function AccountDetailsPage({ params }: { params: Promise<{
 
   return (
     <div className="grid gap-8">
-      <BackButton href="/manage/list" />
+      <BackButton href="/manage" />
       <div className="flex items-center gap-4">
         <Avatar className="h-16 w-16">
           <AvatarImage

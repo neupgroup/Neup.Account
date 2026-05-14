@@ -20,7 +20,7 @@ export function UserDetailsClient({ initialUserDetails }: UserDetailsClientProps
     const router = useRouter();
 
     const handleBack = () => {
-        redirectInApp(router, '/manage/list');
+        redirectInApp(router, '/manage');
     };
 
     return (
