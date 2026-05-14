@@ -32,6 +32,8 @@ model Account {
   authzOwnedGrants    AuthzAccountAccessGrant[] @relation("AuthzGrantOwner")
   authzTargetGrants   AuthzAccountAccessGrant[] @relation("AuthzGrantTarget")
   authzAssetsAccessGrants AuthzAssetsAccessGrant[]
+  authzAppOwnedGrants AuthzAppAccessGrant[]     @relation("AuthzAppGrantOwner")
+  authzAppTargetGrants AuthzAppAccessGrant[]    @relation("AuthzAppGrantTarget")
   permits           Permit[]
   permitTargets     Permit[]                @relation("PermitTarget")
   parentOwnerships  AccountOwnership[]      @relation("ChildAccount")
@@ -261,6 +263,7 @@ model Application {
   authzCapabilities AuthzCapability[]
   authzRoles        AuthzRole[]
   authzAccountAccessGrants AuthzAccountAccessGrant[]
+  authzAppAccessGrants     AuthzAppAccessGrant[]
   identities     Identity[]
 
   @@map("application")
@@ -275,6 +278,7 @@ model Portfolio {
   members     PortfolioMember[]
   authzAccountAccessGrants AuthzAccountAccessGrant[]
   authzAssetsAccessGrants  AuthzAssetsAccessGrant[]
+  authzAppAccessGrants     AuthzAppAccessGrant[]
   
 
   @@map("portfolio")
@@ -384,6 +388,7 @@ model AuthzRole {
   roleMaps    AuthzRoleCapability[]
   grants      AuthzAccountAccessGrant[]
   assetsGrants AuthzAssetsAccessGrant[]
+  appGrants    AuthzAppAccessGrant[]
 
   @@unique([name, appId], map: "authz_role_name_app_id_key")
   @@map("authz_role")
@@ -464,6 +469,28 @@ model Permit {
   @@index([accountId], map: "permit_account_id_idx")
   @@index([targetAccountId], map: "permit_target_account_id_idx")
   @@map("permit")
+}
+
+model AuthzAppAccessGrant {
+  id              String   @id @default(uuid())
+  appId           String   @map("app_id")
+  accountId       String   @map("account_id")
+  targetAccountId String   @map("target_account_id")
+  roleId          String   @map("role_id")
+  portfolioId     String?  @map("portfolio_id")
+
+  application     Application @relation(fields: [appId], references: [id], map: "authz_app_access_grant_app_id_fkey")
+  account         Account     @relation("AuthzAppGrantOwner", fields: [accountId], references: [id], map: "authz_app_access_grant_account_id_fkey")
+  targetAccount   Account     @relation("AuthzAppGrantTarget", fields: [targetAccountId], references: [id], map: "authz_app_access_grant_target_account_id_fkey")
+  role            AuthzRole   @relation(fields: [roleId], references: [id], map: "authz_app_access_grant_role_id_fkey")
+  portfolio       Portfolio?  @relation(fields: [portfolioId], references: [id], map: "authz_app_access_grant_portfolio_id_fkey")
+
+  @@index([appId], map: "authz_app_access_grant_app_id_idx")
+  @@index([accountId], map: "authz_app_access_grant_account_id_idx")
+  @@index([targetAccountId], map: "authz_app_access_grant_target_account_id_idx")
+  @@index([roleId], map: "authz_app_access_grant_role_id_idx")
+  @@index([portfolioId], map: "authz_app_access_grant_portfolio_id_idx")
+  @@map("authz_app_access_grant")
 }
 
 /// Stores per-app identity records keyed by guest account ID.

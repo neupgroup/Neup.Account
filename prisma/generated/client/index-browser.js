@@ -129,7 +129,6 @@ exports.Prisma.AccountScalarFieldEnum = {
   isVerified: 'isVerified',
   details: 'details',
   createdAt: 'createdAt',
-  lastActive: 'lastActive',
   linkedAccountId: 'linkedAccountId'
 };
 
@@ -403,6 +402,15 @@ exports.Prisma.PermitScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.AuthzAppAccessGrantScalarFieldEnum = {
+  id: 'id',
+  appId: 'appId',
+  accountId: 'accountId',
+  targetAccountId: 'targetAccountId',
+  roleId: 'roleId',
+  portfolioId: 'portfolioId'
+};
+
 exports.Prisma.IdentityScalarFieldEnum = {
   id: 'id',
   trackId: 'trackId',
@@ -475,6 +483,7 @@ exports.Prisma.ModelName = {
   AuthzAccountAccessGrant: 'AuthzAccountAccessGrant',
   AuthzAssetsAccessGrant: 'AuthzAssetsAccessGrant',
   Permit: 'Permit',
+  AuthzAppAccessGrant: 'AuthzAppAccessGrant',
   Identity: 'Identity'
 };
 
