@@ -1,22 +1,11 @@
 import { notFound } from 'next/navigation';
 import { BackButton } from '@/components/ui/back-button';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Database, KeyRound, Shield, UserCircle, Users, X, UserPlus } from '@/components/icons';
-import {
-  addAssetToGroupFromForm,
-  addMemberToAssetGroupFromForm,
-  assignRoleToAssetMemberFromForm,
-  removeAssetFromGroupFromForm,
-  bulkAssignPermissionsFromForm,
-} from '@/services/manage/access/actions';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ChevronRight, Database, UserCircle, Users, UserPlus } from '@/components/icons';
 import { getAccessAssetGroup } from '@/services/manage/access/assets';
 import { resolveAssetNames } from '@/services/manage/access/asset-resolvers';
 import { getUserProfile } from '@/services/user';
-import { AddMemberForm } from './add-member-form';
-import { AddAssetForm } from './add-asset-form';
-import { RoleAssignForm } from './role-assign-form';
-import { AssignPermissionsWizard } from './assign-permissions-wizard';
 import { FlowLink } from '@/components/ui/flow-link';
 
 type PageProps = {
@@ -47,30 +36,7 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
     memberProfiles.map((p) => [p.accountId, p.name])
   );
 
-  // Resolve display names for all assets in parallel
   const assetNameMap = await resolveAssetNames(group.assets);
-
-  const getMemberDetails = (value: unknown) => {
-    const d = value && typeof value === 'object' ? (value as Record<string, unknown>) : {};
-    return {
-      isPermanent: d.isPermanent === true,
-      removesOn: typeof d.removesOn === 'string' ? d.removesOn : null,
-      hasFullAccess: d.hasFullAccess === true,
-    };
-  };
-
-  const addMemberAction = addMemberToAssetGroupFromForm.bind(null, id);
-  const addAssetAction = addAssetToGroupFromForm.bind(null, id);
-  const removeAssetAction = removeAssetFromGroupFromForm.bind(null, id);
-  const assignRoleAction = assignRoleToAssetMemberFromForm.bind(null, id);
-  const bulkAssignAction = bulkAssignPermissionsFromForm.bind(null, id);
-
-  const roleRows = (Array.isArray((group as { roles?: unknown }).roles)
-    ? (group as { roles?: unknown[] }).roles
-    : []) as Array<{ id: string; accountId: string; roleId: string }>;
-
-  // IDs already in this portfolio — passed to the add form to filter duplicates
-  const existingAssetIds = group.assets.map((a) => a.assetId);
 
   return (
     <div className="grid gap-8">
@@ -78,204 +44,200 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
 
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">{group.name}</h1>
+        <div className="min-w-0">
+          <h1 className="text-2xl font-bold tracking-tight truncate">{group.name}</h1>
           {group.description && (
-            <p className="mt-1 text-muted-foreground">{group.description}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{group.description}</p>
           )}
         </div>
-        <div className="flex shrink-0 gap-2 text-xs text-muted-foreground pt-1">
-          <span>{group.members.length} accounts</span>
-          <span>·</span>
-          <span>{group.assets.length} assets</span>
+        <div className="flex shrink-0 items-center gap-3 pt-0.5">
+          <div className="flex items-center gap-1.5 rounded-md bg-muted px-2.5 py-1 text-xs text-muted-foreground">
+            <Users className="h-3.5 w-3.5" />
+            <span>{group.members.length}</span>
+          </div>
+          <div className="flex items-center gap-1.5 rounded-md bg-muted px-2.5 py-1 text-xs text-muted-foreground">
+            <Database className="h-3.5 w-3.5" />
+            <span>{group.assets.length}</span>
+          </div>
         </div>
       </div>
 
-      {/* ── Accounts ─────────────────────────────────────────────────────── */}
-      <section className="grid gap-3">
-        <div className="flex items-center gap-2">
-          <Users className="h-4 w-4 text-muted-foreground" />
-          <h2 className="font-semibold">Accounts</h2>
-        </div>
+      {/* ── Section links ─────────────────────────────────────────────────── */}
+      <div className="overflow-hidden rounded-lg border divide-y">
 
-        <div className="overflow-hidden rounded-lg border divide-y">
-          <AddMemberForm action={addMemberAction} />
-
-          {group.members.length > 0 ? (
-            group.members.map((member) => {
-              const d = getMemberDetails(member.details);
-              const memberRoles = roleRows.filter((r) => r.accountId === member.accountId);
-              const displayName = nameMap[member.accountId] ?? member.accountId;
-              return (
-                <div key={member.id} className="flex items-start gap-3 px-4 py-3">
-                  <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted">
-                    <UserCircle className="h-4 w-4 text-muted-foreground" />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium truncate">{displayName}</p>
-                    <div className="mt-0.5 flex flex-wrap gap-1">
-                      {d.isPermanent ? (
-                        <Badge variant="secondary" className="text-xs px-1.5 py-0">permanent</Badge>
-                      ) : d.removesOn ? (
-                        <Badge variant="outline" className="text-xs px-1.5 py-0">
-                          expires {new Date(d.removesOn).toLocaleDateString()}
-                        </Badge>
-                      ) : null}
-                      {d.hasFullAccess && (
-                        <Badge variant="secondary" className="text-xs px-1.5 py-0">full access</Badge>
-                      )}
-                      {memberRoles.map((r) => (
-                        <Badge key={r.id} variant="outline" className="font-mono text-xs px-1.5 py-0">
-                          {r.roleId}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <div className="flex items-center gap-3 px-4 py-3 text-sm text-muted-foreground">
-              <Shield className="h-4 w-4 shrink-0" />
-              No accounts added yet.
+        {/* Accounts */}
+        <FlowLink
+          href={`/access/accounts?portfolio=${id}`}
+          className="flex items-center justify-between gap-4 px-4 py-4 hover:bg-muted/40 transition-colors"
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-sm font-medium">Accounts</p>
+              <p className="text-xs text-muted-foreground">
+                {group.members.length > 0
+                  ? `${group.members.length} member${group.members.length !== 1 ? 's' : ''}`
+                  : 'No members yet'}
+              </p>
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            {group.members.length > 0 && (
+              <Badge variant="secondary" className="text-xs font-normal">
+                {group.members.length}
+              </Badge>
+            )}
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+          </div>
+        </FlowLink>
 
-      {/* ── Assets ───────────────────────────────────────────────────────── */}
-      <section className="grid gap-3">
-        <div className="flex items-center gap-2">
-          <Database className="h-4 w-4 text-muted-foreground" />
-          <h2 className="font-semibold">Assets</h2>
-        </div>
-
-        <div className="overflow-hidden rounded-lg border divide-y">
-          <AddAssetForm action={addAssetAction} existingAssetIds={existingAssetIds} />
-
-          {group.assets.length > 0 ? (
-            group.assets.map((asset) => {
-              const resolved = assetNameMap[asset.id];
-              return (
-                <div key={asset.id} className="flex items-center justify-between gap-4 px-4 py-3 hover:bg-muted/20 transition-colors">
-                  <FlowLink
-                    href={`/access/portfolio/${id}/asset/${asset.id}`}
-                    className="flex items-center gap-3 min-w-0 flex-1"
-                  >
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted">
-                      <Database className="h-3.5 w-3.5 text-muted-foreground" />
-                    </span>
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium truncate">{resolved?.name ?? asset.assetId}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {resolved?.subtitle ?? asset.assetType}
-                      </p>
-                    </div>
-                  </FlowLink>
-                  <div className="flex shrink-0 items-center gap-2">
-                    <Badge variant="outline" className="text-xs">{asset.assetType}</Badge>
-                    {/* Remove asset — moves it back to the caller's personal portfolio */}
-                    <form action={removeAssetAction}>
-                      <input type="hidden" name="portfolioAssetId" value={asset.id} />
-                      <Button
-                        type="submit"
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 text-muted-foreground hover:text-destructive"
-                        aria-label={`Remove ${resolved?.name ?? asset.assetId} from portfolio`}
-                      >
-                        <X className="h-3.5 w-3.5" />
-                      </Button>
-                    </form>
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <div className="flex items-center gap-3 px-4 py-3 text-sm text-muted-foreground">
-              <Database className="h-4 w-4 shrink-0" />
-              No assets added yet.
+        {/* Assets */}
+        <FlowLink
+          href={`/access/assets?portfolio=${id}`}
+          className="flex items-center justify-between gap-4 px-4 py-4 hover:bg-muted/40 transition-colors"
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
+              <Database className="h-4 w-4 text-muted-foreground" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-sm font-medium">Assets</p>
+              <p className="text-xs text-muted-foreground">
+                {group.assets.length > 0
+                  ? `${group.assets.length} asset${group.assets.length !== 1 ? 's' : ''}`
+                  : 'No assets yet'}
+              </p>
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            {group.assets.length > 0 && (
+              <Badge variant="secondary" className="text-xs font-normal">
+                {group.assets.length}
+              </Badge>
+            )}
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+          </div>
+        </FlowLink>
 
-      {/* ── Assign Permissions (Wizard) ──────────────────────────────────── */}
-      <section className="grid gap-3">
-        <div className="flex items-center gap-2">
-          <UserPlus className="h-4 w-4 text-muted-foreground" />
-          <h2 className="font-semibold">Assign Permissions</h2>
-        </div>
+        {/* Assign Permissions */}
+        <FlowLink
+          href={`/access/assign?portfolio=${id}`}
+          className="flex items-center justify-between gap-4 px-4 py-4 hover:bg-muted/40 transition-colors"
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
+              <UserPlus className="h-4 w-4 text-muted-foreground" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-sm font-medium">Assign Permissions</p>
+              <p className="text-xs text-muted-foreground">
+                Grant members access to assets with roles
+              </p>
+            </div>
+          </div>
+          <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+        </FlowLink>
 
-        <div className="overflow-hidden rounded-lg border">
-          <AssignPermissionsWizard
-            action={bulkAssignAction}
-            groupId={id}
-            members={group.members.map((m) => ({
-              id: m.id,
-              accountId: m.accountId,
-              displayName: nameMap[m.accountId] ?? m.accountId,
-            }))}
-            existingAssetIds={existingAssetIds}
-          />
-        </div>
-      </section>
+      </div>
 
-      {/* ── Roles ────────────────────────────────────────────────────────── */}
-      <section className="grid gap-3">
-        <div className="flex items-center gap-2">
-          <KeyRound className="h-4 w-4 text-muted-foreground" />
-          <h2 className="font-semibold">Roles</h2>
-        </div>
-
-        <div className="overflow-hidden rounded-lg border divide-y">
-          <RoleAssignForm
-            action={assignRoleAction}
-            members={group.members.map((m) => ({
-              id: m.id,
-              accountId: m.accountId,
-              displayName: nameMap[m.accountId] ?? m.accountId,
-            }))}
-            assets={group.assets.map((a) => ({
-              id: a.id,
-              label: assetNameMap[a.id]?.name ?? a.assetId,
-            }))}
-          />
-
-          {group.members.length > 0 && roleRows.length > 0 ? (
-            group.members
-              .filter((member) => roleRows.some((r) => r.accountId === member.accountId))
-              .map((member) => {
-                const memberRoles = roleRows.filter((r) => r.accountId === member.accountId);
+      {/* ── Members preview ───────────────────────────────────────────────── */}
+      {group.members.length > 0 && (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-sm font-semibold">
+              <Users className="h-4 w-4 text-muted-foreground" />
+              Members
+              <Badge variant="secondary" className="ml-auto text-xs font-normal">
+                {group.members.length}
+              </Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="border-t divide-y">
+              {group.members.slice(0, 5).map((member) => {
                 const displayName = nameMap[member.accountId] ?? member.accountId;
                 return (
-                  <div key={member.id} className="flex items-start gap-3 px-4 py-3">
-                    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted">
+                  <div key={member.id} className="flex items-center gap-3 px-4 py-3">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted">
                       <UserCircle className="h-4 w-4 text-muted-foreground" />
                     </span>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium truncate">{displayName}</p>
-                      <div className="mt-1 flex flex-wrap gap-1">
-                        {memberRoles.map((r) => (
-                          <Badge key={r.id} variant="secondary" className="font-mono text-xs px-1.5 py-0">
-                            {r.roleId}
-                          </Badge>
-                        ))}
-                      </div>
+                      <p className="text-xs text-muted-foreground font-mono truncate">
+                        {member.accountId}
+                      </p>
                     </div>
                   </div>
                 );
-              })
-          ) : (
-            <div className="flex items-center gap-3 px-4 py-3 text-sm text-muted-foreground">
-              <KeyRound className="h-4 w-4 shrink-0" />
-              {group.members.length === 0
-                ? 'Add accounts first to assign roles.'
-                : 'No roles assigned yet.'}
+              })}
+              {group.members.length > 5 && (
+                <FlowLink
+                  href={`/access/accounts?portfolio=${id}`}
+                  className="flex items-center justify-center gap-1.5 px-4 py-3 text-xs text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors"
+                >
+                  View all {group.members.length} members
+                  <ChevronRight className="h-3 w-3" />
+                </FlowLink>
+              )}
             </div>
-          )}
-        </div>
-      </section>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* ── Assets preview ────────────────────────────────────────────────── */}
+      {group.assets.length > 0 && (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-sm font-semibold">
+              <Database className="h-4 w-4 text-muted-foreground" />
+              Assets
+              <Badge variant="secondary" className="ml-auto text-xs font-normal">
+                {group.assets.length}
+              </Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="border-t divide-y">
+              {group.assets.slice(0, 5).map((asset) => {
+                const resolved = assetNameMap[asset.id];
+                return (
+                  <FlowLink
+                    key={asset.id}
+                    href={`/access/portfolio/${id}/asset/${asset.id}`}
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-muted/20 transition-colors"
+                  >
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted">
+                      <Database className="h-3.5 w-3.5 text-muted-foreground" />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium truncate">
+                        {resolved?.name ?? asset.assetId}
+                      </p>
+                      <p className="text-xs text-muted-foreground truncate">
+                        {resolved?.subtitle ?? asset.assetType}
+                      </p>
+                    </div>
+                    <Badge variant="outline" className="shrink-0 text-xs">
+                      {asset.assetType}
+                    </Badge>
+                  </FlowLink>
+                );
+              })}
+              {group.assets.length > 5 && (
+                <FlowLink
+                  href={`/access/assets?portfolio=${id}`}
+                  className="flex items-center justify-center gap-1.5 px-4 py-3 text-xs text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors"
+                >
+                  View all {group.assets.length} assets
+                  <ChevronRight className="h-3 w-3" />
+                </FlowLink>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

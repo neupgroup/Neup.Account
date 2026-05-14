@@ -1,7 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { addAssetGroupMember, addAssetToGroup, assignAssetMemberRole, removeAssetFromGroup, bulkAssignAssetRoles } from '@/services/manage/access/assets';
+import { addAssetGroupMember, addAssetToGroup, assignAssetMemberRole, removeAssetFromGroup, removeAssetGroupMember, bulkAssignAssetRoles } from '@/services/manage/access/assets';
 
 /**
  * Function addMemberToAssetGroupFromForm.
@@ -15,7 +15,20 @@ export async function addMemberToAssetGroupFromForm(groupId: string, formData: F
     hasFullPermit: formData.get('hasFullPermit') === 'on',
   });
 
-  redirect(`/access/portfolio/${groupId}`);
+  redirect(`/access/accounts?portfolio=${groupId}`);
+}
+
+
+/**
+ * Function removeMemberFromAssetGroupFromForm.
+ */
+export async function removeMemberFromAssetGroupFromForm(groupId: string, formData: FormData) {
+  await removeAssetGroupMember({
+    groupId,
+    memberId: String(formData.get('memberId') || ''),
+  });
+
+  redirect(`/access/accounts?portfolio=${groupId}`);
 }
 
 
@@ -30,7 +43,7 @@ export async function addAssetToGroupFromForm(groupId: string, formData: FormDat
     details: String(formData.get('details') || ''),
   });
 
-  redirect(`/access/portfolio/${groupId}`);
+  redirect(`/access/assets?portfolio=${groupId}`);
 }
 
 
@@ -46,7 +59,7 @@ export async function removeAssetFromGroupFromForm(groupId: string, formData: Fo
     portfolioAssetId: String(formData.get('portfolioAssetId') || ''),
   });
 
-  redirect(`/access/portfolio/${groupId}`);
+  redirect(`/access/assets?portfolio=${groupId}`);
 }
 
 
@@ -61,7 +74,7 @@ export async function assignRoleToAssetMemberFromForm(groupId: string, formData:
     role: String(formData.get('role') || ''),
   });
 
-  redirect(`/access/portfolio/${groupId}`);
+  redirect(`/access/assign?portfolio=${groupId}`);
 }
 
 
@@ -83,5 +96,5 @@ export async function bulkAssignPermissionsFromForm(groupId: string, formData: F
     roleIds: roleIdsRaw.split(',').filter(Boolean),
   });
 
-  redirect(`/access/portfolio/${groupId}`);
+  redirect(`/access/assign?portfolio=${groupId}`);
 }

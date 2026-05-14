@@ -433,6 +433,69 @@ export async function removeAssetFromGroup(input: { groupId: string; portfolioAs
 
 
 /**
+ * Function removeAssetGroupMember.
+ *
+ * Removes a member from a portfolio and cleans up all access grants they held
+ * on assets within that portfolio.
+ */
+export async function removeAssetGroupMember(input: {
+  groupId: string;
+  memberId: string;
+}): Promise<{ success: boolean; error?: string }> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) {
+    return { success: false, error: 'Not authenticated.' };
+  }
+
+  if (!input.groupId || !input.memberId) {
+    return { success: false, error: 'Missing required fields.' };
+  }
+
+  try {
+    const allowed = await canAccessGroup(input.groupId, accountId);
+    if (!allowed) {
+      return { success: false, error: 'Permission denied.' };
+    }
+
+    const member = await prisma.portfolioMember.findFirst({
+      where: {
+        id: input.memberId,
+        portfolioId: input.groupId,
+      },
+      select: { id: true, accountId: true },
+    });
+
+    if (!member) {
+      return { success: false, error: 'Member not found in this portfolio.' };
+    }
+
+    await prisma.$transaction(async (tx) => {
+      // Remove all access grants for this member in this portfolio
+      await tx.authzAssetsAccessGrant.deleteMany({
+        where: {
+          account_id: member.accountId,
+          portfolio_id: input.groupId,
+          app_id: ACCESS_APP_ID,
+        },
+      });
+
+      // Remove the member from the portfolio
+      await tx.portfolioMember.delete({
+        where: { id: member.id },
+      });
+    });
+
+    revalidatePath('/access');
+    revalidatePath(`/access/portfolio/${input.groupId}`);
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `removeAssetGroupMember:${input.groupId}:${input.memberId}`);
+    return { success: false, error: 'Failed to remove member.' };
+  }
+}
+
+
+/**
  * Function assignAssetMemberRole.
  */
 export async function assignAssetMemberRole(input: {
