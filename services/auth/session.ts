@@ -497,3 +497,55 @@ export async function validateSession(input: ValidateSessionInput): Promise<Vali
 		return { valid: false };
 	}
 }
+
+
+/**
+ * Expires a session by ID and clears the auth cookie if it is the active session.
+ * Used by the sign-out button on the auth/start page.
+ */
+export async function logoutStoredSession(sessionId: string): Promise<{ success: boolean; error?: string }> {
+  const headersList = await headers();
+  const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
+
+  try {
+    const session = await prisma.authnSession.findUnique({ where: { id: sessionId } });
+    if (!session) return { success: false, error: 'Session not found.' };
+
+    await prisma.authnSession.update({
+      where: { id: sessionId },
+      data: { validTill: new Date() },
+    });
+
+    // If this is the currently active session, clear the auth cookie
+    const { sessionId: activeSessionId } = await authCookies.getSessionCookies();
+    if (activeSessionId === sessionId) {
+      await authCookies.clearSessionCookies();
+    }
+
+    await makeNotification({
+      recipient_id: session.accountId,
+      action: 'informative.logout',
+      message: 'A session was logged out.',
+    });
+
+    return { success: true };
+  } catch {
+    return { success: false, error: 'An unexpected error occurred.' };
+  }
+}
+
+/**
+ * Clears the auth cookie for the current device, effectively removing the stored account.
+ * Used by the "Remove" button on the auth/start page.
+ */
+export async function removeStoredAccount(accountId: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    const { accountId: activeAccountId } = await authCookies.getSessionCookies();
+    if (accountId === activeAccountId) {
+      await authCookies.clearSessionCookies();
+    }
+    return { success: true };
+  } catch {
+    return { success: false, error: 'Failed to remove account from device.' };
+  }
+}

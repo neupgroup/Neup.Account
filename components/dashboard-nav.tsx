@@ -1,17 +1,29 @@
 'use client';
 
 import { FlowLink } from '@/components/ui/flow-link'
-import { usePathname } from "next/navigation";
-import { useMemo } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useMemo, useTransition } from "react";
 import { cn } from "@/core/helpers/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { type NavSection, navItems, allPermissionsMap } from "./nav-data"
 import { Skeleton } from "./ui/skeleton";
 import { useSession } from "@/core/providers/session";
+import { switchToPersonal } from "@/services/auth/switch";
 
 export function DashboardNav() {
     const pathname = usePathname();
-    const { permissions, isManaging, profile, loading } = useSession();
+    const router = useRouter();
+    const { permissions, isManaging, profile, loading, refetch } = useSession();
+    const [isSwitching, startSwitchTransition] = useTransition();
+
+    const handleSwitchBack = () => {
+        startSwitchTransition(async () => {
+            await switchToPersonal();
+            refetch();
+            router.push('/home');
+            router.refresh();
+        });
+    };
 
     const navConfig: NavSection[] | null = useMemo(() => {
         if (loading || !permissions) return null;
@@ -28,30 +40,29 @@ export function DashboardNav() {
                 requiredPermissions: allPermissionsMap[item.label] || []
             })).filter(item => hasAnyPermissionFor(item.requiredPermissions));
         };
-        
+
+        // When managing, replace "Switch Account" with a "Switch Back" action item
         const accountNavItems = isManaging
-            ? navItems.accountNav.map(item => 
-                item.label === "Switch Account" ? { ...item, href: '/auth/start' } : item
-              )
+            ? navItems.accountNav
+                .filter(item => item.label !== "Switch Account")
+                .concat([{ href: '__switch_back__', label: 'Switch Back', description: 'Return to your personal account.' }])
             : navItems.accountNav;
 
         const visibleNeupIdNav = navItemsWithPerms(navItems.neupIdNav);
         const visibleAccountNav = navItemsWithPerms(accountNavItems);
-        
+
         const primaryNeupId = profile?.neupIdPrimary ? `@${profile.neupIdPrimary}` : 'Neup.Account';
         const title = isManaging ? profile?.nameDisplay : primaryNeupId;
 
-
         const config: NavSection[] = [];
-        
+
         if (isManaging) {
             config.push({ title: title || "Brand", items: [
                 { href: "/home", label: "Dashboard", description: "Your central account management hub." },
                 { href: "/profile", label: "Brand Info", description: "Manage brand profile." },
                 { href: "/accounts/branches", label: "Branches", description: "Manage brand branches." },
             ]});
-             config.push({ title: "Account", items: visibleAccountNav });
-
+            config.push({ title: "Account", items: visibleAccountNav });
         } else {
             if (visibleNeupIdNav.length > 0) {
                 config.push({ title: primaryNeupId, items: visibleNeupIdNav });
@@ -100,12 +111,24 @@ export function DashboardNav() {
             {navConfig.map((section: NavSection) => (
                 <div key={section.title} className="mt-4 first:mt-0">
                     {section.title && (
-                         <div className="flex justify-between items-center px-3 py-2 text-xs font-semibold text-muted-foreground tracking-wider uppercase">
+                        <div className="flex justify-between items-center px-3 py-2 text-xs font-semibold text-muted-foreground tracking-wider uppercase">
                             <span>{section.title}</span>
                         </div>
                     )}
-                     <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1">
                         {section.items.map((item) => {
+                            if (item.href === '__switch_back__') {
+                                return (
+                                    <button
+                                        key="switch-back"
+                                        onClick={handleSwitchBack}
+                                        disabled={isSwitching}
+                                        className={cn(buttonVariants({ variant: "ghost", size: "default" }), "justify-start text-base md:text-sm w-full")}
+                                    >
+                                        {isSwitching ? 'Switching…' : item.label}
+                                    </button>
+                                );
+                            }
                             const isActive = item.href === activeHref;
                             return (
                                 <FlowLink
@@ -116,11 +139,11 @@ export function DashboardNav() {
                                 >
                                     {item.label}
                                 </FlowLink>
-                            )
+                            );
                         })}
                     </div>
                 </div>
             ))}
         </nav>
-    )
+    );
 }

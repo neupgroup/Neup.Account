@@ -1,403 +1,105 @@
 'use server';
 
 import prisma from '@/core/helpers/prisma';
-import { logActivity } from '@/services/log-actions';
 import { logError } from '@/core/helpers/logger';
-import { headers } from 'next/headers';
-import {
-    switchToAccount as switchToAccountAction,
-    switchToBrand as switchToBrandAction,
-    switchToPersonal as switchToPersonalAction,
-    switchToDependent as switchToDependentAction,
-    switchToDelegated as switchToDelegatedAction,
-} from '@/core/auth/session';
-import type { StoredAccount } from '@/core/auth/session';
-import { getSessionCookies, setStoredAccountsCookie, clearSessionCookies } from '@/core/helpers/cookies';
-import { makeNotification } from '../notifications';
 import { checkPermissions } from '@/services/user';
 import { getPersonalAccountId } from '@/core/auth/verify';
-
-export async function getStoredAccounts(): Promise<StoredAccount[]> {
-    return getValidatedStoredAccounts();
-}
-
+import { setManagingCookie, clearManagingCookie } from '@/core/helpers/cookies';
+import { revalidatePath } from 'next/cache';
 
 /**
- * Function switchActiveAccount.
+ * Switch into any account the current user has been granted access to.
+ * Sets auth_account_switch = targetAccountId.
  */
-export async function switchActiveAccount(account: StoredAccount) {
-    const result = await switchToAccountAction(account);
-    if(result.success) {
-        await logActivity(account.aid, `Switched to account: ${account.neupId}`, 'Success', undefined, undefined);
-        const switched = await prisma.account.findUnique({
-            where: { id: account.aid },
-            select: { displayName: true },
-        });
-        const label = switched?.displayName || account.neupId || account.aid;
-        await makeNotification({
-            recipient_id: account.aid,
-            action: 'informative.switch',
-            message: `You switched to ${label}.`,
-        });
-    }
-    return result;
-}
+export async function switchToAccount(targetAccountId: string): Promise<{ success: boolean; error?: string }> {
+  const personalAccountId = await getPersonalAccountId();
+  if (!personalAccountId) return { success: false, error: 'Not authenticated.' };
 
-
-/**
- * Function switchActiveAccountByNeupId.
- */
-export async function switchActiveAccountByNeupId(neupId: string) {
-    const { switchToAccountByNeupId } = await import('@/core/auth/session');
-    const result = await switchToAccountByNeupId(neupId);
-
-    if (result.success) {
-        const matchedNeupId = await prisma.neupId.findUnique({
-            where: { id: neupId.toLowerCase().trim() },
-            select: { accountId: true },
-        });
-
-        await logActivity('self', `Switched account by NeupID: ${neupId}`, 'Success', undefined, undefined);
-
-        if (matchedNeupId?.accountId) {
-            const switched = await prisma.account.findUnique({
-                where: { id: matchedNeupId.accountId },
-                select: { displayName: true },
-            });
-            const label = switched?.displayName || neupId;
-            await makeNotification({
-                recipient_id: matchedNeupId.accountId,
-                action: 'informative.switch',
-                message: `You switched to ${label}.`,
-            });
-        }
-    }
-
-    return result;
-}
-
-
-/**
- * Function logoutStoredSession.
- */
-export async function logoutStoredSession(sessionId: string): Promise<{ success: boolean; error?: string }> {
-    const headersList = await headers();
-    const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
-    
-    try {
-        const session = await prisma.authnSession.findUnique({
-            where: { id: sessionId }
-        });
-
-        if (!session) {
-            return { success: false, error: "Session not found." };
-        }
-        
-        const accountId = session.accountId;
-        
-        await prisma.$transaction([
-            prisma.authnSession.update({
-                where: { id: sessionId },
-                data: { validTill: new Date() }
-            })
-        ]);
-
-        await logActivity(accountId, 'Signout', 'Success', ipAddress);
-        await makeNotification({
-            recipient_id: accountId,
-            action: 'informative.logout',
-            message: `A session was logged out.`,
-        });
-
-
-        const { allAccounts, sid: currentSessionId } = await getSessionCookies();
-        
-        // If signing out the active session, clear session cookies
-        if (currentSessionId === sessionId) {
-            await clearSessionCookies();
-        }
-
-        if (allAccounts.length > 0) {
-            const updatedAccounts = allAccounts.map(acc => {
-                if (acc.sid === sessionId) {
-                    return {
-                        ...acc,
-                        sid: undefined,
-                        skey: undefined,
-                        def: 0 as const,
-                    };
-                }
-                return acc;
-            });
-            await setStoredAccountsCookie(updatedAccounts as StoredAccount[]);
-        }
-        return { success: true };
-    } catch (error) {
-        await logError('database', error, `logoutStoredSession: ${sessionId}`);
-        return { success: false, error: "An unexpected error occurred." };
-    }
-}
-
-
-/**
- * Function removeStoredAccount.
- */
-export async function removeStoredAccount(accountId: string): Promise<{ success: boolean; error?: string }> {
-    try {
-        const { allAccounts, aid: activeAccountId } = await getSessionCookies();
-        
-        // If removing the active account, clear session cookies
-        if (accountId === activeAccountId) {
-            await clearSessionCookies();
-        }
-
-        if (allAccounts.length > 0) {
-            const filteredAccounts = allAccounts.filter(acc => acc.aid !== accountId);
-            await setStoredAccountsCookie(filteredAccounts);
-        }
-        
-        await logActivity(accountId, 'Removed account from device', 'Success');
-        return { success: true };
-    } catch (error) {
-        await logError('unknown', error, `removeStoredAccount: ${accountId}`);
-        return { success: false, error: "Failed to remove account from device." };
-    }
-}
-
-
-/**
- * Function switchToBrand.
- */
-export async function switchToBrand(brandId: string) {
-    const canSwitch = await checkPermissions(['linked_accounts.brand.view']);
-    if (!canSwitch) {
-        return { success: false, error: 'Permission denied.' };
-    }
-
-    // Verify the brand actually belongs to the personal account
-    const personalAccountId = await getPersonalAccountId();
-    if (!personalAccountId) {
-        return { success: false, error: 'Not authenticated.' };
-    }
-
-    const ownership = await prisma.authzAccountAccessGrant.findFirst({
-        where: {
-            ownerAccountId: brandId,
-            targetAccountId: personalAccountId,
-            roleId: 'brand-owner-neup-account',
-            appId: 'neup.account',
-        },
-        select: { id: true },
-    });
-    if (!ownership) {
-        return { success: false, error: 'Brand account not found or not owned by you.' };
-    }
-
-    const result = await switchToBrandAction(brandId);
-
-    if (result.success) {
-        const brand = await prisma.account.findUnique({
-            where: { id: brandId },
-            select: { displayName: true },
-        });
-        const label = brand?.displayName || brandId;
-        await makeNotification({
-            recipient_id: personalAccountId,
-            action: 'informative.switch',
-            message: `You switched to ${label}.`,
-        });
-    }
-
-    return result;
-}
-
-
-/**
- * Function switchToDependent.
- */
-export async function switchToDependent(dependentId: string) {
-    const canSwitch = await checkPermissions(['linked_accounts.dependent.view']);
-    if (!canSwitch) {
-        return { success: false, error: 'Permission denied.' };
-    }
-
-    // Verify the dependent actually belongs to the personal account
-    const personalAccountId = await getPersonalAccountId();
-    if (!personalAccountId) {
-        return { success: false, error: 'Not authenticated.' };
-    }
-
-    const ownership = await prisma.authzAccountAccessGrant.findFirst({
-        where: {
-            ownerAccountId: dependentId,
-            targetAccountId: personalAccountId,
-            roleId: 'account.guardian',
-            appId: 'neup.account',
-        },
-        select: { id: true },
-    });
-    if (!ownership) {
-        return { success: false, error: 'Dependent account not found or not owned by you.' };
-    }
-
-    const result = await switchToDependentAction(dependentId);
-
-    if (result.success) {
-        const dependent = await prisma.account.findUnique({
-            where: { id: dependentId },
-            select: { displayName: true },
-        });
-        const label = dependent?.displayName || dependentId;
-        await makeNotification({
-            recipient_id: personalAccountId,
-            action: 'informative.switch',
-            message: `You switched to ${label}.`,
-        });
-    }
-
-    return result;
-}
-
-
-/**
- * Function switchToDelegated.
- */
-export async function switchToDelegated(accountId: string) {
-    const personalAccountId = await getPersonalAccountId();
-    if (!personalAccountId) {
-        return { success: false, error: 'Not authenticated.' };
-    }
-
-    // Verify a grant exists giving this account access to the delegated account
+  try {
+    // Verify a grant exists giving this user access to the target account
     const grant = await prisma.authzAccountAccessGrant.findFirst({
-        where: { ownerAccountId: accountId, targetAccountId: personalAccountId, appId: 'neup.account' },
-        select: { id: true },
+      where: { ownerAccountId: targetAccountId, targetAccountId: personalAccountId, appId: 'neup.account' },
+      select: { id: true },
     });
-    if (!grant) {
-        return { success: false, error: 'No delegated access found for this account.' };
-    }
+    if (!grant) return { success: false, error: 'No access found for this account.' };
 
-    const result = await switchToDelegatedAction(accountId);
-
-    if (result.success) {
-        const delegated = await prisma.account.findUnique({
-            where: { id: accountId },
-            select: { displayName: true },
-        });
-        const label = delegated?.displayName || accountId;
-        await makeNotification({
-            recipient_id: personalAccountId,
-            action: 'informative.switch',
-            message: `You switched to ${label}.`,
-        });
-    }
-
-    return result;
-}
-
-
-/**
- * Function switchToPersonal.
- */
-export async function switchToPersonal() {
-    await switchToPersonalAction();
-
-    const { accountId } = await getSessionCookies();
-    if (accountId) {
-        const personal = await prisma.account.findUnique({
-            where: { id: accountId },
-            select: { displayName: true },
-        });
-        const label = personal?.displayName || 'your personal account';
-        await makeNotification({
-            recipient_id: accountId,
-            action: 'informative.switch',
-            message: `You switched to ${label}.`,
-        });
-    }
-}
-
-
-/**
- * Function bridgeSwitchAccountBySessionId.
- */
-export async function bridgeSwitchAccountBySessionId(input: {
-    requestUrl: string;
-    sessionId?: string | null;
-}): Promise<{ redirectTo: string }> {
-    const { requestUrl, sessionId } = input;
-
-    if (!sessionId) {
-        const errorUrl = new URL('/auth/start', requestUrl);
-        errorUrl.searchParams.set('error', 'invalid_request');
-        return { redirectTo: errorUrl.toString() };
-    }
-
-    const storedAccounts = await getStoredAccounts();
-    const accountToSwitch = storedAccounts.find((acc) => acc.sessionId === sessionId);
-
-    if (!accountToSwitch) {
-        const errorUrl = new URL('/auth/start', requestUrl);
-        errorUrl.searchParams.set('error', 'session_not_found');
-        return { redirectTo: errorUrl.toString() };
-    }
-
-    const result = await switchToAccountAction(accountToSwitch);
-
-    if (result.success) {
-        const manageUrl = new URL('/', requestUrl);
-        return { redirectTo: manageUrl.toString() };
-    }
-
-    const errorUrl = new URL('/auth/start', requestUrl);
-    errorUrl.searchParams.set('error', 'switch_failed');
-    if (result.error) {
-        errorUrl.searchParams.set('error_description', result.error);
-    }
-
-    return { redirectTo: errorUrl.toString() };
-}
-
-
-// Local helper to validate accounts using Prisma
-async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
-  const { allAccounts } = await getSessionCookies();
-  if (allAccounts.length === 0) {
-    return [];
+    await setManagingCookie(targetAccountId);
+    revalidatePath('/');
+    return { success: true };
+  } catch (error) {
+    await logError('auth', error, `switchToAccount:${targetAccountId}`);
+    return { success: false, error: 'Failed to switch account.' };
   }
+}
 
-  const validatedAccounts = await Promise.all(
-    allAccounts.map(async (account) => {
-      if (account.def !== 1) return account;
-      if (!account.sid || !account.skey) return { ...account, def: 0 as const, sid: undefined, skey: undefined };
+/**
+ * Switch into a brand account owned by the current user.
+ * Sets auth_account_switch = brandId.
+ */
+export async function switchToBrand(brandId: string): Promise<{ success: boolean; error?: string }> {
+  const canSwitch = await checkPermissions(['linked_accounts.brand.view']);
+  if (!canSwitch) return { success: false, error: 'Permission denied.' };
 
-      try {
-        const session = await prisma.authnSession.findUnique({
-            where: { id: account.sid }
-        });
+  const personalAccountId = await getPersonalAccountId();
+  if (!personalAccountId) return { success: false, error: 'Not authenticated.' };
 
-        if (!session) return { ...account, def: 0 as const, sid: undefined, skey: undefined };
+  try {
+    const ownership = await prisma.authzAccountAccessGrant.findFirst({
+      where: {
+        ownerAccountId: brandId,
+        targetAccountId: personalAccountId,
+        roleId: 'brand-owner-neup-account',
+        appId: 'neup.account',
+      },
+      select: { id: true },
+    });
+    if (!ownership) return { success: false, error: 'Brand account not found or not owned by you.' };
 
-        const dbValidTill = session.validTill;
-        const dbKey = session.key;
+    await setManagingCookie(brandId);
+    revalidatePath('/');
+    return { success: true };
+  } catch (error) {
+    await logError('auth', error, `switchToBrand:${brandId}`);
+    return { success: false, error: 'Failed to switch to brand account.' };
+  }
+}
 
-        const isInvalid =
-          !dbValidTill ||
-          dbValidTill < new Date() ||
-          session.accountId !== account.aid ||
-          !dbKey ||
-          dbKey !== account.skey;
+/**
+ * Switch into a dependent account owned by the current user.
+ * Sets auth_account_switch = dependentId.
+ */
+export async function switchToDependent(dependentId: string): Promise<{ success: boolean; error?: string }> {
+  const canSwitch = await checkPermissions(['linked_accounts.dependent.view']);
+  if (!canSwitch) return { success: false, error: 'Permission denied.' };
 
-        if (isInvalid) {
-            return { ...account, def: 0 as const, sid: undefined, skey: undefined };
-        }
+  const personalAccountId = await getPersonalAccountId();
+  if (!personalAccountId) return { success: false, error: 'Not authenticated.' };
 
-        return account;
-      } catch (e) {
-        await logError('database', e, 'getValidatedStoredAccounts');
-        return { ...account, def: 0 as const, sid: undefined, skey: undefined };
-      }
-    })
-  );
-  return validatedAccounts;
+  try {
+    const ownership = await prisma.authzAccountAccessGrant.findFirst({
+      where: {
+        ownerAccountId: dependentId,
+        targetAccountId: personalAccountId,
+        roleId: 'account.guardian',
+        appId: 'neup.account',
+      },
+      select: { id: true },
+    });
+    if (!ownership) return { success: false, error: 'Dependent account not found or not owned by you.' };
+
+    await setManagingCookie(dependentId);
+    revalidatePath('/');
+    return { success: true };
+  } catch (error) {
+    await logError('auth', error, `switchToDependent:${dependentId}`);
+    return { success: false, error: 'Failed to switch to dependent account.' };
+  }
+}
+
+/**
+ * Switch back to the personal account by clearing auth_account_switch.
+ */
+export async function switchToPersonal(): Promise<void> {
+  await clearManagingCookie();
+  revalidatePath('/');
 }

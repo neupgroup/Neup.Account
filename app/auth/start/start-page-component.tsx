@@ -14,7 +14,7 @@ import type { StoredAccount } from '@/core/auth/session';
 import { appendAuthCallbackContext, appendRedirect, getAppDisplayName, shouldReturnToAuthStartForExternalAuthentication } from '@/core/auth/callback';
 import { redirectInApp } from '@/services/navigation';
 import { cleanupExpiredStoredSessions } from '@/core/auth/session';
-import { logoutStoredSession, removeStoredAccount } from '@/services/auth/switch';
+import { logoutStoredSession, removeStoredAccount } from '@/services/auth/session';
 
 // Inline sign-out / remove actions rendered next to each account on the start page.
 export function AccountActions({ account }: { account: StoredAccount }) {

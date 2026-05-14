@@ -9,7 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronRight } from '@/components/icons';
 import { AccountActions } from '@/app/auth/start/start-page-component';
-import { switchActiveAccount, switchToBrand, switchToDependent, switchToDelegated } from '@/services/auth/switch';
+import { switchToBrand, switchToDependent, switchToAccount } from '@/services/auth/switch';
 import { appendAuthCallbackContext, appendRedirect } from '@/core/auth/callback';
 import { redirectInApp } from '@/services/navigation';
 import { cn } from '@/core/helpers/utils';
@@ -97,33 +97,19 @@ export function AccountListItem({ account, isActive }: { account: CombinedAccoun
             const targetAccountId = finalAccount.aid || finalAccount.accountId || '';
 
             if (finalAccount.isBrand) {
-                 const res = await switchToBrand(targetAccountId);
-                 if (res.success) redirectInApp(router, redirects || '/');
-                 return;
+                const res = await switchToBrand(targetAccountId);
+                if (res.success) redirectInApp(router, redirects || '/');
+                return;
             }
 
             if (finalAccount.isDependent) {
-                 const res = await switchToDependent(targetAccountId);
-                 if (res.success) redirectInApp(router, redirects || '/');
-                 return;
-            }
-
-            if (finalAccount.def === 1 && (finalAccount.sid || finalAccount.sessionId)) {
-                redirectInApp(router, redirects || '/');
+                const res = await switchToDependent(targetAccountId);
+                if (res.success) redirectInApp(router, redirects || '/');
                 return;
             }
 
-            if (finalAccount.sid || finalAccount.sessionId) {
-                const res = await switchActiveAccount(finalAccount);
-                if (res.success) {
-                    redirectInApp(router, redirects || '/');
-                }
-                return;
-            }
-
-            redirectInApp(router, getSigninUrl(finalAccount.nid || finalAccount.neupId));
-
-            const res = await switchToDelegated(targetAccountId);
+            // Delegated / any other accessible account
+            const res = await switchToAccount(targetAccountId);
             if (res.success) redirectInApp(router, redirects || '/');
         });
     };

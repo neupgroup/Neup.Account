@@ -72,10 +72,10 @@ export async function getActiveAccountId(): Promise<string | null> {
 }
 
 /**
- * Returns the ID of the account currently being managed (from the managing cookie).
+ * Returns the ID of the account currently being managed (from the auth_account_switch cookie).
  */
 export async function getManagedAccountId(): Promise<string | null> {
-  const raw = await cookieProvider.getCookie('managing');
+  const raw = await cookieProvider.getCookie('auth_account_switch');
   return raw || null;
 }
 

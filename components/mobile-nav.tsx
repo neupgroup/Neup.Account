@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useMemo } from "react";
+import React, { useMemo, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import {
     Card,
     CardContent,
@@ -29,6 +30,7 @@ import { NotificationBell } from "./warning-display";
 import { ListItem } from "./ui/list-item";
 import { useSession } from "@/core/providers/session";
 import { Skeleton } from "./ui/skeleton";
+import { switchToPersonal } from "@/services/auth/switch";
 
 const iconMap: { [key: string]: LucideIcon | React.ElementType } = {
     Home: Home,
@@ -54,7 +56,18 @@ const iconMap: { [key: string]: LucideIcon | React.ElementType } = {
 };
 
 export function MobileNav() {
-    const { permissions, isManaging, profile, loading } = useSession();
+    const { permissions, isManaging, profile, loading, refetch } = useSession();
+    const router = useRouter();
+    const [isSwitching, startSwitchTransition] = useTransition();
+
+    const handleSwitchBack = () => {
+        startSwitchTransition(async () => {
+            await switchToPersonal();
+            refetch();
+            router.push('/home');
+            router.refresh();
+        });
+    };
 
     const navConfig: NavSection[] | null = useMemo(() => {
         if (loading || !permissions) return null;
@@ -73,10 +86,11 @@ export function MobileNav() {
             })).filter(item => hasAnyPermissionFor(item.requiredPermissions));
         };
         
+        // When managing, replace "Switch Account" with a "Switch Back" action item
         const accountNavItems = isManaging
-            ? navItems.accountNav.map(item => 
-                item.label === "Switch Account" ? { ...item, href: '/auth/start' } : item
-              )
+            ? navItems.accountNav
+                .filter(item => item.label !== "Switch Account")
+                .concat([{ href: '__switch_back__', label: 'Switch Back', description: 'Return to your personal account.' }])
             : navItems.accountNav;
 
         const visibleNeupIdNav = navItemsWithPerms(navItems.neupIdNav);
@@ -133,11 +147,29 @@ export function MobileNav() {
             {navConfig.map((section: NavSection) => (
                  <div key={section.title || 'main'} className="space-y-2">
                     {section.title && <h2 className="text-xl font-semibold tracking-tight">{section.title}</h2>}
-                     <Card>
+                    <Card>
                         <CardContent className="divide-y p-0">
-                           {section.items.map((item, index) => (
-                               <ListItem key={index} href={item.href} title={item.label} description={item.description} icon={(item as any).icon} />
-                            ))}
+                           {section.items.map((item, index) => {
+                               if (item.href === '__switch_back__') {
+                                   return (
+                                       <button
+                                           key="switch-back"
+                                           onClick={handleSwitchBack}
+                                           disabled={isSwitching}
+                                           className="flex items-center gap-4 py-4 px-4 w-full text-left hover:bg-muted/50 transition-colors"
+                                       >
+                                           <ArrowLeft className="h-5 w-5 text-muted-foreground shrink-0" />
+                                           <div className="flex-grow">
+                                               <p className="text-sm font-medium">{isSwitching ? 'Switching…' : item.label}</p>
+                                               <p className="text-xs text-muted-foreground">{item.description}</p>
+                                           </div>
+                                       </button>
+                                   );
+                               }
+                               return (
+                                   <ListItem key={index} href={item.href} title={item.label} description={item.description} icon={(item as any).icon} />
+                               );
+                           })}
                         </CardContent>
                     </Card>
                 </div>

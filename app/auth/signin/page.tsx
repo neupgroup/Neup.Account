@@ -11,7 +11,6 @@ import { getSignupStepData } from '@/services/auth/signup';
 import { cancelAccountDeletion } from '@/services/data/delete';
 import { initializeAuthFlow } from '@/services/auth/AuthenticationFlow';
 import { verifyTotpFromPost } from '@/services/auth/totp';
-import { switchActiveAccountByNeupId } from '@/services/auth/switch';
 import { redirectInApp } from '@/core/helpers/link';
 import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication, getFlowParams, appendFlowParams } from '@/core/auth/callback';
 
@@ -565,46 +564,6 @@ function SigninFlow() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const step = searchParams.get('step');
-
-  useEffect(() => {
-    const neupId = searchParams.get('neupId');
-    if (!step || !neupId) {
-      return;
-    }
-
-    const attemptAutoSwitch = async () => {
-      const result = await switchActiveAccountByNeupId(neupId);
-      if (!result.success) {
-        return;
-      }
-
-      sessionStorage.clear();
-
-      if (shouldReturnToAuthStartForExternalAuthentication(searchParams)) {
-        redirectInApp(appendAuthCallbackContext('/auth/start', searchParams), router, { replace: true });
-        return;
-      }
-
-      const redirects = searchParams.get('redirects');
-      if (redirects) {
-        redirectInApp(redirects, router, { replace: true });
-        return;
-      }
-
-      if (hasAuthCallbackContext(searchParams)) {
-        const params = new URLSearchParams(searchParams.toString());
-        params.delete('step');
-        params.delete('neupId');
-        params.set('step', 'access');
-        redirectInApp(`/auth/sign?${params.toString()}`, router, { replace: true });
-        return;
-      }
-
-      redirectInApp('/', router, { replace: true });
-    };
-
-    attemptAutoSwitch();
-  }, [step, searchParams, router]);
 
   useEffect(() => {
     if (!step) {

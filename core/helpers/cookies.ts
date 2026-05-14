@@ -111,7 +111,7 @@ export class AuthCookiesHelper extends Singleton {
         const skey = account?.skey || '';
         const allAccounts: StoredAccount[] = account ? [account] : [];
 
-        const managingCookie = await this.get('managing');
+        const managingCookie = await this.get('auth_account_switch');
         const managingAccountId = managingCookie || undefined;
 
         return {
@@ -161,11 +161,11 @@ export class AuthCookiesHelper extends Singleton {
     public async setManagingCookie(accountId: string) {
         const expires = new Date();
         expires.setDate(expires.getDate() + 30);
-        await this.set('managing', accountId, { ...COOKIE_OPTIONS, expires });
+        await this.set('auth_account_switch', accountId, { ...COOKIE_OPTIONS, expires });
     }
 
     public async clearManagingCookie() {
-        await this.del('managing');
+        await this.del('auth_account_switch');
     }
 
     public async clearSessionCookies() {
@@ -173,7 +173,7 @@ export class AuthCookiesHelper extends Singleton {
         const cookieStore = await this.getStore();
         cookieStore.delete('auth_account');
 
-        await this.del('managing');
+        await this.del('auth_account_switch');
 
         // Remove legacy individual session cookies
         await this.del('auth_acc');
