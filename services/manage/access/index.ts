@@ -285,6 +285,71 @@ export async function getDirectAccessGroup(accountId: string): Promise<DirectAcc
 
 
 /**
+ * Type DirectMember — a unique member with their role count and photo.
+ */
+export type DirectMember = {
+  accountId: string;
+  displayName: string;
+  accountPhoto?: string;
+  roleCount: number;
+};
+
+/**
+ * Function getDirectMembers.
+ *
+ * Returns unique members with direct (non-portfolio) grants on the given account,
+ * grouped by accountId with a total role count.
+ */
+export async function getDirectMembers(accountId: string): Promise<{ accountName: string; members: DirectMember[] }> {
+  try {
+    const [accountProfile, grants] = await Promise.all([
+      getUserProfile(accountId),
+      prisma.authzAccountAccessGrant.findMany({
+        where: {
+          ownerAccountId: accountId,
+          appId: 'neup.account',
+          portfolioId: null,
+        },
+        select: { targetAccountId: true },
+      }),
+    ]);
+
+    const accountName =
+      accountProfile?.nameDisplay ||
+      `${accountProfile?.nameFirst ?? ''} ${accountProfile?.nameLast ?? ''}`.trim() ||
+      accountId;
+
+    // Group by targetAccountId to count roles
+    const countMap = new Map<string, number>();
+    for (const grant of grants) {
+      countMap.set(grant.targetAccountId, (countMap.get(grant.targetAccountId) ?? 0) + 1);
+    }
+
+    const members = await Promise.all(
+      Array.from(countMap.entries()).map(async ([targetAccountId, roleCount]) => {
+        const profile = await getUserProfile(targetAccountId);
+        const displayName =
+          profile?.nameDisplay ||
+          `${profile?.nameFirst ?? ''} ${profile?.nameLast ?? ''}`.trim() ||
+          targetAccountId;
+        return {
+          accountId: targetAccountId,
+          displayName,
+          accountPhoto: profile?.accountPhoto,
+          roleCount,
+        };
+      })
+    );
+
+    return { accountName, members };
+  } catch (error) {
+    await logError('database', error, `getDirectMembers for ${accountId}`);
+    return { accountName: accountId, members: [] };
+  }
+}
+
+
+/**
  * Function getAccessDetails.
  */
 export async function getAccessDetails(permitId: string): Promise<AccessDetails | null> {
@@ -559,6 +624,65 @@ export async function grantAccessByNeupId(formData: FormData, geolocation?: stri
 
 
 /**
+ * Type DirectMemberDetail — a member's profile + their direct grants on an account.
+ */
+export type DirectMemberDetail = {
+  accountId: string;
+  displayName: string;
+  accountPhoto?: string;
+  roles: { roleId: string; roleName: string; roleDescription?: string }[];
+};
+
+/**
+ * Function getDirectMemberDetail.
+ *
+ * Returns the display name and all direct (non-portfolio) roles a member holds
+ * on the given owner account.
+ */
+export async function getDirectMemberDetail(
+  ownerAccountId: string,
+  memberAccountId: string,
+): Promise<DirectMemberDetail | null> {
+  try {
+    const [profile, grants] = await Promise.all([
+      getUserProfile(memberAccountId),
+      prisma.authzAccountAccessGrant.findMany({
+        where: {
+          ownerAccountId,
+          targetAccountId: memberAccountId,
+          appId: 'neup.account',
+          portfolioId: null,
+        },
+        include: {
+          role: { select: { id: true, name: true, description: true } },
+        },
+      }),
+    ]);
+
+    if (!profile) return null;
+
+    const displayName =
+      profile.nameDisplay ||
+      `${profile.nameFirst ?? ''} ${profile.nameLast ?? ''}`.trim() ||
+      memberAccountId;
+
+    return {
+      accountId: memberAccountId,
+      displayName,
+      accountPhoto: profile.accountPhoto,
+      roles: grants.map((g) => ({
+        roleId: g.role.id,
+        roleName: g.role.name,
+        roleDescription: g.role.description ?? undefined,
+      })),
+    };
+  } catch (error) {
+    await logError('database', error, `getDirectMemberDetail:${ownerAccountId}:${memberAccountId}`);
+    return null;
+  }
+}
+
+/**
  * Type PortfolioMemberRole — a role held by a member on an asset within a portfolio.
  */
 export type PortfolioMemberRole = {
@@ -579,6 +703,70 @@ export type PortfolioMemberDetail = {
   portfolioName: string;
   roles: PortfolioMemberRole[];
 };
+
+/**
+ * Type PortfolioMemberSummary — a member with their role count for the list view.
+ */
+export type PortfolioMemberSummary = {
+  accountId: string;
+  displayName: string;
+  accountPhoto?: string;
+  roleCount: number;
+};
+
+/**
+ * Function getPortfolioMembers.
+ *
+ * Returns all members of a portfolio with their display name, photo, and
+ * total number of roles assigned across all assets in the portfolio.
+ */
+export async function getPortfolioMembers(
+  portfolioId: string,
+): Promise<{ portfolioName: string; members: PortfolioMemberSummary[] }> {
+  try {
+    const portfolio = await prisma.portfolio.findUnique({
+      where: { id: portfolioId },
+      select: {
+        name: true,
+        members: { select: { accountId: true } },
+      },
+    });
+
+    if (!portfolio) return { portfolioName: '', members: [] };
+
+    const members = await Promise.all(
+      portfolio.members.map(async ({ accountId: memberAccountId }) => {
+        const [profile, grantCount] = await Promise.all([
+          getUserProfile(memberAccountId),
+          prisma.authzAssetsAccessGrant.count({
+            where: {
+              account_id: memberAccountId,
+              portfolio_id: portfolioId,
+              app_id: 'neup.account',
+            },
+          }),
+        ]);
+
+        const displayName =
+          profile?.nameDisplay ||
+          `${profile?.nameFirst ?? ''} ${profile?.nameLast ?? ''}`.trim() ||
+          memberAccountId;
+
+        return {
+          accountId: memberAccountId,
+          displayName,
+          accountPhoto: profile?.accountPhoto,
+          roleCount: grantCount,
+        };
+      })
+    );
+
+    return { portfolioName: portfolio.name, members };
+  } catch (error) {
+    await logError('database', error, `getPortfolioMembers:${portfolioId}`);
+    return { portfolioName: '', members: [] };
+  }
+}
 
 /**
  * Function getPortfolioMemberDetail.

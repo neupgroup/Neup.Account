@@ -1,43 +1,72 @@
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { BackButton } from '@/components/ui/back-button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Shield, UserCircle } from '@/components/icons';
-import {
-  addMemberToAssetGroupFromForm,
-} from '@/services/manage/access/actions';
-import { getAccessAssetGroup } from '@/services/manage/access/assets';
-import { getDirectAccessGroup } from '@/services/manage/access';
+import { Shield, ChevronRight } from '@/components/icons';
+import { addMemberToAssetGroupFromForm } from '@/services/manage/access/actions';
+import { getPortfolioMembers, getDirectMembers } from '@/services/manage/access';
 import { getActiveAccountId } from '@/core/auth/verify';
-import { getUserProfile } from '@/services/user';
 import { AddMemberForm } from '../_components/add-member-form';
 import { AddUserForm } from '../add-user-form';
 import { FlowLink } from '@/components/ui/flow-link';
 import { PrimaryHeader } from '@/components/ui/primary-header';
 import { SecondaryHeader } from '@/components/ui/secondary-header';
-import { ChevronRight } from '@/components/icons';
 
 type PageProps = {
   searchParams: Promise<{ portfolio?: string }>;
 };
 
+// ── Shared member row ─────────────────────────────────────────────────────────
+
+function MemberRow({
+  href,
+  displayName,
+  accountPhoto,
+  roleCount,
+}: {
+  href: string;
+  displayName: string;
+  accountPhoto?: string;
+  roleCount: number;
+}) {
+  return (
+    <FlowLink
+      href={href}
+      className="flex items-center gap-4 py-4 px-4 hover:bg-muted/50 transition-colors"
+    >
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted overflow-hidden">
+        {accountPhoto ? (
+          <Image
+            src={accountPhoto}
+            alt={displayName}
+            width={36}
+            height={36}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <span className="text-sm font-medium text-muted-foreground">
+            {displayName.charAt(0).toUpperCase()}
+          </span>
+        )}
+      </span>
+      <div className="min-w-0 flex-grow">
+        <p className="font-medium text-foreground truncate">{displayName}</p>
+        <p className="text-sm text-muted-foreground">
+          {roleCount === 0
+            ? 'No roles assigned'
+            : `${roleCount} role${roleCount !== 1 ? 's' : ''} assigned`}
+        </p>
+      </div>
+      <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+    </FlowLink>
+  );
+}
+
 // ── Portfolio members view ────────────────────────────────────────────────────
 
 async function PortfolioAccountPage({ id }: { id: string }) {
-  const group = await getAccessAssetGroup(id);
-  if (!group) notFound();
-
-  const memberProfiles = await Promise.all(
-    group.members.map(async (member) => {
-      const profile = await getUserProfile(member.accountId);
-      const name =
-        profile?.nameDisplay ||
-        (profile?.nameFirst || profile?.nameLast
-          ? `${profile.nameFirst ?? ''} ${profile.nameLast ?? ''}`.trim()
-          : null) ||
-        member.accountId;
-      return { id: member.id, accountId: member.accountId, name };
-    })
-  );
+  const { portfolioName, members } = await getPortfolioMembers(id);
+  if (!portfolioName) notFound();
 
   const addMemberAction = addMemberToAssetGroupFromForm.bind(null, id);
 
@@ -47,7 +76,7 @@ async function PortfolioAccountPage({ id }: { id: string }) {
 
       <PrimaryHeader
         title="Members with Access"
-        description={`Members with access to Portfolio "${group.name}"`}
+        description={`Members with access to Portfolio "${portfolioName}"`}
       />
 
       <div className="space-y-2">
@@ -58,24 +87,17 @@ async function PortfolioAccountPage({ id }: { id: string }) {
 
         <AddMemberForm action={addMemberAction} />
 
-        {/* Members card */}
         <Card>
           <CardContent className="divide-y p-2">
-            {memberProfiles.length > 0 ? (
-              memberProfiles.map((member) => (
-                <FlowLink
-                  key={member.id}
+            {members.length > 0 ? (
+              members.map((member) => (
+                <MemberRow
+                  key={member.accountId}
                   href={`/access?portfolio=${id}&member=${member.accountId}`}
-                  className="flex items-center gap-4 py-4 px-4 hover:bg-muted/50 transition-colors"
-                >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
-                    <UserCircle className="h-5 w-5 text-muted-foreground" />
-                  </span>
-                  <div className="min-w-0 flex-grow">
-                    <p className="font-medium text-foreground truncate">{member.name}</p>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                </FlowLink>
+                  displayName={member.displayName}
+                  accountPhoto={member.accountPhoto}
+                  roleCount={member.roleCount}
+                />
               ))
             ) : (
               <div className="flex flex-col items-center gap-2 px-4 py-12 text-center">
@@ -101,8 +123,7 @@ async function DirectAccountPage() {
   const accountId = await getActiveAccountId();
   if (!accountId) notFound();
 
-  const group = await getDirectAccessGroup(accountId);
-  if (!group) notFound();
+  const { accountName, members } = await getDirectMembers(accountId);
 
   return (
     <div className="grid gap-8">
@@ -110,30 +131,23 @@ async function DirectAccountPage() {
 
       <PrimaryHeader
         title="Members with Access"
-        description={`Members with access to Profile "${group.name}"`}
+        description={`Members with access to Profile "${accountName}"`}
       />
 
       <div className="space-y-2">
         <AddUserForm />
 
-        {/* Members card */}
         <Card>
           <CardContent className="divide-y p-2">
-            {group.members.length > 0 ? (
-              group.members.map((member) => (
-                <FlowLink
-                  key={member.id}
-                  href={`/access/${member.id}`}
-                  className="flex items-center gap-4 py-4 px-4 hover:bg-muted/50 transition-colors"
-                >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
-                    <UserCircle className="h-5 w-5 text-muted-foreground" />
-                  </span>
-                  <div className="min-w-0 flex-grow">
-                    <p className="font-medium text-foreground truncate">{member.displayName}</p>
-                    <p className="text-sm text-muted-foreground truncate">{member.subtitle}</p>
-                  </div>
-                </FlowLink>
+            {members.length > 0 ? (
+              members.map((member) => (
+                <MemberRow
+                  key={member.accountId}
+                  href={`/access?member=${member.accountId}`}
+                  displayName={member.displayName}
+                  accountPhoto={member.accountPhoto}
+                  roleCount={member.roleCount}
+                />
               ))
             ) : (
               <div className="flex flex-col items-center gap-2 px-4 py-12 text-center">

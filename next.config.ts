@@ -13,6 +13,12 @@ const nextConfig: NextConfig = {
         hostname: 'neupcdn.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'neupgroup.com',
+        port: '',
+        pathname: '/**',
       }
     ]
   },

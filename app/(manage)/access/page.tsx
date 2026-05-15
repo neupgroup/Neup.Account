@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { FlowLink } from '@/components/ui/flow-link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FolderGit2, ChevronRight, UserCircle } from '@/components/icons';
-import { getDirectAccessGroup, getPortfolioMemberDetail } from '@/services/manage/access';
+import { getDirectAccessGroup, getPortfolioMemberDetail, getDirectMemberDetail } from '@/services/manage/access';
 import { getAccessAssetGroups, getAccessAssetGroup } from '@/services/manage/access/assets';
 import { getActiveAccountId } from '@/core/auth/verify';
 import { CreateAssetGroupCard } from './create-asset-group-card';
@@ -15,6 +16,22 @@ import { Badge } from '@/components/ui/badge';
 type PageProps = {
   searchParams: Promise<{ portfolio?: string; member?: string }>;
 };
+
+// ── Shared member avatar ──────────────────────────────────────────────────────
+
+function MemberAvatar({ photo, name }: { photo?: string; name: string }) {
+  return (
+    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-muted overflow-hidden">
+      {photo ? (
+        <Image src={photo} alt={name} width={48} height={48} className="h-full w-full object-cover" />
+      ) : (
+        <span className="text-base font-medium text-muted-foreground">
+          {name.charAt(0).toUpperCase()}
+        </span>
+      )}
+    </span>
+  );
+}
 
 // ── Portfolio member detail view ──────────────────────────────────────────────
 
@@ -32,10 +49,13 @@ async function PortfolioMemberDetail({
     <div className="grid gap-8">
       <BackButton href={`/access/member?portfolio=${portfolioId}`} />
 
-      <PrimaryHeader
-        title={detail.displayName}
-        description={`Member of portfolio "${detail.portfolioName}"`}
-      />
+      <div className="flex items-center gap-4">
+        <MemberAvatar name={detail.displayName} />
+        <PrimaryHeader
+          title={detail.displayName}
+          description={`Member of portfolio "${detail.portfolioName}"`}
+        />
+      </div>
 
       <Card>
         <CardHeader>
@@ -81,6 +101,63 @@ async function PortfolioMemberDetail({
   );
 }
 
+// ── Direct member detail view ─────────────────────────────────────────────────
+
+async function DirectMemberDetail({ memberAccountId }: { memberAccountId: string }) {
+  const accountId = await getActiveAccountId();
+  if (!accountId) notFound();
+
+  const detail = await getDirectMemberDetail(accountId, memberAccountId);
+  if (!detail) notFound();
+
+  return (
+    <div className="grid gap-8">
+      <BackButton href="/access/member" />
+
+      <div className="flex items-center gap-4">
+        <MemberAvatar photo={detail.accountPhoto} name={detail.displayName} />
+        <PrimaryHeader
+          title={detail.displayName}
+          description="Direct access member"
+        />
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Roles</CardTitle>
+          <CardDescription>
+            Roles this member holds on your account.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-2">
+          {detail.roles.length > 0 ? (
+            <div className="divide-y">
+              {detail.roles.map((role) => (
+                <div key={role.roleId} className="px-4 py-3">
+                  <p className="text-sm font-medium">{role.roleName}</p>
+                  {role.roleDescription && (
+                    <p className="text-xs text-muted-foreground mt-0.5">{role.roleDescription}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center gap-2 px-4 py-12 text-center">
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+                <UserCircle className="h-6 w-6 text-muted-foreground" />
+              </span>
+              <p className="font-medium">No roles assigned</p>
+              <p className="text-sm text-muted-foreground max-w-xs">
+                This member has not been assigned any roles yet.
+              </p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 // ── Portfolio detail view — section 1 only ────────────────────────────────────
 
 async function PortfolioDetail({ id }: { id: string }) {
@@ -109,6 +186,10 @@ export default async function AccessControlPage({ searchParams }: PageProps) {
 
   if (portfolioId && memberAccountId) {
     return <PortfolioMemberDetail portfolioId={portfolioId} memberAccountId={memberAccountId} />;
+  }
+
+  if (memberAccountId) {
+    return <DirectMemberDetail memberAccountId={memberAccountId} />;
   }
 
   if (portfolioId) {
