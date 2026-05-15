@@ -59,22 +59,13 @@ async function PortfolioAccountPage({ id }: { id: string }) {
     <div className="grid gap-8">
       <BackButton href={`/access?portfolio=${id}`} />
 
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start gap-4">
         <div className="min-w-0">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
-            {group.name}
-          </p>
-          <h1 className="text-2xl font-bold tracking-tight">Members</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Members with Access</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Manage who has access to this portfolio.
+            Members with access to Portfolio &ldquo;{group.name}&rdquo;
           </p>
         </div>
-        {group.members.length > 0 && (
-          <div className="flex shrink-0 items-center gap-1.5 rounded-md bg-muted px-2.5 py-1 text-xs text-muted-foreground">
-            <Users className="h-3.5 w-3.5" />
-            <span>{group.members.length}</span>
-          </div>
-        )}
       </div>
 
       <Card>
@@ -179,22 +170,13 @@ async function DirectAccountPage() {
     <div className="grid gap-8">
       <BackButton href="/access" />
 
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start gap-4">
         <div className="min-w-0">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
-            {group.name}
-          </p>
-          <h1 className="text-2xl font-bold tracking-tight">Members</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Members with Access</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            People who have direct access to this account.
+            Members with access to Profile &ldquo;{group.name}&rdquo;
           </p>
         </div>
-        {group.members.length > 0 && (
-          <div className="flex shrink-0 items-center gap-1.5 rounded-md bg-muted px-2.5 py-1 text-xs text-muted-foreground">
-            <Users className="h-3.5 w-3.5" />
-            <span>{group.members.length}</span>
-          </div>
-        )}
       </div>
 
       {/* Grant access */}
