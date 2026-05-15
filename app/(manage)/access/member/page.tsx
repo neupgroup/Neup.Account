@@ -83,13 +83,15 @@ function MembersLayout({
         description={description}
       />
 
-      {addForm}
+      <div className="grid gap-3">
+        {addForm}
 
-      <Card>
-        <CardContent className="divide-y p-2">
-          {children}
-        </CardContent>
-      </Card>
+        <Card>
+          <CardContent className="divide-y p-2">
+            {children}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Loader2, Plus, UserCircle, X } from "@/components/icons";
+import { Loader2, Plus, UserPlus, UserCircle, X } from "@/components/icons";
 import { resolveNeupId, type ResolvedAccount } from "./actions";
 
 const DURATION_OPTIONS = [
@@ -83,7 +83,7 @@ export function AddMemberForm({
       {/* Step 1 — NeupID lookup */}
       {!resolved ? (
         <div className="grid gap-1.5">
-          <div className="flex gap-2">
+          <div className="relative">
             <Input
               ref={inputRef}
               value={neupIdInput}
@@ -93,17 +93,20 @@ export function AddMemberForm({
               }}
               onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleLookup())}
               placeholder="Enter NeupID"
-              className={`h-8 text-sm flex-1 ${lookupError ? "border-destructive focus-visible:ring-destructive" : ""}`}
+              className={`pr-10 ${lookupError ? "border-destructive focus-visible:ring-destructive" : ""}`}
               disabled={isPending}
+              aria-invalid={!!lookupError}
             />
             <Button
               type="button"
-              size="sm"
+              size="icon"
+              variant="ghost"
               onClick={handleLookup}
               disabled={isPending || !neupIdInput.trim()}
-              className="shrink-0"
+              className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:bg-accent"
             >
-              {isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : "Look up"}
+              {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserPlus className="h-4 w-4" />}
+              <span className="sr-only">Look up</span>
             </Button>
           </div>
           {lookupError && (
