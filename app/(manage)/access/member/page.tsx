@@ -4,8 +4,7 @@ import { BackButton } from '@/components/ui/back-button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Shield, ChevronRight } from '@/components/icons';
 import { addMemberToAssetGroupFromForm } from '@/services/manage/access/actions';
-import { getPortfolioMembers, getDirectMembers } from '@/services/manage/access';
-import { getActiveAccountId } from '@/core/auth/verify';
+import { getPortfolioMembers, getDirectMembers } from '@/services/manage/access';import { getActiveAccountId } from '@/core/auth/verify';
 import { AddMemberForm } from '../_components/add-member-form';
 import { AddUserForm } from '../add-user-form';
 import { FlowLink } from '@/components/ui/flow-link';
@@ -116,13 +115,11 @@ async function PortfolioAccountPage({ id }: { id: string }) {
   const { portfolioName, members } = await getPortfolioMembers(id);
   if (!portfolioName) notFound();
 
-  const addMemberAction = addMemberToAssetGroupFromForm.bind(null, id);
-
   return (
     <MembersLayout
       backHref={`/access?portfolio=${id}`}
       description={`Members with access to portfolio "${portfolioName}"`}
-      addForm={<AddMemberForm action={addMemberAction} />}
+      addForm={<AddMemberForm portfolioId={id} />}
     >
       {members.length > 0 ? (
         members.map((member) => (

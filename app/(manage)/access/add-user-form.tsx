@@ -2,71 +2,63 @@
 
 import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/core/hooks/use-toast";
-import { grantAccessByNeupId } from "@/services/manage/access";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, UserPlus } from "@/components/icons";
+import { resolveNeupId } from "./_components/actions";
 
 export function AddUserForm() {
+  const [neupIdInput, setNeupIdInput] = useState("");
+  const [lookupError, setLookupError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
-  const formRef = useRef<HTMLFormElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { toast } = useToast();
   const router = useRouter();
 
-  const handleSubmit = async (formData: FormData) => {
-    setError(null);
+  const handleLookup = () => {
+    if (!neupIdInput.trim()) return;
+    setLookupError(null);
     startTransition(async () => {
-      const result = await grantAccessByNeupId(formData);
+      const result = await resolveNeupId(neupIdInput);
       if (result.success) {
-        toast({
-          title: "Request Sent",
-          description: "The user has been invited to manage this account.",
-          className: "bg-accent text-accent-foreground",
-        });
-        formRef.current?.reset();
-        router.refresh();
+        router.push(`/access/assign?neupid=${encodeURIComponent(neupIdInput.trim())}`);
       } else {
-        setError(result.error || "An unknown error occurred.");
+        setLookupError(result.error);
         inputRef.current?.focus();
       }
     });
   };
 
   return (
-    <form ref={formRef} action={handleSubmit}>
-      <div className="grid gap-1.5">
-        <div className="relative">
-          <Input
-            ref={inputRef}
-            name="neupId"
-            placeholder="Enter NeupID"
-            disabled={isPending}
-            required
-            onChange={(e) => {
-              e.target.value = e.target.value.toLowerCase();
-              if (error) setError(null);
-            }}
-            aria-invalid={!!error}
-            className={`pr-10 ${error ? "border-destructive focus-visible:ring-destructive" : ""}`}
-          />
-          <Button
-            type="submit"
-            size="icon"
-            variant="ghost"
-            disabled={isPending}
-            className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:bg-accent"
-          >
-            {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserPlus className="h-4 w-4" />}
-            <span className="sr-only">Grant Access</span>
-          </Button>
-        </div>
-        {error && (
-          <p className="text-xs text-destructive px-0.5">{error}</p>
-        )}
+    <div className="grid gap-1.5">
+      <div className="relative">
+        <Input
+          ref={inputRef}
+          value={neupIdInput}
+          onChange={(e) => {
+            setNeupIdInput(e.target.value.toLowerCase());
+            if (lookupError) setLookupError(null);
+          }}
+          onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleLookup())}
+          placeholder="Enter NeupID"
+          className={`pr-10 ${lookupError ? "border-destructive focus-visible:ring-destructive" : ""}`}
+          disabled={isPending}
+          aria-invalid={!!lookupError}
+        />
+        <Button
+          type="button"
+          size="icon"
+          variant="ghost"
+          onClick={handleLookup}
+          disabled={isPending || !neupIdInput.trim()}
+          className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:bg-accent"
+        >
+          {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserPlus className="h-4 w-4" />}
+          <span className="sr-only">Look up</span>
+        </Button>
       </div>
-    </form>
+      {lookupError && (
+        <p className="text-xs text-destructive px-0.5">{lookupError}</p>
+      )}
+    </div>
   );
 }
