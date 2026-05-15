@@ -56,7 +56,7 @@ export default async function PortfolioAccountsPage({ searchParams }: PageProps)
 
   return (
     <div className="grid gap-8">
-      <BackButton href={`/access/portfolio/${id}`} />
+      <BackButton href={`/access?portfolio=${id}`} />
 
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
