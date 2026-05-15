@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { FlowLink } from '@/components/ui/flow-link';
+import { Card, CardContent } from '@/components/ui/card';
 import { FolderGit2, ChevronRight } from '@/components/icons';
 import { getDirectAccessGroup } from '@/services/manage/access';
 import { getAccessAssetGroups, getAccessAssetGroup } from '@/services/manage/access/assets';
@@ -47,17 +48,18 @@ async function PortfolioDetail({ id }: { id: string }) {
     assetType: asset.assetType,
   }));
 
-  // Portfolio view: section 1 only — no portfolios section
   return (
     <AccessGroupView
+      pageTitle="Access & Control"
+      pageDescription="Manage who can access this account and what they can do."
       name={group.name}
-      description={group.description ?? undefined}
+      description={group.description ?? 'Portfolio access group.'}
       members={memberProfiles}
       assets={assets}
       backHref="/access"
       accountsHref={`/access/account?portfolio=${id}`}
       assetsHref={`/access/asset?portfolio=${id}`}
-      applicationsHref={`/access/application`}
+      applicationsHref="/access/application"
       allAssetsHref={`/access/asset?portfolio=${id}`}
     />
   );
@@ -90,6 +92,8 @@ export default async function AccessControlPage({ searchParams }: PageProps) {
 
   return (
     <AccessGroupView
+      pageTitle="Access & Control"
+      pageDescription="Manage who can access this account and what they can do."
       name={directGroup.name}
       description="Direct access grants on this account."
       members={members}
@@ -105,29 +109,27 @@ export default async function AccessControlPage({ searchParams }: PageProps) {
           title="Portfolios"
           description="Manage asset groups and role-based access."
         />
-        <div className="overflow-hidden rounded-lg border divide-y">
-          <CreateAssetGroupCard variant="row" />
-          {portfolios.map((portfolio) => (
-            <FlowLink
-              key={portfolio.id}
-              href={`/access?portfolio=${portfolio.id}`}
-              className="flex items-center justify-between gap-4 px-4 py-3 hover:bg-muted/40 transition-colors"
-            >
-              <div className="flex items-center gap-3 min-w-0">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted">
-                  <FolderGit2 className="h-4 w-4 text-muted-foreground" />
-                </span>
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-medium">{portfolio.name}</p>
-                  <p className="truncate text-xs text-muted-foreground">
+        <Card>
+          <CardContent className="divide-y p-2">
+            <CreateAssetGroupCard variant="row" />
+            {portfolios.map((portfolio) => (
+              <FlowLink
+                key={portfolio.id}
+                href={`/access?portfolio=${portfolio.id}`}
+                className="flex items-center gap-4 py-4 px-4 hover:bg-muted/50 transition-colors"
+              >
+                <FolderGit2 className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                <div className="flex-grow min-w-0">
+                  <p className="font-medium text-foreground truncate">{portfolio.name}</p>
+                  <p className="text-sm text-muted-foreground">
                     {portfolio._count.members} members · {portfolio._count.assets} assets
                   </p>
                 </div>
-              </div>
-              <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
-            </FlowLink>
-          ))}
-        </div>
+                <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+              </FlowLink>
+            ))}
+          </CardContent>
+        </Card>
       </div>
     </AccessGroupView>
   );
