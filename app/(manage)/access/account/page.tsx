@@ -10,13 +10,13 @@ import {
 } from '@/services/manage/access/actions';
 import { getAccessAssetGroup } from '@/services/manage/access/assets';
 import { getUserProfile } from '@/services/user';
-import { AddMemberForm } from '../portfolio/[id]/add-member-form';
+import { AddMemberForm } from '../_components/add-member-form';
 
 type PageProps = {
   searchParams: Promise<{ portfolio?: string }>;
 };
 
-export default async function PortfolioAccountsPage({ searchParams }: PageProps) {
+export default async function PortfolioAccountPage({ searchParams }: PageProps) {
   const { portfolio: id } = await searchParams;
 
   if (!id) notFound();
@@ -24,7 +24,6 @@ export default async function PortfolioAccountsPage({ searchParams }: PageProps)
   const group = await getAccessAssetGroup(id);
   if (!group) notFound();
 
-  // Resolve display names for all members in parallel
   const memberProfiles = await Promise.all(
     group.members.map(async (member) => {
       const profile = await getUserProfile(member.accountId);
@@ -114,12 +113,10 @@ export default async function PortfolioAccountsPage({ searchParams }: PageProps)
 
                 return (
                   <div key={member.id} className="flex items-center gap-3 px-4 py-3">
-                    {/* Avatar */}
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
                       <UserCircle className="h-5 w-5 text-muted-foreground" />
                     </span>
 
-                    {/* Info */}
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium truncate">{displayName}</p>
                       <p className="text-xs text-muted-foreground font-mono truncate">
@@ -127,7 +124,6 @@ export default async function PortfolioAccountsPage({ searchParams }: PageProps)
                       </p>
                     </div>
 
-                    {/* Badges */}
                     <div className="flex shrink-0 flex-wrap items-center gap-1.5">
                       {d.isPermanent ? (
                         <Badge variant="secondary" className="text-xs px-1.5 py-0">
@@ -145,7 +141,6 @@ export default async function PortfolioAccountsPage({ searchParams }: PageProps)
                       )}
                     </div>
 
-                    {/* Remove */}
                     <form action={removeMemberAction}>
                       <input type="hidden" name="memberId" value={member.id} />
                       <Button

@@ -68,7 +68,7 @@ async function PortfolioDetail({ id }: { id: string }) {
       <div className="overflow-hidden rounded-lg border divide-y">
         {/* Accounts */}
         <FlowLink
-          href={`/access/accounts?portfolio=${id}`}
+          href={`/access/account?portfolio=${id}`}
           className="flex items-center justify-between gap-4 px-4 py-4 hover:bg-muted/40 transition-colors"
         >
           <div className="flex items-center gap-3 min-w-0">
@@ -96,7 +96,7 @@ async function PortfolioDetail({ id }: { id: string }) {
 
         {/* Assets */}
         <FlowLink
-          href={`/access/assets?portfolio=${id}`}
+          href={`/access/asset?portfolio=${id}`}
           className="flex items-center justify-between gap-4 px-4 py-4 hover:bg-muted/40 transition-colors"
         >
           <div className="flex items-center gap-3 min-w-0">
@@ -174,7 +174,7 @@ async function PortfolioDetail({ id }: { id: string }) {
               })}
               {group.members.length > 5 && (
                 <FlowLink
-                  href={`/access/accounts?portfolio=${id}`}
+                  href={`/access/account?portfolio=${id}`}
                   className="flex items-center justify-center gap-1.5 px-4 py-3 text-xs text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors"
                 >
                   View all {group.members.length} members
@@ -205,7 +205,7 @@ async function PortfolioDetail({ id }: { id: string }) {
                 return (
                   <FlowLink
                     key={asset.id}
-                    href={`/access/portfolio/${id}/asset/${asset.id}`}
+                    href={`/access/asset?portfolio=${id}&asset=${asset.id}`}
                     className="flex items-center gap-3 px-4 py-3 hover:bg-muted/20 transition-colors"
                   >
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted">
@@ -227,7 +227,7 @@ async function PortfolioDetail({ id }: { id: string }) {
               })}
               {group.assets.length > 5 && (
                 <FlowLink
-                  href={`/access/assets?portfolio=${id}`}
+                  href={`/access/asset?portfolio=${id}`}
                   className="flex items-center justify-center gap-1.5 px-4 py-3 text-xs text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors"
                 >
                   View all {group.assets.length} assets

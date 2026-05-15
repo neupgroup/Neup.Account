@@ -10,8 +10,8 @@ import {
 import { getAccessAssetGroup } from '@/services/manage/access/assets';
 import { resolveAssetNames } from '@/services/manage/access/asset-resolvers';
 import { getUserProfile } from '@/services/user';
-import { AssignPermissionsWizard } from '../portfolio/[id]/assign-permissions-wizard';
-import { RoleAssignForm } from '../portfolio/[id]/role-assign-form';
+import { AssignPermissionsWizard } from '../_components/assign-permissions-wizard';
+import { RoleAssignForm } from '../_components/role-assign-form';
 
 type PageProps = {
   searchParams: Promise<{ portfolio?: string }>;
@@ -130,7 +130,7 @@ export default async function PortfolioAssignPage({ searchParams }: PageProps) {
                 <div className="flex gap-2 mt-1">
                   {members.length === 0 && (
                     <a
-                      href={`/access/accounts?portfolio=${id}`}
+                      href={`/access/account?portfolio=${id}`}
                       className="text-xs text-foreground underline underline-offset-2"
                     >
                       Add accounts
@@ -138,7 +138,7 @@ export default async function PortfolioAssignPage({ searchParams }: PageProps) {
                   )}
                   {assets.length === 0 && (
                     <a
-                      href={`/access/assets?portfolio=${id}`}
+                      href={`/access/asset?portfolio=${id}`}
                       className="text-xs text-foreground underline underline-offset-2"
                     >
                       Add assets
