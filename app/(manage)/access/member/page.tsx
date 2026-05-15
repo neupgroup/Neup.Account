@@ -66,17 +66,14 @@ async function PortfolioAccountPage({ id }: { id: string }) {
         </p>
       </div>
 
-      {/* Card 1 — Invite */}
-      <Card>
-        <CardContent className="p-0">
-          <AddMemberForm action={addMemberAction} />
-        </CardContent>
-      </Card>
+      {/* Invite + members in a tighter group */}
+      <div className="grid gap-3">
+        <AddMemberForm action={addMemberAction} />
 
-      {/* Card 2 — Users list */}
-      <Card>
-        <CardContent className="p-0">
-          <div className="divide-y">
+        {/* Members card */}
+        <Card>
+          <CardContent className="p-0">
+            <div className="divide-y">
             {group.members.length > 0 ? (
               group.members.map((member) => {
                 const d = getMemberDetails(member.details);
@@ -134,6 +131,7 @@ async function PortfolioAccountPage({ id }: { id: string }) {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }
@@ -158,15 +156,12 @@ async function DirectAccountPage() {
         </p>
       </div>
 
-      {/* Card 1 — Invite */}
-      <Card>
-        <CardContent className="p-4">
-          <AddUserForm />
-        </CardContent>
-      </Card>
+      {/* Invite + members in a tighter group */}
+      <div className="grid gap-3">
+        <AddUserForm />
 
-      {/* Card 2 — Users list */}
-      <Card>
+        {/* Members card */}
+        <Card>
         <CardContent className="p-0">
           <div className="divide-y">
             {group.members.length > 0 ? (
@@ -199,6 +194,7 @@ async function DirectAccountPage() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

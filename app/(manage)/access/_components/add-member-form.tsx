@@ -79,7 +79,7 @@ export function AddMemberForm({
   };
 
   return (
-    <div className="px-4 py-3 grid gap-3">
+    <div className="grid gap-3">
       {/* Step 1 — NeupID lookup */}
       {!resolved ? (
         <div className="grid gap-1.5">
