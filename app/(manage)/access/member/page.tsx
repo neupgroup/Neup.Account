@@ -2,14 +2,14 @@ import { notFound } from 'next/navigation';
 import { BackButton } from '@/components/ui/back-button';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, UserCircle, Users, X } from '@/components/icons';
+import { Card, CardContent } from '@/components/ui/card';
+import { Shield, UserCircle, X } from '@/components/icons';
 import {
   addMemberToAssetGroupFromForm,
   removeMemberFromAssetGroupFromForm,
 } from '@/services/manage/access/actions';
 import { getAccessAssetGroup } from '@/services/manage/access/assets';
-import { getDirectAccessGroup, removeAccess } from '@/services/manage/access';
+import { getDirectAccessGroup } from '@/services/manage/access';
 import { getActiveAccountId } from '@/core/auth/verify';
 import { getUserProfile } from '@/services/user';
 import { AddMemberForm } from '../_components/add-member-form';
@@ -59,43 +59,24 @@ async function PortfolioAccountPage({ id }: { id: string }) {
     <div className="grid gap-8">
       <BackButton href={`/access?portfolio=${id}`} />
 
-      <div className="flex items-start gap-4">
-        <div className="min-w-0">
-          <h1 className="text-2xl font-bold tracking-tight">Members with Access</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Members with access to Portfolio &ldquo;{group.name}&rdquo;
-          </p>
-        </div>
+      <div className="min-w-0">
+        <h1 className="text-2xl font-bold tracking-tight">Members with Access</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Members with access to Portfolio &ldquo;{group.name}&rdquo;
+        </p>
       </div>
 
+      {/* Card 1 — Invite */}
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-semibold">Add Member</CardTitle>
-          <p className="text-xs text-muted-foreground">
-            Look up a NeupID to add someone to this portfolio.
-          </p>
-        </CardHeader>
         <CardContent className="p-0">
-          <div className="border-t">
-            <AddMemberForm action={addMemberAction} />
-          </div>
+          <AddMemberForm action={addMemberAction} />
         </CardContent>
       </Card>
 
+      {/* Card 2 — Users list */}
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-sm font-semibold">
-            <Users className="h-4 w-4 text-muted-foreground" />
-            Members
-            {group.members.length > 0 && (
-              <Badge variant="secondary" className="ml-auto text-xs font-normal">
-                {group.members.length}
-              </Badge>
-            )}
-          </CardTitle>
-        </CardHeader>
         <CardContent className="p-0">
-          <div className="border-t divide-y">
+          <div className="divide-y">
             {group.members.length > 0 ? (
               group.members.map((member) => {
                 const d = getMemberDetails(member.details);
@@ -170,43 +151,24 @@ async function DirectAccountPage() {
     <div className="grid gap-8">
       <BackButton href="/access" />
 
-      <div className="flex items-start gap-4">
-        <div className="min-w-0">
-          <h1 className="text-2xl font-bold tracking-tight">Members with Access</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Members with access to Profile &ldquo;{group.name}&rdquo;
-          </p>
-        </div>
+      <div className="min-w-0">
+        <h1 className="text-2xl font-bold tracking-tight">Members with Access</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Members with access to Profile &ldquo;{group.name}&rdquo;
+        </p>
       </div>
 
-      {/* Grant access */}
+      {/* Card 1 — Invite */}
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-semibold">Grant Access</CardTitle>
-          <p className="text-xs text-muted-foreground">
-            Invite someone by NeupID to access this account.
-          </p>
-        </CardHeader>
-        <CardContent className="pt-3">
+        <CardContent className="p-4">
           <AddUserForm />
         </CardContent>
       </Card>
 
-      {/* Member list — one row per grant */}
+      {/* Card 2 — Users list */}
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-sm font-semibold">
-            <Users className="h-4 w-4 text-muted-foreground" />
-            Members
-            {group.members.length > 0 && (
-              <Badge variant="secondary" className="ml-auto text-xs font-normal">
-                {group.members.length}
-              </Badge>
-            )}
-          </CardTitle>
-        </CardHeader>
         <CardContent className="p-0">
-          <div className="border-t divide-y">
+          <div className="divide-y">
             {group.members.length > 0 ? (
               group.members.map((member) => (
                 <FlowLink
