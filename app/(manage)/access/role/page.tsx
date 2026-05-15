@@ -69,13 +69,13 @@ function PageHeader({
 }) {
   return (
     <div className="flex items-center gap-4">
-      <span className="shrink-0 flex h-12 w-12 rounded-full overflow-hidden bg-muted">
+      <span className="shrink-0 rounded-lg overflow-hidden bg-muted border">
         <Image
           src={photo}
           alt={displayName}
-          width={48}
-          height={48}
-          className="h-full w-full object-cover"
+          width={72}
+          height={72}
+          className="h-18 w-18 object-cover"
         />
       </span>
       <div>
@@ -102,38 +102,36 @@ function RoleCard({
   avatar?: React.ReactNode;
 }) {
   return (
-    <Card>
-      <CardContent className="px-4 py-3 flex items-center gap-4">
-        {avatar}
+    <div className="flex items-center gap-4 px-4 py-3">
+      {avatar}
 
-        <div className="grid gap-1 min-w-0">
-          {avatar ? (
-            contextName && (
-              <p className="text-base font-semibold">{contextName}</p>
-            )
-          ) : (
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-base font-semibold capitalize">{platformLabel}</span>
-              {contextName && (
-                <Badge variant="secondary" className="text-xs font-normal">
-                  {contextName}
-                </Badge>
-              )}
-            </div>
-          )}
-
-          <p className="text-sm text-muted-foreground">
-            <span className="font-medium text-foreground">{roleName}</span>
-            {roleDescription && (
-              <>
-                <span className="mx-1.5 text-muted-foreground/60">&middot;</span>
-                {roleDescription}
-              </>
+      <div className="grid gap-1 min-w-0">
+        {avatar ? (
+          contextName && (
+            <p className="text-base font-semibold">{contextName}</p>
+          )
+        ) : (
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-base font-semibold capitalize">{platformLabel}</span>
+            {contextName && (
+              <Badge variant="secondary" className="text-xs font-normal">
+                {contextName}
+              </Badge>
             )}
-          </p>
-        </div>
-      </CardContent>
-    </Card>
+          </div>
+        )}
+
+        <p className="text-sm text-muted-foreground">
+          <span className="font-medium text-foreground">{roleName}</span>
+          {roleDescription && (
+            <>
+              <span className="mx-1.5 text-muted-foreground/60">&middot;</span>
+              {roleDescription}
+            </>
+          )}
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -183,18 +181,20 @@ async function MyDirectRolesView() {
       />
 
       {data.roles.length > 0 ? (
-        <div className="grid gap-3">
-          {data.roles.map((role, i) => (
-            <RoleCard
-              key={`${role.roleId}-${i}`}
-              platformLabel="NeupID"
-              contextName={displayName}
-              roleName={role.roleName}
-              roleDescription={role.roleDescription}
-              avatar={avatar}
-            />
-          ))}
-        </div>
+        <Card>
+          <CardContent className="divide-y p-0">
+            {data.roles.map((role, i) => (
+              <RoleCard
+                key={`${role.roleId}-${i}`}
+                platformLabel="NeupID"
+                contextName={displayName}
+                roleName={role.roleName}
+                roleDescription={role.roleDescription}
+                avatar={avatar}
+              />
+            ))}
+          </CardContent>
+        </Card>
       ) : (
         <EmptyRoles message="You have no direct roles assigned on this account." />
       )}
@@ -230,17 +230,19 @@ async function MyPortfolioRolesView({ portfolioId }: { portfolioId: string }) {
       />
 
       {data.roles.length > 0 ? (
-        <div className="grid gap-3">
-          {data.roles.map((role, i) => (
-            <RoleCard
-              key={`${role.roleId}-${i}`}
-              platformLabel={role.assetType.replace(/_/g, ' ')}
-              contextName={role.assetName}
-              roleName={role.roleName}
-              roleDescription={role.roleDescription}
-            />
-          ))}
-        </div>
+        <Card>
+          <CardContent className="divide-y p-0">
+            {data.roles.map((role, i) => (
+              <RoleCard
+                key={`${role.roleId}-${i}`}
+                platformLabel={role.assetType.replace(/_/g, ' ')}
+                contextName={role.assetName}
+                roleName={role.roleName}
+                roleDescription={role.roleDescription}
+              />
+            ))}
+          </CardContent>
+        </Card>
       ) : (
         <EmptyRoles message="You have no roles assigned on assets in this portfolio." />
       )}
@@ -280,18 +282,20 @@ async function MemberDirectRolesView({ memberAccountId }: { memberAccountId: str
       />
 
       {detail.roles.length > 0 ? (
-        <div className="grid gap-3">
-          {detail.roles.map((role, i) => (
-            <RoleCard
-              key={`${role.roleId}-${i}`}
-              platformLabel="NeupID"
-              contextName={detail.displayName}
-              roleName={role.roleName}
-              roleDescription={role.roleDescription}
-              avatar={avatar}
-            />
-          ))}
-        </div>
+        <Card>
+          <CardContent className="divide-y p-0">
+            {detail.roles.map((role, i) => (
+              <RoleCard
+                key={`${role.roleId}-${i}`}
+                platformLabel="NeupID"
+                contextName={detail.displayName}
+                roleName={role.roleName}
+                roleDescription={role.roleDescription}
+                avatar={avatar}
+              />
+            ))}
+          </CardContent>
+        </Card>
       ) : (
         <EmptyRoles message="This member has no roles assigned on your account." />
       )}
@@ -329,17 +333,19 @@ async function MemberPortfolioRolesView({
       />
 
       {detail.roles.length > 0 ? (
-        <div className="grid gap-3">
-          {detail.roles.map((role, i) => (
-            <RoleCard
-              key={`${role.roleId}-${i}`}
-              platformLabel={role.assetType.replace(/_/g, ' ')}
-              contextName={role.assetName}
-              roleName={role.roleName}
-              roleDescription={role.roleDescription}
-            />
-          ))}
-        </div>
+        <Card>
+          <CardContent className="divide-y p-0">
+            {detail.roles.map((role, i) => (
+              <RoleCard
+                key={`${role.roleId}-${i}`}
+                platformLabel={role.assetType.replace(/_/g, ' ')}
+                contextName={role.assetName}
+                roleName={role.roleName}
+                roleDescription={role.roleDescription}
+              />
+            ))}
+          </CardContent>
+        </Card>
       ) : (
         <EmptyRoles message="This member has no roles assigned on assets in this portfolio." />
       )}
