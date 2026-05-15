@@ -5,15 +5,9 @@ import { FolderGit2, ChevronRight } from '@/components/icons';
 import { getDirectAccessGroup } from '@/services/manage/access';
 import { getAccessAssetGroups, getAccessAssetGroup } from '@/services/manage/access/assets';
 import { getActiveAccountId } from '@/core/auth/verify';
-import { getUserProfile } from '@/services/user';
-import { resolveAssetNames } from '@/services/manage/access/asset-resolvers';
 import { CreateAssetGroupCard } from './create-asset-group-card';
 import { SecondaryHeader } from '@/components/ui/secondary-header';
-import {
-  AccessGroupView,
-  type AccessGroupMember,
-  type AccessGroupAsset,
-} from './_components/access-group-view';
+import { AccessGroupView } from './_components/access-group-view';
 
 type PageProps = {
   searchParams: Promise<{ portfolio?: string }>;
@@ -25,37 +19,12 @@ async function PortfolioDetail({ id }: { id: string }) {
   const group = await getAccessAssetGroup(id);
   if (!group) notFound();
 
-  const memberProfiles = await Promise.all(
-    group.members.map(async (member) => {
-      const profile = await getUserProfile(member.accountId);
-      const name =
-        profile?.nameDisplay ||
-        (profile?.nameFirst || profile?.nameLast
-          ? `${profile.nameFirst ?? ''} ${profile.nameLast ?? ''}`.trim()
-          : null) ||
-        member.accountId;
-      return { id: member.id, accountId: member.accountId, displayName: name } satisfies AccessGroupMember;
-    })
-  );
-
-  const assetNameMap = await resolveAssetNames(group.assets);
-
-  const assets: AccessGroupAsset[] = group.assets.map((asset) => ({
-    id: asset.id,
-    assetId: asset.assetId,
-    name: assetNameMap[asset.id]?.name ?? asset.assetId,
-    subtitle: assetNameMap[asset.id]?.subtitle ?? asset.assetType,
-    assetType: asset.assetType,
-  }));
-
   return (
     <AccessGroupView
       pageTitle="Access & Control"
       pageDescription="Manage who can access this account and what they can do."
       name={group.name}
       description={group.description ?? 'Portfolio access group.'}
-      members={memberProfiles}
-      assets={assets}
       backHref="/access"
       accountsHref={`/access/account?portfolio=${id}`}
       assetsHref={`/access/asset?portfolio=${id}`}
@@ -83,21 +52,12 @@ export default async function AccessControlPage({ searchParams }: PageProps) {
 
   if (!directGroup) notFound();
 
-  const members: AccessGroupMember[] = directGroup.members.map((m) => ({
-    id: m.id,
-    accountId: m.accountId,
-    displayName: m.displayName,
-    subtitle: m.subtitle,
-  }));
-
   return (
     <AccessGroupView
       pageTitle="Access & Control"
       pageDescription="Manage who can access this account and what they can do."
       name={directGroup.name}
       description="Direct access grants on this account."
-      members={members}
-      assets={[]}
       accountsHref="/access/account"
       assetsHref="/access/asset"
       applicationsHref="/access/application"

@@ -1,6 +1,5 @@
 import { FlowLink } from '@/components/ui/flow-link';
 import { BackButton } from '@/components/ui/back-button';
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { PrimaryHeader } from '@/components/ui/primary-header';
 import { SecondaryHeader } from '@/components/ui/secondary-header';
@@ -30,8 +29,6 @@ export type AccessGroupViewProps = {
   name: string;
   /** Sub-heading description */
   description?: string;
-  members: AccessGroupMember[];
-  assets: AccessGroupAsset[];
   accountsHref: string;
   assetsHref: string;
   applicationsHref: string;
@@ -47,12 +44,9 @@ export function AccessGroupView({
   pageDescription,
   name,
   description,
-  members,
-  assets,
   accountsHref,
   assetsHref,
   applicationsHref,
-  allAssetsHref,
   backHref,
   children,
 }: AccessGroupViewProps) {
@@ -79,20 +73,9 @@ export function AccessGroupView({
               <Users className="h-5 w-5 text-muted-foreground flex-shrink-0" />
               <div className="flex-grow min-w-0">
                 <p className="font-medium text-foreground">Accounts</p>
-                <p className="text-sm text-muted-foreground">
-                  {members.length > 0
-                    ? `${members.length} member${members.length !== 1 ? 's' : ''} with access`
-                    : 'No members yet'}
-                </p>
+                <p className="text-sm text-muted-foreground">Members with access</p>
               </div>
-              <div className="flex shrink-0 items-center gap-2">
-                {members.length > 0 && (
-                  <Badge variant="secondary" className="text-xs font-normal">
-                    {members.length}
-                  </Badge>
-                )}
-                <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-              </div>
+              <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
             </FlowLink>
 
             {/* Assets */}
@@ -103,20 +86,9 @@ export function AccessGroupView({
               <Database className="h-5 w-5 text-muted-foreground flex-shrink-0" />
               <div className="flex-grow min-w-0">
                 <p className="font-medium text-foreground">Assets</p>
-                <p className="text-sm text-muted-foreground">
-                  {assets.length > 0
-                    ? `${assets.length} asset${assets.length !== 1 ? 's' : ''} in this group`
-                    : 'No assets yet'}
-                </p>
+                <p className="text-sm text-muted-foreground">Assets in this group</p>
               </div>
-              <div className="flex shrink-0 items-center gap-2">
-                {assets.length > 0 && (
-                  <Badge variant="secondary" className="text-xs font-normal">
-                    {assets.length}
-                  </Badge>
-                )}
-                <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-              </div>
+              <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
             </FlowLink>
 
             {/* Applications */}
