@@ -93,7 +93,7 @@ async function PortfolioAccountPage({ id }: { id: string }) {
               members.map((member) => (
                 <MemberRow
                   key={member.accountId}
-                  href={`/access?portfolio=${id}&member=${member.accountId}`}
+                  href={`/access/role?portfolio=${id}&member=${member.accountId}`}
                   displayName={member.displayName}
                   accountPhoto={member.accountPhoto}
                   roleCount={member.roleCount}
@@ -143,7 +143,7 @@ async function DirectAccountPage() {
               members.map((member) => (
                 <MemberRow
                   key={member.accountId}
-                  href={`/access?member=${member.accountId}`}
+                  href={`/access/role?member=${member.accountId}`}
                   displayName={member.displayName}
                   accountPhoto={member.accountPhoto}
                   roleCount={member.roleCount}

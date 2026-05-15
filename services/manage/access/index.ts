@@ -842,3 +842,146 @@ export async function getPortfolioMemberDetail(
     return null;
   }
 }
+
+/**
+ * Type MyDirectRole — a role the current user holds directly on an account.
+ */
+export type MyDirectRole = {
+  roleId: string;
+  roleName: string;
+  roleDescription?: string;
+  ownerAccountId: string;
+  ownerName: string;
+};
+
+/**
+ * Function getMyDirectRoles.
+ *
+ * Returns all direct (non-portfolio) roles the current user holds on the
+ * given owner account (i.e. grants where targetAccountId = current user).
+ */
+export async function getMyDirectRoles(
+  ownerAccountId: string,
+): Promise<{ ownerName: string; myName: string; roles: MyDirectRole[] } | null> {
+  try {
+    const myAccountId = await getActiveAccountId();
+    if (!myAccountId) return null;
+
+    const [ownerProfile, myProfile, grants] = await Promise.all([
+      getUserProfile(ownerAccountId),
+      getUserProfile(myAccountId),
+      prisma.authzAccountAccessGrant.findMany({
+        where: {
+          ownerAccountId,
+          targetAccountId: myAccountId,
+          appId: 'neup.account',
+          portfolioId: null,
+        },
+        include: {
+          role: { select: { id: true, name: true, description: true } },
+        },
+      }),
+    ]);
+
+    if (!ownerProfile) return null;
+
+    const ownerName =
+      ownerProfile.nameDisplay ||
+      `${ownerProfile.nameFirst ?? ''} ${ownerProfile.nameLast ?? ''}`.trim() ||
+      ownerAccountId;
+
+    const myName =
+      myProfile?.nameDisplay ||
+      `${myProfile?.nameFirst ?? ''} ${myProfile?.nameLast ?? ''}`.trim() ||
+      myAccountId;
+
+    return {
+      ownerName,
+      myName,
+      roles: grants.map((g) => ({
+        roleId: g.role.id,
+        roleName: g.role.name,
+        roleDescription: g.role.description ?? undefined,
+        ownerAccountId,
+        ownerName,
+      })),
+    };
+  } catch (error) {
+    await logError('database', error, `getMyDirectRoles:${ownerAccountId}`);
+    return null;
+  }
+}
+
+/**
+ * Type MyPortfolioRole — a role the current user holds on an asset within a portfolio.
+ */
+export type MyPortfolioRole = {
+  roleId: string;
+  roleName: string;
+  roleDescription?: string;
+  assetId: string;
+  assetName: string;
+  assetType: string;
+};
+
+/**
+ * Function getMyPortfolioRoles.
+ *
+ * Returns all roles the current user holds on assets within the given portfolio.
+ */
+export async function getMyPortfolioRoles(
+  portfolioId: string,
+): Promise<{ portfolioName: string; myName: string; roles: MyPortfolioRole[] } | null> {
+  try {
+    const myAccountId = await getActiveAccountId();
+    if (!myAccountId) return null;
+
+    const [portfolio, myProfile, grants] = await Promise.all([
+      prisma.portfolio.findUnique({
+        where: { id: portfolioId },
+        select: { name: true },
+      }),
+      getUserProfile(myAccountId),
+      prisma.authzAssetsAccessGrant.findMany({
+        where: {
+          account_id: myAccountId,
+          portfolio_id: portfolioId,
+          app_id: 'neup.account',
+        },
+        select: {
+          role_id: true,
+          role: { select: { id: true, name: true, description: true } },
+          asset: { select: { id: true, assetId: true, assetType: true } },
+        },
+      }),
+    ]);
+
+    if (!portfolio) return null;
+
+    const myName =
+      myProfile?.nameDisplay ||
+      `${myProfile?.nameFirst ?? ''} ${myProfile?.nameLast ?? ''}`.trim() ||
+      myAccountId;
+
+    const { resolveAssetName } = await import('@/services/manage/access/asset-resolvers');
+
+    const roles = await Promise.all(
+      grants.map(async (grant) => {
+        const resolved = await resolveAssetName(grant.asset.assetId, grant.asset.assetType);
+        return {
+          roleId: grant.role.id,
+          roleName: grant.role.name,
+          roleDescription: grant.role.description ?? undefined,
+          assetId: grant.asset.assetId,
+          assetName: resolved.name,
+          assetType: grant.asset.assetType,
+        };
+      })
+    );
+
+    return { portfolioName: portfolio.name, myName, roles };
+  } catch (error) {
+    await logError('database', error, `getMyPortfolioRoles:${portfolioId}`);
+    return null;
+  }
+}
