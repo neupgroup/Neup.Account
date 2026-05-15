@@ -297,12 +297,14 @@ model PortfolioAsset {
 }
 
 model PortfolioMember {
-  id          String    @id(map: "portfolio_members_pkey") @default(uuid())
-  portfolioId String
-  accountId   String
-  details     Json?
-  account     Account   @relation(fields: [accountId], references: [id], onDelete: Cascade, map: "portfolio_members_accountId_fkey")
-  portfolio   Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade, map: "portfolio_members_portfolioId_fkey")
+  id            String    @id(map: "portfolio_members_pkey") @default(uuid())
+  portfolioId   String
+  accountId     String
+  isPermanent   Boolean   @default(false)
+  hasFullAccess Boolean   @default(false)
+  details       Json?
+  account       Account   @relation(fields: [accountId], references: [id], onDelete: Cascade, map: "portfolio_members_accountId_fkey")
+  portfolio     Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade, map: "portfolio_members_portfolioId_fkey")
 
   @@unique([portfolioId, accountId], map: "portfolio_members_portfolioId_accountId_key")
   @@index([accountId], map: "portfolio_members_accountId_idx")

@@ -69,11 +69,9 @@ async function hasPendingPortfolioInvitation(
 async function isPortfolioOwner(portfolioId: string, memberAccountId: string): Promise<boolean> {
   const member = await prisma.portfolioMember.findFirst({
     where: { portfolioId, accountId: memberAccountId },
-    select: { details: true },
+    select: { hasFullAccess: true },
   });
-  if (!member) return false;
-  const details = member.details as Record<string, unknown> | null;
-  return details?.hasFullAccess === true;
+  return member?.hasFullAccess === true;
 }
 
 // ── Platform avatar ───────────────────────────────────────────────────────────

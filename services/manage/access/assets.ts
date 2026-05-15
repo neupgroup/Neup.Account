@@ -181,6 +181,8 @@ export async function createAssetGroup(input: { name: string; details?: string }
         data: {
           portfolioId: group.id,
           accountId,
+          isPermanent: true,
+          hasFullAccess: true,
           details: {
             isPermanent: true,
             hasFullAccess: true,
@@ -249,6 +251,8 @@ export async function addAssetGroupMember(input: {
       data: {
         portfolioId: parsed.data.groupId,
         accountId: normalizedMemberId,
+        isPermanent: parsed.data.isPermanent,
+        hasFullAccess: parsed.data.hasFullPermit,
         details: {
           isPermanent: parsed.data.isPermanent,
           removesOn: parsed.data.isPermanent ? null : parsed.data.validTill || null,
@@ -391,6 +395,8 @@ export async function removeAssetFromGroup(input: { groupId: string; portfolioAs
             members: {
               create: {
                 accountId,
+                isPermanent: true,
+                hasFullAccess: true,
                 details: {
                   isPermanent: true,
                   hasFullAccess: true,
@@ -466,7 +472,7 @@ export async function removeAssetGroupMember(input: {
         id: input.memberId,
         portfolioId: input.groupId,
       },
-      select: { id: true, accountId: true, details: true },
+      select: { id: true, accountId: true, hasFullAccess: true },
     });
 
     if (!member) {
@@ -474,8 +480,7 @@ export async function removeAssetGroupMember(input: {
     }
 
     // The portfolio owner (hasFullAccess: true) cannot be removed.
-    const details = member.details as Record<string, unknown> | null;
-    if (details?.hasFullAccess === true) {
+    if (member.hasFullAccess) {
       return { success: false, error: 'The portfolio owner cannot be removed.' };
     }
 

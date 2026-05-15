@@ -261,6 +261,8 @@ async function resolvePermissionSet(input: {
 				members: {
 					where: { accountId: input.accountId },
 					select: {
+						isPermanent: true,
+						hasFullAccess: true,
 						details: true,
 					},
 				},
@@ -303,15 +305,13 @@ async function resolvePermissionSet(input: {
 
 		const hasFullAccess = portfolio.members.some((member) => {
 			const details = (member.details ?? null) as Record<string, unknown> | null;
-			if (!details || typeof details !== 'object') return false;
-			const isPermanent = details.isPermanent === true;
-			const removesOnRaw = details.removesOn;
+			const removesOnRaw = details?.removesOn;
 			const removesOn =
 				typeof removesOnRaw === 'string' || removesOnRaw instanceof Date
 					? new Date(removesOnRaw as string | Date)
 					: null;
-			const stillValid = isPermanent || (removesOn instanceof Date && !Number.isNaN(removesOn.getTime()) && removesOn > now);
-			return stillValid && details.hasFullAccess === true;
+			const stillValid = member.isPermanent || (removesOn instanceof Date && !Number.isNaN(removesOn.getTime()) && removesOn > now);
+			return stillValid && member.hasFullAccess;
 		});
 
 		if (hasFullAccess) {
