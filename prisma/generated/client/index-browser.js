@@ -325,7 +325,8 @@ exports.Prisma.ApplicationConnectionScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
   appId: 'appId',
-  connectedAt: 'connectedAt'
+  connectedAt: 'connectedAt',
+  details: 'details'
 };
 
 exports.Prisma.ApplicationBridgeScalarFieldEnum = {
@@ -377,7 +378,8 @@ exports.Prisma.AuthzAccountAccessGrantScalarFieldEnum = {
   targetAccountId: 'targetAccountId',
   roleId: 'roleId',
   appId: 'appId',
-  portfolioId: 'portfolioId'
+  portfolioId: 'portfolioId',
+  status: 'status'
 };
 
 exports.Prisma.AuthzAssetsAccessGrantScalarFieldEnum = {
@@ -408,7 +410,8 @@ exports.Prisma.AuthzAppAccessGrantScalarFieldEnum = {
   accountId: 'accountId',
   targetAccountId: 'targetAccountId',
   roleId: 'roleId',
-  portfolioId: 'portfolioId'
+  portfolioId: 'portfolioId',
+  status: 'status'
 };
 
 exports.Prisma.IdentityScalarFieldEnum = {
@@ -450,7 +453,12 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.AuthzGrantStatus = exports.$Enums.AuthzGrantStatus = {
+  active: 'active',
+  invited: 'invited',
+  on_hold: 'on_hold',
+  expired: 'expired'
+};
 
 exports.Prisma.ModelName = {
   Account: 'Account',

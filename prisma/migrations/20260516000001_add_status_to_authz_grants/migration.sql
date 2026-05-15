@@ -8,12 +8,22 @@ CREATE TYPE "AuthzGrantStatus" AS ENUM ('active', 'invited', 'on_hold', 'expired
 ALTER TABLE "authz_account_access_grant"
     ADD COLUMN "status" "AuthzGrantStatus" NOT NULL DEFAULT 'active';
 
+-- Backfill: set all existing rows to active
+UPDATE "authz_account_access_grant"
+    SET "status" = 'active'
+    WHERE "status" IS DISTINCT FROM 'active';
+
 CREATE INDEX "authz_account_access_grant_status_idx"
     ON "authz_account_access_grant"("status");
 
 -- AlterTable: authz_app_access_grant — add status column
 ALTER TABLE "authz_app_access_grant"
     ADD COLUMN "status" "AuthzGrantStatus" NOT NULL DEFAULT 'active';
+
+-- Backfill: set all existing rows to active
+UPDATE "authz_app_access_grant"
+    SET "status" = 'active'
+    WHERE "status" IS DISTINCT FROM 'active';
 
 CREATE INDEX "authz_app_access_grant_status_idx"
     ON "authz_app_access_grant"("status");

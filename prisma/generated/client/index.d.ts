@@ -177,6 +177,25 @@ export type AuthzAppAccessGrant = $Result.DefaultSelection<Prisma.$AuthzAppAcces
 export type Identity = $Result.DefaultSelection<Prisma.$IdentityPayload>
 
 /**
+ * Enums
+ */
+export namespace $Enums {
+  export const AuthzGrantStatus: {
+  active: 'active',
+  invited: 'invited',
+  on_hold: 'on_hold',
+  expired: 'expired'
+};
+
+export type AuthzGrantStatus = (typeof AuthzGrantStatus)[keyof typeof AuthzGrantStatus]
+
+}
+
+export type AuthzGrantStatus = $Enums.AuthzGrantStatus
+
+export const AuthzGrantStatus: typeof $Enums.AuthzGrantStatus
+
+/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
@@ -27827,6 +27846,7 @@ export namespace Prisma {
     accountId: number
     appId: number
     connectedAt: number
+    details: number
     _all: number
   }
 
@@ -27850,6 +27870,7 @@ export namespace Prisma {
     accountId?: true
     appId?: true
     connectedAt?: true
+    details?: true
     _all?: true
   }
 
@@ -27930,6 +27951,7 @@ export namespace Prisma {
     accountId: string
     appId: string
     connectedAt: Date
+    details: JsonValue | null
     _count: ApplicationConnectionCountAggregateOutputType | null
     _min: ApplicationConnectionMinAggregateOutputType | null
     _max: ApplicationConnectionMaxAggregateOutputType | null
@@ -27954,6 +27976,7 @@ export namespace Prisma {
     accountId?: boolean
     appId?: boolean
     connectedAt?: boolean
+    details?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["applicationConnection"]>
@@ -27963,6 +27986,7 @@ export namespace Prisma {
     accountId?: boolean
     appId?: boolean
     connectedAt?: boolean
+    details?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["applicationConnection"]>
@@ -27972,6 +27996,7 @@ export namespace Prisma {
     accountId?: boolean
     appId?: boolean
     connectedAt?: boolean
+    details?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["applicationConnection"]>
@@ -27981,9 +28006,10 @@ export namespace Prisma {
     accountId?: boolean
     appId?: boolean
     connectedAt?: boolean
+    details?: boolean
   }
 
-  export type ApplicationConnectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "appId" | "connectedAt", ExtArgs["result"]["applicationConnection"]>
+  export type ApplicationConnectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "appId" | "connectedAt" | "details", ExtArgs["result"]["applicationConnection"]>
   export type ApplicationConnectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
@@ -28008,6 +28034,7 @@ export namespace Prisma {
       accountId: string
       appId: string
       connectedAt: Date
+      details: Prisma.JsonValue | null
     }, ExtArgs["result"]["applicationConnection"]>
     composites: {}
   }
@@ -28437,6 +28464,7 @@ export namespace Prisma {
     readonly accountId: FieldRef<"ApplicationConnection", 'String'>
     readonly appId: FieldRef<"ApplicationConnection", 'String'>
     readonly connectedAt: FieldRef<"ApplicationConnection", 'DateTime'>
+    readonly details: FieldRef<"ApplicationConnection", 'Json'>
   }
     
 
@@ -34375,6 +34403,7 @@ export namespace Prisma {
     roleId: string | null
     appId: string | null
     portfolioId: string | null
+    status: $Enums.AuthzGrantStatus | null
   }
 
   export type AuthzAccountAccessGrantMaxAggregateOutputType = {
@@ -34384,6 +34413,7 @@ export namespace Prisma {
     roleId: string | null
     appId: string | null
     portfolioId: string | null
+    status: $Enums.AuthzGrantStatus | null
   }
 
   export type AuthzAccountAccessGrantCountAggregateOutputType = {
@@ -34393,6 +34423,7 @@ export namespace Prisma {
     roleId: number
     appId: number
     portfolioId: number
+    status: number
     _all: number
   }
 
@@ -34404,6 +34435,7 @@ export namespace Prisma {
     roleId?: true
     appId?: true
     portfolioId?: true
+    status?: true
   }
 
   export type AuthzAccountAccessGrantMaxAggregateInputType = {
@@ -34413,6 +34445,7 @@ export namespace Prisma {
     roleId?: true
     appId?: true
     portfolioId?: true
+    status?: true
   }
 
   export type AuthzAccountAccessGrantCountAggregateInputType = {
@@ -34422,6 +34455,7 @@ export namespace Prisma {
     roleId?: true
     appId?: true
     portfolioId?: true
+    status?: true
     _all?: true
   }
 
@@ -34504,6 +34538,7 @@ export namespace Prisma {
     roleId: string
     appId: string
     portfolioId: string | null
+    status: $Enums.AuthzGrantStatus
     _count: AuthzAccountAccessGrantCountAggregateOutputType | null
     _min: AuthzAccountAccessGrantMinAggregateOutputType | null
     _max: AuthzAccountAccessGrantMaxAggregateOutputType | null
@@ -34530,6 +34565,7 @@ export namespace Prisma {
     roleId?: boolean
     appId?: boolean
     portfolioId?: boolean
+    status?: boolean
     owner?: boolean | AccountDefaultArgs<ExtArgs>
     target?: boolean | AccountDefaultArgs<ExtArgs>
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
@@ -34544,6 +34580,7 @@ export namespace Prisma {
     roleId?: boolean
     appId?: boolean
     portfolioId?: boolean
+    status?: boolean
     owner?: boolean | AccountDefaultArgs<ExtArgs>
     target?: boolean | AccountDefaultArgs<ExtArgs>
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
@@ -34558,6 +34595,7 @@ export namespace Prisma {
     roleId?: boolean
     appId?: boolean
     portfolioId?: boolean
+    status?: boolean
     owner?: boolean | AccountDefaultArgs<ExtArgs>
     target?: boolean | AccountDefaultArgs<ExtArgs>
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
@@ -34572,9 +34610,10 @@ export namespace Prisma {
     roleId?: boolean
     appId?: boolean
     portfolioId?: boolean
+    status?: boolean
   }
 
-  export type AuthzAccountAccessGrantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ownerAccountId" | "targetAccountId" | "roleId" | "appId" | "portfolioId", ExtArgs["result"]["authzAccountAccessGrant"]>
+  export type AuthzAccountAccessGrantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ownerAccountId" | "targetAccountId" | "roleId" | "appId" | "portfolioId" | "status", ExtArgs["result"]["authzAccountAccessGrant"]>
   export type AuthzAccountAccessGrantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | AccountDefaultArgs<ExtArgs>
     target?: boolean | AccountDefaultArgs<ExtArgs>
@@ -34613,6 +34652,7 @@ export namespace Prisma {
       roleId: string
       appId: string
       portfolioId: string | null
+      status: $Enums.AuthzGrantStatus
     }, ExtArgs["result"]["authzAccountAccessGrant"]>
     composites: {}
   }
@@ -35047,6 +35087,7 @@ export namespace Prisma {
     readonly roleId: FieldRef<"AuthzAccountAccessGrant", 'String'>
     readonly appId: FieldRef<"AuthzAccountAccessGrant", 'String'>
     readonly portfolioId: FieldRef<"AuthzAccountAccessGrant", 'String'>
+    readonly status: FieldRef<"AuthzAccountAccessGrant", 'AuthzGrantStatus'>
   }
     
 
@@ -37734,6 +37775,7 @@ export namespace Prisma {
     targetAccountId: string | null
     roleId: string | null
     portfolioId: string | null
+    status: $Enums.AuthzGrantStatus | null
   }
 
   export type AuthzAppAccessGrantMaxAggregateOutputType = {
@@ -37743,6 +37785,7 @@ export namespace Prisma {
     targetAccountId: string | null
     roleId: string | null
     portfolioId: string | null
+    status: $Enums.AuthzGrantStatus | null
   }
 
   export type AuthzAppAccessGrantCountAggregateOutputType = {
@@ -37752,6 +37795,7 @@ export namespace Prisma {
     targetAccountId: number
     roleId: number
     portfolioId: number
+    status: number
     _all: number
   }
 
@@ -37763,6 +37807,7 @@ export namespace Prisma {
     targetAccountId?: true
     roleId?: true
     portfolioId?: true
+    status?: true
   }
 
   export type AuthzAppAccessGrantMaxAggregateInputType = {
@@ -37772,6 +37817,7 @@ export namespace Prisma {
     targetAccountId?: true
     roleId?: true
     portfolioId?: true
+    status?: true
   }
 
   export type AuthzAppAccessGrantCountAggregateInputType = {
@@ -37781,6 +37827,7 @@ export namespace Prisma {
     targetAccountId?: true
     roleId?: true
     portfolioId?: true
+    status?: true
     _all?: true
   }
 
@@ -37863,6 +37910,7 @@ export namespace Prisma {
     targetAccountId: string
     roleId: string
     portfolioId: string | null
+    status: $Enums.AuthzGrantStatus
     _count: AuthzAppAccessGrantCountAggregateOutputType | null
     _min: AuthzAppAccessGrantMinAggregateOutputType | null
     _max: AuthzAppAccessGrantMaxAggregateOutputType | null
@@ -37889,6 +37937,7 @@ export namespace Prisma {
     targetAccountId?: boolean
     roleId?: boolean
     portfolioId?: boolean
+    status?: boolean
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
     targetAccount?: boolean | AccountDefaultArgs<ExtArgs>
@@ -37903,6 +37952,7 @@ export namespace Prisma {
     targetAccountId?: boolean
     roleId?: boolean
     portfolioId?: boolean
+    status?: boolean
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
     targetAccount?: boolean | AccountDefaultArgs<ExtArgs>
@@ -37917,6 +37967,7 @@ export namespace Prisma {
     targetAccountId?: boolean
     roleId?: boolean
     portfolioId?: boolean
+    status?: boolean
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
     targetAccount?: boolean | AccountDefaultArgs<ExtArgs>
@@ -37931,9 +37982,10 @@ export namespace Prisma {
     targetAccountId?: boolean
     roleId?: boolean
     portfolioId?: boolean
+    status?: boolean
   }
 
-  export type AuthzAppAccessGrantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "appId" | "accountId" | "targetAccountId" | "roleId" | "portfolioId", ExtArgs["result"]["authzAppAccessGrant"]>
+  export type AuthzAppAccessGrantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "appId" | "accountId" | "targetAccountId" | "roleId" | "portfolioId" | "status", ExtArgs["result"]["authzAppAccessGrant"]>
   export type AuthzAppAccessGrantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
@@ -37972,6 +38024,7 @@ export namespace Prisma {
       targetAccountId: string
       roleId: string
       portfolioId: string | null
+      status: $Enums.AuthzGrantStatus
     }, ExtArgs["result"]["authzAppAccessGrant"]>
     composites: {}
   }
@@ -38406,6 +38459,7 @@ export namespace Prisma {
     readonly targetAccountId: FieldRef<"AuthzAppAccessGrant", 'String'>
     readonly roleId: FieldRef<"AuthzAppAccessGrant", 'String'>
     readonly portfolioId: FieldRef<"AuthzAppAccessGrant", 'String'>
+    readonly status: FieldRef<"AuthzAppAccessGrant", 'AuthzGrantStatus'>
   }
     
 
@@ -40201,7 +40255,8 @@ export namespace Prisma {
     id: 'id',
     accountId: 'accountId',
     appId: 'appId',
-    connectedAt: 'connectedAt'
+    connectedAt: 'connectedAt',
+    details: 'details'
   };
 
   export type ApplicationConnectionScalarFieldEnum = (typeof ApplicationConnectionScalarFieldEnum)[keyof typeof ApplicationConnectionScalarFieldEnum]
@@ -40271,7 +40326,8 @@ export namespace Prisma {
     targetAccountId: 'targetAccountId',
     roleId: 'roleId',
     appId: 'appId',
-    portfolioId: 'portfolioId'
+    portfolioId: 'portfolioId',
+    status: 'status'
   };
 
   export type AuthzAccountAccessGrantScalarFieldEnum = (typeof AuthzAccountAccessGrantScalarFieldEnum)[keyof typeof AuthzAccountAccessGrantScalarFieldEnum]
@@ -40311,7 +40367,8 @@ export namespace Prisma {
     accountId: 'accountId',
     targetAccountId: 'targetAccountId',
     roleId: 'roleId',
-    portfolioId: 'portfolioId'
+    portfolioId: 'portfolioId',
+    status: 'status'
   };
 
   export type AuthzAppAccessGrantScalarFieldEnum = (typeof AuthzAppAccessGrantScalarFieldEnum)[keyof typeof AuthzAppAccessGrantScalarFieldEnum]
@@ -40429,6 +40486,20 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'AuthzGrantStatus'
+   */
+  export type EnumAuthzGrantStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthzGrantStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'AuthzGrantStatus[]'
+   */
+  export type ListEnumAuthzGrantStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthzGrantStatus[]'>
     
 
 
@@ -41897,6 +41968,7 @@ export namespace Prisma {
     accountId?: StringFilter<"ApplicationConnection"> | string
     appId?: StringFilter<"ApplicationConnection"> | string
     connectedAt?: DateTimeFilter<"ApplicationConnection"> | Date | string
+    details?: JsonNullableFilter<"ApplicationConnection">
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
   }
@@ -41906,6 +41978,7 @@ export namespace Prisma {
     accountId?: SortOrder
     appId?: SortOrder
     connectedAt?: SortOrder
+    details?: SortOrderInput | SortOrder
     account?: AccountOrderByWithRelationInput
     application?: ApplicationOrderByWithRelationInput
   }
@@ -41919,6 +41992,7 @@ export namespace Prisma {
     accountId?: StringFilter<"ApplicationConnection"> | string
     appId?: StringFilter<"ApplicationConnection"> | string
     connectedAt?: DateTimeFilter<"ApplicationConnection"> | Date | string
+    details?: JsonNullableFilter<"ApplicationConnection">
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
   }, "id" | "accountId_appId">
@@ -41928,6 +42002,7 @@ export namespace Prisma {
     accountId?: SortOrder
     appId?: SortOrder
     connectedAt?: SortOrder
+    details?: SortOrderInput | SortOrder
     _count?: ApplicationConnectionCountOrderByAggregateInput
     _max?: ApplicationConnectionMaxOrderByAggregateInput
     _min?: ApplicationConnectionMinOrderByAggregateInput
@@ -41941,6 +42016,7 @@ export namespace Prisma {
     accountId?: StringWithAggregatesFilter<"ApplicationConnection"> | string
     appId?: StringWithAggregatesFilter<"ApplicationConnection"> | string
     connectedAt?: DateTimeWithAggregatesFilter<"ApplicationConnection"> | Date | string
+    details?: JsonNullableWithAggregatesFilter<"ApplicationConnection">
   }
 
   export type ApplicationBridgeWhereInput = {
@@ -42262,6 +42338,7 @@ export namespace Prisma {
     roleId?: StringFilter<"AuthzAccountAccessGrant"> | string
     appId?: StringFilter<"AuthzAccountAccessGrant"> | string
     portfolioId?: StringNullableFilter<"AuthzAccountAccessGrant"> | string | null
+    status?: EnumAuthzGrantStatusFilter<"AuthzAccountAccessGrant"> | $Enums.AuthzGrantStatus
     owner?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     target?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     role?: XOR<AuthzRoleScalarRelationFilter, AuthzRoleWhereInput>
@@ -42276,6 +42353,7 @@ export namespace Prisma {
     roleId?: SortOrder
     appId?: SortOrder
     portfolioId?: SortOrderInput | SortOrder
+    status?: SortOrder
     owner?: AccountOrderByWithRelationInput
     target?: AccountOrderByWithRelationInput
     role?: AuthzRoleOrderByWithRelationInput
@@ -42293,6 +42371,7 @@ export namespace Prisma {
     roleId?: StringFilter<"AuthzAccountAccessGrant"> | string
     appId?: StringFilter<"AuthzAccountAccessGrant"> | string
     portfolioId?: StringNullableFilter<"AuthzAccountAccessGrant"> | string | null
+    status?: EnumAuthzGrantStatusFilter<"AuthzAccountAccessGrant"> | $Enums.AuthzGrantStatus
     owner?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     target?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     role?: XOR<AuthzRoleScalarRelationFilter, AuthzRoleWhereInput>
@@ -42307,6 +42386,7 @@ export namespace Prisma {
     roleId?: SortOrder
     appId?: SortOrder
     portfolioId?: SortOrderInput | SortOrder
+    status?: SortOrder
     _count?: AuthzAccountAccessGrantCountOrderByAggregateInput
     _max?: AuthzAccountAccessGrantMaxOrderByAggregateInput
     _min?: AuthzAccountAccessGrantMinOrderByAggregateInput
@@ -42322,6 +42402,7 @@ export namespace Prisma {
     roleId?: StringWithAggregatesFilter<"AuthzAccountAccessGrant"> | string
     appId?: StringWithAggregatesFilter<"AuthzAccountAccessGrant"> | string
     portfolioId?: StringNullableWithAggregatesFilter<"AuthzAccountAccessGrant"> | string | null
+    status?: EnumAuthzGrantStatusWithAggregatesFilter<"AuthzAccountAccessGrant"> | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAssetsAccessGrantWhereInput = {
@@ -42486,6 +42567,7 @@ export namespace Prisma {
     targetAccountId?: StringFilter<"AuthzAppAccessGrant"> | string
     roleId?: StringFilter<"AuthzAppAccessGrant"> | string
     portfolioId?: StringNullableFilter<"AuthzAppAccessGrant"> | string | null
+    status?: EnumAuthzGrantStatusFilter<"AuthzAppAccessGrant"> | $Enums.AuthzGrantStatus
     application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     targetAccount?: XOR<AccountScalarRelationFilter, AccountWhereInput>
@@ -42500,6 +42582,7 @@ export namespace Prisma {
     targetAccountId?: SortOrder
     roleId?: SortOrder
     portfolioId?: SortOrderInput | SortOrder
+    status?: SortOrder
     application?: ApplicationOrderByWithRelationInput
     account?: AccountOrderByWithRelationInput
     targetAccount?: AccountOrderByWithRelationInput
@@ -42517,6 +42600,7 @@ export namespace Prisma {
     targetAccountId?: StringFilter<"AuthzAppAccessGrant"> | string
     roleId?: StringFilter<"AuthzAppAccessGrant"> | string
     portfolioId?: StringNullableFilter<"AuthzAppAccessGrant"> | string | null
+    status?: EnumAuthzGrantStatusFilter<"AuthzAppAccessGrant"> | $Enums.AuthzGrantStatus
     application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     targetAccount?: XOR<AccountScalarRelationFilter, AccountWhereInput>
@@ -42531,6 +42615,7 @@ export namespace Prisma {
     targetAccountId?: SortOrder
     roleId?: SortOrder
     portfolioId?: SortOrderInput | SortOrder
+    status?: SortOrder
     _count?: AuthzAppAccessGrantCountOrderByAggregateInput
     _max?: AuthzAppAccessGrantMaxOrderByAggregateInput
     _min?: AuthzAppAccessGrantMinOrderByAggregateInput
@@ -42546,6 +42631,7 @@ export namespace Prisma {
     targetAccountId?: StringWithAggregatesFilter<"AuthzAppAccessGrant"> | string
     roleId?: StringWithAggregatesFilter<"AuthzAppAccessGrant"> | string
     portfolioId?: StringNullableWithAggregatesFilter<"AuthzAppAccessGrant"> | string | null
+    status?: EnumAuthzGrantStatusWithAggregatesFilter<"AuthzAppAccessGrant"> | $Enums.AuthzGrantStatus
   }
 
   export type IdentityWhereInput = {
@@ -44164,6 +44250,7 @@ export namespace Prisma {
   export type ApplicationConnectionCreateInput = {
     id?: string
     connectedAt?: Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
     account: AccountCreateNestedOneWithoutAppConnectionsInput
     application: ApplicationCreateNestedOneWithoutConnectionsInput
   }
@@ -44173,11 +44260,13 @@ export namespace Prisma {
     accountId: string
     appId: string
     connectedAt?: Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ApplicationConnectionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
     account?: AccountUpdateOneRequiredWithoutAppConnectionsNestedInput
     application?: ApplicationUpdateOneRequiredWithoutConnectionsNestedInput
   }
@@ -44187,6 +44276,7 @@ export namespace Prisma {
     accountId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ApplicationConnectionCreateManyInput = {
@@ -44194,11 +44284,13 @@ export namespace Prisma {
     accountId: string
     appId: string
     connectedAt?: Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ApplicationConnectionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ApplicationConnectionUncheckedUpdateManyInput = {
@@ -44206,6 +44298,7 @@ export namespace Prisma {
     accountId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ApplicationBridgeCreateInput = {
@@ -44525,6 +44618,7 @@ export namespace Prisma {
 
   export type AuthzAccountAccessGrantCreateInput = {
     id?: string
+    status?: $Enums.AuthzGrantStatus
     owner: AccountCreateNestedOneWithoutAuthzOwnedGrantsInput
     target: AccountCreateNestedOneWithoutAuthzTargetGrantsInput
     role: AuthzRoleCreateNestedOneWithoutGrantsInput
@@ -44539,10 +44633,12 @@ export namespace Prisma {
     roleId: string
     appId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
     owner?: AccountUpdateOneRequiredWithoutAuthzOwnedGrantsNestedInput
     target?: AccountUpdateOneRequiredWithoutAuthzTargetGrantsNestedInput
     role?: AuthzRoleUpdateOneRequiredWithoutGrantsNestedInput
@@ -44557,6 +44653,7 @@ export namespace Prisma {
     roleId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantCreateManyInput = {
@@ -44566,10 +44663,12 @@ export namespace Prisma {
     roleId: string
     appId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantUncheckedUpdateManyInput = {
@@ -44579,6 +44678,7 @@ export namespace Prisma {
     roleId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAssetsAccessGrantCreateInput = {
@@ -44731,6 +44831,7 @@ export namespace Prisma {
 
   export type AuthzAppAccessGrantCreateInput = {
     id?: string
+    status?: $Enums.AuthzGrantStatus
     application: ApplicationCreateNestedOneWithoutAuthzAppAccessGrantsInput
     account: AccountCreateNestedOneWithoutAuthzAppOwnedGrantsInput
     targetAccount: AccountCreateNestedOneWithoutAuthzAppTargetGrantsInput
@@ -44745,10 +44846,12 @@ export namespace Prisma {
     targetAccountId: string
     roleId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
     application?: ApplicationUpdateOneRequiredWithoutAuthzAppAccessGrantsNestedInput
     account?: AccountUpdateOneRequiredWithoutAuthzAppOwnedGrantsNestedInput
     targetAccount?: AccountUpdateOneRequiredWithoutAuthzAppTargetGrantsNestedInput
@@ -44763,6 +44866,7 @@ export namespace Prisma {
     targetAccountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantCreateManyInput = {
@@ -44772,10 +44876,12 @@ export namespace Prisma {
     targetAccountId: string
     roleId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantUncheckedUpdateManyInput = {
@@ -44785,6 +44891,7 @@ export namespace Prisma {
     targetAccountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type IdentityCreateInput = {
@@ -45958,6 +46065,7 @@ export namespace Prisma {
     accountId?: SortOrder
     appId?: SortOrder
     connectedAt?: SortOrder
+    details?: SortOrder
   }
 
   export type ApplicationConnectionMaxOrderByAggregateInput = {
@@ -46127,6 +46235,13 @@ export namespace Prisma {
     roleName?: SortOrder
   }
 
+  export type EnumAuthzGrantStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthzGrantStatus | EnumAuthzGrantStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthzGrantStatus[] | ListEnumAuthzGrantStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthzGrantStatus[] | ListEnumAuthzGrantStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthzGrantStatusFilter<$PrismaModel> | $Enums.AuthzGrantStatus
+  }
+
   export type PortfolioNullableScalarRelationFilter = {
     is?: PortfolioWhereInput | null
     isNot?: PortfolioWhereInput | null
@@ -46139,6 +46254,7 @@ export namespace Prisma {
     roleId?: SortOrder
     appId?: SortOrder
     portfolioId?: SortOrder
+    status?: SortOrder
   }
 
   export type AuthzAccountAccessGrantMaxOrderByAggregateInput = {
@@ -46148,6 +46264,7 @@ export namespace Prisma {
     roleId?: SortOrder
     appId?: SortOrder
     portfolioId?: SortOrder
+    status?: SortOrder
   }
 
   export type AuthzAccountAccessGrantMinOrderByAggregateInput = {
@@ -46157,6 +46274,17 @@ export namespace Prisma {
     roleId?: SortOrder
     appId?: SortOrder
     portfolioId?: SortOrder
+    status?: SortOrder
+  }
+
+  export type EnumAuthzGrantStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthzGrantStatus | EnumAuthzGrantStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthzGrantStatus[] | ListEnumAuthzGrantStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthzGrantStatus[] | ListEnumAuthzGrantStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthzGrantStatusWithAggregatesFilter<$PrismaModel> | $Enums.AuthzGrantStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAuthzGrantStatusFilter<$PrismaModel>
+    _max?: NestedEnumAuthzGrantStatusFilter<$PrismaModel>
   }
 
   export type PortfolioAssetScalarRelationFilter = {
@@ -46241,6 +46369,7 @@ export namespace Prisma {
     targetAccountId?: SortOrder
     roleId?: SortOrder
     portfolioId?: SortOrder
+    status?: SortOrder
   }
 
   export type AuthzAppAccessGrantMaxOrderByAggregateInput = {
@@ -46250,6 +46379,7 @@ export namespace Prisma {
     targetAccountId?: SortOrder
     roleId?: SortOrder
     portfolioId?: SortOrder
+    status?: SortOrder
   }
 
   export type AuthzAppAccessGrantMinOrderByAggregateInput = {
@@ -46259,6 +46389,7 @@ export namespace Prisma {
     targetAccountId?: SortOrder
     roleId?: SortOrder
     portfolioId?: SortOrder
+    status?: SortOrder
   }
 
   export type IdentityTrackIdAppIdCompoundUniqueInput = {
@@ -48616,6 +48747,10 @@ export namespace Prisma {
     connect?: PortfolioWhereUniqueInput
   }
 
+  export type EnumAuthzGrantStatusFieldUpdateOperationsInput = {
+    set?: $Enums.AuthzGrantStatus
+  }
+
   export type AccountUpdateOneRequiredWithoutAuthzOwnedGrantsNestedInput = {
     create?: XOR<AccountCreateWithoutAuthzOwnedGrantsInput, AccountUncheckedCreateWithoutAuthzOwnedGrantsInput>
     connectOrCreate?: AccountCreateOrConnectWithoutAuthzOwnedGrantsInput
@@ -49041,6 +49176,23 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type NestedEnumAuthzGrantStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthzGrantStatus | EnumAuthzGrantStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthzGrantStatus[] | ListEnumAuthzGrantStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthzGrantStatus[] | ListEnumAuthzGrantStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthzGrantStatusFilter<$PrismaModel> | $Enums.AuthzGrantStatus
+  }
+
+  export type NestedEnumAuthzGrantStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthzGrantStatus | EnumAuthzGrantStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthzGrantStatus[] | ListEnumAuthzGrantStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthzGrantStatus[] | ListEnumAuthzGrantStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthzGrantStatusWithAggregatesFilter<$PrismaModel> | $Enums.AuthzGrantStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAuthzGrantStatusFilter<$PrismaModel>
+    _max?: NestedEnumAuthzGrantStatusFilter<$PrismaModel>
+  }
+
   export type AccountTypeBrandCreateWithoutAccountInput = {
     brandName?: string | null
     isLegalEntity?: boolean
@@ -49088,6 +49240,7 @@ export namespace Prisma {
   export type ApplicationConnectionCreateWithoutAccountInput = {
     id?: string
     connectedAt?: Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
     application: ApplicationCreateNestedOneWithoutConnectionsInput
   }
 
@@ -49095,6 +49248,7 @@ export namespace Prisma {
     id?: string
     appId: string
     connectedAt?: Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ApplicationConnectionCreateOrConnectWithoutAccountInput = {
@@ -49329,6 +49483,7 @@ export namespace Prisma {
 
   export type AuthzAccountAccessGrantCreateWithoutOwnerInput = {
     id?: string
+    status?: $Enums.AuthzGrantStatus
     target: AccountCreateNestedOneWithoutAuthzTargetGrantsInput
     role: AuthzRoleCreateNestedOneWithoutGrantsInput
     application: ApplicationCreateNestedOneWithoutAuthzAccountAccessGrantsInput
@@ -49341,6 +49496,7 @@ export namespace Prisma {
     roleId: string
     appId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantCreateOrConnectWithoutOwnerInput = {
@@ -49355,6 +49511,7 @@ export namespace Prisma {
 
   export type AuthzAccountAccessGrantCreateWithoutTargetInput = {
     id?: string
+    status?: $Enums.AuthzGrantStatus
     owner: AccountCreateNestedOneWithoutAuthzOwnedGrantsInput
     role: AuthzRoleCreateNestedOneWithoutGrantsInput
     application: ApplicationCreateNestedOneWithoutAuthzAccountAccessGrantsInput
@@ -49367,6 +49524,7 @@ export namespace Prisma {
     roleId: string
     appId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantCreateOrConnectWithoutTargetInput = {
@@ -49409,6 +49567,7 @@ export namespace Prisma {
 
   export type AuthzAppAccessGrantCreateWithoutAccountInput = {
     id?: string
+    status?: $Enums.AuthzGrantStatus
     application: ApplicationCreateNestedOneWithoutAuthzAppAccessGrantsInput
     targetAccount: AccountCreateNestedOneWithoutAuthzAppTargetGrantsInput
     role: AuthzRoleCreateNestedOneWithoutAppGrantsInput
@@ -49421,6 +49580,7 @@ export namespace Prisma {
     targetAccountId: string
     roleId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantCreateOrConnectWithoutAccountInput = {
@@ -49435,6 +49595,7 @@ export namespace Prisma {
 
   export type AuthzAppAccessGrantCreateWithoutTargetAccountInput = {
     id?: string
+    status?: $Enums.AuthzGrantStatus
     application: ApplicationCreateNestedOneWithoutAuthzAppAccessGrantsInput
     account: AccountCreateNestedOneWithoutAuthzAppOwnedGrantsInput
     role: AuthzRoleCreateNestedOneWithoutAppGrantsInput
@@ -49447,6 +49608,7 @@ export namespace Prisma {
     accountId: string
     roleId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantCreateOrConnectWithoutTargetAccountInput = {
@@ -49934,6 +50096,7 @@ export namespace Prisma {
     accountId?: StringFilter<"ApplicationConnection"> | string
     appId?: StringFilter<"ApplicationConnection"> | string
     connectedAt?: DateTimeFilter<"ApplicationConnection"> | Date | string
+    details?: JsonNullableFilter<"ApplicationConnection">
   }
 
   export type AuthnMethodUpsertWithWhereUniqueWithoutAccountInput = {
@@ -50192,6 +50355,7 @@ export namespace Prisma {
     roleId?: StringFilter<"AuthzAccountAccessGrant"> | string
     appId?: StringFilter<"AuthzAccountAccessGrant"> | string
     portfolioId?: StringNullableFilter<"AuthzAccountAccessGrant"> | string | null
+    status?: EnumAuthzGrantStatusFilter<"AuthzAccountAccessGrant"> | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantUpsertWithWhereUniqueWithoutTargetInput = {
@@ -50265,6 +50429,7 @@ export namespace Prisma {
     targetAccountId?: StringFilter<"AuthzAppAccessGrant"> | string
     roleId?: StringFilter<"AuthzAppAccessGrant"> | string
     portfolioId?: StringNullableFilter<"AuthzAppAccessGrant"> | string | null
+    status?: EnumAuthzGrantStatusFilter<"AuthzAppAccessGrant"> | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantUpsertWithWhereUniqueWithoutTargetAccountInput = {
@@ -52740,6 +52905,7 @@ export namespace Prisma {
   export type ApplicationConnectionCreateWithoutApplicationInput = {
     id?: string
     connectedAt?: Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
     account: AccountCreateNestedOneWithoutAppConnectionsInput
   }
 
@@ -52747,6 +52913,7 @@ export namespace Prisma {
     id?: string
     accountId: string
     connectedAt?: Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ApplicationConnectionCreateOrConnectWithoutApplicationInput = {
@@ -52869,6 +53036,7 @@ export namespace Prisma {
 
   export type AuthzAccountAccessGrantCreateWithoutApplicationInput = {
     id?: string
+    status?: $Enums.AuthzGrantStatus
     owner: AccountCreateNestedOneWithoutAuthzOwnedGrantsInput
     target: AccountCreateNestedOneWithoutAuthzTargetGrantsInput
     role: AuthzRoleCreateNestedOneWithoutGrantsInput
@@ -52881,6 +53049,7 @@ export namespace Prisma {
     targetAccountId: string
     roleId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantCreateOrConnectWithoutApplicationInput = {
@@ -52895,6 +53064,7 @@ export namespace Prisma {
 
   export type AuthzAppAccessGrantCreateWithoutApplicationInput = {
     id?: string
+    status?: $Enums.AuthzGrantStatus
     account: AccountCreateNestedOneWithoutAuthzAppOwnedGrantsInput
     targetAccount: AccountCreateNestedOneWithoutAuthzAppTargetGrantsInput
     role: AuthzRoleCreateNestedOneWithoutAppGrantsInput
@@ -52907,6 +53077,7 @@ export namespace Prisma {
     targetAccountId: string
     roleId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantCreateOrConnectWithoutApplicationInput = {
@@ -53183,6 +53354,7 @@ export namespace Prisma {
 
   export type AuthzAccountAccessGrantCreateWithoutPortfolioInput = {
     id?: string
+    status?: $Enums.AuthzGrantStatus
     owner: AccountCreateNestedOneWithoutAuthzOwnedGrantsInput
     target: AccountCreateNestedOneWithoutAuthzTargetGrantsInput
     role: AuthzRoleCreateNestedOneWithoutGrantsInput
@@ -53195,6 +53367,7 @@ export namespace Prisma {
     targetAccountId: string
     roleId: string
     appId: string
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantCreateOrConnectWithoutPortfolioInput = {
@@ -53237,6 +53410,7 @@ export namespace Prisma {
 
   export type AuthzAppAccessGrantCreateWithoutPortfolioInput = {
     id?: string
+    status?: $Enums.AuthzGrantStatus
     application: ApplicationCreateNestedOneWithoutAuthzAppAccessGrantsInput
     account: AccountCreateNestedOneWithoutAuthzAppOwnedGrantsInput
     targetAccount: AccountCreateNestedOneWithoutAuthzAppTargetGrantsInput
@@ -53249,6 +53423,7 @@ export namespace Prisma {
     accountId: string
     targetAccountId: string
     roleId: string
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantCreateOrConnectWithoutPortfolioInput = {
@@ -54690,6 +54865,7 @@ export namespace Prisma {
 
   export type AuthzAccountAccessGrantCreateWithoutRoleInput = {
     id?: string
+    status?: $Enums.AuthzGrantStatus
     owner: AccountCreateNestedOneWithoutAuthzOwnedGrantsInput
     target: AccountCreateNestedOneWithoutAuthzTargetGrantsInput
     application: ApplicationCreateNestedOneWithoutAuthzAccountAccessGrantsInput
@@ -54702,6 +54878,7 @@ export namespace Prisma {
     targetAccountId: string
     appId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantCreateOrConnectWithoutRoleInput = {
@@ -54744,6 +54921,7 @@ export namespace Prisma {
 
   export type AuthzAppAccessGrantCreateWithoutRoleInput = {
     id?: string
+    status?: $Enums.AuthzGrantStatus
     application: ApplicationCreateNestedOneWithoutAuthzAppAccessGrantsInput
     account: AccountCreateNestedOneWithoutAuthzAppOwnedGrantsInput
     targetAccount: AccountCreateNestedOneWithoutAuthzAppTargetGrantsInput
@@ -54756,6 +54934,7 @@ export namespace Prisma {
     accountId: string
     targetAccountId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantCreateOrConnectWithoutRoleInput = {
@@ -56825,6 +57004,7 @@ export namespace Prisma {
     id?: string
     appId: string
     connectedAt?: Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthnMethodCreateManyAccountInput = {
@@ -56903,6 +57083,7 @@ export namespace Prisma {
     roleId: string
     appId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantCreateManyTargetInput = {
@@ -56911,6 +57092,7 @@ export namespace Prisma {
     roleId: string
     appId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAssetsAccessGrantCreateManyAccountInput = {
@@ -56928,6 +57110,7 @@ export namespace Prisma {
     targetAccountId: string
     roleId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantCreateManyTargetAccountInput = {
@@ -56936,6 +57119,7 @@ export namespace Prisma {
     accountId: string
     roleId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type PermitCreateManyAccountInput = {
@@ -57030,6 +57214,7 @@ export namespace Prisma {
   export type ApplicationConnectionUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
     application?: ApplicationUpdateOneRequiredWithoutConnectionsNestedInput
   }
 
@@ -57037,12 +57222,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ApplicationConnectionUncheckedUpdateManyWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthnMethodUpdateWithoutAccountInput = {
@@ -57257,6 +57444,7 @@ export namespace Prisma {
 
   export type AuthzAccountAccessGrantUpdateWithoutOwnerInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
     target?: AccountUpdateOneRequiredWithoutAuthzTargetGrantsNestedInput
     role?: AuthzRoleUpdateOneRequiredWithoutGrantsNestedInput
     application?: ApplicationUpdateOneRequiredWithoutAuthzAccountAccessGrantsNestedInput
@@ -57269,6 +57457,7 @@ export namespace Prisma {
     roleId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantUncheckedUpdateManyWithoutOwnerInput = {
@@ -57277,10 +57466,12 @@ export namespace Prisma {
     roleId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantUpdateWithoutTargetInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
     owner?: AccountUpdateOneRequiredWithoutAuthzOwnedGrantsNestedInput
     role?: AuthzRoleUpdateOneRequiredWithoutGrantsNestedInput
     application?: ApplicationUpdateOneRequiredWithoutAuthzAccountAccessGrantsNestedInput
@@ -57293,6 +57484,7 @@ export namespace Prisma {
     roleId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantUncheckedUpdateManyWithoutTargetInput = {
@@ -57301,6 +57493,7 @@ export namespace Prisma {
     roleId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAssetsAccessGrantUpdateWithoutAccountInput = {
@@ -57332,6 +57525,7 @@ export namespace Prisma {
 
   export type AuthzAppAccessGrantUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
     application?: ApplicationUpdateOneRequiredWithoutAuthzAppAccessGrantsNestedInput
     targetAccount?: AccountUpdateOneRequiredWithoutAuthzAppTargetGrantsNestedInput
     role?: AuthzRoleUpdateOneRequiredWithoutAppGrantsNestedInput
@@ -57344,6 +57538,7 @@ export namespace Prisma {
     targetAccountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantUncheckedUpdateManyWithoutAccountInput = {
@@ -57352,10 +57547,12 @@ export namespace Prisma {
     targetAccountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantUpdateWithoutTargetAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
     application?: ApplicationUpdateOneRequiredWithoutAuthzAppAccessGrantsNestedInput
     account?: AccountUpdateOneRequiredWithoutAuthzAppOwnedGrantsNestedInput
     role?: AuthzRoleUpdateOneRequiredWithoutAppGrantsNestedInput
@@ -57368,6 +57565,7 @@ export namespace Prisma {
     accountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantUncheckedUpdateManyWithoutTargetAccountInput = {
@@ -57376,6 +57574,7 @@ export namespace Prisma {
     accountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type PermitUpdateWithoutAccountInput = {
@@ -57723,6 +57922,7 @@ export namespace Prisma {
     id?: string
     accountId: string
     connectedAt?: Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ApplicationBridgeCreateManyApplicationInput = {
@@ -57760,6 +57960,7 @@ export namespace Prisma {
     targetAccountId: string
     roleId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantCreateManyApplicationInput = {
@@ -57768,6 +57969,7 @@ export namespace Prisma {
     targetAccountId: string
     roleId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type IdentityCreateManyApplicationInput = {
@@ -57782,6 +57984,7 @@ export namespace Prisma {
   export type ApplicationConnectionUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
     account?: AccountUpdateOneRequiredWithoutAppConnectionsNestedInput
   }
 
@@ -57789,12 +57992,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ApplicationConnectionUncheckedUpdateManyWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ApplicationBridgeUpdateWithoutApplicationInput = {
@@ -57896,6 +58101,7 @@ export namespace Prisma {
 
   export type AuthzAccountAccessGrantUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
     owner?: AccountUpdateOneRequiredWithoutAuthzOwnedGrantsNestedInput
     target?: AccountUpdateOneRequiredWithoutAuthzTargetGrantsNestedInput
     role?: AuthzRoleUpdateOneRequiredWithoutGrantsNestedInput
@@ -57908,6 +58114,7 @@ export namespace Prisma {
     targetAccountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationInput = {
@@ -57916,10 +58123,12 @@ export namespace Prisma {
     targetAccountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
     account?: AccountUpdateOneRequiredWithoutAuthzAppOwnedGrantsNestedInput
     targetAccount?: AccountUpdateOneRequiredWithoutAuthzAppTargetGrantsNestedInput
     role?: AuthzRoleUpdateOneRequiredWithoutAppGrantsNestedInput
@@ -57932,6 +58141,7 @@ export namespace Prisma {
     targetAccountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantUncheckedUpdateManyWithoutApplicationInput = {
@@ -57940,6 +58150,7 @@ export namespace Prisma {
     targetAccountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type IdentityUpdateWithoutApplicationInput = {
@@ -57988,6 +58199,7 @@ export namespace Prisma {
     targetAccountId: string
     roleId: string
     appId: string
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAssetsAccessGrantCreateManyPortfolioInput = {
@@ -58005,6 +58217,7 @@ export namespace Prisma {
     accountId: string
     targetAccountId: string
     roleId: string
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type PortfolioAssetUpdateWithoutPortfolioInput = {
@@ -58050,6 +58263,7 @@ export namespace Prisma {
 
   export type AuthzAccountAccessGrantUpdateWithoutPortfolioInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
     owner?: AccountUpdateOneRequiredWithoutAuthzOwnedGrantsNestedInput
     target?: AccountUpdateOneRequiredWithoutAuthzTargetGrantsNestedInput
     role?: AuthzRoleUpdateOneRequiredWithoutGrantsNestedInput
@@ -58062,6 +58276,7 @@ export namespace Prisma {
     targetAccountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantUncheckedUpdateManyWithoutPortfolioInput = {
@@ -58070,6 +58285,7 @@ export namespace Prisma {
     targetAccountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAssetsAccessGrantUpdateWithoutPortfolioInput = {
@@ -58101,6 +58317,7 @@ export namespace Prisma {
 
   export type AuthzAppAccessGrantUpdateWithoutPortfolioInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
     application?: ApplicationUpdateOneRequiredWithoutAuthzAppAccessGrantsNestedInput
     account?: AccountUpdateOneRequiredWithoutAuthzAppOwnedGrantsNestedInput
     targetAccount?: AccountUpdateOneRequiredWithoutAuthzAppTargetGrantsNestedInput
@@ -58113,6 +58330,7 @@ export namespace Prisma {
     accountId?: StringFieldUpdateOperationsInput | string
     targetAccountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantUncheckedUpdateManyWithoutPortfolioInput = {
@@ -58121,6 +58339,7 @@ export namespace Prisma {
     accountId?: StringFieldUpdateOperationsInput | string
     targetAccountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAssetsAccessGrantCreateManyAssetInput = {
@@ -58210,6 +58429,7 @@ export namespace Prisma {
     targetAccountId: string
     appId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzAssetsAccessGrantCreateManyRoleInput = {
@@ -58227,6 +58447,7 @@ export namespace Prisma {
     accountId: string
     targetAccountId: string
     portfolioId?: string | null
+    status?: $Enums.AuthzGrantStatus
   }
 
   export type AuthzRoleCapabilityUpdateWithoutRoleInput = {
@@ -58258,6 +58479,7 @@ export namespace Prisma {
 
   export type AuthzAccountAccessGrantUpdateWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
     owner?: AccountUpdateOneRequiredWithoutAuthzOwnedGrantsNestedInput
     target?: AccountUpdateOneRequiredWithoutAuthzTargetGrantsNestedInput
     application?: ApplicationUpdateOneRequiredWithoutAuthzAccountAccessGrantsNestedInput
@@ -58270,6 +58492,7 @@ export namespace Prisma {
     targetAccountId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAccountAccessGrantUncheckedUpdateManyWithoutRoleInput = {
@@ -58278,6 +58501,7 @@ export namespace Prisma {
     targetAccountId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAssetsAccessGrantUpdateWithoutRoleInput = {
@@ -58309,6 +58533,7 @@ export namespace Prisma {
 
   export type AuthzAppAccessGrantUpdateWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
     application?: ApplicationUpdateOneRequiredWithoutAuthzAppAccessGrantsNestedInput
     account?: AccountUpdateOneRequiredWithoutAuthzAppOwnedGrantsNestedInput
     targetAccount?: AccountUpdateOneRequiredWithoutAuthzAppTargetGrantsNestedInput
@@ -58321,6 +58546,7 @@ export namespace Prisma {
     accountId?: StringFieldUpdateOperationsInput | string
     targetAccountId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
   export type AuthzAppAccessGrantUncheckedUpdateManyWithoutRoleInput = {
@@ -58329,6 +58555,7 @@ export namespace Prisma {
     accountId?: StringFieldUpdateOperationsInput | string
     targetAccountId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuthzGrantStatusFieldUpdateOperationsInput | $Enums.AuthzGrantStatus
   }
 
 
