@@ -6,12 +6,20 @@ import { Badge } from '@/components/ui/badge';
 import { UserCircle } from '@/components/icons';
 import { getActiveAccountId } from '@/core/auth/verify';
 import { getUserProfile } from '@/services/user';
+import prisma from '@/core/helpers/prisma';
 import {
   getDirectMemberDetail,
   getPortfolioMemberDetail,
   getMyDirectRoles,
   getMyPortfolioRoles,
 } from '@/services/manage/access';
+import { RemoveMemberButton } from '../_components/remove-member-button';
+import {
+  removeDirectMember,
+  cancelDirectInvitation,
+  removePortfolioMember,
+  cancelPortfolioInvitation,
+} from '../_components/actions';
 
 type PageProps = {
   searchParams: Promise<{ member?: string; portfolio?: string }>;
@@ -19,6 +27,43 @@ type PageProps = {
 
 const NEUPID_LOGO = 'https://neupgroup.com/assets/branding/neup.group/logo.svg';
 const FALLBACK_PHOTO = 'https://neupgroup.com/assets/user.png';
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+async function hasPendingDirectInvitation(
+  senderAccountId: string,
+  recipientAccountId: string,
+): Promise<boolean> {
+  const req = await prisma.request.findFirst({
+    where: {
+      action: 'access_invitation',
+      senderId: senderAccountId,
+      recipientId: recipientAccountId,
+      status: 'pending',
+    },
+    select: { id: true },
+  });
+  return req !== null;
+}
+
+async function hasPendingPortfolioInvitation(
+  senderAccountId: string,
+  recipientAccountId: string,
+  portfolioId: string,
+): Promise<boolean> {
+  const reqs = await prisma.request.findMany({
+    where: {
+      action: 'access_invitation',
+      senderId: senderAccountId,
+      recipientId: recipientAccountId,
+      status: 'pending',
+    },
+    select: { data: true },
+  });
+  return reqs.some(
+    (r) => (r.data as Record<string, unknown> | null)?.portfolioId === portfolioId,
+  );
+}
 
 // ── Platform avatar ───────────────────────────────────────────────────────────
 
@@ -34,29 +79,16 @@ function PlatformAvatar({
   return (
     <div className="relative shrink-0 h-14 w-14">
       <span className="flex h-14 w-14 rounded-full overflow-hidden bg-muted">
-        <Image
-          src={userPhoto}
-          alt="User photo"
-          width={56}
-          height={56}
-          className="h-full w-full object-cover"
-        />
+        <Image src={userPhoto} alt="User photo" width={56} height={56} className="h-full w-full object-cover" />
       </span>
       <span className="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-background ring-2 ring-background overflow-hidden">
-        <Image
-          src={platformLogo}
-          alt={platformName}
-          width={20}
-          height={20}
-          className="h-full w-full object-contain"
-        />
+        <Image src={platformLogo} alt={platformName} width={20} height={20} className="h-full w-full object-contain" />
       </span>
     </div>
   );
 }
 
 // ── Page header ───────────────────────────────────────────────────────────────
-// displayImage + displayName on top, description line below.
 
 function PageHeader({
   photo,
@@ -70,13 +102,7 @@ function PageHeader({
   return (
     <div className="flex items-center gap-4">
       <span className="shrink-0 rounded-lg overflow-hidden bg-muted border">
-        <Image
-          src={photo}
-          alt={displayName}
-          width={72}
-          height={72}
-          className="h-18 w-18 object-cover"
-        />
+        <Image src={photo} alt={displayName} width={72} height={72} className="h-18 w-18 object-cover" />
       </span>
       <div>
         <p className="text-lg font-semibold">{displayName}</p>
@@ -104,23 +130,17 @@ function RoleCard({
   return (
     <div className="flex items-center gap-4 px-4 py-3">
       {avatar}
-
       <div className="grid gap-1 min-w-0">
         {avatar ? (
-          contextName && (
-            <p className="text-base font-semibold">{contextName}</p>
-          )
+          contextName && <p className="text-base font-semibold">{contextName}</p>
         ) : (
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-base font-semibold capitalize">{platformLabel}</span>
             {contextName && (
-              <Badge variant="secondary" className="text-xs font-normal">
-                {contextName}
-              </Badge>
+              <Badge variant="secondary" className="text-xs font-normal">{contextName}</Badge>
             )}
           </div>
         )}
-
         <p className="text-sm text-muted-foreground">
           <span className="font-medium text-foreground">{roleName}</span>
           {roleDescription && (
@@ -139,13 +159,15 @@ function RoleCard({
 
 function EmptyRoles({ message }: { message: string }) {
   return (
-    <div className="flex flex-col items-center gap-2 py-16 text-center">
-      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-        <UserCircle className="h-6 w-6 text-muted-foreground" />
-      </span>
-      <p className="font-medium">No roles assigned</p>
-      <p className="text-sm text-muted-foreground max-w-xs">{message}</p>
-    </div>
+    <Card>
+      <CardContent className="flex flex-col items-center gap-2 py-16 text-center">
+        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+          <UserCircle className="h-6 w-6 text-muted-foreground" />
+        </span>
+        <p className="font-medium">No roles assigned</p>
+        <p className="text-sm text-muted-foreground max-w-xs">{message}</p>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -171,15 +193,11 @@ async function MyDirectRolesView() {
   return (
     <div className="grid gap-6">
       <BackButton href="/access" />
-
       <PageHeader
         photo={userPhoto}
         displayName={displayName}
-        description={
-          <>Roles assigned to <span className="font-medium text-foreground">{displayName}</span> for account of <span className="font-medium text-foreground">{data.ownerName}</span></>
-        }
+        description={<>Roles assigned to <span className="font-medium text-foreground">{displayName}</span> for account of <span className="font-medium text-foreground">{data.ownerName}</span></>}
       />
-
       {data.roles.length > 0 ? (
         <Card>
           <CardContent className="divide-y p-0">
@@ -220,15 +238,11 @@ async function MyPortfolioRolesView({ portfolioId }: { portfolioId: string }) {
   return (
     <div className="grid gap-6">
       <BackButton href={`/access?portfolio=${portfolioId}`} />
-
       <PageHeader
         photo={userPhoto}
         displayName={displayName}
-        description={
-          <>Role assigned to <span className="font-medium text-foreground">{displayName}</span> on portfolio <span className="font-medium text-foreground">{data.portfolioName}</span></>
-        }
+        description={<>Role assigned to <span className="font-medium text-foreground">{displayName}</span> on portfolio <span className="font-medium text-foreground">{data.portfolioName}</span></>}
       />
-
       {data.roles.length > 0 ? (
         <Card>
           <CardContent className="divide-y p-0">
@@ -256,9 +270,10 @@ async function MemberDirectRolesView({ memberAccountId }: { memberAccountId: str
   const accountId = await getActiveAccountId();
   if (!accountId) notFound();
 
-  const [detail, ownerProfile] = await Promise.all([
+  const [detail, ownerProfile, isPending] = await Promise.all([
     getDirectMemberDetail(accountId, memberAccountId),
     getUserProfile(accountId),
+    hasPendingDirectInvitation(accountId, memberAccountId),
   ]);
   if (!detail) notFound();
 
@@ -276,9 +291,7 @@ async function MemberDirectRolesView({ memberAccountId }: { memberAccountId: str
       <PageHeader
         photo={userPhoto}
         displayName={detail.displayName}
-        description={
-          <>Roles assigned to <span className="font-medium text-foreground">{detail.displayName}</span> for account of <span className="font-medium text-foreground">{ownerName}</span></>
-        }
+        description={<>Roles assigned to <span className="font-medium text-foreground">{detail.displayName}</span> for account of <span className="font-medium text-foreground">{ownerName}</span></>}
       />
 
       {detail.roles.length > 0 ? (
@@ -299,6 +312,27 @@ async function MemberDirectRolesView({ memberAccountId }: { memberAccountId: str
       ) : (
         <EmptyRoles message="This member has no roles assigned on your account." />
       )}
+
+      <div className="flex justify-start">
+        {isPending ? (
+          <RemoveMemberButton
+            label="Cancel Invitation"
+            confirmTitle="Cancel invitation?"
+            confirmDescription={`This will cancel the pending access invitation sent to ${detail.displayName}. They will no longer be able to accept it.`}
+            action={cancelDirectInvitation.bind(null, memberAccountId)}
+            redirectTo="/access/member"
+            variant="outline"
+          />
+        ) : (
+          <RemoveMemberButton
+            label="Remove All Access"
+            confirmTitle="Remove all access?"
+            confirmDescription={`This will remove all roles ${detail.displayName} holds on your account. This cannot be undone.`}
+            action={removeDirectMember.bind(null, memberAccountId)}
+            redirectTo="/access/member"
+          />
+        )}
+      </div>
     </div>
   );
 }
@@ -312,9 +346,13 @@ async function MemberPortfolioRolesView({
   memberAccountId: string;
   portfolioId: string;
 }) {
-  const [detail, memberProfile] = await Promise.all([
+  const accountId = await getActiveAccountId();
+  if (!accountId) notFound();
+
+  const [detail, memberProfile, isPending] = await Promise.all([
     getPortfolioMemberDetail(portfolioId, memberAccountId),
     getUserProfile(memberAccountId),
+    hasPendingPortfolioInvitation(accountId, memberAccountId, portfolioId),
   ]);
   if (!detail) notFound();
 
@@ -327,9 +365,7 @@ async function MemberPortfolioRolesView({
       <PageHeader
         photo={userPhoto}
         displayName={detail.displayName}
-        description={
-          <>Role assigned to <span className="font-medium text-foreground">{detail.displayName}</span> on portfolio <span className="font-medium text-foreground">{detail.portfolioName}</span></>
-        }
+        description={<>Role assigned to <span className="font-medium text-foreground">{detail.displayName}</span> on portfolio <span className="font-medium text-foreground">{detail.portfolioName}</span></>}
       />
 
       {detail.roles.length > 0 ? (
@@ -349,6 +385,27 @@ async function MemberPortfolioRolesView({
       ) : (
         <EmptyRoles message="This member has no roles assigned on assets in this portfolio." />
       )}
+
+      <div className="flex justify-start">
+        {isPending ? (
+          <RemoveMemberButton
+            label="Cancel Invitation"
+            confirmTitle="Cancel invitation?"
+            confirmDescription={`This will cancel the pending invitation for ${detail.displayName} to join portfolio "${detail.portfolioName}".`}
+            action={cancelPortfolioInvitation.bind(null, portfolioId, memberAccountId)}
+            redirectTo={`/access/member?portfolio=${portfolioId}`}
+            variant="outline"
+          />
+        ) : (
+          <RemoveMemberButton
+            label="Remove from Portfolio"
+            confirmTitle="Remove from portfolio?"
+            confirmDescription={`This will remove ${detail.displayName} from portfolio "${detail.portfolioName}" and revoke all their asset roles within it.`}
+            action={removePortfolioMember.bind(null, portfolioId, memberAccountId)}
+            redirectTo={`/access/member?portfolio=${portfolioId}`}
+          />
+        )}
+      </div>
     </div>
   );
 }
@@ -360,12 +417,7 @@ export default async function RolePage({ searchParams }: PageProps) {
 
   // /access/role?member=[id]&portfolio=[id]
   if (memberAccountId && portfolioId) {
-    return (
-      <MemberPortfolioRolesView
-        memberAccountId={memberAccountId}
-        portfolioId={portfolioId}
-      />
-    );
+    return <MemberPortfolioRolesView memberAccountId={memberAccountId} portfolioId={portfolioId} />;
   }
 
   // /access/role?member=[id]

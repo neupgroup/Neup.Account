@@ -175,3 +175,129 @@ export async function getSelectableAssets(
 
   return assets;
 }
+
+// ── Member removal & invitation cancellation ──────────────────────────────────
+
+import { revalidatePath } from 'next/cache';
+import { logActivity } from '@/services/log-actions';
+import { removeAssetGroupMember } from '@/services/manage/access/assets';
+
+/**
+ * Removes all direct (non-portfolio) access grants a member holds on the
+ * active account, then revalidates the access pages.
+ */
+export async function removeDirectMember(
+  memberAccountId: string,
+): Promise<{ success: boolean; error?: string }> {
+  const ownerAccountId = await getActiveAccountId();
+  if (!ownerAccountId) return { success: false, error: 'Not authenticated.' };
+
+  try {
+    await prisma.authzAccountAccessGrant.deleteMany({
+      where: {
+        ownerAccountId,
+        targetAccountId: memberAccountId,
+        appId: 'neup.account',
+        portfolioId: null,
+      },
+    });
+
+    await logActivity(ownerAccountId, `Removed all direct access for ${memberAccountId}`, 'Completed');
+    revalidatePath('/access');
+    revalidatePath('/access/member');
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `removeDirectMember:${memberAccountId}`);
+    return { success: false, error: 'Failed to remove access.' };
+  }
+}
+
+/**
+ * Cancels a pending direct (non-portfolio) access invitation sent to a member.
+ */
+export async function cancelDirectInvitation(
+  recipientAccountId: string,
+): Promise<{ success: boolean; error?: string }> {
+  const senderAccountId = await getActiveAccountId();
+  if (!senderAccountId) return { success: false, error: 'Not authenticated.' };
+
+  try {
+    await prisma.request.deleteMany({
+      where: {
+        action: 'access_invitation',
+        senderId: senderAccountId,
+        recipientId: recipientAccountId,
+        status: 'pending',
+      },
+    });
+
+    revalidatePath('/access');
+    revalidatePath('/access/member');
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `cancelDirectInvitation:${recipientAccountId}`);
+    return { success: false, error: 'Failed to cancel invitation.' };
+  }
+}
+
+/**
+ * Removes a member from a portfolio by looking up their portfolioMember row
+ * and delegating to removeAssetGroupMember.
+ */
+export async function removePortfolioMember(
+  portfolioId: string,
+  memberAccountId: string,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const member = await prisma.portfolioMember.findFirst({
+      where: { portfolioId, accountId: memberAccountId },
+      select: { id: true },
+    });
+
+    if (!member) return { success: false, error: 'Member not found in this portfolio.' };
+
+    return await removeAssetGroupMember({ groupId: portfolioId, memberId: member.id });
+  } catch (error) {
+    await logError('database', error, `removePortfolioMember:${portfolioId}:${memberAccountId}`);
+    return { success: false, error: 'Failed to remove member.' };
+  }
+}
+
+/**
+ * Cancels a pending portfolio-scoped access invitation.
+ */
+export async function cancelPortfolioInvitation(
+  portfolioId: string,
+  recipientAccountId: string,
+): Promise<{ success: boolean; error?: string }> {
+  const senderAccountId = await getActiveAccountId();
+  if (!senderAccountId) return { success: false, error: 'Not authenticated.' };
+
+  try {
+    // Portfolio invitations store portfolioId in the data JSON field
+    const pending = await prisma.request.findMany({
+      where: {
+        action: 'access_invitation',
+        senderId: senderAccountId,
+        recipientId: recipientAccountId,
+        status: 'pending',
+      },
+      select: { id: true, data: true },
+    });
+
+    const ids = pending
+      .filter((r) => (r.data as Record<string, unknown> | null)?.portfolioId === portfolioId)
+      .map((r) => r.id);
+
+    if (ids.length > 0) {
+      await prisma.request.deleteMany({ where: { id: { in: ids } } });
+    }
+
+    revalidatePath('/access');
+    revalidatePath(`/access/member?portfolio=${portfolioId}`);
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `cancelPortfolioInvitation:${portfolioId}:${recipientAccountId}`);
+    return { success: false, error: 'Failed to cancel invitation.' };
+  }
+}
