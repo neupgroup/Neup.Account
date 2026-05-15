@@ -445,8 +445,11 @@ export async function removeAssetFromGroup(input: { groupId: string; portfolioAs
  * on assets within that portfolio.
  *
  * Security rules:
- * - The portfolio owner (the member with hasFullAccess: true in their details)
- *   cannot be removed by anyone. Portfolio ownership is permanent.
+ * 1. Only a member with hasFullAccess AND isPermanent can remove another member
+ *    who also has hasFullAccess AND isPermanent.
+ * 2. A user removing themselves is only allowed if at least one other member
+ *    in the portfolio has hasFullAccess AND isPermanent (so the portfolio is
+ *    never left without a permanent full-access owner).
  */
 export async function removeAssetGroupMember(input: {
   groupId: string;
@@ -467,21 +470,56 @@ export async function removeAssetGroupMember(input: {
       return { success: false, error: 'Permission denied.' };
     }
 
-    const member = await prisma.portfolioMember.findFirst({
-      where: {
-        id: input.memberId,
-        portfolioId: input.groupId,
-      },
-      select: { id: true, accountId: true, hasFullAccess: true },
-    });
+    // Load the target member and the caller's own membership in one query.
+    const [member, callerMember] = await Promise.all([
+      prisma.portfolioMember.findFirst({
+        where: { id: input.memberId, portfolioId: input.groupId },
+        select: { id: true, accountId: true, hasFullAccess: true, isPermanent: true },
+      }),
+      prisma.portfolioMember.findFirst({
+        where: { portfolioId: input.groupId, accountId },
+        select: { hasFullAccess: true, isPermanent: true },
+      }),
+    ]);
 
     if (!member) {
       return { success: false, error: 'Member not found in this portfolio.' };
     }
 
-    // The portfolio owner (hasFullAccess: true) cannot be removed.
-    if (member.hasFullAccess) {
-      return { success: false, error: 'The portfolio owner cannot be removed.' };
+    const targetIsPermanentOwner = member.hasFullAccess && member.isPermanent;
+    const isSelfRemoval = member.accountId === accountId;
+
+    // Rule 1: removing a permanent full-access member requires the caller to
+    // also be a permanent full-access member.
+    if (targetIsPermanentOwner) {
+      const callerIsPermanentOwner = callerMember?.hasFullAccess && callerMember?.isPermanent;
+      if (!callerIsPermanentOwner) {
+        return {
+          success: false,
+          error: 'Only a permanent full-access member can remove another permanent full-access member.',
+        };
+      }
+    }
+
+    // Rule 2: self-removal is only allowed when at least one other member
+    // retains hasFullAccess AND isPermanent.
+    if (isSelfRemoval) {
+      const otherPermanentOwnerCount = await prisma.portfolioMember.count({
+        where: {
+          portfolioId: input.groupId,
+          hasFullAccess: true,
+          isPermanent: true,
+          accountId: { not: accountId },
+        },
+      });
+
+      if (otherPermanentOwnerCount === 0) {
+        return {
+          success: false,
+          error:
+            'You cannot leave the portfolio because there is no other permanent full-access member. Transfer ownership first.',
+        };
+      }
     }
 
     await prisma.$transaction(async (tx) => {

@@ -65,13 +65,40 @@ async function hasPendingPortfolioInvitation(
   );
 }
 
-/** Returns true if the given member is the portfolio owner (hasFullAccess: true). */
-async function isPortfolioOwner(portfolioId: string, memberAccountId: string): Promise<boolean> {
+type PortfolioMemberFlags = {
+  hasFullAccess: boolean;
+  isPermanent: boolean;
+};
+
+/** Returns the hasFullAccess and isPermanent flags for a portfolio member, or null if not found. */
+async function getPortfolioMemberFlags(
+  portfolioId: string,
+  memberAccountId: string,
+): Promise<PortfolioMemberFlags | null> {
   const member = await prisma.portfolioMember.findFirst({
     where: { portfolioId, accountId: memberAccountId },
-    select: { hasFullAccess: true },
+    select: { hasFullAccess: true, isPermanent: true },
   });
-  return member?.hasFullAccess === true;
+  return member ?? null;
+}
+
+/**
+ * Returns true if there is at least one permanent full-access member in the
+ * portfolio other than the given account.
+ */
+async function hasOtherPermanentOwner(
+  portfolioId: string,
+  excludeAccountId: string,
+): Promise<boolean> {
+  const count = await prisma.portfolioMember.count({
+    where: {
+      portfolioId,
+      hasFullAccess: true,
+      isPermanent: true,
+      accountId: { not: excludeAccountId },
+    },
+  });
+  return count > 0;
 }
 
 // ── Platform avatar ───────────────────────────────────────────────────────────
@@ -364,15 +391,44 @@ async function MemberPortfolioRolesView({
   const accountId = await getActiveAccountId();
   if (!accountId) notFound();
 
-  const [detail, memberProfile, isPending, isOwner] = await Promise.all([
+  const [detail, memberProfile, isPending, targetFlags, callerFlags] = await Promise.all([
     getPortfolioMemberDetail(portfolioId, memberAccountId),
     getUserProfile(memberAccountId),
     hasPendingPortfolioInvitation(accountId, memberAccountId, portfolioId),
-    isPortfolioOwner(portfolioId, memberAccountId),
+    getPortfolioMemberFlags(portfolioId, memberAccountId),
+    getPortfolioMemberFlags(portfolioId, accountId),
   ]);
   if (!detail) notFound();
 
   const userPhoto = memberProfile?.accountPhoto ?? FALLBACK_PHOTO;
+
+  const isSelfView = memberAccountId === accountId;
+  const targetIsPermanentOwner = targetFlags?.hasFullAccess === true && targetFlags?.isPermanent === true;
+  const callerIsPermanentOwner = callerFlags?.hasFullAccess === true && callerFlags?.isPermanent === true;
+
+  // Rule 1: only a permanent full-access caller can remove a permanent full-access target.
+  // Rule 2: self-removal requires another permanent full-access member to exist.
+  let canRemove = false;
+  let removeBlockedReason: string | null = null;
+
+  if (isSelfView) {
+    // Self-removal: allowed only if another permanent full-access member exists.
+    const otherOwnerExists = await hasOtherPermanentOwner(portfolioId, accountId);
+    if (otherOwnerExists) {
+      canRemove = true;
+    } else {
+      removeBlockedReason =
+        'You cannot leave this portfolio because there is no other permanent full-access member.';
+    }
+  } else {
+    // Removing someone else: blocked if target is a permanent full-access member and caller is not.
+    if (targetIsPermanentOwner && !callerIsPermanentOwner) {
+      removeBlockedReason =
+        'Only a permanent full-access member can remove another permanent full-access member.';
+    } else {
+      canRemove = true;
+    }
+  }
 
   return (
     <div className="grid gap-6">
@@ -402,7 +458,7 @@ async function MemberPortfolioRolesView({
         <EmptyRoles message="This member has no roles assigned on assets in this portfolio." />
       )}
 
-      {!isOwner && (
+      {canRemove && (
         <div className="flex justify-start">
           {isPending ? (
             <RemoveMemberButton
@@ -415,14 +471,22 @@ async function MemberPortfolioRolesView({
             />
           ) : (
             <RemoveMemberButton
-              label="Remove from Portfolio"
-              confirmTitle="Remove from portfolio?"
-              confirmDescription={`This will remove ${detail.displayName} from portfolio "${detail.portfolioName}" and revoke all their asset roles within it.`}
+              label={isSelfView ? 'Leave Portfolio' : 'Remove from Portfolio'}
+              confirmTitle={isSelfView ? 'Leave portfolio?' : 'Remove from portfolio?'}
+              confirmDescription={
+                isSelfView
+                  ? `You will be removed from portfolio "${detail.portfolioName}" and lose all your asset roles within it.`
+                  : `This will remove ${detail.displayName} from portfolio "${detail.portfolioName}" and revoke all their asset roles within it.`
+              }
               action={removePortfolioMember.bind(null, portfolioId, memberAccountId)}
-              redirectTo={`/access/member?portfolio=${portfolioId}`}
+              redirectTo={isSelfView ? '/access' : `/access/member?portfolio=${portfolioId}`}
             />
           )}
         </div>
+      )}
+
+      {!canRemove && removeBlockedReason && (
+        <p className="text-sm text-muted-foreground">{removeBlockedReason}</p>
       )}
     </div>
   );
