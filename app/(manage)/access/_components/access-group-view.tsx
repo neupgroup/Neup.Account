@@ -2,7 +2,7 @@ import { FlowLink } from '@/components/ui/flow-link';
 import { BackButton } from '@/components/ui/back-button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChevronRight, Database, UserCircle, UserPlus, Users } from '@/components/icons';
+import { AppWindow, ChevronRight, Database, Users } from '@/components/icons';
 
 export type AccessGroupMember = {
   id: string;
@@ -26,12 +26,11 @@ export type AccessGroupViewProps = {
   assets: AccessGroupAsset[];
   accountsHref: string;
   assetsHref: string;
-  assignHref: string;
-  allMembersHref: string;
+  applicationsHref: string;
   allAssetsHref: string;
   /** href for the back button — omit to hide the back button (e.g. on the root /access page) */
   backHref?: string;
-  /** Optional extra sections rendered after the assets preview (e.g. Applications, Portfolios) */
+  /** Optional extra sections rendered after section 1 (e.g. Portfolios on the individual view) */
   children?: React.ReactNode;
 };
 
@@ -42,8 +41,7 @@ export function AccessGroupView({
   assets,
   accountsHref,
   assetsHref,
-  assignHref,
-  allMembersHref,
+  applicationsHref,
   allAssetsHref,
   backHref,
   children,
@@ -52,32 +50,28 @@ export function AccessGroupView({
     <div className="grid gap-8">
       {backHref && <BackButton href={backHref} />}
 
-      {/* Header */}
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <h1 className="text-2xl font-bold tracking-tight truncate">{name}</h1>
-          {description && (
-            <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+      {/* Section 1 */}
+      <div className="grid gap-4">
+        {/* Header */}
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <h1 className="text-2xl font-bold tracking-tight truncate">{name}</h1>
+            {description && (
+              <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+            )}
+          </div>
+          {members.length > 0 && (
+            <div className="flex shrink-0 items-center gap-1.5 rounded-md bg-muted px-2.5 py-1 text-xs text-muted-foreground">
+              <Users className="h-3.5 w-3.5" />
+              <span>{members.length}</span>
+            </div>
           )}
         </div>
-        <div className="flex shrink-0 items-center gap-3 pt-0.5">
-          <div className="flex items-center gap-1.5 rounded-md bg-muted px-2.5 py-1 text-xs text-muted-foreground">
-            <Users className="h-3.5 w-3.5" />
-            <span>{members.length}</span>
-          </div>
-          <div className="flex items-center gap-1.5 rounded-md bg-muted px-2.5 py-1 text-xs text-muted-foreground">
-            <Database className="h-3.5 w-3.5" />
-            <span>{assets.length}</span>
-          </div>
-        </div>
-      </div>
 
-      {/* Section links */}
-      <div className="overflow-hidden rounded-lg border divide-y">
-        {/* Accounts */}
+        {/* Card 1 — Accounts */}
         <FlowLink
           href={accountsHref}
-          className="flex items-center justify-between gap-4 px-4 py-4 hover:bg-muted/40 transition-colors"
+          className="flex items-center justify-between gap-4 rounded-lg border px-4 py-4 hover:bg-muted/40 transition-colors"
         >
           <div className="flex items-center gap-3 min-w-0">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
@@ -102,10 +96,10 @@ export function AccessGroupView({
           </div>
         </FlowLink>
 
-        {/* Assets */}
+        {/* Card 2 — Assets */}
         <FlowLink
           href={assetsHref}
-          className="flex items-center justify-between gap-4 px-4 py-4 hover:bg-muted/40 transition-colors"
+          className="flex items-center justify-between gap-4 rounded-lg border px-4 py-4 hover:bg-muted/40 transition-colors"
         >
           <div className="flex items-center gap-3 min-w-0">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
@@ -130,115 +124,75 @@ export function AccessGroupView({
           </div>
         </FlowLink>
 
-        {/* Assign Permissions */}
+        {/* Card 3 — Applications */}
         <FlowLink
-          href={assignHref}
-          className="flex items-center justify-between gap-4 px-4 py-4 hover:bg-muted/40 transition-colors"
+          href={applicationsHref}
+          className="flex items-center justify-between gap-4 rounded-lg border px-4 py-4 hover:bg-muted/40 transition-colors"
         >
           <div className="flex items-center gap-3 min-w-0">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
-              <UserPlus className="h-4 w-4 text-muted-foreground" />
+              <AppWindow className="h-4 w-4 text-muted-foreground" />
             </span>
             <div className="min-w-0">
-              <p className="text-sm font-medium">Assign Permissions</p>
+              <p className="text-sm font-medium">Applications</p>
               <p className="text-xs text-muted-foreground">
-                Grant members access to assets with roles
+                Connected apps and access grants
               </p>
             </div>
           </div>
           <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
         </FlowLink>
+
+        {/* Assets preview card — only when there are assets */}
+        {assets.length > 0 && (
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-sm font-semibold">
+                <Database className="h-4 w-4 text-muted-foreground" />
+                Assets
+                <Badge variant="secondary" className="ml-auto text-xs font-normal">
+                  {assets.length}
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="border-t divide-y">
+                {assets.slice(0, 5).map((asset) => (
+                  <FlowLink
+                    key={asset.id}
+                    href={`${allAssetsHref}&asset=${asset.id}`}
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-muted/20 transition-colors"
+                  >
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted">
+                      <Database className="h-3.5 w-3.5 text-muted-foreground" />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium truncate">{asset.name}</p>
+                      {asset.subtitle && (
+                        <p className="text-xs text-muted-foreground truncate">{asset.subtitle}</p>
+                      )}
+                    </div>
+                    <Badge variant="outline" className="shrink-0 text-xs">
+                      {asset.assetType}
+                    </Badge>
+                  </FlowLink>
+                ))}
+                {assets.length > 5 && (
+                  <FlowLink
+                    href={allAssetsHref}
+                    className="flex items-center justify-center gap-1.5 px-4 py-3 text-xs text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors"
+                  >
+                    View all {assets.length} assets
+                    <ChevronRight className="h-3 w-3" />
+                  </FlowLink>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
-      {/* Members preview */}
-      {members.length > 0 && (
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-sm font-semibold">
-              <Users className="h-4 w-4 text-muted-foreground" />
-              Members
-              <Badge variant="secondary" className="ml-auto text-xs font-normal">
-                {members.length}
-              </Badge>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
-            <div className="border-t divide-y">
-              {members.slice(0, 5).map((member) => (
-                <div key={member.id} className="flex items-center gap-3 px-4 py-3">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted">
-                    <UserCircle className="h-4 w-4 text-muted-foreground" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium truncate">{member.displayName}</p>
-                    {member.subtitle && (
-                      <p className="text-xs text-muted-foreground truncate">{member.subtitle}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-              {members.length > 5 && (
-                <FlowLink
-                  href={allMembersHref}
-                  className="flex items-center justify-center gap-1.5 px-4 py-3 text-xs text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors"
-                >
-                  View all {members.length} members
-                  <ChevronRight className="h-3 w-3" />
-                </FlowLink>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Assets preview */}
-      {assets.length > 0 && (
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-sm font-semibold">
-              <Database className="h-4 w-4 text-muted-foreground" />
-              Assets
-              <Badge variant="secondary" className="ml-auto text-xs font-normal">
-                {assets.length}
-              </Badge>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
-            <div className="border-t divide-y">
-              {assets.slice(0, 5).map((asset) => (
-                <FlowLink
-                  key={asset.id}
-                  href={`${allAssetsHref}&asset=${asset.id}`}
-                  className="flex items-center gap-3 px-4 py-3 hover:bg-muted/20 transition-colors"
-                >
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted">
-                    <Database className="h-3.5 w-3.5 text-muted-foreground" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium truncate">{asset.name}</p>
-                    {asset.subtitle && (
-                      <p className="text-xs text-muted-foreground truncate">{asset.subtitle}</p>
-                    )}
-                  </div>
-                  <Badge variant="outline" className="shrink-0 text-xs">
-                    {asset.assetType}
-                  </Badge>
-                </FlowLink>
-              ))}
-              {assets.length > 5 && (
-                <FlowLink
-                  href={allAssetsHref}
-                  className="flex items-center justify-center gap-1.5 px-4 py-3 text-xs text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors"
-                >
-                  View all {assets.length} assets
-                  <ChevronRight className="h-3 w-3" />
-                </FlowLink>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
+      {/* Section 2 — extra content (e.g. Portfolios), only on individual view */}
       {children}
     </div>
   );
