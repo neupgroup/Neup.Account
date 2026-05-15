@@ -154,10 +154,10 @@ export default async function PortfolioAssignPage({ searchParams }: PageProps) {
                 <div className="flex gap-2 mt-1">
                   {members.length === 0 && (
                     <a
-                      href={`/access/account?portfolio=${id}`}
+                      href={`/access/member?portfolio=${id}`}
                       className="text-xs text-foreground underline underline-offset-2"
                     >
-                      Add accounts
+                      Add members
                     </a>
                   )}
                   {assets.length === 0 && (

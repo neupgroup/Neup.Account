@@ -64,7 +64,7 @@ async function PortfolioAccountPage({ id }: { id: string }) {
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
             {group.name}
           </p>
-          <h1 className="text-2xl font-bold tracking-tight">Accounts</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Members</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Manage who has access to this portfolio.
           </p>
@@ -79,7 +79,7 @@ async function PortfolioAccountPage({ id }: { id: string }) {
 
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-semibold">Add Account</CardTitle>
+          <CardTitle className="text-sm font-semibold">Add Member</CardTitle>
           <p className="text-xs text-muted-foreground">
             Look up a NeupID to add someone to this portfolio.
           </p>
@@ -153,7 +153,7 @@ async function PortfolioAccountPage({ id }: { id: string }) {
                 <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
                   <Shield className="h-6 w-6 text-muted-foreground" />
                 </span>
-                <p className="text-sm font-medium">No accounts yet</p>
+                <p className="text-sm font-medium">No members yet</p>
                 <p className="text-xs text-muted-foreground max-w-xs">
                   Add a member above using their NeupID.
                 </p>
@@ -184,7 +184,7 @@ async function DirectAccountPage() {
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
             {group.name}
           </p>
-          <h1 className="text-2xl font-bold tracking-tight">Accounts</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Members</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             People who have direct access to this account.
           </p>
@@ -246,7 +246,7 @@ async function DirectAccountPage() {
                 <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
                   <Shield className="h-6 w-6 text-muted-foreground" />
                 </span>
-                <p className="text-sm font-medium">No accounts yet</p>
+                <p className="text-sm font-medium">No members yet</p>
                 <p className="text-xs text-muted-foreground max-w-xs">
                   Use the form above to invite someone by NeupID.
                 </p>
@@ -261,7 +261,7 @@ async function DirectAccountPage() {
 
 // ── Page entry point ──────────────────────────────────────────────────────────
 
-export default async function AccountPage({ searchParams }: PageProps) {
+export default async function MemberPage({ searchParams }: PageProps) {
   const { portfolio: id } = await searchParams;
 
   if (id) {

@@ -29,7 +29,7 @@ export type AccessGroupViewProps = {
   name: string;
   /** Sub-heading description */
   description?: string;
-  accountsHref: string;
+  membersHref: string;
   assetsHref: string;
   applicationsHref: string;
   allAssetsHref: string;
@@ -44,7 +44,7 @@ export function AccessGroupView({
   pageDescription,
   name,
   description,
-  accountsHref,
+  membersHref,
   assetsHref,
   applicationsHref,
   backHref,
@@ -65,15 +65,15 @@ export function AccessGroupView({
         />
         <Card>
           <CardContent className="divide-y p-2">
-            {/* Accounts */}
+            {/* Members */}
             <FlowLink
-              href={accountsHref}
+              href={membersHref}
               className="flex items-center gap-4 py-4 px-4 hover:bg-muted/50 transition-colors"
             >
               <Users className="h-5 w-5 text-muted-foreground flex-shrink-0" />
               <div className="flex-grow min-w-0">
-                <p className="font-medium text-foreground">Accounts</p>
-                <p className="text-sm text-muted-foreground">Members with access</p>
+                <p className="font-medium text-foreground">Members</p>
+                <p className="text-sm text-muted-foreground">See people who have access to this profile.</p>
               </div>
               <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
             </FlowLink>
@@ -86,7 +86,7 @@ export function AccessGroupView({
               <Database className="h-5 w-5 text-muted-foreground flex-shrink-0" />
               <div className="flex-grow min-w-0">
                 <p className="font-medium text-foreground">Assets</p>
-                <p className="text-sm text-muted-foreground">Assets in this group</p>
+                <p className="text-sm text-muted-foreground">See assets associated with this profile.</p>
               </div>
               <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
             </FlowLink>
@@ -99,9 +99,7 @@ export function AccessGroupView({
               <AppWindow className="h-5 w-5 text-muted-foreground flex-shrink-0" />
               <div className="flex-grow min-w-0">
                 <p className="font-medium text-foreground">Applications</p>
-                <p className="text-sm text-muted-foreground">
-                  Connected apps and access grants
-                </p>
+                <p className="text-sm text-muted-foreground">See applications connected with this profile.</p>
               </div>
               <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
             </FlowLink>
