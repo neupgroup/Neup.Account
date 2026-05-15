@@ -5,7 +5,7 @@ import { BackButton } from '@/components/ui/back-button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AppWindow, ChevronRight, Database, FolderGit2, Shield, UserCircle, UserPlus, Users } from '@/components/icons';
-import { getAccessList } from '@/services/manage/access';
+import { getAccessListByGrant } from '@/services/manage/access';
 import { getAccessAssetGroups, getAccessAssetGroup } from '@/services/manage/access/assets';
 import { getActiveAccountId } from '@/core/auth/verify';
 import { getConnectedApplications } from '@/services/applications/connected';
@@ -253,15 +253,15 @@ export default async function AccessControlPage({ searchParams }: PageProps) {
   }
 
   const accountId = await getActiveAccountId();
-  const [accessList, portfolios, connectedApps] = await Promise.all([
-    accountId ? getAccessList(accountId) : [],
+  const [grantList, portfolios, connectedApps] = await Promise.all([
+    accountId ? getAccessListByGrant(accountId) : [],
     getAccessAssetGroups(),
     getConnectedApplications(),
   ]);
 
   const allApps = [...connectedApps.firstParty, ...connectedApps.thirdParty];
-  const yourAccess = accessList.filter((item) => item.isSelf);
-  const othersAccess = accessList.filter((item) => !item.isSelf);
+  const yourAccess = grantList.filter((item) => item.isSelf);
+  const othersAccess = grantList.filter((item) => !item.isSelf);
 
   return (
     <div className="grid gap-8">
@@ -276,16 +276,16 @@ export default async function AccessControlPage({ searchParams }: PageProps) {
         <AddUserForm />
       </div>
 
-      {/* Your access — self-grants */}
+      {/* Your access — self-grants, one card per role */}
       {yourAccess.length > 0 && (
         <div className="grid gap-3">
           <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Your Access</h2>
-          <div className="overflow-hidden rounded-lg border divide-y">
+          <div className="grid gap-2">
             {yourAccess.map((item) => (
               <FlowLink
                 key={item.permitId}
                 href={`/access/${item.permitId}`}
-                className="flex items-center justify-between gap-4 px-4 py-3 hover:bg-muted/40 transition-colors"
+                className="flex items-center justify-between gap-4 rounded-lg border px-4 py-3 hover:bg-muted/40 transition-colors"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted">
@@ -293,9 +293,7 @@ export default async function AccessControlPage({ searchParams }: PageProps) {
                   </span>
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">{item.displayName}</p>
-                    <p className="truncate text-xs text-muted-foreground">
-                      {item.permissions.join(', ')}
-                    </p>
+                    <p className="truncate text-xs text-muted-foreground">{item.role.name}</p>
                   </div>
                 </div>
                 <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -305,16 +303,16 @@ export default async function AccessControlPage({ searchParams }: PageProps) {
         </div>
       )}
 
-      {/* People with access */}
+      {/* People with access — one card per role */}
       <div className="grid gap-3">
         <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">People with Access</h2>
         {othersAccess.length > 0 ? (
-          <div className="overflow-hidden rounded-lg border divide-y">
+          <div className="grid gap-2">
             {othersAccess.map((item) => (
               <FlowLink
                 key={item.permitId}
                 href={`/access/${item.permitId}`}
-                className="flex items-center justify-between gap-4 px-4 py-3 hover:bg-muted/40 transition-colors"
+                className="flex items-center justify-between gap-4 rounded-lg border px-4 py-3 hover:bg-muted/40 transition-colors"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted">
@@ -322,9 +320,7 @@ export default async function AccessControlPage({ searchParams }: PageProps) {
                   </span>
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">{item.displayName}</p>
-                    <p className="truncate text-xs text-muted-foreground">
-                      {item.permissions.join(', ')}
-                    </p>
+                    <p className="truncate text-xs text-muted-foreground">{item.role.name}</p>
                   </div>
                 </div>
                 <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />

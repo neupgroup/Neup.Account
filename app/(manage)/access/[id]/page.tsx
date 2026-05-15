@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation';
 import { BackButton } from '@/components/ui/back-button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { getAccessDetails, getMasterPermissions } from '@/services/manage/access';
-import { AccessManagementForm } from './form';
+import { getAccessDetails } from '@/services/manage/access';
+import { RevokeAccessForm } from './form';
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -12,10 +12,7 @@ type PageProps = {
 export default async function AccessDetailPage({ params }: PageProps) {
   const { id } = await params;
 
-  const [details, allPermissions] = await Promise.all([
-    getAccessDetails(id),
-    getMasterPermissions(),
-  ]);
+  const details = await getAccessDetails(id);
 
   if (!details) notFound();
 
@@ -23,6 +20,7 @@ export default async function AccessDetailPage({ params }: PageProps) {
     <div className="grid gap-6">
       <BackButton href="/access" />
 
+      {/* Who this grant is for */}
       <div>
         <h1 className="text-3xl font-bold tracking-tight">{details.grantedTo.name}</h1>
         <p className="text-muted-foreground">
@@ -30,46 +28,54 @@ export default async function AccessDetailPage({ params }: PageProps) {
         </p>
       </div>
 
+      {/* Context: portfolio + account */}
       <Card>
         <CardHeader>
-          <CardTitle>Grant Details</CardTitle>
-          <CardDescription>Overview of this access grant.</CardDescription>
+          <CardTitle>Access Context</CardTitle>
+          <CardDescription>Where this access applies.</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-3 text-sm">
           <div className="flex items-center justify-between border-b pb-3">
-            <span className="text-muted-foreground">Granted to</span>
-            <span className="font-medium">{details.grantedTo.name}</span>
+            <span className="text-muted-foreground">Account</span>
+            <span className="font-medium">{details.account.name}</span>
           </div>
-          <div className="flex items-center justify-between border-b pb-3">
-            <span className="text-muted-foreground">NeupID</span>
-            <span className="font-medium">{details.grantedTo.neupId}</span>
-          </div>
-          <div className="flex items-center justify-between border-b pb-3">
-            <span className="text-muted-foreground">Granted by</span>
-            <span className="font-medium">{details.grantedBy.name}</span>
-          </div>
-          <div className="flex items-start justify-between gap-4">
-            <span className="text-muted-foreground shrink-0">Permissions</span>
-            <div className="flex flex-wrap gap-1 justify-end">
-              {details.permissions.length > 0 ? (
-                details.permissions.map((p) => (
-                  <Badge key={p} variant="secondary" className="font-mono text-xs">
-                    {p}
-                  </Badge>
-                ))
-              ) : (
-                <span className="text-muted-foreground">None</span>
-              )}
-            </div>
+          <div className="flex items-center justify-between">
+            <span className="text-muted-foreground">Portfolio</span>
+            {details.portfolio ? (
+              <div className="flex flex-col items-end gap-0.5">
+                <span className="font-medium">{details.portfolio.name}</span>
+                {details.portfolio.description && (
+                  <span className="text-xs text-muted-foreground">{details.portfolio.description}</span>
+                )}
+              </div>
+            ) : (
+              <Badge variant="outline" className="text-xs">Direct grant</Badge>
+            )}
           </div>
         </CardContent>
       </Card>
 
-      <AccessManagementForm
-        permitId={details.permitId}
-        allPermissions={allPermissions}
-        currentPermissionIds={details.permissions}
-      />
+      {/* Role details */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Role</CardTitle>
+          <CardDescription>What this user can do with this access.</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-3 text-sm">
+          <div className="flex items-start justify-between gap-4">
+            <span className="text-muted-foreground shrink-0">Title</span>
+            <span className="font-medium text-right">{details.role.name}</span>
+          </div>
+          {details.role.description && (
+            <div className="flex items-start justify-between gap-4 border-t pt-3">
+              <span className="text-muted-foreground shrink-0">Description</span>
+              <span className="text-right text-muted-foreground">{details.role.description}</span>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      <RevokeAccessForm permitId={details.permitId} />
     </div>
   );
 }

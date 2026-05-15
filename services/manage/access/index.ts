@@ -23,6 +23,20 @@ export type UserAccess = {
   isSelf: boolean;
 };
 
+/** One entry per grant row — used to render one card per role on the access list page. */
+export type UserAccessGrant = {
+  permitId: string;
+  userId: string;
+  displayName: string;
+  accountPhoto?: string;
+  isSelf: boolean;
+  role: {
+    id: string;
+    name: string;
+    description?: string;
+  };
+};
+
 export type AccessDetails = {
   permitId: string;
   grantedTo: {
@@ -30,12 +44,23 @@ export type AccessDetails = {
     name: string;
     neupId: string;
   };
-  grantedBy: {
+  /** The account whose resources are being accessed (ownerAccountId). */
+  account: {
     id: string;
     name: string;
   };
-  grantedOn: string;
-  permissions: string[];
+  /** Set when this grant is scoped to a portfolio. */
+  portfolio: {
+    id: string;
+    name: string;
+    description?: string;
+  } | null;
+  /** The role assigned to this grant. */
+  role: {
+    id: string;
+    name: string;
+    description?: string;
+  };
 };
 
 /**
@@ -140,27 +165,79 @@ export async function getAccessList(accountId: string): Promise<UserAccess[]> {
 
 
 /**
+ * Function getAccessListByGrant.
+ * Returns one entry per grant row (one per role), with role details resolved.
+ * Used to render one card per role on the access list page.
+ */
+export async function getAccessListByGrant(accountId: string): Promise<UserAccessGrant[]> {
+  try {
+    const grants = await prisma.authzAccountAccessGrant.findMany({
+      where: {
+        ownerAccountId: accountId,
+        appId: 'neup.account',
+        portfolioId: null,
+      },
+      include: {
+        role: { select: { id: true, name: true, description: true } },
+      },
+    });
+
+    const results = await Promise.all(
+      grants.map(async (grant) => {
+        const userProfile = await getUserProfile(grant.targetAccountId);
+        if (!userProfile) return null;
+
+        return {
+          permitId: grant.id,
+          userId: grant.targetAccountId,
+          displayName:
+            userProfile.nameDisplay ||
+            `${userProfile.nameFirst ?? ''} ${userProfile.nameLast ?? ''}`.trim(),
+          accountPhoto: userProfile.accountPhoto,
+          isSelf: grant.ownerAccountId === grant.targetAccountId,
+          role: {
+            id: grant.role.id,
+            name: grant.role.name,
+            description: grant.role.description ?? undefined,
+          },
+        };
+      })
+    );
+
+    return results.filter((u): u is NonNullable<typeof u> => u !== null);
+  } catch (error) {
+    await logError('database', error, `getAccessListByGrant for ${accountId}`);
+    return [];
+  }
+}
+
+
+/**
  * Function getAccessDetails.
  */
 export async function getAccessDetails(permitId: string): Promise<AccessDetails | null> {
     try {
         const grant = await prisma.authzAccountAccessGrant.findUnique({
-          where: { id: permitId }
+          where: { id: permitId },
+          include: {
+            role: { select: { id: true, name: true, description: true } },
+            portfolio: { select: { id: true, name: true, description: true } },
+          },
         });
 
         if (!grant) {
             return null;
         }
 
-        // In authzAccountAccessGrant: ownerAccountId = the account being managed (grantedBy),
+        // In authzAccountAccessGrant: ownerAccountId = the account being managed,
         // targetAccountId = the accessor who was granted access (grantedTo).
-        const [grantedToProfile, grantedByProfile, grantedToNeupIds] = await Promise.all([
+        const [grantedToProfile, accountProfile, grantedToNeupIds] = await Promise.all([
             getUserProfile(grant.targetAccountId),
             getUserProfile(grant.ownerAccountId),
             getUserNeupIds(grant.targetAccountId),
         ]);
 
-        if (!grantedToProfile || !grantedByProfile) {
+        if (!grantedToProfile || !accountProfile) {
             return null;
         }
 
@@ -171,12 +248,22 @@ export async function getAccessDetails(permitId: string): Promise<AccessDetails 
                 name: grantedToProfile.nameDisplay || `${grantedToProfile.nameFirst} ${grantedToProfile.nameLast}`.trim(),
                 neupId: grantedToNeupIds[0] || 'N/A',
             },
-            grantedBy: {
+            account: {
                 id: grant.ownerAccountId,
-                name: grantedByProfile.nameDisplay || `${grantedByProfile.nameFirst} ${grantedByProfile.nameLast}`.trim(),
+                name: accountProfile.nameDisplay || `${accountProfile.nameFirst} ${accountProfile.nameLast}`.trim(),
             },
-            grantedOn: new Date().toLocaleString(), // authzAccountAccessGrant has no createdAt; use current as fallback
-            permissions: [grant.roleId],
+            portfolio: grant.portfolio
+                ? {
+                    id: grant.portfolio.id,
+                    name: grant.portfolio.name,
+                    description: grant.portfolio.description ?? undefined,
+                  }
+                : null,
+            role: {
+                id: grant.role.id,
+                name: grant.role.name,
+                description: grant.role.description ?? undefined,
+            },
         };
 
     } catch (error) {
