@@ -27,9 +27,9 @@ export function AddMemberForm({
     startTransition(async () => {
       const result = await resolveNeupId(neupIdInput);
       if (result.success) {
-        const params = new URLSearchParams({ neupid: neupIdInput.trim() });
+        const params = new URLSearchParams({ member: result.account.accountId });
         if (portfolioId) params.set("portfolio", portfolioId);
-        router.push(`/access/assign?${params.toString()}`);
+        router.push(`/access/role?${params.toString()}`);
       } else {
         setLookupError(result.error);
         inputRef.current?.focus();

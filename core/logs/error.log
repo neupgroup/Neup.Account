@@ -3479,3 +3479,40 @@ Unknown field `status` for select statement on model `AuthzAccountAccessGrant`. 
     at async getDirectMembers (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_f83feb48._.js:978:62)
     at async DirectAccountPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__e22c0b5f._.js:679:38)
 --------------------------------------------------------------------------------
+[2026-05-15T19:09:23.734Z] [database] [auto] [getDirectMembers for d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.authzAccountAccessGrant.findMany()` invocation:
+
+{
+  where: {
+    ownerAccountId: "d7169b8d-df72-4284-89fc-ed3f27950ac7",
+    appId: "neup.account",
+    portfolioId: null
+  },
+  select: {
+    targetAccountId: true,
+    status: true,
+    ~~~~~~
+?   id?: true,
+?   ownerAccountId?: true,
+?   roleId?: true,
+?   appId?: true,
+?   portfolioId?: true,
+?   owner?: true,
+?   target?: true,
+?   role?: true,
+?   application?: true,
+?   portfolio?: true
+  }
+}
+
+Unknown field `status` for select statement on model `AuthzAccountAccessGrant`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getDirectMembers (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_f83feb48._.js:978:62)
+    at async DirectAccountPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__e22c0b5f._.js:679:38)
+--------------------------------------------------------------------------------
