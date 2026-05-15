@@ -1,10 +1,11 @@
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { BackButton } from '@/components/ui/back-button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { UserCircle } from '@/components/icons';
 import { getActiveAccountId } from '@/core/auth/verify';
-import { getUserNeupIds } from '@/services/user';
+import { getUserProfile, getUserNeupIds } from '@/services/user';
 import {
   getDirectMemberDetail,
   getPortfolioMemberDetail,
@@ -16,46 +17,96 @@ type PageProps = {
   searchParams: Promise<{ member?: string; portfolio?: string }>;
 };
 
+const NEUPID_LOGO = 'https://neupgroup.com/assets/branding/neup.group/logo.svg';
+const FALLBACK_PHOTO = 'https://neupgroup.com/assets/user.png';
+
+// ── Platform avatar ───────────────────────────────────────────────────────────
+// Large circular user photo with a smaller platform logo badge at bottom-right.
+
+function PlatformAvatar({
+  userPhoto,
+  platformLogo,
+  platformName,
+}: {
+  userPhoto: string;
+  platformLogo: string;
+  platformName: string;
+}) {
+  return (
+    <div className="relative shrink-0 h-14 w-14">
+      {/* Main user photo */}
+      <span className="flex h-14 w-14 rounded-full overflow-hidden bg-muted">
+        <Image
+          src={userPhoto}
+          alt="User photo"
+          width={56}
+          height={56}
+          className="h-full w-full object-cover"
+        />
+      </span>
+
+      {/* Platform badge — bottom-right */}
+      <span className="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-background ring-2 ring-background overflow-hidden">
+        <Image
+          src={platformLogo}
+          alt={platformName}
+          width={20}
+          height={20}
+          className="h-full w-full object-contain"
+        />
+      </span>
+    </div>
+  );
+}
+
 // ── Role card ─────────────────────────────────────────────────────────────────
 //
 // Layout:
-//   Platform / asset type  [Tag]
-//   roleName > description
+//   [Avatar?]  Platform / asset type  [Tag]
+//              roleName · description
 
 function RoleCard({
   platformLabel,
   tag,
   roleName,
   roleDescription,
+  avatar,
 }: {
   platformLabel: string;
   tag?: string;
   roleName: string;
   roleDescription?: string;
+  avatar?: React.ReactNode;
 }) {
   return (
     <Card>
-      <CardContent className="px-4 py-3 grid gap-1.5">
-        {/* Platform row */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-base font-semibold capitalize">{platformLabel}</span>
-          {tag && (
-            <Badge variant="secondary" className="text-xs font-normal">
-              {tag}
-            </Badge>
-          )}
-        </div>
+      <CardContent className="px-4 py-3 flex items-center gap-4">
+        {avatar}
 
-        {/* Role row */}
-        <p className="text-sm text-muted-foreground">
-          <span className="font-medium text-foreground">{roleName}</span>
-          {roleDescription && (
-            <>
-              <span className="mx-1.5 text-muted-foreground/60">&middot;</span>
-              {roleDescription}
-            </>
-          )}
-        </p>
+        <div className="grid gap-1 min-w-0">
+          {/* Platform row */}
+          <div className="flex items-center gap-2 flex-wrap">
+            {!avatar && (
+              <span className="text-base font-semibold capitalize">{platformLabel}</span>
+            )}
+            {tag && (
+              <Badge variant="secondary" className="text-xs font-normal">
+                {tag}
+              </Badge>
+            )}
+          </div>
+
+          {/* Role row */}
+          <p className="text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">{roleName}</span>
+            {roleDescription && (
+              <>
+                <span className="mx-1.5 text-muted-foreground/60">&middot;</span>
+                {roleDescription}
+              </>
+            )}
+          </p>
+        </div>
       </CardContent>
     </Card>
   );
@@ -81,13 +132,23 @@ async function MyDirectRolesView() {
   const accountId = await getActiveAccountId();
   if (!accountId) notFound();
 
-  const [data, neupIds] = await Promise.all([
+  const [data, neupIds, profile] = await Promise.all([
     getMyDirectRoles(accountId),
     getUserNeupIds(accountId),
+    getUserProfile(accountId),
   ]);
   if (!data) notFound();
 
   const neupId = neupIds[0];
+  const userPhoto = profile?.accountPhoto ?? FALLBACK_PHOTO;
+
+  const avatar = (
+    <PlatformAvatar
+      userPhoto={userPhoto}
+      platformLogo={NEUPID_LOGO}
+      platformName="NeupID"
+    />
+  );
 
   return (
     <div className="grid gap-4">
@@ -102,6 +163,7 @@ async function MyDirectRolesView() {
               tag={neupId}
               roleName={role.roleName}
               roleDescription={role.roleDescription}
+              avatar={avatar}
             />
           ))}
         </div>
@@ -157,6 +219,15 @@ async function MemberDirectRolesView({ memberAccountId }: { memberAccountId: str
   if (!detail) notFound();
 
   const neupId = neupIds[0];
+  const userPhoto = detail.accountPhoto ?? FALLBACK_PHOTO;
+
+  const avatar = (
+    <PlatformAvatar
+      userPhoto={userPhoto}
+      platformLogo={NEUPID_LOGO}
+      platformName="NeupID"
+    />
+  );
 
   return (
     <div className="grid gap-4">
@@ -171,6 +242,7 @@ async function MemberDirectRolesView({ memberAccountId }: { memberAccountId: str
               tag={neupId}
               roleName={role.roleName}
               roleDescription={role.roleDescription}
+              avatar={avatar}
             />
           ))}
         </div>
