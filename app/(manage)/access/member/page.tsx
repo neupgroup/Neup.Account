@@ -15,6 +15,8 @@ import { getUserProfile } from '@/services/user';
 import { AddMemberForm } from '../_components/add-member-form';
 import { AddUserForm } from '../add-user-form';
 import { FlowLink } from '@/components/ui/flow-link';
+import { PrimaryHeader } from '@/components/ui/primary-header';
+import { SecondaryHeader } from '@/components/ui/secondary-header';
 
 type PageProps = {
   searchParams: Promise<{ portfolio?: string }>;
@@ -59,34 +61,35 @@ async function PortfolioAccountPage({ id }: { id: string }) {
     <div className="grid gap-8">
       <BackButton href={`/access?portfolio=${id}`} />
 
-      <div className="min-w-0">
-        <h1 className="text-2xl font-bold tracking-tight">Members with Access</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Members with access to Portfolio &ldquo;{group.name}&rdquo;
-        </p>
-      </div>
+      <PrimaryHeader
+        title="Members with Access"
+        description={`Members with access to Portfolio "${group.name}"`}
+      />
 
-      {/* Invite + members in a tighter group */}
-      <div className="grid gap-3">
+      <div className="space-y-2">
+        <SecondaryHeader
+          title="Portfolio Members"
+          description="People who have access to this portfolio."
+        />
+
         <AddMemberForm action={addMemberAction} />
 
         {/* Members card */}
         <Card>
-          <CardContent className="p-0">
-            <div className="divide-y">
+          <CardContent className="divide-y p-2">
             {group.members.length > 0 ? (
               group.members.map((member) => {
                 const d = getMemberDetails(member.details);
                 const displayName = nameMap[member.accountId] ?? member.accountId;
 
                 return (
-                  <div key={member.id} className="flex items-center gap-3 px-4 py-3">
+                  <div key={member.id} className="flex items-center gap-4 py-4 px-4">
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
                       <UserCircle className="h-5 w-5 text-muted-foreground" />
                     </span>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium truncate">{displayName}</p>
-                      <p className="text-xs text-muted-foreground font-mono truncate">
+                    <div className="min-w-0 flex-grow">
+                      <p className="font-medium text-foreground truncate">{displayName}</p>
+                      <p className="text-sm text-muted-foreground font-mono truncate">
                         {member.accountId}
                       </p>
                     </div>
@@ -122,15 +125,14 @@ async function PortfolioAccountPage({ id }: { id: string }) {
                 <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
                   <Shield className="h-6 w-6 text-muted-foreground" />
                 </span>
-                <p className="text-sm font-medium">No members yet</p>
-                <p className="text-xs text-muted-foreground max-w-xs">
+                <p className="font-medium">No members yet</p>
+                <p className="text-sm text-muted-foreground max-w-xs">
                   Add a member above using their NeupID.
                 </p>
               </div>
             )}
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
@@ -149,34 +151,30 @@ async function DirectAccountPage() {
     <div className="grid gap-8">
       <BackButton href="/access" />
 
-      <div className="min-w-0">
-        <h1 className="text-2xl font-bold tracking-tight">Members with Access</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Members with access to Profile &ldquo;{group.name}&rdquo;
-        </p>
-      </div>
+      <PrimaryHeader
+        title="Members with Access"
+        description={`Members with access to Profile "${group.name}"`}
+      />
 
-      {/* Invite + members in a tighter group */}
-      <div className="grid gap-3">
+      <div className="space-y-2">
         <AddUserForm />
 
         {/* Members card */}
         <Card>
-        <CardContent className="p-0">
-          <div className="divide-y">
+          <CardContent className="divide-y p-2">
             {group.members.length > 0 ? (
               group.members.map((member) => (
                 <FlowLink
                   key={member.id}
                   href={`/access/${member.id}`}
-                  className="flex items-center gap-3 px-4 py-3 hover:bg-muted/40 transition-colors"
+                  className="flex items-center gap-4 py-4 px-4 hover:bg-muted/50 transition-colors"
                 >
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
                     <UserCircle className="h-5 w-5 text-muted-foreground" />
                   </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium truncate">{member.displayName}</p>
-                    <p className="text-xs text-muted-foreground truncate">{member.subtitle}</p>
+                  <div className="min-w-0 flex-grow">
+                    <p className="font-medium text-foreground truncate">{member.displayName}</p>
+                    <p className="text-sm text-muted-foreground truncate">{member.subtitle}</p>
                   </div>
                 </FlowLink>
               ))
@@ -185,15 +183,14 @@ async function DirectAccountPage() {
                 <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
                   <Shield className="h-6 w-6 text-muted-foreground" />
                 </span>
-                <p className="text-sm font-medium">No members yet</p>
-                <p className="text-xs text-muted-foreground max-w-xs">
+                <p className="font-medium">No members yet</p>
+                <p className="text-sm text-muted-foreground max-w-xs">
                   Use the form above to invite someone by NeupID.
                 </p>
               </div>
             )}
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
