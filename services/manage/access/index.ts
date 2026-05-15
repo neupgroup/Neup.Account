@@ -556,3 +556,101 @@ export async function grantAccessByNeupId(formData: FormData, geolocation?: stri
         return { success: false, error: 'An unexpected error occurred.' };
     }
 }
+
+
+/**
+ * Type PortfolioMemberRole — a role held by a member on an asset within a portfolio.
+ */
+export type PortfolioMemberRole = {
+  roleId: string;
+  roleName: string;
+  roleDescription?: string;
+  assetId: string;
+  assetName: string;
+  assetType: string;
+};
+
+/**
+ * Type PortfolioMemberDetail — a member's profile + their roles in a portfolio.
+ */
+export type PortfolioMemberDetail = {
+  accountId: string;
+  displayName: string;
+  portfolioName: string;
+  roles: PortfolioMemberRole[];
+};
+
+/**
+ * Function getPortfolioMemberDetail.
+ *
+ * Returns the display name of a member and all roles they hold on assets
+ * within the given portfolio.
+ */
+export async function getPortfolioMemberDetail(
+  portfolioId: string,
+  memberAccountId: string,
+): Promise<PortfolioMemberDetail | null> {
+  try {
+    const [portfolio, memberProfile] = await Promise.all([
+      prisma.portfolio.findUnique({
+        where: { id: portfolioId },
+        select: { name: true },
+      }),
+      getUserProfile(memberAccountId),
+    ]);
+
+    if (!portfolio || !memberProfile) return null;
+
+    const displayName =
+      memberProfile.nameDisplay ||
+      `${memberProfile.nameFirst ?? ''} ${memberProfile.nameLast ?? ''}`.trim() ||
+      memberAccountId;
+
+    // Fetch all asset grants for this member in this portfolio
+    const grants = await prisma.authzAssetsAccessGrant.findMany({
+      where: {
+        account_id: memberAccountId,
+        portfolio_id: portfolioId,
+        app_id: 'neup.account',
+      },
+      select: {
+        role_id: true,
+        role: { select: { id: true, name: true, description: true } },
+        asset: {
+          select: {
+            id: true,
+            assetId: true,
+            assetType: true,
+          },
+        },
+      },
+    });
+
+    // Resolve asset names
+    const { resolveAssetName } = await import('@/services/manage/access/asset-resolvers');
+
+    const roles = await Promise.all(
+      grants.map(async (grant) => {
+        const resolved = await resolveAssetName(grant.asset.assetId, grant.asset.assetType);
+        return {
+          roleId: grant.role.id,
+          roleName: grant.role.name,
+          roleDescription: grant.role.description ?? undefined,
+          assetId: grant.asset.assetId,
+          assetName: resolved.name,
+          assetType: grant.asset.assetType,
+        };
+      })
+    );
+
+    return {
+      accountId: memberAccountId,
+      displayName,
+      portfolioName: portfolio.name,
+      roles,
+    };
+  } catch (error) {
+    await logError('database', error, `getPortfolioMemberDetail:${portfolioId}:${memberAccountId}`);
+    return null;
+  }
+}
