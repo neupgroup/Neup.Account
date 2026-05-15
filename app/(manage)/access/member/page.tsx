@@ -10,7 +10,6 @@ import { AddMemberForm } from '../_components/add-member-form';
 import { AddUserForm } from '../add-user-form';
 import { FlowLink } from '@/components/ui/flow-link';
 import { PrimaryHeader } from '@/components/ui/primary-header';
-import { SecondaryHeader } from '@/components/ui/secondary-header';
 
 type PageProps = {
   searchParams: Promise<{ portfolio?: string }>;
@@ -62,6 +61,53 @@ function MemberRow({
   );
 }
 
+// ── Shared page layout ────────────────────────────────────────────────────────
+
+function MembersLayout({
+  backHref,
+  description,
+  addForm,
+  children,
+}: {
+  backHref: string;
+  description: string;
+  addForm: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="grid gap-8">
+      <BackButton href={backHref} />
+
+      <PrimaryHeader
+        title="Members with Access"
+        description={description}
+      />
+
+      {addForm}
+
+      <Card>
+        <CardContent className="divide-y p-2">
+          {children}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+// ── Empty state ───────────────────────────────────────────────────────────────
+
+function EmptyMembers({ message }: { message: string }) {
+  return (
+    <div className="flex flex-col items-center gap-2 px-4 py-12 text-center">
+      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+        <Shield className="h-6 w-6 text-muted-foreground" />
+      </span>
+      <p className="font-medium">No members yet</p>
+      <p className="text-sm text-muted-foreground max-w-xs">{message}</p>
+    </div>
+  );
+}
+
 // ── Portfolio members view ────────────────────────────────────────────────────
 
 async function PortfolioAccountPage({ id }: { id: string }) {
@@ -71,53 +117,29 @@ async function PortfolioAccountPage({ id }: { id: string }) {
   const addMemberAction = addMemberToAssetGroupFromForm.bind(null, id);
 
   return (
-    <div className="grid gap-8">
-      <BackButton href={`/access?portfolio=${id}`} />
-
-      <PrimaryHeader
-        title="Members with Access"
-        description={`Members with access to Portfolio "${portfolioName}"`}
-      />
-
-      <div className="space-y-2">
-        <SecondaryHeader
-          title="Portfolio Members"
-          description="People who have access to this portfolio."
-        />
-
-        <AddMemberForm action={addMemberAction} />
-
-        <Card>
-          <CardContent className="divide-y p-2">
-            {members.length > 0 ? (
-              members.map((member) => (
-                <MemberRow
-                  key={member.accountId}
-                  href={`/access/role?portfolio=${id}&member=${member.accountId}`}
-                  displayName={member.displayName}
-                  accountPhoto={member.accountPhoto}
-                  roleCount={member.roleCount}
-                />
-              ))
-            ) : (
-              <div className="flex flex-col items-center gap-2 px-4 py-12 text-center">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-                  <Shield className="h-6 w-6 text-muted-foreground" />
-                </span>
-                <p className="font-medium">No members yet</p>
-                <p className="text-sm text-muted-foreground max-w-xs">
-                  Add a member above using their NeupID.
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+    <MembersLayout
+      backHref={`/access?portfolio=${id}`}
+      description={`Members with access to portfolio "${portfolioName}"`}
+      addForm={<AddMemberForm action={addMemberAction} />}
+    >
+      {members.length > 0 ? (
+        members.map((member) => (
+          <MemberRow
+            key={member.accountId}
+            href={`/access/role?portfolio=${id}&member=${member.accountId}`}
+            displayName={member.displayName}
+            accountPhoto={member.accountPhoto}
+            roleCount={member.roleCount}
+          />
+        ))
+      ) : (
+        <EmptyMembers message="Add a member above using their NeupID." />
+      )}
+    </MembersLayout>
   );
 }
 
-// ── Direct access members view (no portfolio) ─────────────────────────────────
+// ── Direct access members view ────────────────────────────────────────────────
 
 async function DirectAccountPage() {
   const accountId = await getActiveAccountId();
@@ -126,44 +148,25 @@ async function DirectAccountPage() {
   const { accountName, members } = await getDirectMembers(accountId);
 
   return (
-    <div className="grid gap-8">
-      <BackButton href="/access" />
-
-      <PrimaryHeader
-        title="Members with Access"
-        description={`Members with access to Profile "${accountName}"`}
-      />
-
-      <div className="space-y-2">
-        <AddUserForm />
-
-        <Card>
-          <CardContent className="divide-y p-2">
-            {members.length > 0 ? (
-              members.map((member) => (
-                <MemberRow
-                  key={member.accountId}
-                  href={`/access/role?member=${member.accountId}`}
-                  displayName={member.displayName}
-                  accountPhoto={member.accountPhoto}
-                  roleCount={member.roleCount}
-                />
-              ))
-            ) : (
-              <div className="flex flex-col items-center gap-2 px-4 py-12 text-center">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-                  <Shield className="h-6 w-6 text-muted-foreground" />
-                </span>
-                <p className="font-medium">No members yet</p>
-                <p className="text-sm text-muted-foreground max-w-xs">
-                  Use the form above to invite someone by NeupID.
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+    <MembersLayout
+      backHref="/access"
+      description={`Members with access to profile "${accountName}"`}
+      addForm={<AddUserForm />}
+    >
+      {members.length > 0 ? (
+        members.map((member) => (
+          <MemberRow
+            key={member.accountId}
+            href={`/access/role?member=${member.accountId}`}
+            displayName={member.displayName}
+            accountPhoto={member.accountPhoto}
+            roleCount={member.roleCount}
+          />
+        ))
+      ) : (
+        <EmptyMembers message="Use the form above to invite someone by NeupID." />
+      )}
+    </MembersLayout>
   );
 }
 
