@@ -307,7 +307,29 @@ async function AssetList({ portfolioId }: { portfolioId: string }) {
 export default async function AssetPage({ searchParams }: PageProps) {
   const { portfolio: portfolioId, asset: assetId } = await searchParams;
 
-  if (!portfolioId) notFound();
+  if (!portfolioId) {
+    // Direct access context — no portfolio assets
+    return (
+      <div className="grid gap-8">
+        <BackButton href="/access" />
+        <div className="min-w-0">
+          <h1 className="text-2xl font-bold tracking-tight">Assets</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Assets are managed through portfolios.
+          </p>
+        </div>
+        <div className="flex flex-col items-center gap-2 rounded-lg border px-4 py-12 text-center">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+            <Database className="h-6 w-6 text-muted-foreground" />
+          </span>
+          <p className="text-sm font-medium">No assets in direct access</p>
+          <p className="text-xs text-muted-foreground max-w-xs">
+            Create a portfolio to manage assets and assign roles to members.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (assetId) {
     return <AssetDetail portfolioId={portfolioId} assetId={assetId} />;

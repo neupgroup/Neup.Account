@@ -213,6 +213,78 @@ export async function getAccessListByGrant(accountId: string): Promise<UserAcces
 
 
 /**
+ * Type DirectAccessGroup.
+ * Represents the active account's direct (non-portfolio) access context
+ * in the same shape used by the shared AccessGroupView component.
+ */
+export type DirectAccessMember = {
+  /** The grant ID — used as a stable key */
+  id: string;
+  accountId: string;
+  displayName: string;
+  /** Role name shown as subtitle */
+  subtitle: string;
+};
+
+export type DirectAccessGroup = {
+  name: string;
+  description?: string;
+  members: DirectAccessMember[];
+};
+
+/**
+ * Function getDirectAccessGroup.
+ * Returns the active account's name and all accounts that have direct
+ * (non-portfolio) grants on it, one entry per grant row.
+ */
+export async function getDirectAccessGroup(accountId: string): Promise<DirectAccessGroup | null> {
+  try {
+    const [accountProfile, grants] = await Promise.all([
+      getUserProfile(accountId),
+      prisma.authzAccountAccessGrant.findMany({
+        where: {
+          ownerAccountId: accountId,
+          appId: 'neup.account',
+          portfolioId: null,
+        },
+        include: {
+          role: { select: { id: true, name: true } },
+        },
+      }),
+    ]);
+
+    if (!accountProfile) return null;
+
+    const name =
+      accountProfile.nameDisplay ||
+      `${accountProfile.nameFirst ?? ''} ${accountProfile.nameLast ?? ''}`.trim() ||
+      accountId;
+
+    const members = await Promise.all(
+      grants.map(async (grant) => {
+        const profile = await getUserProfile(grant.targetAccountId);
+        const displayName =
+          profile?.nameDisplay ||
+          `${profile?.nameFirst ?? ''} ${profile?.nameLast ?? ''}`.trim() ||
+          grant.targetAccountId;
+        return {
+          id: grant.id,
+          accountId: grant.targetAccountId,
+          displayName,
+          subtitle: grant.role.name,
+        };
+      })
+    );
+
+    return { name, members };
+  } catch (error) {
+    await logError('database', error, `getDirectAccessGroup for ${accountId}`);
+    return null;
+  }
+}
+
+
+/**
  * Function getAccessDetails.
  */
 export async function getAccessDetails(permitId: string): Promise<AccessDetails | null> {

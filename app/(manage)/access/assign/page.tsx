@@ -20,7 +20,31 @@ type PageProps = {
 export default async function PortfolioAssignPage({ searchParams }: PageProps) {
   const { portfolio: id } = await searchParams;
 
-  if (!id) notFound();
+  if (!id) {
+    // Direct access context — no portfolio, so no asset-based role assignment
+    const { BackButton } = await import('@/components/ui/back-button');
+    const { KeyRound } = await import('@/components/icons');
+    return (
+      <div className="grid gap-8">
+        <BackButton href="/access" />
+        <div className="min-w-0">
+          <h1 className="text-2xl font-bold tracking-tight">Assign Permissions</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Role assignment is managed through portfolios.
+          </p>
+        </div>
+        <div className="flex flex-col items-center gap-2 rounded-lg border px-4 py-12 text-center">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+            <KeyRound className="h-6 w-6 text-muted-foreground" />
+          </span>
+          <p className="text-sm font-medium">No role assignment in direct access</p>
+          <p className="text-xs text-muted-foreground max-w-xs">
+            Create a portfolio to assign roles to members across assets.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const group = await getAccessAssetGroup(id);
   if (!group) notFound();
