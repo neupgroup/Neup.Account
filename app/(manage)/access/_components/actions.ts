@@ -195,16 +195,14 @@ import { removeAssetGroupMember } from '@/services/manage/access/assets';
 export async function removeDirectMember(
   memberAccountId: string,
 ): Promise<{ success: boolean; error?: string }> {
-  const [ownerAccountId, personalAccountId] = await Promise.all([
-    getActiveAccountId(),
-    getPersonalAccountId(),
-  ]);
+  const ownerAccountId = await getActiveAccountId();
   if (!ownerAccountId) return { success: false, error: 'Not authenticated.' };
 
-  // A delegated actor (someone who was granted access) cannot remove the
-  // account owner's own grants. Only the owner acting directly can do that.
-  if (memberAccountId === ownerAccountId && personalAccountId !== ownerAccountId) {
-    return { success: false, error: 'Permission denied. The account owner\'s access cannot be removed.' };
+  // Nobody can remove the account owner's own direct grants:
+  // - not a delegated actor (personalAccountId !== ownerAccountId)
+  // - not the owner themselves
+  if (memberAccountId === ownerAccountId) {
+    return { success: false, error: 'Direct account roles cannot be removed.' };
   }
 
   try {

@@ -4,7 +4,7 @@ import { BackButton } from '@/components/ui/back-button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { UserCircle } from '@/components/icons';
-import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/verify';
+import { getActiveAccountId } from '@/core/auth/verify';
 import { getUserProfile } from '@/services/user';
 import prisma from '@/core/helpers/prisma';
 import {
@@ -281,21 +281,19 @@ async function MemberDirectRolesView({ memberAccountId }: { memberAccountId: str
   const accountId = await getActiveAccountId();
   if (!accountId) notFound();
 
-  const [detail, ownerProfile, isPending, personalAccountId] = await Promise.all([
+  const [detail, ownerProfile, isPending] = await Promise.all([
     getDirectMemberDetail(accountId, memberAccountId),
     getUserProfile(accountId),
     hasPendingDirectInvitation(accountId, memberAccountId),
-    getPersonalAccountId(),
   ]);
   if (!detail) notFound();
 
   const userPhoto = detail.accountPhoto ?? FALLBACK_PHOTO;
   const ownerName = ownerProfile?.nameDisplay ?? accountId;
 
-  // A delegated actor cannot remove the account owner's access.
+  // Nobody can remove the account owner's own direct roles — not delegates, not themselves.
   const isOwnerAccount = memberAccountId === accountId;
-  const isDelegate = personalAccountId !== accountId;
-  const canRemove = !(isOwnerAccount && isDelegate);
+  const canRemove = !isOwnerAccount;
 
   const avatar = (
     <PlatformAvatar userPhoto={userPhoto} platformLogo={NEUPID_LOGO} platformName="NeupID" />
