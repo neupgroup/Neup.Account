@@ -4,7 +4,7 @@ import { BackButton } from '@/components/ui/back-button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { UserCircle } from '@/components/icons';
-import { getActiveAccountId } from '@/core/auth/verify';
+import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/verify';
 import { getUserProfile } from '@/services/user';
 import prisma from '@/core/helpers/prisma';
 import {
@@ -63,6 +63,17 @@ async function hasPendingPortfolioInvitation(
   return reqs.some(
     (r) => (r.data as Record<string, unknown> | null)?.portfolioId === portfolioId,
   );
+}
+
+/** Returns true if the given member is the portfolio owner (hasFullAccess: true). */
+async function isPortfolioOwner(portfolioId: string, memberAccountId: string): Promise<boolean> {
+  const member = await prisma.portfolioMember.findFirst({
+    where: { portfolioId, accountId: memberAccountId },
+    select: { details: true },
+  });
+  if (!member) return false;
+  const details = member.details as Record<string, unknown> | null;
+  return details?.hasFullAccess === true;
 }
 
 // ── Platform avatar ───────────────────────────────────────────────────────────
@@ -270,15 +281,21 @@ async function MemberDirectRolesView({ memberAccountId }: { memberAccountId: str
   const accountId = await getActiveAccountId();
   if (!accountId) notFound();
 
-  const [detail, ownerProfile, isPending] = await Promise.all([
+  const [detail, ownerProfile, isPending, personalAccountId] = await Promise.all([
     getDirectMemberDetail(accountId, memberAccountId),
     getUserProfile(accountId),
     hasPendingDirectInvitation(accountId, memberAccountId),
+    getPersonalAccountId(),
   ]);
   if (!detail) notFound();
 
   const userPhoto = detail.accountPhoto ?? FALLBACK_PHOTO;
   const ownerName = ownerProfile?.nameDisplay ?? accountId;
+
+  // A delegated actor cannot remove the account owner's access.
+  const isOwnerAccount = memberAccountId === accountId;
+  const isDelegate = personalAccountId !== accountId;
+  const canRemove = !(isOwnerAccount && isDelegate);
 
   const avatar = (
     <PlatformAvatar userPhoto={userPhoto} platformLogo={NEUPID_LOGO} platformName="NeupID" />
@@ -313,26 +330,28 @@ async function MemberDirectRolesView({ memberAccountId }: { memberAccountId: str
         <EmptyRoles message="This member has no roles assigned on your account." />
       )}
 
-      <div className="flex justify-start">
-        {isPending ? (
-          <RemoveMemberButton
-            label="Cancel Invitation"
-            confirmTitle="Cancel invitation?"
-            confirmDescription={`This will cancel the pending access invitation sent to ${detail.displayName}. They will no longer be able to accept it.`}
-            action={cancelDirectInvitation.bind(null, memberAccountId)}
-            redirectTo="/access/member"
-            variant="outline"
-          />
-        ) : (
-          <RemoveMemberButton
-            label="Remove All Access"
-            confirmTitle="Remove all access?"
-            confirmDescription={`This will remove all roles ${detail.displayName} holds on your account. This cannot be undone.`}
-            action={removeDirectMember.bind(null, memberAccountId)}
-            redirectTo="/access/member"
-          />
-        )}
-      </div>
+      {canRemove && (
+        <div className="flex justify-start">
+          {isPending ? (
+            <RemoveMemberButton
+              label="Cancel Invitation"
+              confirmTitle="Cancel invitation?"
+              confirmDescription={`This will cancel the pending access invitation sent to ${detail.displayName}. They will no longer be able to accept it.`}
+              action={cancelDirectInvitation.bind(null, memberAccountId)}
+              redirectTo="/access/member"
+              variant="outline"
+            />
+          ) : (
+            <RemoveMemberButton
+              label="Remove All Access"
+              confirmTitle="Remove all access?"
+              confirmDescription={`This will remove all roles ${detail.displayName} holds on your account. This cannot be undone.`}
+              action={removeDirectMember.bind(null, memberAccountId)}
+              redirectTo="/access/member"
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -349,10 +368,11 @@ async function MemberPortfolioRolesView({
   const accountId = await getActiveAccountId();
   if (!accountId) notFound();
 
-  const [detail, memberProfile, isPending] = await Promise.all([
+  const [detail, memberProfile, isPending, isOwner] = await Promise.all([
     getPortfolioMemberDetail(portfolioId, memberAccountId),
     getUserProfile(memberAccountId),
     hasPendingPortfolioInvitation(accountId, memberAccountId, portfolioId),
+    isPortfolioOwner(portfolioId, memberAccountId),
   ]);
   if (!detail) notFound();
 
@@ -386,26 +406,28 @@ async function MemberPortfolioRolesView({
         <EmptyRoles message="This member has no roles assigned on assets in this portfolio." />
       )}
 
-      <div className="flex justify-start">
-        {isPending ? (
-          <RemoveMemberButton
-            label="Cancel Invitation"
-            confirmTitle="Cancel invitation?"
-            confirmDescription={`This will cancel the pending invitation for ${detail.displayName} to join portfolio "${detail.portfolioName}".`}
-            action={cancelPortfolioInvitation.bind(null, portfolioId, memberAccountId)}
-            redirectTo={`/access/member?portfolio=${portfolioId}`}
-            variant="outline"
-          />
-        ) : (
-          <RemoveMemberButton
-            label="Remove from Portfolio"
-            confirmTitle="Remove from portfolio?"
-            confirmDescription={`This will remove ${detail.displayName} from portfolio "${detail.portfolioName}" and revoke all their asset roles within it.`}
-            action={removePortfolioMember.bind(null, portfolioId, memberAccountId)}
-            redirectTo={`/access/member?portfolio=${portfolioId}`}
-          />
-        )}
-      </div>
+      {!isOwner && (
+        <div className="flex justify-start">
+          {isPending ? (
+            <RemoveMemberButton
+              label="Cancel Invitation"
+              confirmTitle="Cancel invitation?"
+              confirmDescription={`This will cancel the pending invitation for ${detail.displayName} to join portfolio "${detail.portfolioName}".`}
+              action={cancelPortfolioInvitation.bind(null, portfolioId, memberAccountId)}
+              redirectTo={`/access/member?portfolio=${portfolioId}`}
+              variant="outline"
+            />
+          ) : (
+            <RemoveMemberButton
+              label="Remove from Portfolio"
+              confirmTitle="Remove from portfolio?"
+              confirmDescription={`This will remove ${detail.displayName} from portfolio "${detail.portfolioName}" and revoke all their asset roles within it.`}
+              action={removePortfolioMember.bind(null, portfolioId, memberAccountId)}
+              redirectTo={`/access/member?portfolio=${portfolioId}`}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

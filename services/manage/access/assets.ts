@@ -437,6 +437,10 @@ export async function removeAssetFromGroup(input: { groupId: string; portfolioAs
  *
  * Removes a member from a portfolio and cleans up all access grants they held
  * on assets within that portfolio.
+ *
+ * Security rules:
+ * - The portfolio owner (the member with hasFullAccess: true in their details)
+ *   cannot be removed by anyone. Portfolio ownership is permanent.
  */
 export async function removeAssetGroupMember(input: {
   groupId: string;
@@ -462,11 +466,17 @@ export async function removeAssetGroupMember(input: {
         id: input.memberId,
         portfolioId: input.groupId,
       },
-      select: { id: true, accountId: true },
+      select: { id: true, accountId: true, details: true },
     });
 
     if (!member) {
       return { success: false, error: 'Member not found in this portfolio.' };
+    }
+
+    // The portfolio owner (hasFullAccess: true) cannot be removed.
+    const details = member.details as Record<string, unknown> | null;
+    if (details?.hasFullAccess === true) {
+      return { success: false, error: 'The portfolio owner cannot be removed.' };
     }
 
     await prisma.$transaction(async (tx) => {

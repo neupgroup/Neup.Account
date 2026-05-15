@@ -185,12 +185,27 @@ import { removeAssetGroupMember } from '@/services/manage/access/assets';
 /**
  * Removes all direct (non-portfolio) access grants a member holds on the
  * active account, then revalidates the access pages.
+ *
+ * Security rules:
+ * - The account owner's own grants cannot be removed by a delegated actor.
+ *   Only the owner themselves (personalAccountId === ownerAccountId) can
+ *   remove their own access. A member who was granted access later cannot
+ *   remove the grants of the account that originally owns the resource.
  */
 export async function removeDirectMember(
   memberAccountId: string,
 ): Promise<{ success: boolean; error?: string }> {
-  const ownerAccountId = await getActiveAccountId();
+  const [ownerAccountId, personalAccountId] = await Promise.all([
+    getActiveAccountId(),
+    getPersonalAccountId(),
+  ]);
   if (!ownerAccountId) return { success: false, error: 'Not authenticated.' };
+
+  // A delegated actor (someone who was granted access) cannot remove the
+  // account owner's own grants. Only the owner acting directly can do that.
+  if (memberAccountId === ownerAccountId && personalAccountId !== ownerAccountId) {
+    return { success: false, error: 'Permission denied. The account owner\'s access cannot be removed.' };
+  }
 
   try {
     await prisma.authzAccountAccessGrant.deleteMany({
