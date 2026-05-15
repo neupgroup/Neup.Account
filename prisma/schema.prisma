@@ -367,6 +367,14 @@ model ApplicationPolicy {
   @@map("application_policies")
 }
 
+/// Status of an authorization grant.
+enum AuthzGrantStatus {
+  active
+  invited
+  on_hold
+  expired
+}
+
 model AuthzCapability {
   id          String  @id @default(uuid())
   name        String
@@ -410,12 +418,13 @@ model AuthzRoleCapability {
 }
 
 model AuthzAccountAccessGrant {
-  id              String   @id @default(uuid())
-  ownerAccountId  String   @map("owner_account_id")
-  targetAccountId String   @map("target_account_id")
-  roleId          String   @map("role_id")
-  appId           String   @map("app_id")
-  portfolioId     String?  @map("portfolio_id")
+  id              String            @id @default(uuid())
+  ownerAccountId  String            @map("owner_account_id")
+  targetAccountId String            @map("target_account_id")
+  roleId          String            @map("role_id")
+  appId           String            @map("app_id")
+  portfolioId     String?           @map("portfolio_id")
+  status          AuthzGrantStatus  @default(active)
 
   owner       Account     @relation("AuthzGrantOwner", fields: [ownerAccountId], references: [id])
   target      Account     @relation("AuthzGrantTarget", fields: [targetAccountId], references: [id])
@@ -427,6 +436,7 @@ model AuthzAccountAccessGrant {
   @@index([targetAccountId], map: "authz_account_access_grant_target_account_id_idx")
   @@index([roleId], map: "authz_account_access_grant_role_id_idx")
   @@index([appId], map: "authz_account_access_grant_app_id_idx")
+  @@index([status], map: "authz_account_access_grant_status_idx")
   @@map("authz_account_access_grant")
 }
 
@@ -473,12 +483,13 @@ model Permit {
 }
 
 model AuthzAppAccessGrant {
-  id              String   @id @default(uuid())
-  appId           String   @map("app_id")
-  accountId       String   @map("account_id")
-  targetAccountId String   @map("target_account_id")
-  roleId          String   @map("role_id")
-  portfolioId     String?  @map("portfolio_id")
+  id              String            @id @default(uuid())
+  appId           String            @map("app_id")
+  accountId       String            @map("account_id")
+  targetAccountId String            @map("target_account_id")
+  roleId          String            @map("role_id")
+  portfolioId     String?           @map("portfolio_id")
+  status          AuthzGrantStatus  @default(active)
 
   application     Application @relation(fields: [appId], references: [id], map: "authz_app_access_grant_app_id_fkey")
   account         Account     @relation("AuthzAppGrantOwner", fields: [accountId], references: [id], map: "authz_app_access_grant_account_id_fkey")
@@ -491,6 +502,7 @@ model AuthzAppAccessGrant {
   @@index([targetAccountId], map: "authz_app_access_grant_target_account_id_idx")
   @@index([roleId], map: "authz_app_access_grant_role_id_idx")
   @@index([portfolioId], map: "authz_app_access_grant_portfolio_id_idx")
+  @@index([status], map: "authz_app_access_grant_status_idx")
   @@map("authz_app_access_grant")
 }
 

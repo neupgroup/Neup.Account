@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { BackButton } from '@/components/ui/back-button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Shield, ChevronRight } from '@/components/icons';
+import { Badge } from '@/components/ui/badge';
+import { Shield, ChevronRight, Clock } from '@/components/icons';
 import { addMemberToAssetGroupFromForm } from '@/services/manage/access/actions';
 import { getPortfolioMembers, getDirectMembers } from '@/services/manage/access';import { getActiveAccountId } from '@/core/auth/verify';
 import { AddMemberForm } from '../_components/add-member-form';
@@ -14,6 +15,24 @@ type PageProps = {
   searchParams: Promise<{ portfolio?: string }>;
 };
 
+// ── Status badge ──────────────────────────────────────────────────────────────
+
+function StatusBadge({ status }: { status: 'active' | 'invited' | 'on_hold' | 'expired' }) {
+  if (status === 'active') return null;
+
+  const config = {
+    invited: { label: 'Invited', variant: 'outline' as const, className: 'text-amber-600 border-amber-300 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-800 dark:text-amber-400' },
+    on_hold: { label: 'On Hold', variant: 'outline' as const, className: 'text-orange-600 border-orange-300 bg-orange-50 dark:bg-orange-950/30 dark:border-orange-800 dark:text-orange-400' },
+    expired: { label: 'Expired', variant: 'outline' as const, className: 'text-muted-foreground border-border' },
+  }[status];
+
+  return (
+    <Badge variant={config.variant} className={`text-xs shrink-0 ${config.className}`}>
+      {config.label}
+    </Badge>
+  );
+}
+
 // ── Shared member row ─────────────────────────────────────────────────────────
 
 function MemberRow({
@@ -21,18 +40,22 @@ function MemberRow({
   displayName,
   accountPhoto,
   roleCount,
+  status,
 }: {
   href: string;
   displayName: string;
   accountPhoto?: string;
   roleCount: number;
+  status: 'active' | 'invited' | 'on_hold' | 'expired';
 }) {
+  const isInvited = status === 'invited';
+
   return (
     <FlowLink
       href={href}
       className="flex items-center gap-4 py-4 px-4 hover:bg-muted/50 transition-colors"
     >
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted overflow-hidden">
+      <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full overflow-hidden ${isInvited ? 'bg-amber-100 dark:bg-amber-950/40' : 'bg-muted'}`}>
         {accountPhoto ? (
           <Image
             src={accountPhoto}
@@ -41,6 +64,8 @@ function MemberRow({
             height={36}
             className="h-full w-full object-cover"
           />
+        ) : isInvited ? (
+          <Clock className="h-4 w-4 text-amber-500" />
         ) : (
           <span className="text-sm font-medium text-muted-foreground">
             {displayName.charAt(0).toUpperCase()}
@@ -48,13 +73,18 @@ function MemberRow({
         )}
       </span>
       <div className="min-w-0 flex-grow">
-        <p className="font-medium text-foreground truncate">{displayName}</p>
+        <p className={`font-medium truncate ${isInvited ? 'text-muted-foreground' : 'text-foreground'}`}>
+          {displayName}
+        </p>
         <p className="text-sm text-muted-foreground">
-          {roleCount === 0
+          {isInvited
+            ? 'Invitation pending'
+            : roleCount === 0
             ? 'No roles assigned'
             : `${roleCount} role${roleCount !== 1 ? 's' : ''} assigned`}
         </p>
       </div>
+      <StatusBadge status={status} />
       <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
     </FlowLink>
   );
@@ -129,6 +159,7 @@ async function PortfolioAccountPage({ id }: { id: string }) {
             displayName={member.displayName}
             accountPhoto={member.accountPhoto}
             roleCount={member.roleCount}
+            status={member.status}
           />
         ))
       ) : (
@@ -160,6 +191,7 @@ async function DirectAccountPage() {
             displayName={member.displayName}
             accountPhoto={member.accountPhoto}
             roleCount={member.roleCount}
+            status={member.status}
           />
         ))
       ) : (

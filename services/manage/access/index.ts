@@ -292,17 +292,20 @@ export type DirectMember = {
   displayName: string;
   accountPhoto?: string;
   roleCount: number;
+  /** Grant status — 'active' for confirmed members, 'invited' for pending invitations. */
+  status: 'active' | 'invited' | 'on_hold' | 'expired';
 };
 
 /**
  * Function getDirectMembers.
  *
  * Returns unique members with direct (non-portfolio) grants on the given account,
- * grouped by accountId with a total role count.
+ * grouped by accountId with a total role count. Also includes accounts with a
+ * pending access_invitation request (shown with status 'invited').
  */
 export async function getDirectMembers(accountId: string): Promise<{ accountName: string; members: DirectMember[] }> {
   try {
-    const [accountProfile, grants] = await Promise.all([
+    const [accountProfile, grants, pendingInvitations] = await Promise.all([
       getUserProfile(accountId),
       prisma.authzAccountAccessGrant.findMany({
         where: {
@@ -310,7 +313,16 @@ export async function getDirectMembers(accountId: string): Promise<{ accountName
           appId: 'neup.account',
           portfolioId: null,
         },
-        select: { targetAccountId: true },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        select: { targetAccountId: true, status: true } as any,
+      }) as unknown as Promise<Array<{ targetAccountId: string; status: string }>>,
+      prisma.request.findMany({
+        where: {
+          action: 'access_invitation',
+          senderId: accountId,
+          status: 'pending',
+        },
+        select: { recipientId: true },
       }),
     ]);
 
@@ -319,14 +331,30 @@ export async function getDirectMembers(accountId: string): Promise<{ accountName
       `${accountProfile?.nameFirst ?? ''} ${accountProfile?.nameLast ?? ''}`.trim() ||
       accountId;
 
-    // Group by targetAccountId to count roles
-    const countMap = new Map<string, number>();
+    // Build a map of confirmed grant members: accountId → { roleCount, status }
+    const grantMap = new Map<string, { roleCount: number; status: 'active' | 'invited' | 'on_hold' | 'expired' }>();
     for (const grant of grants) {
-      countMap.set(grant.targetAccountId, (countMap.get(grant.targetAccountId) ?? 0) + 1);
+      const existing = grantMap.get(grant.targetAccountId);
+      const validStatuses = ['active', 'invited', 'on_hold', 'expired'] as const;
+      const grantStatus: 'active' | 'invited' | 'on_hold' | 'expired' =
+        validStatuses.includes(grant.status as typeof validStatuses[number])
+          ? (grant.status as 'active' | 'invited' | 'on_hold' | 'expired')
+          : 'active';
+      if (existing) {
+        existing.roleCount += 1;
+      } else {
+        grantMap.set(grant.targetAccountId, { roleCount: 1, status: grantStatus });
+      }
     }
 
-    const members = await Promise.all(
-      Array.from(countMap.entries()).map(async ([targetAccountId, roleCount]) => {
+    // Collect invited account IDs that don't already have a confirmed grant
+    const invitedIds = pendingInvitations
+      .map((r) => r.recipientId)
+      .filter((id) => !grantMap.has(id));
+
+    // Resolve profiles for confirmed grant members
+    const confirmedMembers = await Promise.all(
+      Array.from(grantMap.entries()).map(async ([targetAccountId, { roleCount, status }]) => {
         const profile = await getUserProfile(targetAccountId);
         const displayName =
           profile?.nameDisplay ||
@@ -337,9 +365,31 @@ export async function getDirectMembers(accountId: string): Promise<{ accountName
           displayName,
           accountPhoto: profile?.accountPhoto,
           roleCount,
+          status,
         };
       })
     );
+
+    // Resolve profiles for invited (pending) accounts
+    const invitedMembers = await Promise.all(
+      invitedIds.map(async (targetAccountId) => {
+        const profile = await getUserProfile(targetAccountId);
+        const displayName =
+          profile?.nameDisplay ||
+          `${profile?.nameFirst ?? ''} ${profile?.nameLast ?? ''}`.trim() ||
+          targetAccountId;
+        return {
+          accountId: targetAccountId,
+          displayName,
+          accountPhoto: profile?.accountPhoto,
+          roleCount: 0,
+          status: 'invited' as const,
+        };
+      })
+    );
+
+    // Active/confirmed members first, then invited
+    const members = [...confirmedMembers, ...invitedMembers];
 
     return { accountName, members };
   } catch (error) {
@@ -712,6 +762,8 @@ export type PortfolioMemberSummary = {
   displayName: string;
   accountPhoto?: string;
   roleCount: number;
+  /** Grant status — 'active' for confirmed members, 'invited' for pending invitations. */
+  status: 'active' | 'invited' | 'on_hold' | 'expired';
 };
 
 /**
@@ -719,22 +771,34 @@ export type PortfolioMemberSummary = {
  *
  * Returns all members of a portfolio with their display name, photo, and
  * total number of roles assigned across all assets in the portfolio.
+ * Also includes accounts with a pending access_invitation for this portfolio.
  */
 export async function getPortfolioMembers(
   portfolioId: string,
 ): Promise<{ portfolioName: string; members: PortfolioMemberSummary[] }> {
   try {
-    const portfolio = await prisma.portfolio.findUnique({
-      where: { id: portfolioId },
-      select: {
-        name: true,
-        members: { select: { accountId: true } },
-      },
-    });
+    const [portfolio, pendingInvitations] = await Promise.all([
+      prisma.portfolio.findUnique({
+        where: { id: portfolioId },
+        select: {
+          name: true,
+          members: { select: { accountId: true } },
+        },
+      }),
+      // Fetch pending invitations scoped to this portfolio (portfolioId stored in data JSON)
+      prisma.request.findMany({
+        where: {
+          action: 'access_invitation',
+          status: 'pending',
+        },
+        select: { recipientId: true, data: true },
+      }),
+    ]);
 
     if (!portfolio) return { portfolioName: '', members: [] };
 
-    const members = await Promise.all(
+    // Confirmed portfolio members
+    const confirmedMembers = await Promise.all(
       portfolio.members.map(async ({ accountId: memberAccountId }) => {
         const [profile, grantCount] = await Promise.all([
           getUserProfile(memberAccountId),
@@ -757,11 +821,36 @@ export async function getPortfolioMembers(
           displayName,
           accountPhoto: profile?.accountPhoto,
           roleCount: grantCount,
+          status: 'active' as const,
         };
       })
     );
 
-    return { portfolioName: portfolio.name, members };
+    // Invited (pending) accounts scoped to this portfolio
+    const confirmedIds = new Set(portfolio.members.map((m) => m.accountId));
+    const invitedForPortfolio = pendingInvitations.filter((r) => {
+      const data = r.data as Record<string, unknown> | null;
+      return data?.portfolioId === portfolioId && !confirmedIds.has(r.recipientId);
+    });
+
+    const invitedMembers = await Promise.all(
+      invitedForPortfolio.map(async ({ recipientId }) => {
+        const profile = await getUserProfile(recipientId);
+        const displayName =
+          profile?.nameDisplay ||
+          `${profile?.nameFirst ?? ''} ${profile?.nameLast ?? ''}`.trim() ||
+          recipientId;
+        return {
+          accountId: recipientId,
+          displayName,
+          accountPhoto: profile?.accountPhoto,
+          roleCount: 0,
+          status: 'invited' as const,
+        };
+      })
+    );
+
+    return { portfolioName: portfolio.name, members: [...confirmedMembers, ...invitedMembers] };
   } catch (error) {
     await logError('database', error, `getPortfolioMembers:${portfolioId}`);
     return { portfolioName: '', members: [] };
