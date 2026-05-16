@@ -306,7 +306,7 @@ exports.Prisma.PortfolioScalarFieldEnum = {
   dateCreated: 'dateCreated'
 };
 
-exports.Prisma.PortfolioAssetScalarFieldEnum = {
+exports.Prisma.AssetScalarFieldEnum = {
   id: 'id',
   portfolioId: 'portfolioId',
   assetType: 'assetType',
@@ -492,7 +492,7 @@ exports.Prisma.ModelName = {
   ApplicationProvider: 'ApplicationProvider',
   Application: 'Application',
   Portfolio: 'Portfolio',
-  PortfolioAsset: 'PortfolioAsset',
+  Asset: 'Asset',
   PortfolioMember: 'PortfolioMember',
   AccountOwnership: 'AccountOwnership',
   ApplicationConnection: 'ApplicationConnection',

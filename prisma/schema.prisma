@@ -286,7 +286,7 @@ model Portfolio {
   name        String
   description String?
   dateCreated DateTime          @default(now())
-  assets      PortfolioAsset[]
+  assets      Asset[]
   members     PortfolioMember[]
   authzAccountAccessGrants AuthzAccountAccessGrant[]
   authzAssetsAccessGrants  AuthzAssetsAccessGrant[]
@@ -296,7 +296,7 @@ model Portfolio {
   @@map("portfolio")
 }
 
-model PortfolioAsset {
+model Asset {
   id          String    @id(map: "portfolio_assets_pkey") @default(uuid())
   portfolioId String
   assetType   String
@@ -307,7 +307,7 @@ model PortfolioAsset {
 
   @@index([assetType, assetId], map: "portfolio_assets_assetType_assetId_idx")
   @@index([portfolioId], map: "portfolio_assets_portfolioId_idx")
-  @@map("portfolio_asset")
+  @@map("assets")
 }
 
 model PortfolioMember {
@@ -465,7 +465,7 @@ model AuthzAssetsAccessGrant {
   app_id         String   @map("app_id")
   asset_type     String?  @map("asset_type")
 
-  asset       PortfolioAsset @relation(fields: [asset_id], references: [id], map: "authz_assets_access_grant_asset_id_fkey")
+  asset       Asset          @relation(fields: [asset_id], references: [id], map: "authz_assets_access_grant_asset_id_fkey")
   account     Account        @relation(fields: [account_id], references: [id], map: "authz_assets_access_grant_account_id_fkey")
   role        AuthzRole      @relation(fields: [role_id], references: [id], map: "authz_assets_access_grant_role_id_fkey")
   portfolio   Portfolio?     @relation(fields: [portfolio_id], references: [id], map: "authz_assets_access_grant_portfolio_id_fkey")

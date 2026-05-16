@@ -12,7 +12,6 @@ export type ResolvedAsset = {
 
 /**
  * Resolves an application asset by its application ID.
- * Returns the application name and status as subtitle.
  */
 async function resolveApplicationAsset(assetId: string): Promise<ResolvedAsset | null> {
   try {
@@ -31,12 +30,45 @@ async function resolveApplicationAsset(assetId: string): Promise<ResolvedAsset |
   }
 }
 
+/**
+ * Resolves an account asset (individual, brand, branch, dependent) by account ID.
+ */
+async function resolveAccountAsset(assetId: string, assetType: string): Promise<ResolvedAsset | null> {
+  try {
+    const account = await prisma.account.findUnique({
+      where: { id: assetId },
+      select: {
+        displayName: true,
+        accountType: true,
+        neupIds: { where: { isPrimary: true }, select: { neupId: true }, take: 1 },
+      },
+    });
+    if (!account) return null;
+    return {
+      name: account.displayName ?? assetId,
+      subtitle: assetType,
+    };
+  } catch (error) {
+    await logError('database', error, `resolveAccountAsset:${assetId}`);
+    return null;
+  }
+}
+
 // ── Dispatcher ────────────────────────────────────────────────────────────────
 
 const APPLICATION_TYPES = new Set(['application', 'app']);
+const ACCOUNT_TYPES = new Set([
+  'account.individual',
+  'account.brand',
+  'account.branch',
+  'account.dependent',
+  // legacy aliases
+  'brand_account',
+  'branch_account',
+]);
 
 /**
- * Resolves a human-readable name for any portfolio asset.
+ * Resolves a human-readable name for any asset.
  * Falls back to the raw assetId if no resolver matches or the entity is not found.
  */
 export async function resolveAssetName(
@@ -50,13 +82,18 @@ export async function resolveAssetName(
     if (result) return result;
   }
 
+  if (ACCOUNT_TYPES.has(type)) {
+    const result = await resolveAccountAsset(assetId, assetType);
+    if (result) return result;
+  }
+
   // Fallback — unknown type or entity not found
   return { name: assetId, subtitle: assetType };
 }
 
 /**
  * Resolves names for a list of assets in parallel.
- * Returns a map keyed by portfolioAsset.id → ResolvedAsset.
+ * Returns a map keyed by asset.id → ResolvedAsset.
  */
 export async function resolveAssetNames(
   assets: Array<{ id: string; assetId: string; assetType: string }>,

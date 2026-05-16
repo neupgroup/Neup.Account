@@ -458,47 +458,76 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
          return { success: false, error: 'This NeupID is no longer available.' };
     }
 
-    const account = await prisma.account.create({
-      data: {
-        accountType: 'individual',
-        status: 'active',
-        isVerified: false,
-        displayName: nameDisplay,
-        displayImage: null,
+    const account = await prisma.$transaction(async (tx) => {
+      const created = await tx.account.create({
+        data: {
+          accountType: 'individual',
+          status: 'active',
+          isVerified: false,
+          displayName: nameDisplay,
+          displayImage: null,
 
-        neupIds: {
-          create: {
-            id: neupId,
-            neupId,
-            isPrimary: true,
+          neupIds: {
+            create: {
+              id: neupId,
+              neupId,
+              isPrimary: true,
+            },
           },
-        },
-        
-        contacts: {
-          create: {
-            contactType: 'primaryPhone',
-            value: phone,
-          },
-        },
 
-        individualProfile: {
-          create: {
-            firstName: nameFirst,
-            middleName: nameMiddle || null,
-            lastName: nameLast,
-            dateOfBirth: birthDateObj,
-            countryOfResidence: nationality,
+          contacts: {
+            create: {
+              contactType: 'primaryPhone',
+              value: phone,
+            },
+          },
+
+          individualProfile: {
+            create: {
+              firstName: nameFirst,
+              middleName: nameMiddle || null,
+              lastName: nameLast,
+              dateOfBirth: birthDateObj,
+              countryOfResidence: nationality,
+            },
+          },
+          authMethods: {
+            create: {
+              type: 'password',
+              value: password,
+              order: 'primary',
+              status: 'active',
+            },
           },
         },
-        authMethods: {
-          create: {
-            type: 'password',
-            value: password,
-            order: 'primary',
-            status: 'active',
+      });
+
+      // Create a personal portfolio and register the individual account as an asset
+      const personalPortfolio = await tx.portfolio.create({
+        data: {
+          name: 'My Assets',
+          description: 'Personal asset portfolio.',
+          members: {
+            create: {
+              accountId: created.id,
+              isPermanent: true,
+              hasFullAccess: true,
+              details: { isPermanent: true, hasFullAccess: true },
+            },
           },
         },
-      },
+        select: { id: true },
+      });
+
+      await tx.asset.create({
+        data: {
+          portfolioId: personalPortfolio.id,
+          assetId: created.id,
+          assetType: 'account.individual',
+        },
+      });
+
+      return created;
     });
 
     const accountId = account.id;

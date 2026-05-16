@@ -117,81 +117,119 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
         }
         
         const hashedPassword = await bcrypt.hash(password, 10);
-        
-        const account = await prisma.account.create({
-            data: {
-                accountType: 'dependent',
-                status: 'active',
-                isVerified: false,
-                displayName: `${profileData.firstName} ${profileData.lastName}`.trim(),
-                displayImage: null,
-                details: {
-                    gender: profileData.gender,
-                },
 
-                individualProfile: {
-                    create: {
-                        firstName: profileData.firstName,
-                        middleName: profileData.middleName || null,
-                        lastName: profileData.lastName,
-                        dateOfBirth: new Date(profileData.dob),
-                        countryOfResidence: profileData.nationality,
+        const dependentAccountId = await prisma.$transaction(async (tx) => {
+            const account = await tx.account.create({
+                data: {
+                    accountType: 'dependent',
+                    status: 'active',
+                    isVerified: false,
+                    displayName: `${profileData.firstName} ${profileData.lastName}`.trim(),
+                    displayImage: null,
+                    details: {
+                        gender: profileData.gender,
+                    },
+                    individualProfile: {
+                        create: {
+                            firstName: profileData.firstName,
+                            middleName: profileData.middleName || null,
+                            lastName: profileData.lastName,
+                            dateOfBirth: new Date(profileData.dob),
+                            countryOfResidence: profileData.nationality,
+                        },
+                    },
+                    authMethods: {
+                        create: {
+                            type: 'password',
+                            order: 'primary',
+                            status: 'active',
+                            value: hashedPassword,
+                        },
+                    },
+                    neupIds: {
+                        create: {
+                            id: neupId,
+                            neupId: neupId,
+                            isPrimary: true,
+                        },
                     },
                 },
-                authMethods: {
-                    create: {
-                        type: 'password',
-                        order: 'primary',
-                        status: 'active',
-                        value: hashedPassword,
+            });
+
+            const accountId = account.id;
+
+            // Ensure delegation roles exist
+            await tx.authzRole.upsert({
+                where: { id: 'account.guardian' },
+                update: { name: 'account.guardian', scope: 'account', appId: 'neup.account' },
+                create: { id: 'account.guardian', name: 'account.guardian', scope: 'account', appId: 'neup.account' },
+            });
+            await tx.authzRole.upsert({
+                where: { id: 'account.dependent' },
+                update: { name: 'account.dependent', scope: 'account', appId: 'neup.account' },
+                create: { id: 'account.dependent', name: 'account.dependent', scope: 'account', appId: 'neup.account' },
+            });
+
+            // Grant guardian access to manage the dependent account
+            await tx.authzAccountAccessGrant.create({
+                data: {
+                    ownerAccountId: accountId,
+                    targetAccountId: guardianAccountId,
+                    roleId: 'account.guardian',
+                    appId: 'neup.account',
+                },
+            });
+
+            // Grant the dependent account access to itself
+            await tx.authzAccountAccessGrant.create({
+                data: {
+                    ownerAccountId: accountId,
+                    targetAccountId: accountId,
+                    roleId: 'account.dependent',
+                    appId: 'neup.account',
+                },
+            });
+
+            // Register the dependent account as an asset in the guardian's personal portfolio
+            let personalPortfolio = await tx.portfolio.findFirst({
+                where: {
+                    members: {
+                        every: { accountId: guardianAccountId },
+                        some: { accountId: guardianAccountId },
                     },
                 },
-                
-                neupIds: {
-                    create: {
-                        id: neupId,
-                        neupId: neupId,
-                        isPrimary: true
-                    }
+                select: { id: true },
+            });
+
+            if (!personalPortfolio) {
+                personalPortfolio = await tx.portfolio.create({
+                    data: {
+                        name: 'My Assets',
+                        description: 'Personal asset portfolio.',
+                        members: {
+                            create: {
+                                accountId: guardianAccountId,
+                                isPermanent: true,
+                                hasFullAccess: true,
+                                details: { isPermanent: true, hasFullAccess: true },
+                            },
+                        },
+                    },
+                    select: { id: true },
+                });
+            }
+
+            await tx.asset.create({
+                data: {
+                    portfolioId: personalPortfolio.id,
+                    assetId: accountId,
+                    assetType: 'account.dependent',
                 },
-                
-            }
-        });
-        
-        const dependentAccountId = account.id;
+            });
 
-        // Ensure delegation roles exist
-        await prisma.authzRole.upsert({
-            where: { id: 'account.guardian' },
-            update: { name: 'account.guardian', scope: 'account', appId: 'neup.account' },
-            create: { id: 'account.guardian', name: 'account.guardian', scope: 'account', appId: 'neup.account' },
-        });
-        await prisma.authzRole.upsert({
-            where: { id: 'account.dependent' },
-            update: { name: 'account.dependent', scope: 'account', appId: 'neup.account' },
-            create: { id: 'account.dependent', name: 'account.dependent', scope: 'account', appId: 'neup.account' },
+            return accountId;
         });
 
-        // Grant guardian access to manage the dependent account
-        await prisma.authzAccountAccessGrant.create({
-            data: {
-                ownerAccountId: dependentAccountId,
-                targetAccountId: guardianAccountId,
-                roleId: 'account.guardian',
-                appId: 'neup.account',
-            }
-        });
-
-        // Grant the dependent account access to itself
-        await prisma.authzAccountAccessGrant.create({
-            data: {
-                ownerAccountId: dependentAccountId,
-                targetAccountId: dependentAccountId,
-                roleId: 'account.dependent',
-                appId: 'neup.account',
-            }
-        });
-        
         await logActivity(guardianAccountId, `Created Dependent Account: ${neupId}`, 'Success', ipAddress, undefined, geolocation);
         revalidatePath('/accounts/dependent');
 

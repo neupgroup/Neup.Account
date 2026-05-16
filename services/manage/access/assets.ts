@@ -407,7 +407,7 @@ export async function addAssetToGroup(input: { groupId: string; asset: string; t
     }
 
     // Prevent duplicate assets in the same portfolio
-    const existing = await prisma.portfolioAsset.findFirst({
+    const existing = await prisma.asset.findFirst({
       where: {
         portfolioId: parsed.data.groupId,
         assetId: parsed.data.asset,
@@ -419,7 +419,7 @@ export async function addAssetToGroup(input: { groupId: string; asset: string; t
       return { success: false, error: 'This asset is already in the portfolio.' };
     }
 
-    await prisma.portfolioAsset.create({
+    await prisma.asset.create({
       data: {
         portfolioId: parsed.data.groupId,
         assetId: parsed.data.asset,
@@ -464,7 +464,7 @@ export async function removeAssetFromGroup(input: { groupId: string; portfolioAs
     }
 
     // Load the asset row so we know assetId and assetType for re-attachment
-    const assetRow = await prisma.portfolioAsset.findFirst({
+    const assetRow = await prisma.asset.findFirst({
       where: {
         id: input.portfolioAssetId,
         portfolioId: input.groupId,
@@ -486,7 +486,7 @@ export async function removeAssetFromGroup(input: { groupId: string; portfolioAs
       });
 
       // 2. Remove the asset from the portfolio
-      await tx.portfolioAsset.delete({
+      await tx.asset.delete({
         where: { id: assetRow.id },
       });
 
@@ -524,7 +524,7 @@ export async function removeAssetFromGroup(input: { groupId: string; portfolioAs
       }
 
       // Only add if not already present in the personal portfolio
-      const alreadyInPersonal = await tx.portfolioAsset.findFirst({
+      const alreadyInPersonal = await tx.asset.findFirst({
         where: {
           portfolioId: personalPortfolio.id,
           assetId: assetRow.assetId,
@@ -533,7 +533,7 @@ export async function removeAssetFromGroup(input: { groupId: string; portfolioAs
       });
 
       if (!alreadyInPersonal) {
-        await tx.portfolioAsset.create({
+        await tx.asset.create({
           data: {
             portfolioId: personalPortfolio.id,
             assetId: assetRow.assetId,
@@ -751,12 +751,17 @@ export type AssetRole = {
   description?: string;
 };
 
-// Maps portfolioAsset.assetType values to the authzRole.scope used in the seeder.
+// Maps asset.assetType values to the authzRole.scope used in the seeder.
 const ASSET_TYPE_TO_ROLE_SCOPE: Record<string, string> = {
-  application:     'application',
-  app:             'application',
-  brand_account:   'brand',
-  branch_account:  'brand',
+  application:          'application',
+  app:                  'application',
+  'account.individual': 'account',
+  'account.brand':      'brand',
+  'account.branch':     'brand',
+  'account.dependent':  'account',
+  // legacy aliases
+  brand_account:        'brand',
+  branch_account:       'brand',
 };
 
 /**
@@ -772,7 +777,7 @@ export async function getRolesForAsset(portfolioAssetId: string): Promise<AssetR
   if (!portfolioAssetId) return [];
 
   try {
-    const assetRow = await prisma.portfolioAsset.findUnique({
+    const assetRow = await prisma.asset.findUnique({
       where: { id: portfolioAssetId },
       select: { assetType: true },
     });
@@ -882,7 +887,7 @@ export async function bulkAssignAssetRoles(input: {
     }
 
     // First, ensure all assets are in the portfolio
-    const existingAssets = await prisma.portfolioAsset.findMany({
+    const existingAssets = await prisma.asset.findMany({
       where: {
         portfolioId: input.groupId,
         assetId: { in: input.assetIds },
@@ -899,7 +904,7 @@ export async function bulkAssignAssetRoles(input: {
         if (existingAssetIdMap.has(assetId)) {
           portfolioAssetIds.push(existingAssetIdMap.get(assetId)!);
         } else {
-          const created = await tx.portfolioAsset.create({
+          const created = await tx.asset.create({
             data: {
               portfolioId: input.groupId,
               assetId,
