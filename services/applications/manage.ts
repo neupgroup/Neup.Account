@@ -1233,3 +1233,174 @@ export async function getAppPublicationRequestStatus(
     return 'none';
   }
 }
+
+// ---------------------------------------------------------------------------
+// Ownership data
+// ---------------------------------------------------------------------------
+
+export type AppOwnerEntry = {
+  accountId: string;
+  displayName: string;
+  accountType: string;
+  neupId?: string;
+  isVerified: boolean;
+};
+
+export type AppAccessEntry = {
+  accountId: string;
+  displayName: string;
+  accountType: string;
+  neupId?: string;
+  isVerified: boolean;
+  roles: string[];
+  /** null = direct grant; string = portfolio name the grant came through */
+  via: null | string;
+};
+
+export type AppPortfolioEntry = {
+  portfolioId: string;
+  portfolioName: string;
+};
+
+export type AppOwnershipData = {
+  owners: AppOwnerEntry[];
+  accessGrants: AppAccessEntry[];
+  portfolios: AppPortfolioEntry[];
+};
+
+/**
+ * Function getAppOwnershipData.
+ *
+ * Returns the owner(s), all accounts with access grants, and any portfolios
+ * this application belongs to. Accessible to the app owner and root viewers.
+ */
+export async function getAppOwnershipData(appId: string): Promise<AppOwnershipData | null> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) return null;
+
+  const isRootViewer = await checkPermissions(['root.app.view']);
+  const isOwner = await isApplicationOwnerForAccount(accountId, appId);
+  if (!isRootViewer && !isOwner) return null;
+
+  try {
+    // All access grants for this app
+    const grants = await prisma.authzAccountAccessGrant.findMany({
+      where: { appId },
+      select: {
+        targetAccountId: true,
+        roleId: true,
+        portfolioId: true,
+        portfolio: { select: { id: true, name: true } },
+        target: {
+          select: {
+            id: true,
+            displayName: true,
+            accountType: true,
+            isVerified: true,
+            neupIds: { where: { isPrimary: true }, select: { neupId: true }, take: 1 },
+            individualProfile: { select: { firstName: true, lastName: true } },
+            brandProfile: { select: { brandName: true } },
+          },
+        },
+      },
+    });
+
+    // Portfolios this app belongs to (via AuthzAppAccessGrant)
+    const appPortfolioGrants = await prisma.authzAppAccessGrant.findMany({
+      where: { appId, portfolioId: { not: null } },
+      select: {
+        portfolioId: true,
+        portfolio: { select: { id: true, name: true } },
+      },
+      distinct: ['portfolioId'],
+    });
+
+    // Also check AuthzAccountAccessGrant portfolios
+    const portfolioIds = new Set<string>();
+    const portfolioMap = new Map<string, string>();
+
+    for (const g of grants) {
+      if (g.portfolioId && g.portfolio) {
+        portfolioIds.add(g.portfolioId);
+        portfolioMap.set(g.portfolioId, g.portfolio.name);
+      }
+    }
+    for (const g of appPortfolioGrants) {
+      if (g.portfolioId && g.portfolio) {
+        portfolioIds.add(g.portfolioId);
+        portfolioMap.set(g.portfolioId, g.portfolio.name);
+      }
+    }
+
+    const portfolios: AppPortfolioEntry[] = Array.from(portfolioIds).map((id) => ({
+      portfolioId: id,
+      portfolioName: portfolioMap.get(id) ?? id,
+    }));
+
+    // Helper to resolve a display name from the included account data
+    function resolveDisplayName(target: {
+      displayName: string | null;
+      individualProfile: { firstName: string | null; lastName: string | null } | null;
+      brandProfile: { brandName: string | null } | null;
+    }): string {
+      if (target.brandProfile?.brandName) return target.brandProfile.brandName;
+      if (target.displayName) return target.displayName;
+      const first = target.individualProfile?.firstName ?? '';
+      const last = target.individualProfile?.lastName ?? '';
+      const full = `${first} ${last}`.trim();
+      return full || 'Unknown';
+    }
+
+    // Separate owners from other grantees; group roles per account
+    const ownerMap = new Map<string, AppOwnerEntry>();
+    const accessMap = new Map<string, AppAccessEntry>();
+
+    for (const g of grants) {
+      const t = g.target;
+      const displayName = resolveDisplayName(t);
+      const neupId = t.neupIds[0]?.neupId;
+      const isOwnerRole = ownerRoleKeys.has(g.roleId.trim().toLowerCase());
+
+      if (isOwnerRole) {
+        if (!ownerMap.has(t.id)) {
+          ownerMap.set(t.id, {
+            accountId: t.id,
+            displayName,
+            accountType: t.accountType,
+            neupId,
+            isVerified: t.isVerified,
+          });
+        }
+      } else {
+        if (!accessMap.has(t.id)) {
+          accessMap.set(t.id, {
+            accountId: t.id,
+            displayName,
+            accountType: t.accountType,
+            neupId,
+            isVerified: t.isVerified,
+            roles: [],
+            via: g.portfolioId && g.portfolio ? g.portfolio.name : null,
+          });
+        }
+        const entry = accessMap.get(t.id)!;
+        if (!entry.roles.includes(g.roleId)) {
+          entry.roles.push(g.roleId);
+        }
+        // If any grant for this account came via a portfolio, mark it
+        if (g.portfolioId && g.portfolio && entry.via === null) {
+          entry.via = g.portfolio.name;
+        }
+      }
+    }
+
+    return {
+      owners: Array.from(ownerMap.values()),
+      accessGrants: Array.from(accessMap.values()),
+      portfolios,
+    };
+  } catch (error) {
+    await logError('database', error, `getAppOwnershipData:${appId}`);
+    return null;
+  }
+}
