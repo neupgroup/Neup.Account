@@ -9,7 +9,7 @@ import prisma from '@/core/helpers/prisma';
 import { checkPermissions } from '@/services/user';
 import { logError } from '@/core/helpers/logger';
 import { getUserProfile, getUserNeupIds } from '@/services/user';
-import { REQUEST_TYPE_LABELS } from './types';
+import { REQUEST_TYPE_LABELS, UnifiedRequest, GetRequestsOptions } from './types';
 
 // ---------------------------------------------------------------------------
 // Helper — resolve display name from accountId
