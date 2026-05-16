@@ -2,7 +2,7 @@ import { FlowLink } from '@/components/ui/flow-link';
 import { notFound } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ApplicationCreateForm } from '@/app/(manage)/data/applications/_components/application-create-form';
+import { ApplicationCreateForm } from '@/app/(manage)/applications/_components/application-create-form';
 import { checkPermissions } from '@/services/user';
 
 export default async function AddApplicationPage() {

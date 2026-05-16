@@ -4,7 +4,7 @@ import { BackButton } from '@/components/ui/back-button';
 import { PrimaryHeader } from '@/components/ui/primary-header';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ShieldAlert } from 'lucide-react';
-import { AppMetaForm } from '@/app/(manage)/data/applications/_components/app-meta-form';
+import { AppMetaForm } from '@/app/(manage)/applications/_components/app-meta-form';
 
 type Props = { params: Promise<{ id: string }> };
 

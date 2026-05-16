@@ -5,7 +5,7 @@ import { BackButton } from '@/components/ui/back-button';
 import { PrimaryHeader } from '@/components/ui/primary-header';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ApplicationAccessForm } from '@/app/(manage)/data/applications/_components/application-access-form';
+import { ApplicationAccessForm } from '@/app/(manage)/applications/_components/application-access-form';
 
 type Props = { params: Promise<{ id: string }> };
 

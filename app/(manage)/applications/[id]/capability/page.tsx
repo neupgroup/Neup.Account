@@ -4,7 +4,7 @@ import { getAppCapabilities } from '@/services/applications/authz-manage';
 import { BackButton } from '@/components/ui/back-button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ShieldAlert } from 'lucide-react';
-import { CapabilityPanel } from '@/app/(manage)/data/applications/_components/capability-panel';
+import { CapabilityPanel } from '@/app/(manage)/applications/_components/capability-panel';
 
 type Props = { params: Promise<{ id: string }> };
 
