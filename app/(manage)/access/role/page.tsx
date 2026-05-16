@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { BackButton } from '@/components/ui/back-button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { UserCircle } from '@/components/icons';
+import { UserCircle, Clock } from '@/components/icons';
 import { getActiveAccountId } from '@/core/auth/verify';
 import { getUserProfile } from '@/services/user';
 import prisma from '@/core/helpers/prisma';
@@ -14,11 +14,14 @@ import {
   getMyPortfolioRoles,
 } from '@/services/manage/access';
 import { RemoveMemberButton } from '../_components/remove-member-button';
+import { InviteButton } from '../_components/invite-button';
 import {
   removeDirectMember,
   cancelDirectInvitation,
   removePortfolioMember,
   cancelPortfolioInvitation,
+  inviteToPortfolio,
+  inviteDirectMember,
 } from '../_components/actions';
 
 type PageProps = {
@@ -34,16 +37,19 @@ async function hasPendingDirectInvitation(
   senderAccountId: string,
   recipientAccountId: string,
 ): Promise<boolean> {
-  const req = await prisma.request.findFirst({
+  const reqs = await prisma.request.findMany({
     where: {
       action: 'access_invitation',
       senderId: senderAccountId,
       recipientId: recipientAccountId,
       status: 'pending',
     },
-    select: { id: true },
+    select: { data: true },
   });
-  return req !== null;
+  // A direct invitation has no portfolioId in data
+  return reqs.some(
+    (r) => !(r.data as Record<string, unknown> | null)?.portfolioId,
+  );
 }
 
 async function hasPendingPortfolioInvitation(
@@ -63,6 +69,15 @@ async function hasPendingPortfolioInvitation(
   return reqs.some(
     (r) => (r.data as Record<string, unknown> | null)?.portfolioId === portfolioId,
   );
+}
+
+/** Returns the portfolio name, or null if not found. */
+async function getPortfolioName(portfolioId: string): Promise<string | null> {
+  const portfolio = await prisma.portfolio.findUnique({
+    where: { id: portfolioId },
+    select: { name: true },
+  });
+  return portfolio?.name ?? null;
 }
 
 type PortfolioMemberFlags = {
@@ -191,6 +206,17 @@ function RoleCard({
   );
 }
 
+// ── Invited banner ────────────────────────────────────────────────────────────
+
+function InvitedBanner({ message }: { message: string }) {
+  return (
+    <div className="flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 dark:border-amber-800 dark:bg-amber-950/30">
+      <Clock className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
+      <p className="text-sm text-amber-700 dark:text-amber-400">{message}</p>
+    </div>
+  );
+}
+
 // ── Empty state ───────────────────────────────────────────────────────────────
 
 function EmptyRoles({ message }: { message: string }) {
@@ -306,19 +332,19 @@ async function MemberDirectRolesView({ memberAccountId }: { memberAccountId: str
   const accountId = await getActiveAccountId();
   if (!accountId) notFound();
 
-  const [detail, ownerProfile, isPending] = await Promise.all([
+  const [detail, ownerProfile, isPendingInvitation] = await Promise.all([
     getDirectMemberDetail(accountId, memberAccountId),
     getUserProfile(accountId),
     hasPendingDirectInvitation(accountId, memberAccountId),
   ]);
+
+  // Profile must exist for the account to be valid
   if (!detail) notFound();
 
   const userPhoto = detail.accountPhoto ?? FALLBACK_PHOTO;
   const ownerName = ownerProfile?.nameDisplay ?? accountId;
-
-  // Nobody can remove the account owner's own direct roles — not delegates, not themselves.
   const isOwnerAccount = memberAccountId === accountId;
-  const canRemove = !isOwnerAccount;
+  const hasNoAccess = detail.roles.length === 0 && !isPendingInvitation;
 
   const avatar = (
     <PlatformAvatar userPhoto={userPhoto} platformLogo={NEUPID_LOGO} platformName="NeupID" />
@@ -331,9 +357,23 @@ async function MemberDirectRolesView({ memberAccountId }: { memberAccountId: str
       <PageHeader
         photo={userPhoto}
         displayName={detail.displayName}
-        description={<>Roles assigned to <span className="font-medium text-foreground">{detail.displayName}</span> for account of <span className="font-medium text-foreground">{ownerName}</span></>}
+        description={
+          <>
+            Roles assigned to{' '}
+            <span className="font-medium text-foreground">{detail.displayName}</span> for account
+            of <span className="font-medium text-foreground">{ownerName}</span>
+          </>
+        }
       />
 
+      {/* Pending invitation banner */}
+      {isPendingInvitation && (
+        <InvitedBanner
+          message={`An invitation has been sent to ${detail.displayName}. Waiting for them to accept.`}
+        />
+      )}
+
+      {/* Roles list */}
       {detail.roles.length > 0 ? (
         <Card>
           <CardContent className="divide-y p-0">
@@ -349,13 +389,22 @@ async function MemberDirectRolesView({ memberAccountId }: { memberAccountId: str
             ))}
           </CardContent>
         </Card>
-      ) : (
-        <EmptyRoles message="This member has no roles assigned on your account." />
-      )}
+      ) : !isPendingInvitation ? (
+        <EmptyRoles message="This account has no roles assigned on your account." />
+      ) : null}
 
-      {canRemove && (
+      {/* Actions */}
+      {!isOwnerAccount && (
         <div className="flex justify-start">
-          {isPending ? (
+          {hasNoAccess ? (
+            // No access and no pending invitation — offer to invite
+            <InviteButton
+              displayName={detail.displayName}
+              confirmDescription={`This will send an access invitation to ${detail.displayName}. They will be able to accept or decline it.`}
+              action={inviteDirectMember.bind(null, memberAccountId)}
+              redirectTo="/access/member"
+            />
+          ) : isPendingInvitation ? (
             <RemoveMemberButton
               label="Cancel Invitation"
               confirmTitle="Cancel invitation?"
@@ -391,28 +440,105 @@ async function MemberPortfolioRolesView({
   const accountId = await getActiveAccountId();
   if (!accountId) notFound();
 
-  const [detail, memberProfile, isPending, targetFlags, callerFlags] = await Promise.all([
-    getPortfolioMemberDetail(portfolioId, memberAccountId),
-    getUserProfile(memberAccountId),
-    hasPendingPortfolioInvitation(accountId, memberAccountId, portfolioId),
-    getPortfolioMemberFlags(portfolioId, memberAccountId),
-    getPortfolioMemberFlags(portfolioId, accountId),
-  ]);
-  if (!detail) notFound();
+  const [detail, memberProfile, isPendingInvitation, targetFlags, callerFlags, portfolioName] =
+    await Promise.all([
+      getPortfolioMemberDetail(portfolioId, memberAccountId),
+      getUserProfile(memberAccountId),
+      hasPendingPortfolioInvitation(accountId, memberAccountId, portfolioId),
+      getPortfolioMemberFlags(portfolioId, memberAccountId),
+      getPortfolioMemberFlags(portfolioId, accountId),
+      getPortfolioName(portfolioId),
+    ]);
 
-  const userPhoto = memberProfile?.accountPhoto ?? FALLBACK_PHOTO;
+  // Profile must exist; portfolio must exist
+  if (!memberProfile || !portfolioName) notFound();
 
+  const displayName =
+    memberProfile.nameDisplay ||
+    `${memberProfile.nameFirst ?? ''} ${memberProfile.nameLast ?? ''}`.trim() ||
+    memberAccountId;
+
+  const userPhoto = memberProfile.accountPhoto ?? FALLBACK_PHOTO;
+
+  // Member is not in the portfolio at all (not confirmed, no pending invitation)
+  const isNotMember = !detail && !isPendingInvitation;
+
+  if (isNotMember) {
+    return (
+      <div className="grid gap-6">
+        <BackButton href={`/access/member?portfolio=${portfolioId}`} />
+
+        <PageHeader
+          photo={userPhoto}
+          displayName={displayName}
+          description={
+            <>
+              <span className="font-medium text-foreground">{displayName}</span> is not a member
+              of portfolio <span className="font-medium text-foreground">{portfolioName}</span>
+            </>
+          }
+        />
+
+        <EmptyRoles message={`${displayName} has no access to this portfolio yet.`} />
+
+        <div className="flex justify-start">
+          <InviteButton
+            displayName={displayName}
+            confirmDescription={`This will send a portfolio membership invitation to ${displayName}. They will join with no roles assigned initially.`}
+            action={inviteToPortfolio.bind(null, portfolioId, memberAccountId)}
+            redirectTo={`/access/member?portfolio=${portfolioId}`}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // Member has a pending invitation but is not yet confirmed
+  if (!detail && isPendingInvitation) {
+    return (
+      <div className="grid gap-6">
+        <BackButton href={`/access/member?portfolio=${portfolioId}`} />
+
+        <PageHeader
+          photo={userPhoto}
+          displayName={displayName}
+          description={
+            <>
+              <span className="font-medium text-foreground">{displayName}</span> has been invited
+              to portfolio <span className="font-medium text-foreground">{portfolioName}</span>
+            </>
+          }
+        />
+
+        <InvitedBanner
+          message={`An invitation has been sent to ${displayName}. Waiting for them to accept.`}
+        />
+
+        <div className="flex justify-start">
+          <RemoveMemberButton
+            label="Cancel Invitation"
+            confirmTitle="Cancel invitation?"
+            confirmDescription={`This will cancel the pending invitation for ${displayName} to join portfolio "${portfolioName}".`}
+            action={cancelPortfolioInvitation.bind(null, portfolioId, memberAccountId)}
+            redirectTo={`/access/member?portfolio=${portfolioId}`}
+            variant="outline"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // Confirmed member — detail is guaranteed non-null here
   const isSelfView = memberAccountId === accountId;
-  const targetIsPermanentOwner = targetFlags?.hasFullAccess === true && targetFlags?.isPermanent === true;
-  const callerIsPermanentOwner = callerFlags?.hasFullAccess === true && callerFlags?.isPermanent === true;
+  const targetIsPermanentOwner =
+    targetFlags?.hasFullAccess === true && targetFlags?.isPermanent === true;
+  const callerIsPermanentOwner =
+    callerFlags?.hasFullAccess === true && callerFlags?.isPermanent === true;
 
-  // Rule 1: only a permanent full-access caller can remove a permanent full-access target.
-  // Rule 2: self-removal requires another permanent full-access member to exist.
   let canRemove = false;
   let removeBlockedReason: string | null = null;
 
   if (isSelfView) {
-    // Self-removal: allowed only if another permanent full-access member exists.
     const otherOwnerExists = await hasOtherPermanentOwner(portfolioId, accountId);
     if (otherOwnerExists) {
       canRemove = true;
@@ -421,7 +547,6 @@ async function MemberPortfolioRolesView({
         'You cannot leave this portfolio because there is no other permanent full-access member.';
     }
   } else {
-    // Removing someone else: blocked if target is a permanent full-access member and caller is not.
     if (targetIsPermanentOwner && !callerIsPermanentOwner) {
       removeBlockedReason =
         'Only a permanent full-access member can remove another permanent full-access member.';
@@ -436,14 +561,20 @@ async function MemberPortfolioRolesView({
 
       <PageHeader
         photo={userPhoto}
-        displayName={detail.displayName}
-        description={<>Role assigned to <span className="font-medium text-foreground">{detail.displayName}</span> on portfolio <span className="font-medium text-foreground">{detail.portfolioName}</span></>}
+        displayName={displayName}
+        description={
+          <>
+            Role assigned to{' '}
+            <span className="font-medium text-foreground">{displayName}</span> on portfolio{' '}
+            <span className="font-medium text-foreground">{detail!.portfolioName}</span>
+          </>
+        }
       />
 
-      {detail.roles.length > 0 ? (
+      {detail!.roles.length > 0 ? (
         <Card>
           <CardContent className="divide-y p-0">
-            {detail.roles.map((role, i) => (
+            {detail!.roles.map((role, i) => (
               <RoleCard
                 key={`${role.roleId}-${i}`}
                 platformLabel={role.assetType.replace(/_/g, ' ')}
@@ -460,28 +591,17 @@ async function MemberPortfolioRolesView({
 
       {canRemove && (
         <div className="flex justify-start">
-          {isPending ? (
-            <RemoveMemberButton
-              label="Cancel Invitation"
-              confirmTitle="Cancel invitation?"
-              confirmDescription={`This will cancel the pending invitation for ${detail.displayName} to join portfolio "${detail.portfolioName}".`}
-              action={cancelPortfolioInvitation.bind(null, portfolioId, memberAccountId)}
-              redirectTo={`/access/member?portfolio=${portfolioId}`}
-              variant="outline"
-            />
-          ) : (
-            <RemoveMemberButton
-              label={isSelfView ? 'Leave Portfolio' : 'Remove from Portfolio'}
-              confirmTitle={isSelfView ? 'Leave portfolio?' : 'Remove from portfolio?'}
-              confirmDescription={
-                isSelfView
-                  ? `You will be removed from portfolio "${detail.portfolioName}" and lose all your asset roles within it.`
-                  : `This will remove ${detail.displayName} from portfolio "${detail.portfolioName}" and revoke all their asset roles within it.`
-              }
-              action={removePortfolioMember.bind(null, portfolioId, memberAccountId)}
-              redirectTo={isSelfView ? '/access' : `/access/member?portfolio=${portfolioId}`}
-            />
-          )}
+          <RemoveMemberButton
+            label={isSelfView ? 'Leave Portfolio' : 'Remove from Portfolio'}
+            confirmTitle={isSelfView ? 'Leave portfolio?' : 'Remove from portfolio?'}
+            confirmDescription={
+              isSelfView
+                ? `You will be removed from portfolio "${detail!.portfolioName}" and lose all your asset roles within it.`
+                : `This will remove ${displayName} from portfolio "${detail!.portfolioName}" and revoke all their asset roles within it.`
+            }
+            action={removePortfolioMember.bind(null, portfolioId, memberAccountId)}
+            redirectTo={isSelfView ? '/access' : `/access/member?portfolio=${portfolioId}`}
+          />
         </div>
       )}
 

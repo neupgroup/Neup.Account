@@ -3572,3 +3572,115 @@ The column `(not available)` does not exist in the current database.
     at async getConnectedApplications (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_26d1a2fb._.js:640:29)
     at async DataAndPrivacyPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__ac91919b._.js:426:40)
 --------------------------------------------------------------------------------
+[2026-05-16T04:21:24.323Z] [database] [auto] [getConnectedApplications] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.applicationConnection.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getConnectedApplications (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_26d1a2fb._.js:640:29)
+    at async DataAndPrivacyPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__ac91919b._.js:426:40)
+--------------------------------------------------------------------------------
+[2026-05-16T04:21:30.287Z] [database] [auto] [getConnectedApplications] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.applicationConnection.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getConnectedApplications (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_26d1a2fb._.js:640:29)
+    at async DataAndPrivacyPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__ac91919b._.js:426:40)
+--------------------------------------------------------------------------------
+[2026-05-16T04:21:30.703Z] [database] [auto] [getConnectedApplications] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.applicationConnection.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getConnectedApplications (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_26d1a2fb._.js:640:29)
+    at async DataAndPrivacyPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__ac91919b._.js:426:40)
+--------------------------------------------------------------------------------
+[2026-05-16T04:21:34.856Z] [database] [auto] [getConnectedApplications] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.applicationConnection.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getConnectedApplications (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_26d1a2fb._.js:640:29)
+    at async DataAndPrivacyPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__ac91919b._.js:426:40)
+--------------------------------------------------------------------------------
+[2026-05-16T04:21:58.216Z] [database] [auto] [getConnectedApplications] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.applicationConnection.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getConnectedApplications (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_26d1a2fb._.js:640:29)
+    at async DataAndPrivacyPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__ac91919b._.js:426:40)
+--------------------------------------------------------------------------------
+[2026-05-16T04:21:58.240Z] [database] [auto] [getConnectedApplications] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.applicationConnection.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getConnectedApplications (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_26d1a2fb._.js:640:29)
+    at async DataAndPrivacyPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__ac91919b._.js:426:40)
+--------------------------------------------------------------------------------
+[2026-05-16T04:22:51.977Z] [database] [auto] [getConnectedApplications] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.applicationConnection.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getConnectedApplications (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_26d1a2fb._.js:640:29)
+    at async DataAndPrivacyPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__ac91919b._.js:426:40)
+--------------------------------------------------------------------------------
+[2026-05-16T04:23:11.746Z] [database] [auto] [getConnectedApplications] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.applicationConnection.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getConnectedApplications (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_26d1a2fb._.js:640:29)
+    at async DataAndPrivacyPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__ac91919b._.js:426:40)
+--------------------------------------------------------------------------------

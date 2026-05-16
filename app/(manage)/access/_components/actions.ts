@@ -314,3 +314,101 @@ export async function cancelPortfolioInvitation(
     return { success: false, error: 'Failed to cancel invitation.' };
   }
 }
+
+/**
+ * Sends a portfolio membership invitation to an account that is not yet a member.
+ * Role is null at invite time — flags default to isPermanent: false, hasFullAccess: false.
+ */
+export async function inviteToPortfolio(
+  portfolioId: string,
+  recipientAccountId: string,
+): Promise<{ success: boolean; error?: string }> {
+  const { addAssetGroupMember } = await import('@/services/manage/access/assets');
+  return addAssetGroupMember({ groupId: portfolioId, member: recipientAccountId });
+}
+
+/**
+ * Sends a direct (non-portfolio) access invitation to an account that has no
+ * existing grants on the active account. Role is null at invite time.
+ */
+export async function inviteDirectMember(
+  recipientAccountId: string,
+): Promise<{ success: boolean; error?: string }> {
+  const senderAccountId = await getActiveAccountId();
+  if (!senderAccountId) return { success: false, error: 'Not authenticated.' };
+
+  try {
+    // Prevent inviting self
+    if (recipientAccountId === senderAccountId) {
+      return { success: false, error: 'You cannot invite yourself.' };
+    }
+
+    // Check for existing grants
+    const existingGrant = await prisma.authzAccountAccessGrant.findFirst({
+      where: {
+        ownerAccountId: senderAccountId,
+        targetAccountId: recipientAccountId,
+        appId: 'neup.account',
+        portfolioId: null,
+      },
+      select: { id: true },
+    });
+    if (existingGrant) {
+      return { success: false, error: 'This account already has access.' };
+    }
+
+    // Check for existing pending invitation
+    const existingInvitation = await prisma.request.findFirst({
+      where: {
+        action: 'access_invitation',
+        senderId: senderAccountId,
+        recipientId: recipientAccountId,
+        status: 'pending',
+        data: { path: ['portfolioId'], equals: null },
+      },
+      select: { id: true },
+    });
+
+    // Fallback: also check without portfolioId filter (direct invitations may not have data)
+    const existingInvitationFallback = existingInvitation ?? await prisma.request.findFirst({
+      where: {
+        action: 'access_invitation',
+        senderId: senderAccountId,
+        recipientId: recipientAccountId,
+        status: 'pending',
+      },
+      select: { id: true, data: true },
+    });
+
+    if (
+      existingInvitationFallback &&
+      !(existingInvitationFallback.data as Record<string, unknown> | null)?.portfolioId
+    ) {
+      return { success: false, error: 'An invitation has already been sent to this account.' };
+    }
+
+    // Invitation expires 7 days from now
+    const expiresOn = new Date();
+    expiresOn.setDate(expiresOn.getDate() + 7);
+
+    await prisma.request.create({
+      data: {
+        action: 'access_invitation',
+        senderId: senderAccountId,
+        recipientId: recipientAccountId,
+        status: 'pending',
+        data: {
+          expiresOn: expiresOn.toISOString(),
+        },
+      },
+    });
+
+    revalidatePath('/access');
+    revalidatePath('/access/member');
+    revalidatePath(`/access/role?member=${recipientAccountId}`);
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `inviteDirectMember:${recipientAccountId}`);
+    return { success: false, error: 'Failed to send invitation.' };
+  }
+}
