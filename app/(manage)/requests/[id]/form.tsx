@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Loader2 } from 'lucide-react';
 import { redirectInApp } from '@/services/navigation';
-import type { UnifiedRequest } from '@/services/manage/requests/all';
+import type { UnifiedRequest } from '@/services/manage/requests/types';
 
 // Per-type server actions
 import { approveNeupIdRequest, denyNeupIdRequest } from '@/services/manage/requests/neupid';

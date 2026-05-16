@@ -9,39 +9,7 @@ import prisma from '@/core/helpers/prisma';
 import { checkPermissions } from '@/services/user';
 import { logError } from '@/core/helpers/logger';
 import { getUserProfile, getUserNeupIds } from '@/services/user';
-
-// ---------------------------------------------------------------------------
-// Canonical type map — ?type= param → action value in DB (or special key)
-// ---------------------------------------------------------------------------
-
-export const REQUEST_TYPE_LABELS: Record<string, string> = {
-  neupid_request:       'NeupID',
-  display_name_request: 'Display Name',
-  kyc_request:          'KYC',
-  kycVerification:      'KYC Verification',
-  applicationChange:    'Application Change',
-  accountDeletion:      'Account Deletion',
-  payment_request:      'Payment',
-  report:               'Report',
-};
-
-// ---------------------------------------------------------------------------
-// Normalised request row
-// ---------------------------------------------------------------------------
-
-export type UnifiedRequest = {
-  id: string;
-  type: string;           // action value or special key
-  typeLabel: string;
-  summary: string;        // one-line human description
-  submittedBy: string;    // display name of sender
-  submittedAt: string;
-  status: string;
-  /** Extra payload fields for the detail view */
-  data: Record<string, unknown>;
-  /** The account the request is about (may differ from submittedBy for admin-initiated) */
-  targetAccountId?: string;
-};
+import { REQUEST_TYPE_LABELS } from './types';
 
 // ---------------------------------------------------------------------------
 // Helper — resolve display name from accountId
@@ -59,9 +27,9 @@ async function resolveDisplayName(accountId: string): Promise<string> {
     });
     if (!account) return accountId;
     return (
-      account.brandProfile?.brandName ??
+      (account.brandProfile?.brandName ??
       account.displayName ??
-      `${account.individualProfile?.firstName ?? ''} ${account.individualProfile?.lastName ?? ''}`.trim() ||
+      `${account.individualProfile?.firstName ?? ''} ${account.individualProfile?.lastName ?? ''}`.trim()) ||
       accountId
     );
   } catch {
@@ -73,12 +41,7 @@ async function resolveDisplayName(accountId: string): Promise<string> {
 // Main fetcher
 // ---------------------------------------------------------------------------
 
-export type GetRequestsOptions = {
-  /** Filter by type key (matches REQUEST_TYPE_LABELS keys). Omit for all. */
-  type?: string;
-  /** Filter by appId — only relevant for applicationChange type */
-  application?: string;
-};
+
 
 export async function getAllRequests(options: GetRequestsOptions = {}): Promise<UnifiedRequest[]> {
   const canView = await checkPermissions(['root.requests.view']);
@@ -128,9 +91,9 @@ export async function getAllRequests(options: GetRequestsOptions = {}): Promise<
 
         const sender = row.sender;
         const displayName =
-          sender.brandProfile?.brandName ??
+          (sender.brandProfile?.brandName ??
           sender.displayName ??
-          `${sender.individualProfile?.firstName ?? ''} ${sender.individualProfile?.lastName ?? ''}`.trim() ||
+          `${sender.individualProfile?.firstName ?? ''} ${sender.individualProfile?.lastName ?? ''}`.trim()) ||
           sender.id;
 
         let summary = '';
@@ -188,9 +151,9 @@ export async function getAllRequests(options: GetRequestsOptions = {}): Promise<
       for (const v of verifications) {
         const acc = v.account;
         const displayName =
-          acc?.brandProfile?.brandName ??
+          (acc?.brandProfile?.brandName ??
           acc?.displayName ??
-          `${acc?.individualProfile?.firstName ?? ''} ${acc?.individualProfile?.lastName ?? ''}`.trim() ||
+          `${acc?.individualProfile?.firstName ?? ''} ${acc?.individualProfile?.lastName ?? ''}`.trim()) ||
           v.accountId;
 
         results.push({
@@ -229,9 +192,9 @@ export async function getAllRequests(options: GetRequestsOptions = {}): Promise<
 
       for (const acc of accounts) {
         const displayName =
-          acc.brandProfile?.brandName ??
+          (acc.brandProfile?.brandName ??
           acc.displayName ??
-          `${acc.individualProfile?.firstName ?? ''} ${acc.individualProfile?.lastName ?? ''}`.trim() ||
+          `${acc.individualProfile?.firstName ?? ''} ${acc.individualProfile?.lastName ?? ''}`.trim()) ||
           acc.id;
 
         results.push({
@@ -286,9 +249,9 @@ export async function getRequestDetail(id: string): Promise<UnifiedRequest | nul
       });
       if (!acc) return null;
       const displayName =
-        acc.brandProfile?.brandName ??
+        (acc.brandProfile?.brandName ??
         acc.displayName ??
-        `${acc.individualProfile?.firstName ?? ''} ${acc.individualProfile?.lastName ?? ''}`.trim() ||
+        `${acc.individualProfile?.firstName ?? ''} ${acc.individualProfile?.lastName ?? ''}`.trim()) ||
         acc.id;
       return {
         id,
@@ -315,9 +278,9 @@ export async function getRequestDetail(id: string): Promise<UnifiedRequest | nul
         },
       });
       const displayName =
-        acc?.brandProfile?.brandName ??
+        (acc?.brandProfile?.brandName ??
         acc?.displayName ??
-        `${acc?.individualProfile?.firstName ?? ''} ${acc?.individualProfile?.lastName ?? ''}`.trim() ||
+        `${acc?.individualProfile?.firstName ?? ''} ${acc?.individualProfile?.lastName ?? ''}`.trim()) ||
         verification.accountId;
       return {
         id: verification.id,
@@ -357,9 +320,9 @@ export async function getRequestDetail(id: string): Promise<UnifiedRequest | nul
     const payload = (row.data ?? {}) as Record<string, unknown>;
     const sender = row.sender;
     const displayName =
-      sender.brandProfile?.brandName ??
+      (sender.brandProfile?.brandName ??
       sender.displayName ??
-      `${sender.individualProfile?.firstName ?? ''} ${sender.individualProfile?.lastName ?? ''}`.trim() ||
+      `${sender.individualProfile?.firstName ?? ''} ${sender.individualProfile?.lastName ?? ''}`.trim()) ||
       sender.id;
 
     // Enrich payload for neupid

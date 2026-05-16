@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { checkPermissions } from '@/services/user';
-import { getAllRequests, REQUEST_TYPE_LABELS } from '@/services/manage/requests/all';
+import { getAllRequests } from '@/services/manage/requests/all';
+import { REQUEST_TYPE_LABELS } from '@/services/manage/requests/types';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';

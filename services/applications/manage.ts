@@ -191,7 +191,7 @@ async function getApplicationAuthorization(accountId: string, appId: string): Pr
 /**
  * Function isApplicationOwnerForAccount.
  */
-async function isApplicationOwnerForAccount(accountId: string, appId: string): Promise<boolean> {
+export async function isApplicationOwnerForAccount(accountId: string, appId: string): Promise<boolean> {
   const app = await prisma.application.findUnique({
     where: { id: appId },
     select: { id: true },

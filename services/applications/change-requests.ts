@@ -210,9 +210,9 @@ export async function getApplicationChangeRequests(options?: {
 
       const sender = req.sender;
       const displayName =
-        sender.brandProfile?.brandName ??
+        (sender.brandProfile?.brandName ??
         sender.displayName ??
-        `${(sender.individualProfile?.firstName ?? '')} ${(sender.individualProfile?.lastName ?? '')}`.trim() ||
+        `${(sender.individualProfile?.firstName ?? '')} ${(sender.individualProfile?.lastName ?? '')}`.trim()) ||
         sender.id;
 
       results.push({
@@ -270,9 +270,9 @@ export async function getApplicationChangeRequestDetails(
 
     const sender = req.sender;
     const displayName =
-      sender.brandProfile?.brandName ??
+      (sender.brandProfile?.brandName ??
       sender.displayName ??
-      `${(sender.individualProfile?.firstName ?? '')} ${(sender.individualProfile?.lastName ?? '')}`.trim() ||
+      `${(sender.individualProfile?.firstName ?? '')} ${(sender.individualProfile?.lastName ?? '')}`.trim()) ||
       sender.id;
 
     return {

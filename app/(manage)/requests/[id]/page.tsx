@@ -67,14 +67,14 @@ function RequestDetailBody({ request }: { request: Awaited<ReturnType<typeof get
           <DetailRow label="User" value={request.submittedBy} />
           <DetailRow label="Document Type" value={String(d.documentType ?? '')} />
           <DetailRow label="Submitted" value={request.submittedAt} />
-          {d.documentPhotoUrl && (
+          {!!d.documentPhotoUrl && (
             <div className="col-span-full">
               <p className="text-xs text-muted-foreground mb-1">Document Photo</p>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={String(d.documentPhotoUrl)} alt="Document" className="rounded-md max-h-48 object-contain border" />
             </div>
           )}
-          {d.selfiePhotoUrl && (
+          {!!d.selfiePhotoUrl && (
             <div className="col-span-full">
               <p className="text-xs text-muted-foreground mb-1">Selfie</p>
               {/* eslint-disable-next-line @next/next/no-img-element */}
