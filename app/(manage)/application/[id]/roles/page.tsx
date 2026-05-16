@@ -6,6 +6,7 @@ import { BackButton } from '@/components/ui/back-button';
 import { PrimaryHeader } from '@/components/ui/primary-header';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ShieldAlert } from 'lucide-react';
+import { CapabilityPanel } from '@/app/(manage)/application/_components/capability-panel';
 import { RolesPanel } from '@/app/(manage)/application/_components/roles-panel';
 
 type Props = { params: Promise<{ id: string }> };
@@ -22,8 +23,8 @@ export default async function ApplicationRolesPage({ params }: Props) {
         <div className="space-y-4">
           <BackButton href={`/application/${id}`} />
           <PrimaryHeader
-            title="Roles"
-            description={`Manage roles for ${details.name}.`}
+            title="Roles & Capabilities"
+            description={`Manage capabilities and roles for ${details.name}.`}
           />
         </div>
         <Alert variant="destructive">
@@ -46,9 +47,24 @@ export default async function ApplicationRolesPage({ params }: Props) {
       <div className="space-y-4">
         <BackButton href={`/application/${id}`} />
         <PrimaryHeader
-          title="Roles"
-          description={`Group capabilities into roles for ${details.name}.`}
+          title="Roles & Capabilities"
+          description={`Define capabilities and group them into roles for ${details.name}.`}
         />
+      </div>
+
+      <div className="grid gap-2">
+        <h2 className="text-base font-semibold">Capabilities</h2>
+        <p className="text-sm text-muted-foreground">
+          Define the individual permissions this application can assign.
+        </p>
+      </div>
+      <CapabilityPanel appId={id} initialCapabilities={capabilities} />
+
+      <div className="grid gap-2">
+        <h2 className="text-base font-semibold">Roles</h2>
+        <p className="text-sm text-muted-foreground">
+          Group capabilities into roles. Roles are assigned to accounts via access grants.
+        </p>
       </div>
       <RolesPanel
         appId={id}

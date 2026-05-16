@@ -94,14 +94,18 @@ export default async function ApplicationDetailPage({ params }: Props) {
             { label: 'Last 7 Days', value: userStats?.lastWeek ?? 0, description: 'New connections this week', icon: UserPlus },
             { label: 'Last 30 Days', value: userStats?.lastMonth ?? 0, description: 'New connections this month', icon: UserPlus },
           ].map(({ label, value, description, icon: Icon }) => (
-            <div key={label} className="p-6">
+            <FlowLink
+              key={label}
+              href={`/application/${id}/users`}
+              className="group p-6 transition-colors hover:bg-muted/40"
+            >
               <div className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <h3 className="text-sm font-medium">{label}</h3>
                 <Icon className="h-4 w-4 text-muted-foreground" />
               </div>
               <div className="text-2xl font-bold">{value.toLocaleString()}</div>
               <p className="text-xs text-muted-foreground">{description}</p>
-            </div>
+            </FlowLink>
           ))}
         </CardContent>
       </Card>
@@ -111,22 +115,11 @@ export default async function ApplicationDetailPage({ params }: Props) {
         <h2 className="text-xl font-semibold tracking-tight">Manage Application</h2>
         <div className="overflow-hidden rounded-2xl border bg-card">
           <FlowLink
-            href={`/application/${id}/users`}
-            className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
-          >
-            <div className="min-w-0">
-              <p className="font-medium">Users</p>
-              <p className="text-sm text-muted-foreground">View all accounts connected to this application.</p>
-            </div>
-            <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-          </FlowLink>
-
-          <FlowLink
             href={`/application/${id}/edit`}
             className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
           >
             <div className="min-w-0">
-              <p className="font-medium">Edit</p>
+              <p className="font-medium">Basic Information</p>
               <p className="text-sm text-muted-foreground">Update name, description, icon, website, and status.</p>
             </div>
             <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
@@ -144,23 +137,12 @@ export default async function ApplicationDetailPage({ params }: Props) {
           </FlowLink>
 
           <FlowLink
-            href={`/application/${id}/capability`}
-            className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
-          >
-            <div className="min-w-0">
-              <p className="font-medium">Capabilities</p>
-              <p className="text-sm text-muted-foreground">Define individual permissions this application can assign.</p>
-            </div>
-            <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-          </FlowLink>
-
-          <FlowLink
             href={`/application/${id}/roles`}
             className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
           >
             <div className="min-w-0">
-              <p className="font-medium">Roles</p>
-              <p className="text-sm text-muted-foreground">Group capabilities into roles for access grants.</p>
+              <p className="font-medium">Roles &amp; Capabilities</p>
+              <p className="text-sm text-muted-foreground">Define capabilities and group them into roles for access grants.</p>
             </div>
             <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
           </FlowLink>
@@ -170,7 +152,7 @@ export default async function ApplicationDetailPage({ params }: Props) {
             className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 sm:px-5"
           >
             <div className="min-w-0">
-              <p className="font-medium">Ownership</p>
+              <p className="font-medium">Access</p>
               <p className="text-sm text-muted-foreground">View who owns and has access to this application.</p>
             </div>
             <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
@@ -181,7 +163,7 @@ export default async function ApplicationDetailPage({ params }: Props) {
             className="group flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
           >
             <div className="min-w-0">
-              <p className="font-medium">Logs</p>
+              <p className="font-medium">Application Logs</p>
               <p className="text-sm text-muted-foreground">View activity and change history for this application.</p>
             </div>
             <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />

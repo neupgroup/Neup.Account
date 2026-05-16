@@ -21,7 +21,7 @@ export default async function ApplicationEditPage({ params }: Props) {
       <div className="grid gap-8">
         <div className="space-y-4">
           <BackButton href={`/application/${id}`} />
-          <PrimaryHeader title="Edit Application" description="Application details." />
+          <PrimaryHeader title="Basic Information" description="Application details." />
         </div>
         <Alert variant="destructive">
           <ShieldAlert className="h-4 w-4" />
@@ -37,7 +37,7 @@ export default async function ApplicationEditPage({ params }: Props) {
       <div className="space-y-4">
         <BackButton href={`/application/${id}`} />
         <PrimaryHeader
-          title="Edit Application"
+          title="Basic Information"
           description={`Update the details for ${details.name}.`}
         />
       </div>
