@@ -1,6 +1,7 @@
 'use server';
 
 import prisma from '@/core/helpers/prisma';
+import { Prisma } from '@/prisma/generated/client';
 import { getUserProfile } from '@/services/user';
 import { getPersonalAccountId, getActiveAccountId } from '@/core/auth/verify';
 import { logError } from '@/core/helpers/logger';
@@ -360,9 +361,9 @@ export async function inviteDirectMember(
         senderId: senderAccountId,
         recipientId: recipientAccountId,
         status: 'pending',
-        data: { path: ['portfolioId'], equals: null },
+        data: { path: ['portfolioId'], equals: Prisma.JsonNull },
       },
-      select: { id: true },
+      select: { id: true, data: true },
     });
 
     // Fallback: also check without portfolioId filter (direct invitations may not have data)
