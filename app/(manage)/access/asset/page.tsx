@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { BackButton } from '@/components/ui/back-button';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { AppWindow, Database, UserCircle, X } from '@/components/icons';
 import prisma from '@/core/helpers/prisma';
 import { getActiveAccountId } from '@/core/auth/verify';
@@ -15,6 +15,8 @@ import { resolveAssetName, resolveAssetNames } from '@/services/manage/access/as
 import { getUserProfile } from '@/services/user';
 import { AddAssetForm } from '../_components/add-asset-form';
 import { FlowLink } from '@/components/ui/flow-link';
+import { PrimaryHeader } from '@/components/ui/primary-header';
+import { SecondaryHeader } from '@/components/ui/secondary-header';
 
 type PageProps = {
   searchParams: Promise<{ portfolio?: string; asset?: string; application?: string }>;
@@ -97,60 +99,64 @@ async function AssetDetail({ portfolioId, assetId }: { portfolioId: string; asse
 
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 min-w-0">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border bg-muted/40">
             <Database className="h-5 w-5 text-muted-foreground" />
           </div>
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">{resolved.name}</h1>
-            <p className="text-sm text-muted-foreground">
-              {resolved.subtitle ?? asset.assetType}
-            </p>
-          </div>
+          <PrimaryHeader
+            title={resolved.name}
+            description={resolved.subtitle ?? asset.assetType}
+          />
         </div>
-        <Badge variant="outline">{asset.assetType}</Badge>
+        <Badge variant="outline" className="shrink-0">{asset.assetType}</Badge>
       </div>
 
       {/* Members with access */}
-      <section className="grid gap-3">
-        <div className="flex items-center justify-between">
-          <h2 className="font-semibold">Members with access</h2>
-          <span className="text-sm text-muted-foreground">{memberProfiles.length} members</span>
-        </div>
+      <div className="space-y-2">
+        <SecondaryHeader
+          title="Members with access"
+          description={`${memberProfiles.length} member${memberProfiles.length !== 1 ? 's' : ''} assigned roles on this asset.`}
+        />
 
-        {memberProfiles.length === 0 ? (
-          <div className="rounded-lg border px-4 py-8 text-center">
-            <p className="text-sm text-muted-foreground">
-              No members have been assigned roles for this asset yet.
-            </p>
-          </div>
-        ) : (
-          <div className="overflow-hidden rounded-lg border divide-y">
-            {memberProfiles.map((member) => (
-              <div key={member.accountId} className="flex items-start gap-3 px-4 py-3">
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted">
-                  <UserCircle className="h-4 w-4 text-muted-foreground" />
+        <Card>
+          <CardContent className="divide-y p-2">
+            {memberProfiles.length === 0 ? (
+              <div className="flex flex-col items-center gap-2 px-4 py-12 text-center">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+                  <UserCircle className="h-6 w-6 text-muted-foreground" />
                 </span>
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium truncate">{member.displayName}</p>
-                  <div className="mt-1 flex flex-wrap gap-1">
-                    {member.roles.map((role) => (
-                      <Badge
-                        key={role.id}
-                        variant="secondary"
-                        className="text-xs px-1.5 py-0"
-                        title={role.description}
-                      >
-                        {role.name}
-                      </Badge>
-                    ))}
+                <p className="font-medium">No members yet</p>
+                <p className="text-sm text-muted-foreground max-w-xs">
+                  No members have been assigned roles for this asset yet.
+                </p>
+              </div>
+            ) : (
+              memberProfiles.map((member) => (
+                <div key={member.accountId} className="flex items-center gap-4 py-4 px-4">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
+                    <UserCircle className="h-4 w-4 text-muted-foreground" />
+                  </span>
+                  <div className="min-w-0 flex-grow">
+                    <p className="font-medium truncate">{member.displayName}</p>
+                    <div className="mt-1 flex flex-wrap gap-1">
+                      {member.roles.map((role) => (
+                        <Badge
+                          key={role.id}
+                          variant="secondary"
+                          className="text-xs px-1.5 py-0"
+                          title={role.description}
+                        >
+                          {role.name}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
+              ))
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
@@ -172,38 +178,23 @@ async function AssetList({ portfolioId }: { portfolioId: string }) {
       <BackButton href={`/access?portfolio=${portfolioId}`} />
 
       {/* Header */}
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
-            {group.name}
-          </p>
-          <h1 className="text-2xl font-bold tracking-tight">Assets</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Manage the assets available in this portfolio.
-          </p>
-        </div>
-        {group.assets.length > 0 && (
-          <div className="flex shrink-0 items-center gap-1.5 rounded-md bg-muted px-2.5 py-1 text-xs text-muted-foreground">
-            <Database className="h-3.5 w-3.5" />
-            <span>{group.assets.length}</span>
-          </div>
-        )}
-      </div>
+      <PrimaryHeader
+        title="Assets"
+        description={`Manage the assets available in portfolio "${group.name}".`}
+      />
 
       {/* Add asset */}
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-semibold">Add Asset</CardTitle>
-          <p className="text-xs text-muted-foreground">
-            Add a brand account, branch account, or application to this portfolio.
-          </p>
-        </CardHeader>
-        <CardContent className="p-0">
-          <div className="border-t">
+      <div className="space-y-2">
+        <SecondaryHeader
+          title="Add Asset"
+          description="Add a brand account, branch account, or application to this portfolio."
+        />
+        <Card>
+          <CardContent className="p-0">
             <AddAssetForm action={addAssetAction} existingAssetIds={existingAssetIds} />
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Application shortcut */}
       {group.assets.some((a) => ['application', 'app'].includes(a.assetType.toLowerCase())) && (
@@ -216,38 +207,31 @@ async function AssetList({ portfolioId }: { portfolioId: string }) {
               <AppWindow className="h-4 w-4 text-muted-foreground" />
             </span>
             <div className="min-w-0">
-              <p className="text-sm font-medium">Application Connection</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="font-medium text-foreground">Application Connection</p>
+              <p className="text-sm text-muted-foreground">
                 See members and roles per application
               </p>
             </div>
           </div>
-          <span className="text-xs text-muted-foreground shrink-0">→</span>
+          <span className="text-sm text-muted-foreground shrink-0">→</span>
         </FlowLink>
       )}
 
       {/* Asset list */}
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-sm font-semibold">
-            <Database className="h-4 w-4 text-muted-foreground" />
-            Assets
-            {group.assets.length > 0 && (
-              <Badge variant="secondary" className="ml-auto text-xs font-normal">
-                {group.assets.length}
-              </Badge>
-            )}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="p-0">
-          <div className="border-t divide-y">
+      <div className="space-y-2">
+        <SecondaryHeader
+          title="Assets"
+          description={group.assets.length > 0 ? `${group.assets.length} asset${group.assets.length !== 1 ? 's' : ''} in this portfolio.` : 'No assets added yet.'}
+        />
+        <Card>
+          <CardContent className="divide-y p-2">
             {group.assets.length > 0 ? (
               group.assets.map((asset) => {
                 const resolved = assetNameMap[asset.id];
                 return (
                   <div
                     key={asset.id}
-                    className="flex items-center gap-3 px-4 py-3 hover:bg-muted/20 transition-colors"
+                    className="flex items-center gap-4 py-4 px-4 hover:bg-muted/50 transition-colors"
                   >
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
                       <Database className="h-4 w-4 text-muted-foreground" />
@@ -255,12 +239,12 @@ async function AssetList({ portfolioId }: { portfolioId: string }) {
 
                     <FlowLink
                       href={`/access/asset?portfolio=${portfolioId}&asset=${asset.id}`}
-                      className="min-w-0 flex-1"
+                      className="min-w-0 flex-grow"
                     >
-                      <p className="text-sm font-medium truncate">
+                      <p className="font-medium truncate text-foreground">
                         {resolved?.name ?? asset.assetId}
                       </p>
-                      <p className="text-xs text-muted-foreground truncate">
+                      <p className="text-sm text-muted-foreground truncate">
                         {resolved?.subtitle ?? asset.assetType}
                       </p>
                     </FlowLink>
@@ -289,15 +273,15 @@ async function AssetList({ portfolioId }: { portfolioId: string }) {
                 <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
                   <Database className="h-6 w-6 text-muted-foreground" />
                 </span>
-                <p className="text-sm font-medium">No assets yet</p>
-                <p className="text-xs text-muted-foreground max-w-xs">
+                <p className="font-medium">No assets yet</p>
+                <p className="text-sm text-muted-foreground max-w-xs">
                   Add a brand account, branch account, or application using the picker above.
                 </p>
               </div>
             )}
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
@@ -326,12 +310,10 @@ async function ApplicationAssetView({ applicationId }: { applicationId: string }
     return (
       <div className="grid gap-8">
         <BackButton href={`/application/${applicationId}`} />
-        <div className="min-w-0">
-          <h1 className="text-2xl font-bold tracking-tight">Access</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            This application has not been added to any portfolio you have access to.
-          </p>
-        </div>
+        <PrimaryHeader
+          title="Access"
+          description="This application has not been added to any portfolio you have access to."
+        />
       </div>
     );
   }
@@ -353,21 +335,21 @@ export default async function AssetPage({ searchParams }: PageProps) {
     return (
       <div className="grid gap-8">
         <BackButton href="/access" />
-        <div className="min-w-0">
-          <h1 className="text-2xl font-bold tracking-tight">Assets</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Assets are managed through portfolios.
-          </p>
-        </div>
-        <div className="flex flex-col items-center gap-2 rounded-lg border px-4 py-12 text-center">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-            <Database className="h-6 w-6 text-muted-foreground" />
-          </span>
-          <p className="text-sm font-medium">No assets in direct access</p>
-          <p className="text-xs text-muted-foreground max-w-xs">
-            Create a portfolio to manage assets and assign roles to members.
-          </p>
-        </div>
+        <PrimaryHeader
+          title="Assets"
+          description="Assets are managed through portfolios."
+        />
+        <Card>
+          <CardContent className="flex flex-col items-center gap-2 px-4 py-12 text-center">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+              <Database className="h-6 w-6 text-muted-foreground" />
+            </span>
+            <p className="font-medium">No assets in direct access</p>
+            <p className="text-sm text-muted-foreground max-w-xs">
+              Create a portfolio to manage assets and assign roles to members.
+            </p>
+          </CardContent>
+        </Card>
       </div>
     );
   }
