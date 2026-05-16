@@ -6,7 +6,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ShieldAlert } from 'lucide-react';
-import { AppPublishPanel } from '@/app/(manage)/applications/_components/app-publish-panel';
+import { AppPublishPanel } from '@/app/(manage)/application/_components/app-publish-panel';
 
 type Props = { params: Promise<{ id: string }> };
 

@@ -2,7 +2,7 @@ import { getApplicationsManagePageData } from '@/services/applications/form-acti
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertTriangle } from '@/components/icons';
 import { Suspense } from 'react';
-import { ApplicationsPillView } from '@/app/(manage)/applications/_components/applications-pill-view';
+import { ApplicationsPillView } from '@/app/(manage)/application/_components/applications-pill-view';
 
 export default async function ApplicationsManagePage() {
   const { sections, canCreateApplication, hasPartialError } = await getApplicationsManagePageData();
