@@ -198,16 +198,20 @@ The JWT contains no account data.
 
 ## Step 5 — Look up account info
 
-Use the `accountId` from step 3 to fetch the public profile.
+The lookup endpoint requires valid app credentials (`appId` + `appSecret`).
+On a successful lookup, an `ApplicationConnection` is automatically created
+between the looked-up account and your app.
+
+Look up by account UUID:
 
 ```http
-GET https://neupgroup.com/account/bridge/api.v1/accounts/lookup?accountId=<uuid>
+GET https://neupgroup.com/account/bridge/api.v1/accounts/lookup?appId=your-app-id&appSecret=your-app-secret&accountId=<uuid>
 ```
 
-Or look up by NeupID handle:
+Or by NeupID handle:
 
 ```http
-GET https://neupgroup.com/account/bridge/api.v1/accounts/lookup?neupId=<handle>
+GET https://neupgroup.com/account/bridge/api.v1/accounts/lookup?appId=your-app-id&appSecret=your-app-secret&neupId=<handle>
 ```
 
 **Response (200):**
@@ -228,8 +232,10 @@ GET https://neupgroup.com/account/bridge/api.v1/accounts/lookup?neupId=<handle>
 
 | Status | Meaning |
 |--------|---------|
-| 400 | Neither `accountId` nor `neupId` provided |
+| 400 | Missing `appId`, `appSecret`, or both `accountId` and `neupId` |
+| 401 | Invalid app credentials |
 | 404 | Account not found |
+| 500 | Internal server error |
 
 ---
 
