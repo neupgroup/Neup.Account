@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { getApplicationDetailsForViewerV2, getApplicationUserStats, getSilentSsoOrigins } from '@/services/applications/manage';
+import { getApplicationDetailsForViewerV2, getApplicationUserStats } from '@/services/applications/manage';
 import { deleteManagedApplicationFromDetailsPage } from '@/services/applications/form-actions';
 import { AppWindow, Building, BarChart, Share2, ExternalLink, ChevronRight, Users, UserPlus, ArrowLeft, type LucideIcon } from '@/components/icons';
 
@@ -35,8 +35,7 @@ export default async function ApplicationDetailPage({ params }: Props) {
   const Icon = iconFor(details.icon);
   const deleteAction = deleteManagedApplicationFromDetailsPage.bind(null, id);
 
-  const [silentSsoOrigins, userStats] = await Promise.all([
-    details.canDelete ? getSilentSsoOrigins(id) : Promise.resolve([]),
+  const [userStats] = await Promise.all([
     getApplicationUserStats(id),
   ]);
 
@@ -123,23 +122,23 @@ export default async function ApplicationDetailPage({ params }: Props) {
           </FlowLink>
 
           <FlowLink
-            href={`/application/${id}/meta`}
+            href={`/application/${id}/edit`}
             className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
           >
             <div className="min-w-0">
-              <p className="font-medium">General Info</p>
-              <p className="text-sm text-muted-foreground">Edit name, description, icon, and website.</p>
+              <p className="font-medium">Edit</p>
+              <p className="text-sm text-muted-foreground">Update name, description, icon, website, and status.</p>
             </div>
             <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
           </FlowLink>
 
           <FlowLink
-            href={`/application/${id}/status`}
+            href={`/application/${id}/config`}
             className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
           >
             <div className="min-w-0">
-              <p className="font-medium">Status</p>
-              <p className="text-sm text-muted-foreground">Request publication and view the activity log.</p>
+              <p className="font-medium">Configuration</p>
+              <p className="text-sm text-muted-foreground">API secret, response fields, and silent SSO origins.</p>
             </div>
             <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
           </FlowLink>
@@ -168,26 +167,11 @@ export default async function ApplicationDetailPage({ params }: Props) {
 
           <FlowLink
             href={`/application/${id}/ownership`}
-            className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
+            className="group flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-muted/40 sm:px-5"
           >
             <div className="min-w-0">
               <p className="font-medium">Ownership</p>
               <p className="text-sm text-muted-foreground">View who owns and has access to this application.</p>
-            </div>
-            <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-          </FlowLink>
-
-          <FlowLink
-            href={`/application/${id}/silent-sso-origins`}
-            className="group flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-muted/40 sm:px-5"
-          >
-            <div className="min-w-0">
-              <p className="font-medium">Silent SSO Origins</p>
-              <p className="text-sm text-muted-foreground">
-                {silentSsoOrigins.length > 0
-                  ? `${silentSsoOrigins.length} origin${silentSsoOrigins.length === 1 ? '' : 's'} registered.`
-                  : 'Trusted origins for the NeupID iframe bridge.'}
-              </p>
             </div>
             <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
           </FlowLink>

@@ -34,11 +34,16 @@ function toggleValue(values: ApplicationAccessField[], value: ApplicationAccessF
 }
 
 const accessLabels: Record<ApplicationAccessField, string> = {
+  connectionId: 'Connection ID',
+  accountId: 'Account ID',
+  displayName: 'Display name',
+  displayImage: 'Display image',
+  accountType: 'Account type',
+  lastActive: 'Last active',
   neupid: 'NeupID',
   firstName: 'First name',
   lastName: 'Last name',
   middleName: 'Middle name',
-  displayName: 'Display name',
   dateBirth: 'Date of birth',
   age: 'Age',
   isMinor: 'Is minor',

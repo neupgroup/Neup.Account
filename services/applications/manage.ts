@@ -1587,3 +1587,174 @@ export async function getApplicationUsersPaginated(params: {
     return { users: [], total: 0, page: 1, pageSize: 10, totalPages: 0 };
   }
 }
+
+// ---------------------------------------------------------------------------
+// Owner edit — name, description, icon, website, status
+// ---------------------------------------------------------------------------
+
+const updateAppEditSchema = z.object({
+  appId: z.string().min(1),
+  name: z.string().trim().min(1, 'Name is required.').max(120, 'Name must be 120 characters or fewer.'),
+  description: z.string().trim().max(1000, 'Description must be 1000 characters or fewer.').optional().or(z.literal('')),
+  icon: z.string().trim().max(50).optional().or(z.literal('')),
+  website: z
+    .string()
+    .trim()
+    .max(500, 'Website must be 500 characters or fewer.')
+    .refine(
+      (val) => !val || val === '' || (() => { try { new URL(val); return true; } catch { return false; } })(),
+      { message: 'Website must be a valid URL.' },
+    )
+    .optional()
+    .or(z.literal('')),
+  status: z.enum(['development', 'active', 'hold', 'blocked']),
+});
+
+/**
+ * Function updateAppEdit.
+ *
+ * Allows the application owner to update name, description, icon, website, and status.
+ */
+export async function updateAppEdit(
+  input: z.infer<typeof updateAppEditSchema>,
+): Promise<{ success: boolean; error?: string; fieldErrors?: Record<string, string> }> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) return { success: false, error: 'Not signed in.' };
+
+  const parsed = updateAppEditSchema.safeParse(input);
+  if (!parsed.success) {
+    const fieldErrors: Record<string, string> = {};
+    for (const [field, messages] of Object.entries(parsed.error.flatten().fieldErrors)) {
+      fieldErrors[field] = messages?.[0] ?? 'Invalid value.';
+    }
+    return { success: false, fieldErrors };
+  }
+
+  const { appId, name, description, icon, website, status } = parsed.data;
+
+  const canEdit = await isApplicationOwnerForAccount(accountId, appId);
+  if (!canEdit) return { success: false, error: 'Only the application owner can edit this application.' };
+
+  try {
+    await prisma.application.update({
+      where: { id: appId },
+      data: {
+        name,
+        description: description || null,
+        icon: icon || null,
+        website: website || null,
+        status,
+      },
+    });
+    revalidatePath('/application');
+    revalidatePath(`/application/${appId}`);
+    revalidatePath(`/application/${appId}/edit`);
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `updateAppEdit:${appId}`);
+    return { success: false, error: 'Failed to save. Please try again.' };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Config page — save secret, access fields, and silent SSO origins together
+// ---------------------------------------------------------------------------
+
+const saveAppConfigSchema = z.object({
+  appId: z.string().min(1),
+  secretKey: z.string().min(16, 'Secret must be at least 16 characters.').optional().or(z.literal('')),
+  access: z.array(z.enum(applicationAccessFields)).default([]),
+});
+
+/**
+ * Function saveAppConfig.
+ *
+ * Saves the application secret (if provided) and the accessTo field list.
+ * Silent SSO origins are managed separately via addSilentSsoOrigin / removeSilentSsoOrigin.
+ */
+export async function saveAppConfig(
+  input: z.infer<typeof saveAppConfigSchema>,
+): Promise<{ success: boolean; error?: string; fieldErrors?: Record<string, string> }> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) return { success: false, error: 'Not signed in.' };
+
+  const parsed = saveAppConfigSchema.safeParse(input);
+  if (!parsed.success) {
+    const fieldErrors: Record<string, string> = {};
+    for (const [field, messages] of Object.entries(parsed.error.flatten().fieldErrors)) {
+      fieldErrors[field] = messages?.[0] ?? 'Invalid value.';
+    }
+    return { success: false, fieldErrors };
+  }
+
+  const { appId, secretKey, access } = parsed.data;
+
+  const canEdit = await isApplicationOwnerForAccount(accountId, appId);
+  if (!canEdit) return { success: false, error: 'Only the application owner can configure this application.' };
+
+  try {
+    const updateData: Record<string, unknown> = {
+      details: { access },
+    };
+    if (secretKey && secretKey.trim().length >= 16) {
+      updateData.appSecret = secretKey.trim();
+    }
+
+    await prisma.application.update({
+      where: { id: appId },
+      data: updateData,
+    });
+
+    revalidatePath('/application');
+    revalidatePath(`/application/${appId}`);
+    revalidatePath(`/application/${appId}/config`);
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `saveAppConfig:${appId}`);
+    return { success: false, error: 'Failed to save configuration.' };
+  }
+}
+
+/**
+ * Function getAppConfigData.
+ *
+ * Returns the data needed to render the config page.
+ */
+export async function getAppConfigData(appId: string): Promise<{
+  hasSecretKey: boolean;
+  access: ApplicationAccessField[];
+  silentSsoOrigins: Array<{ id: string; value: string }>;
+  status: string;
+} | null> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) return null;
+
+  const canEdit = await isApplicationOwnerForAccount(accountId, appId);
+  if (!canEdit) return null;
+
+  try {
+    const [app, origins] = await Promise.all([
+      prisma.application.findUnique({
+        where: { id: appId },
+        select: { appSecret: true, details: true, status: true },
+      }),
+      prisma.applicationBridge.findMany({
+        where: { appId, type: 'silentSsoOrigin' },
+        select: { id: true, value: true },
+        orderBy: { createdAt: 'asc' },
+      }),
+    ]);
+
+    if (!app) return null;
+
+    return {
+      hasSecretKey: Boolean(app.appSecret),
+      access: normalizeAccess((app as any).details?.access ?? []),
+      silentSsoOrigins: origins,
+      status: app.status ?? 'development',
+    };
+  } catch (error) {
+    await logError('database', error, `getAppConfigData:${appId}`);
+    return null;
+  }
+}

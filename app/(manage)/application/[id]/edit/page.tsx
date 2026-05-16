@@ -4,11 +4,11 @@ import { BackButton } from '@/components/ui/back-button';
 import { PrimaryHeader } from '@/components/ui/primary-header';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ShieldAlert } from 'lucide-react';
-import { AppMetaForm } from '@/app/(manage)/application/_components/app-meta-form';
+import { AppEditForm } from '@/app/(manage)/application/_components/app-edit-form';
 
 type Props = { params: Promise<{ id: string }> };
 
-export default async function ApplicationMetaPage({ params }: Props) {
+export default async function ApplicationEditPage({ params }: Props) {
   const { id } = await params;
   const details = await getApplicationDetailsForViewerV2(id);
 
@@ -19,12 +19,12 @@ export default async function ApplicationMetaPage({ params }: Props) {
       <div className="grid gap-8">
         <div className="space-y-4">
           <BackButton href={`/application/${id}`} />
-          <PrimaryHeader title="General Info" description="Application metadata." />
+          <PrimaryHeader title="Edit Application" description="Application details." />
         </div>
         <Alert variant="destructive">
           <ShieldAlert className="h-4 w-4" />
           <AlertTitle>Access Denied</AlertTitle>
-          <AlertDescription>Only the application owner can edit metadata.</AlertDescription>
+          <AlertDescription>Only the application owner can edit this application.</AlertDescription>
         </Alert>
       </div>
     );
@@ -35,17 +35,18 @@ export default async function ApplicationMetaPage({ params }: Props) {
       <div className="space-y-4">
         <BackButton href={`/application/${id}`} />
         <PrimaryHeader
-          title="General Info"
-          description={`Edit the public-facing details for ${details.name}.`}
+          title="Edit Application"
+          description={`Update the details for ${details.name}.`}
         />
       </div>
 
-      <AppMetaForm
+      <AppEditForm
         appId={id}
         initialName={details.name}
         initialDescription={details.description}
         initialIcon={details.icon}
         initialWebsite={details.website}
+        initialStatus={details.status ?? 'development'}
       />
     </div>
   );

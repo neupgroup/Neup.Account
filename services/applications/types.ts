@@ -1,11 +1,16 @@
 // All shared types and constants for the application domain.
 
 export const applicationAccessFields = [
+  'connectionId',
+  'accountId',
+  'displayName',
+  'displayImage',
+  'accountType',
+  'lastActive',
   'neupid',
   'firstName',
   'lastName',
   'middleName',
-  'displayName',
   'dateBirth',
   'age',
   'isMinor',
