@@ -19,7 +19,7 @@ export default async function AddApplicationPage() {
           <p className="text-muted-foreground">Create a new application.</p>
         </div>
         <Button variant="outline" asChild>
-          <FlowLink href="/applications">Back to Applications</FlowLink>
+          <FlowLink href="/application">Back to Applications</FlowLink>
         </Button>
       </div>
 

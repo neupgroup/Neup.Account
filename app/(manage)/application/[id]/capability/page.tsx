@@ -18,7 +18,7 @@ export default async function ApplicationCapabilityPage({ params }: Props) {
     return (
       <div className="grid gap-6">
         <div>
-          <BackButton href={`/applications/${id}`} />
+          <BackButton href={`/application/${id}`} />
           <h1 className="mt-4 text-3xl font-bold tracking-tight">Capabilities</h1>
         </div>
         <Alert variant="destructive">
@@ -35,7 +35,7 @@ export default async function ApplicationCapabilityPage({ params }: Props) {
   return (
     <div className="grid gap-6">
       <div>
-        <BackButton href={`/applications/${id}`} />
+        <BackButton href={`/application/${id}`} />
         <h1 className="mt-4 text-3xl font-bold tracking-tight">Capabilities</h1>
       </div>
       <CapabilityPanel appId={id} initialCapabilities={capabilities} />

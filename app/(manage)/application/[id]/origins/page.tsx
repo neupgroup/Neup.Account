@@ -41,7 +41,7 @@ export default async function SilentSsoOriginsPage({ params }: Props) {
           </p>
         </div>
         <Button variant="outline" asChild>
-          <FlowLink href={`/applications/${id}`}>Back</FlowLink>
+          <FlowLink href={`/application/${id}`}>Back</FlowLink>
         </Button>
       </div>
 

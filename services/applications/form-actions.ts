@@ -49,7 +49,7 @@ export async function getApplicationsPageData() {
 export async function deleteManagedApplicationFromDetailsPage(applicationId: string) {
   const result = await deleteManagedApplication(applicationId);
   if (result.success) {
-    redirect('/applications');
+    redirect('/application');
   }
 }
 
@@ -234,8 +234,8 @@ export async function updateApplicationInfo(
       },
     });
 
-    revalidatePath('/applications');
-    revalidatePath(`/applications/${appId}`);
+    revalidatePath('/application');
+    revalidatePath(`/application/${appId}`);
     return { success: true };
   } catch (error) {
     await logError('database', error, `updateApplicationInfo:${appId}`);

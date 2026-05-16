@@ -27,7 +27,7 @@ export default async function ApplicationStatusPage({ params }: Props) {
     return (
       <div className="grid gap-8">
         <div className="space-y-4">
-          <BackButton href={`/applications/${id}`} />
+          <BackButton href={`/application/${id}`} />
           <PrimaryHeader title="Status" description="Application publication status." />
         </div>
         <Alert variant="destructive">
@@ -47,7 +47,7 @@ export default async function ApplicationStatusPage({ params }: Props) {
   return (
     <div className="grid gap-8">
       <div className="space-y-4">
-        <BackButton href={`/applications/${id}`} />
+        <BackButton href={`/application/${id}`} />
         <PrimaryHeader
           title="Status"
           description={`Publication status and activity log for ${details.name}.`}

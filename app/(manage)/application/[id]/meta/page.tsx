@@ -18,7 +18,7 @@ export default async function ApplicationMetaPage({ params }: Props) {
     return (
       <div className="grid gap-8">
         <div className="space-y-4">
-          <BackButton href={`/applications/${id}`} />
+          <BackButton href={`/application/${id}`} />
           <PrimaryHeader title="General Info" description="Application metadata." />
         </div>
         <Alert variant="destructive">
@@ -33,7 +33,7 @@ export default async function ApplicationMetaPage({ params }: Props) {
   return (
     <div className="grid gap-8">
       <div className="space-y-4">
-        <BackButton href={`/applications/${id}`} />
+        <BackButton href={`/application/${id}`} />
         <PrimaryHeader
           title="General Info"
           description={`Edit the public-facing details for ${details.name}.`}

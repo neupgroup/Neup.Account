@@ -315,7 +315,7 @@ export async function deleteManagedApplication(appId: string): Promise<{ success
       where: { id: appId },
     });
 
-    revalidatePath('/applications');
+    revalidatePath('/application');
     return { success: true };
   } catch (error) {
     await logError('database', error, `deleteManagedApplication:${appId}`);
@@ -408,7 +408,7 @@ export async function createManagedApplication(input: { name: string }) {
       return { id: createdApp.id };
     });
 
-    revalidatePath('/applications');
+    revalidatePath('/application');
     return { success: true, appId: application.id };
   } catch (error) {
     await logError('database', error, 'createManagedApplication');
@@ -588,8 +588,8 @@ export async function saveApplicationSecret(input: { appId: string; secretKey: s
       return { success: false, error: 'Application not found.' };
     }
 
-    revalidatePath('/applications');
-    revalidatePath(`/applications/${parsed.data.appId}`);
+    revalidatePath('/application');
+    revalidatePath(`/application/${parsed.data.appId}`);
 
     return { success: true };
   } catch (error) {
@@ -635,8 +635,8 @@ export async function saveApplicationAccess(input: { appId: string; access: Appl
       return { success: false, error: 'Application not found.' };
     }
 
-    revalidatePath('/applications');
-    revalidatePath(`/applications/${parsed.data.appId}`);
+    revalidatePath('/application');
+    revalidatePath(`/application/${parsed.data.appId}`);
 
     return { success: true };
   } catch (error) {
@@ -682,8 +682,8 @@ export async function saveApplicationPolicies(input: { appId: string; policies: 
       }
     });
 
-    revalidatePath('/applications');
-    revalidatePath(`/applications/${parsed.data.appId}`);
+    revalidatePath('/application');
+    revalidatePath(`/application/${parsed.data.appId}`);
 
     return { success: true };
   } catch (error) {
@@ -736,8 +736,8 @@ export async function saveApplicationEndpoints(input: { appId: string } & Applic
       return { success: false, error: 'Application not found.' };
     }
 
-    revalidatePath('/applications');
-    revalidatePath(`/applications/${parsed.data.appId}`);
+    revalidatePath('/application');
+    revalidatePath(`/application/${parsed.data.appId}`);
 
     return { success: true };
   } catch (error) {
@@ -777,8 +777,8 @@ export async function updateManagedApplicationStatus(input: { appId: string; sta
     }
 
     revalidatePath('/manage/applications');
-    revalidatePath('/applications');
-    revalidatePath(`/applications/${parsed.data.appId}`);
+    revalidatePath('/application');
+    revalidatePath(`/application/${parsed.data.appId}`);
 
     return { success: true };
   } catch (error) {
@@ -901,7 +901,7 @@ export async function addSilentSsoOrigin(input: {
       },
     });
 
-    revalidatePath(`/applications/${input.appId}`);
+    revalidatePath(`/application/${input.appId}`);
     return { success: true };
   } catch (error) {
     await logError('database', error, `addSilentSsoOrigin:${input.appId}`);
@@ -928,7 +928,7 @@ export async function removeSilentSsoOrigin(input: {
       where: { id: input.bridgeId, appId: input.appId, type: 'silentSsoOrigin' },
     });
 
-    revalidatePath(`/applications/${input.appId}`);
+    revalidatePath(`/application/${input.appId}`);
     return { success: true };
   } catch (error) {
     await logError('database', error, `removeSilentSsoOrigin:${input.appId}`);
@@ -1092,9 +1092,9 @@ export async function updateAppMeta(
         website: website || null,
       },
     });
-    revalidatePath('/applications');
-    revalidatePath(`/applications/${appId}`);
-    revalidatePath(`/applications/${appId}/meta`);
+    revalidatePath('/application');
+    revalidatePath(`/application/${appId}`);
+    revalidatePath(`/application/${appId}/meta`);
     return { success: true };
   } catch (error) {
     await logError('database', error, `updateAppMeta:${appId}`);
@@ -1207,7 +1207,7 @@ export async function requestAppPublication(
       });
     });
 
-    revalidatePath(`/applications/${appId}/status`);
+    revalidatePath(`/application/${appId}/status`);
     return { success: true };
   } catch (error) {
     await logError('database', error, `requestAppPublication:${appId}`);

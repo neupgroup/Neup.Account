@@ -19,7 +19,7 @@ export default async function ApplicationOwnershipPage({ params }: Props) {
     return (
       <div className="grid gap-8">
         <div className="space-y-4">
-          <BackButton href={`/applications/${id}`} />
+          <BackButton href={`/application/${id}`} />
           <PrimaryHeader title="Ownership" description="Application ownership and access." />
         </div>
         <Alert variant="destructive">
@@ -39,7 +39,7 @@ export default async function ApplicationOwnershipPage({ params }: Props) {
     return (
       <div className="grid gap-8">
         <div className="space-y-4">
-          <BackButton href={`/applications/${id}`} />
+          <BackButton href={`/application/${id}`} />
           <PrimaryHeader title="Ownership" description="Application ownership and access." />
         </div>
         <Alert variant="destructive">
@@ -54,7 +54,7 @@ export default async function ApplicationOwnershipPage({ params }: Props) {
   return (
     <div className="grid gap-8">
       <div className="space-y-4">
-        <BackButton href={`/applications/${id}`} />
+        <BackButton href={`/application/${id}`} />
         <PrimaryHeader
           title="Ownership"
           description={`Ownership and access details for ${details.name}.`}

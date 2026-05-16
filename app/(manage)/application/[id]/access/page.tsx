@@ -25,7 +25,7 @@ export default async function ApplicationAccessPage({ params }: Props) {
   return (
     <div className="grid gap-8">
       <div className="space-y-4">
-        <BackButton href={`/applications/${id}`} />
+        <BackButton href={`/application/${id}`} />
         <PrimaryHeader
           title="Access & Permissions"
           description={`Manage your access to ${details.name}.`}

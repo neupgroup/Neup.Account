@@ -105,7 +105,7 @@ export default async function ApplicationDetailPage({ params }: Props) {
           </div>
         </div>
         <Button variant="outline" asChild className="shrink-0">
-          <FlowLink href="/applications">Back</FlowLink>
+          <FlowLink href="/application">Back</FlowLink>
         </Button>
       </div>
 
@@ -218,7 +218,7 @@ export default async function ApplicationDetailPage({ params }: Props) {
         <h2 className="text-xl font-semibold tracking-tight">Manage Application</h2>
         <div className="overflow-hidden rounded-2xl border bg-card">
           <FlowLink
-            href={`/applications/${id}/meta`}
+            href={`/application/${id}/meta`}
             className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
           >
             <div className="min-w-0">
@@ -229,7 +229,7 @@ export default async function ApplicationDetailPage({ params }: Props) {
           </FlowLink>
 
           <FlowLink
-            href={`/applications/${id}/status`}
+            href={`/application/${id}/status`}
             className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
           >
             <div className="min-w-0">
@@ -240,7 +240,7 @@ export default async function ApplicationDetailPage({ params }: Props) {
           </FlowLink>
 
           <FlowLink
-            href={`/applications/${id}/capability`}
+            href={`/application/${id}/capability`}
             className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
           >
             <div className="min-w-0">
@@ -251,7 +251,7 @@ export default async function ApplicationDetailPage({ params }: Props) {
           </FlowLink>
 
           <FlowLink
-            href={`/applications/${id}/roles`}
+            href={`/application/${id}/roles`}
             className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
           >
             <div className="min-w-0">
@@ -262,7 +262,7 @@ export default async function ApplicationDetailPage({ params }: Props) {
           </FlowLink>
 
           <FlowLink
-            href={`/applications/${id}/access`}
+            href={`/application/${id}/access`}
             className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
           >
             <div className="min-w-0">
@@ -273,7 +273,7 @@ export default async function ApplicationDetailPage({ params }: Props) {
           </FlowLink>
 
           <FlowLink
-            href={`/applications/${id}/ownership`}
+            href={`/application/${id}/ownership`}
             className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
           >
             <div className="min-w-0">
@@ -284,7 +284,7 @@ export default async function ApplicationDetailPage({ params }: Props) {
           </FlowLink>
 
           <FlowLink
-            href={`/applications/${id}/silent-sso-origins`}
+            href={`/application/${id}/silent-sso-origins`}
             className="group flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-muted/40 sm:px-5"
           >
             <div className="min-w-0">
