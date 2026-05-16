@@ -17,7 +17,7 @@ import { AddAssetForm } from '../_components/add-asset-form';
 import { FlowLink } from '@/components/ui/flow-link';
 
 type PageProps = {
-  searchParams: Promise<{ portfolio?: string; asset?: string }>;
+  searchParams: Promise<{ portfolio?: string; asset?: string; application?: string }>;
 };
 
 // ── Asset detail view ─────────────────────────────────────────────────────────
@@ -302,10 +302,51 @@ async function AssetList({ portfolioId }: { portfolioId: string }) {
   );
 }
 
+// ── Application access view ───────────────────────────────────────────────────
+
+async function ApplicationAssetView({ applicationId }: { applicationId: string }) {
+  const accountId = await getActiveAccountId();
+  if (!accountId) notFound();
+
+  // Find a portfolioAsset row where assetId = applicationId and the current
+  // user is a member of that portfolio.
+  const portfolioAsset = await prisma.portfolioAsset.findFirst({
+    where: {
+      assetId: applicationId,
+      assetType: { in: ['application', 'app'] },
+      portfolio: {
+        members: { some: { accountId, status: 'active' } },
+      },
+    },
+    select: { id: true, portfolioId: true },
+  });
+
+  if (!portfolioAsset) {
+    // Application is not in any portfolio the user can access — show a helpful message
+    return (
+      <div className="grid gap-8">
+        <BackButton href={`/application/${applicationId}`} />
+        <div className="min-w-0">
+          <h1 className="text-2xl font-bold tracking-tight">Access</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            This application has not been added to any portfolio you have access to.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return <AssetDetail portfolioId={portfolioAsset.portfolioId} assetId={portfolioAsset.id} />;
+}
+
 // ── Page entry point ──────────────────────────────────────────────────────────
 
 export default async function AssetPage({ searchParams }: PageProps) {
-  const { portfolio: portfolioId, asset: assetId } = await searchParams;
+  const { portfolio: portfolioId, asset: assetId, application: applicationId } = await searchParams;
+
+  if (applicationId) {
+    return <ApplicationAssetView applicationId={applicationId} />;
+  }
 
   if (!portfolioId) {
     // Direct access context — no portfolio assets
