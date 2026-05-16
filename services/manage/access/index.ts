@@ -751,6 +751,9 @@ export type PortfolioMemberDetail = {
   accountId: string;
   displayName: string;
   portfolioName: string;
+  /** 'active' | 'invited' | 'expired' */
+  status: string;
+  invitationExpiresOn?: string;
   roles: PortfolioMemberRole[];
 };
 
@@ -773,91 +776,76 @@ export type PortfolioMemberSummary = {
  *
  * Returns all members of a portfolio with their display name, photo, and
  * total number of roles assigned across all assets in the portfolio.
- * Also includes accounts with a pending access_invitation for this portfolio.
+ * Includes active members and invited (pending) members from portfolio_member.status.
  */
 export async function getPortfolioMembers(
   portfolioId: string,
 ): Promise<{ portfolioName: string; members: PortfolioMemberSummary[] }> {
   try {
-    const [portfolio, pendingInvitations] = await Promise.all([
-      prisma.portfolio.findUnique({
-        where: { id: portfolioId },
-        select: {
-          name: true,
-          members: { select: { accountId: true } },
+    const portfolio = await prisma.portfolio.findUnique({
+      where: { id: portfolioId },
+      select: {
+        name: true,
+        members: {
+          select: {
+            accountId: true,
+            status: true,
+            details: true,
+          },
         },
-      }),
-      // Fetch pending invitations scoped to this portfolio (portfolioId stored in data JSON)
-      prisma.request.findMany({
-        where: {
-          action: 'access_invitation',
-          status: 'pending',
-        },
-        select: { recipientId: true, data: true },
-      }),
-    ]);
+      },
+    });
 
     if (!portfolio) return { portfolioName: '', members: [] };
 
-    // Confirmed portfolio members
-    const confirmedMembers = await Promise.all(
-      portfolio.members.map(async ({ accountId: memberAccountId }) => {
-        const [profile, grantCount] = await Promise.all([
-          getUserProfile(memberAccountId),
-          prisma.authzAssetsAccessGrant.count({
-            where: {
-              account_id: memberAccountId,
-              portfolio_id: portfolioId,
-              app_id: 'neup.account',
-            },
-          }),
-        ]);
-
+    const members = await Promise.all(
+      portfolio.members.map(async ({ accountId: memberAccountId, status, details }) => {
+        const profile = await getUserProfile(memberAccountId);
         const displayName =
           profile?.nameDisplay ||
           `${profile?.nameFirst ?? ''} ${profile?.nameLast ?? ''}`.trim() ||
           memberAccountId;
 
+        // For active members, count their asset grants
+        let roleCount = 0;
+        if (status === 'active') {
+          roleCount = await prisma.authzAssetsAccessGrant.count({
+            where: {
+              account_id: memberAccountId,
+              portfolio_id: portfolioId,
+              app_id: 'neup.account',
+            },
+          });
+        }
+
+        // Resolve invitation expiry for invited members
+        const detailsObj = details as Record<string, unknown> | null;
+        const invitationExpiresOn =
+          status === 'invited' && typeof detailsObj?.expiresOn === 'string'
+            ? detailsObj.expiresOn
+            : undefined;
+
+        // Determine effective status — mark as expired if past expiresOn
+        let effectiveStatus: 'active' | 'invited' | 'expired' = status as 'active' | 'invited' | 'expired';
+        if (status === 'invited' && invitationExpiresOn) {
+          const expiresOn = new Date(invitationExpiresOn);
+          if (!Number.isNaN(expiresOn.getTime()) && expiresOn < new Date()) {
+            effectiveStatus = 'expired';
+          }
+        }
+
         return {
           accountId: memberAccountId,
           displayName,
           accountPhoto: profile?.accountPhoto,
-          roleCount: grantCount,
-          status: 'active' as const,
-        };
-      })
-    );
-
-    // Invited (pending) accounts scoped to this portfolio
-    const confirmedIds = new Set(portfolio.members.map((m) => m.accountId));
-    const invitedForPortfolio = pendingInvitations.filter((r) => {
-      const data = r.data as Record<string, unknown> | null;
-      return data?.portfolioId === portfolioId && !confirmedIds.has(r.recipientId);
-    });
-
-    const invitedMembers = await Promise.all(
-      invitedForPortfolio.map(async ({ recipientId, data }) => {
-        const profile = await getUserProfile(recipientId);
-        const displayName =
-          profile?.nameDisplay ||
-          `${profile?.nameFirst ?? ''} ${profile?.nameLast ?? ''}`.trim() ||
-          recipientId;
-        const invData = data as Record<string, unknown> | null;
-        const expiresOnRaw = invData?.expiresOn;
-        const invitationExpiresOn =
-          typeof expiresOnRaw === 'string' ? expiresOnRaw : undefined;
-        return {
-          accountId: recipientId,
-          displayName,
-          accountPhoto: profile?.accountPhoto,
-          roleCount: 0,
-          status: 'invited' as const,
+          roleCount,
+          status: effectiveStatus,
           invitationExpiresOn,
         };
       })
     );
 
-    return { portfolioName: portfolio.name, members: [...confirmedMembers, ...invitedMembers] };
+    return { portfolioName: portfolio.name, members };
   } catch (error) {
     await logError('database', error, `getPortfolioMembers:${portfolioId}`);
     return { portfolioName: '', members: [] };
@@ -868,29 +856,64 @@ export async function getPortfolioMembers(
  * Function getPortfolioMemberDetail.
  *
  * Returns the display name of a member and all roles they hold on assets
- * within the given portfolio.
+ * within the given portfolio. Also returns invited members (status = 'invited')
+ * with an empty roles array so the role page can show their invitation state.
+ * Returns null only if the account profile or portfolio does not exist, or if
+ * the account has no PortfolioMember row at all.
  */
 export async function getPortfolioMemberDetail(
   portfolioId: string,
   memberAccountId: string,
 ): Promise<PortfolioMemberDetail | null> {
   try {
-    const [portfolio, memberProfile] = await Promise.all([
+    const [portfolio, memberProfile, memberRow] = await Promise.all([
       prisma.portfolio.findUnique({
         where: { id: portfolioId },
         select: { name: true },
       }),
       getUserProfile(memberAccountId),
+      prisma.portfolioMember.findFirst({
+        where: { portfolioId, accountId: memberAccountId },
+        select: { status: true, details: true },
+      }),
     ]);
 
-    if (!portfolio || !memberProfile) return null;
+    if (!portfolio || !memberProfile || !memberRow) return null;
 
     const displayName =
       memberProfile.nameDisplay ||
       `${memberProfile.nameFirst ?? ''} ${memberProfile.nameLast ?? ''}`.trim() ||
       memberAccountId;
 
-    // Fetch all asset grants for this member in this portfolio
+    // Resolve invitation expiry
+    const detailsObj = memberRow.details as Record<string, unknown> | null;
+    const invitationExpiresOn =
+      memberRow.status === 'invited' && typeof detailsObj?.expiresOn === 'string'
+        ? detailsObj.expiresOn
+        : undefined;
+
+    // Determine effective status
+    let effectiveStatus = memberRow.status;
+    if (memberRow.status === 'invited' && invitationExpiresOn) {
+      const expiresOn = new Date(invitationExpiresOn);
+      if (!Number.isNaN(expiresOn.getTime()) && expiresOn < new Date()) {
+        effectiveStatus = 'expired';
+      }
+    }
+
+    // Invited/expired members have no asset grants yet
+    if (effectiveStatus !== 'active') {
+      return {
+        accountId: memberAccountId,
+        displayName,
+        portfolioName: portfolio.name,
+        status: effectiveStatus,
+        invitationExpiresOn,
+        roles: [],
+      };
+    }
+
+    // Fetch all asset grants for active members
     const grants = await prisma.authzAssetsAccessGrant.findMany({
       where: {
         account_id: memberAccountId,
@@ -931,6 +954,7 @@ export async function getPortfolioMemberDetail(
       accountId: memberAccountId,
       displayName,
       portfolioName: portfolio.name,
+      status: 'active',
       roles,
     };
   } catch (error) {

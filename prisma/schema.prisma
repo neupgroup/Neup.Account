@@ -302,6 +302,7 @@ model PortfolioMember {
   id            String    @id(map: "portfolio_members_pkey") @default(uuid())
   portfolioId   String
   accountId     String
+  status        String    @default("active")
   isPermanent   Boolean   @default(false)
   hasFullAccess Boolean   @default(false)
   details       Json?

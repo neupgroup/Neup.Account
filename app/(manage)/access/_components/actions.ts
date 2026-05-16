@@ -215,7 +215,7 @@ export async function removeDirectMember(
       },
     });
 
-    await logActivity(ownerAccountId, `Removed all direct access for ${memberAccountId}`, 'Completed');
+    await logActivity(ownerAccountId, `Removed all direct access for ${memberAccountId}`, 'Success');
     revalidatePath('/access');
     revalidatePath('/access/member');
     return { success: true };
@@ -277,7 +277,8 @@ export async function removePortfolioMember(
 }
 
 /**
- * Cancels a pending portfolio-scoped access invitation.
+ * Cancels a pending portfolio membership invitation by removing the
+ * PortfolioMember row with status 'invited' or 'expired'.
  */
 export async function cancelPortfolioInvitation(
   portfolioId: string,
@@ -287,27 +288,22 @@ export async function cancelPortfolioInvitation(
   if (!senderAccountId) return { success: false, error: 'Not authenticated.' };
 
   try {
-    // Portfolio invitations store portfolioId in the data JSON field
-    const pending = await prisma.request.findMany({
+    const member = await prisma.portfolioMember.findFirst({
       where: {
-        action: 'access_invitation',
-        senderId: senderAccountId,
-        recipientId: recipientAccountId,
-        status: 'pending',
+        portfolioId,
+        accountId: recipientAccountId,
+        status: { in: ['invited', 'expired'] },
       },
-      select: { id: true, data: true },
+      select: { id: true },
     });
 
-    const ids = pending
-      .filter((r) => (r.data as Record<string, unknown> | null)?.portfolioId === portfolioId)
-      .map((r) => r.id);
-
-    if (ids.length > 0) {
-      await prisma.request.deleteMany({ where: { id: { in: ids } } });
+    if (member) {
+      await prisma.portfolioMember.delete({ where: { id: member.id } });
     }
 
     revalidatePath('/access');
     revalidatePath(`/access/member?portfolio=${portfolioId}`);
+    revalidatePath(`/access/role?portfolio=${portfolioId}&member=${recipientAccountId}`);
     return { success: true };
   } catch (error) {
     await logError('database', error, `cancelPortfolioInvitation:${portfolioId}:${recipientAccountId}`);

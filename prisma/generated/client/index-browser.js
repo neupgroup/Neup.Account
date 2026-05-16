@@ -310,6 +310,7 @@ exports.Prisma.PortfolioMemberScalarFieldEnum = {
   id: 'id',
   portfolioId: 'portfolioId',
   accountId: 'accountId',
+  status: 'status',
   isPermanent: 'isPermanent',
   hasFullAccess: 'hasFullAccess',
   details: 'details'

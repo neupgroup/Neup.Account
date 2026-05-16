@@ -25716,6 +25716,7 @@ export namespace Prisma {
     id: string | null
     portfolioId: string | null
     accountId: string | null
+    status: string | null
     isPermanent: boolean | null
     hasFullAccess: boolean | null
   }
@@ -25724,6 +25725,7 @@ export namespace Prisma {
     id: string | null
     portfolioId: string | null
     accountId: string | null
+    status: string | null
     isPermanent: boolean | null
     hasFullAccess: boolean | null
   }
@@ -25732,6 +25734,7 @@ export namespace Prisma {
     id: number
     portfolioId: number
     accountId: number
+    status: number
     isPermanent: number
     hasFullAccess: number
     details: number
@@ -25743,6 +25746,7 @@ export namespace Prisma {
     id?: true
     portfolioId?: true
     accountId?: true
+    status?: true
     isPermanent?: true
     hasFullAccess?: true
   }
@@ -25751,6 +25755,7 @@ export namespace Prisma {
     id?: true
     portfolioId?: true
     accountId?: true
+    status?: true
     isPermanent?: true
     hasFullAccess?: true
   }
@@ -25759,6 +25764,7 @@ export namespace Prisma {
     id?: true
     portfolioId?: true
     accountId?: true
+    status?: true
     isPermanent?: true
     hasFullAccess?: true
     details?: true
@@ -25841,6 +25847,7 @@ export namespace Prisma {
     id: string
     portfolioId: string
     accountId: string
+    status: string
     isPermanent: boolean
     hasFullAccess: boolean
     details: JsonValue | null
@@ -25867,6 +25874,7 @@ export namespace Prisma {
     id?: boolean
     portfolioId?: boolean
     accountId?: boolean
+    status?: boolean
     isPermanent?: boolean
     hasFullAccess?: boolean
     details?: boolean
@@ -25878,6 +25886,7 @@ export namespace Prisma {
     id?: boolean
     portfolioId?: boolean
     accountId?: boolean
+    status?: boolean
     isPermanent?: boolean
     hasFullAccess?: boolean
     details?: boolean
@@ -25889,6 +25898,7 @@ export namespace Prisma {
     id?: boolean
     portfolioId?: boolean
     accountId?: boolean
+    status?: boolean
     isPermanent?: boolean
     hasFullAccess?: boolean
     details?: boolean
@@ -25900,12 +25910,13 @@ export namespace Prisma {
     id?: boolean
     portfolioId?: boolean
     accountId?: boolean
+    status?: boolean
     isPermanent?: boolean
     hasFullAccess?: boolean
     details?: boolean
   }
 
-  export type PortfolioMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "portfolioId" | "accountId" | "isPermanent" | "hasFullAccess" | "details", ExtArgs["result"]["portfolioMember"]>
+  export type PortfolioMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "portfolioId" | "accountId" | "status" | "isPermanent" | "hasFullAccess" | "details", ExtArgs["result"]["portfolioMember"]>
   export type PortfolioMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
     portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
@@ -25929,6 +25940,7 @@ export namespace Prisma {
       id: string
       portfolioId: string
       accountId: string
+      status: string
       isPermanent: boolean
       hasFullAccess: boolean
       details: Prisma.JsonValue | null
@@ -26360,6 +26372,7 @@ export namespace Prisma {
     readonly id: FieldRef<"PortfolioMember", 'String'>
     readonly portfolioId: FieldRef<"PortfolioMember", 'String'>
     readonly accountId: FieldRef<"PortfolioMember", 'String'>
+    readonly status: FieldRef<"PortfolioMember", 'String'>
     readonly isPermanent: FieldRef<"PortfolioMember", 'Boolean'>
     readonly hasFullAccess: FieldRef<"PortfolioMember", 'Boolean'>
     readonly details: FieldRef<"PortfolioMember", 'Json'>
@@ -40260,6 +40273,7 @@ export namespace Prisma {
     id: 'id',
     portfolioId: 'portfolioId',
     accountId: 'accountId',
+    status: 'status',
     isPermanent: 'isPermanent',
     hasFullAccess: 'hasFullAccess',
     details: 'details'
@@ -41883,6 +41897,7 @@ export namespace Prisma {
     id?: StringFilter<"PortfolioMember"> | string
     portfolioId?: StringFilter<"PortfolioMember"> | string
     accountId?: StringFilter<"PortfolioMember"> | string
+    status?: StringFilter<"PortfolioMember"> | string
     isPermanent?: BoolFilter<"PortfolioMember"> | boolean
     hasFullAccess?: BoolFilter<"PortfolioMember"> | boolean
     details?: JsonNullableFilter<"PortfolioMember">
@@ -41894,6 +41909,7 @@ export namespace Prisma {
     id?: SortOrder
     portfolioId?: SortOrder
     accountId?: SortOrder
+    status?: SortOrder
     isPermanent?: SortOrder
     hasFullAccess?: SortOrder
     details?: SortOrderInput | SortOrder
@@ -41909,6 +41925,7 @@ export namespace Prisma {
     NOT?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[]
     portfolioId?: StringFilter<"PortfolioMember"> | string
     accountId?: StringFilter<"PortfolioMember"> | string
+    status?: StringFilter<"PortfolioMember"> | string
     isPermanent?: BoolFilter<"PortfolioMember"> | boolean
     hasFullAccess?: BoolFilter<"PortfolioMember"> | boolean
     details?: JsonNullableFilter<"PortfolioMember">
@@ -41920,6 +41937,7 @@ export namespace Prisma {
     id?: SortOrder
     portfolioId?: SortOrder
     accountId?: SortOrder
+    status?: SortOrder
     isPermanent?: SortOrder
     hasFullAccess?: SortOrder
     details?: SortOrderInput | SortOrder
@@ -41935,6 +41953,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"PortfolioMember"> | string
     portfolioId?: StringWithAggregatesFilter<"PortfolioMember"> | string
     accountId?: StringWithAggregatesFilter<"PortfolioMember"> | string
+    status?: StringWithAggregatesFilter<"PortfolioMember"> | string
     isPermanent?: BoolWithAggregatesFilter<"PortfolioMember"> | boolean
     hasFullAccess?: BoolWithAggregatesFilter<"PortfolioMember"> | boolean
     details?: JsonNullableWithAggregatesFilter<"PortfolioMember">
@@ -44186,6 +44205,7 @@ export namespace Prisma {
 
   export type PortfolioMemberCreateInput = {
     id?: string
+    status?: string
     isPermanent?: boolean
     hasFullAccess?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -44197,6 +44217,7 @@ export namespace Prisma {
     id?: string
     portfolioId: string
     accountId: string
+    status?: string
     isPermanent?: boolean
     hasFullAccess?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -44204,6 +44225,7 @@ export namespace Prisma {
 
   export type PortfolioMemberUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     isPermanent?: BoolFieldUpdateOperationsInput | boolean
     hasFullAccess?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -44215,6 +44237,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     portfolioId?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     isPermanent?: BoolFieldUpdateOperationsInput | boolean
     hasFullAccess?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -44224,6 +44247,7 @@ export namespace Prisma {
     id?: string
     portfolioId: string
     accountId: string
+    status?: string
     isPermanent?: boolean
     hasFullAccess?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -44231,6 +44255,7 @@ export namespace Prisma {
 
   export type PortfolioMemberUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     isPermanent?: BoolFieldUpdateOperationsInput | boolean
     hasFullAccess?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -44240,6 +44265,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     portfolioId?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     isPermanent?: BoolFieldUpdateOperationsInput | boolean
     hasFullAccess?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -46063,6 +46089,7 @@ export namespace Prisma {
     id?: SortOrder
     portfolioId?: SortOrder
     accountId?: SortOrder
+    status?: SortOrder
     isPermanent?: SortOrder
     hasFullAccess?: SortOrder
     details?: SortOrder
@@ -46072,6 +46099,7 @@ export namespace Prisma {
     id?: SortOrder
     portfolioId?: SortOrder
     accountId?: SortOrder
+    status?: SortOrder
     isPermanent?: SortOrder
     hasFullAccess?: SortOrder
   }
@@ -46080,6 +46108,7 @@ export namespace Prisma {
     id?: SortOrder
     portfolioId?: SortOrder
     accountId?: SortOrder
+    status?: SortOrder
     isPermanent?: SortOrder
     hasFullAccess?: SortOrder
   }
@@ -49465,6 +49494,7 @@ export namespace Prisma {
 
   export type PortfolioMemberCreateWithoutAccountInput = {
     id?: string
+    status?: string
     isPermanent?: boolean
     hasFullAccess?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -49474,6 +49504,7 @@ export namespace Prisma {
   export type PortfolioMemberUncheckedCreateWithoutAccountInput = {
     id?: string
     portfolioId: string
+    status?: string
     isPermanent?: boolean
     hasFullAccess?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -50331,6 +50362,7 @@ export namespace Prisma {
     id?: StringFilter<"PortfolioMember"> | string
     portfolioId?: StringFilter<"PortfolioMember"> | string
     accountId?: StringFilter<"PortfolioMember"> | string
+    status?: StringFilter<"PortfolioMember"> | string
     isPermanent?: BoolFilter<"PortfolioMember"> | boolean
     hasFullAccess?: BoolFilter<"PortfolioMember"> | boolean
     details?: JsonNullableFilter<"PortfolioMember">
@@ -53396,6 +53428,7 @@ export namespace Prisma {
 
   export type PortfolioMemberCreateWithoutPortfolioInput = {
     id?: string
+    status?: string
     isPermanent?: boolean
     hasFullAccess?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -53405,6 +53438,7 @@ export namespace Prisma {
   export type PortfolioMemberUncheckedCreateWithoutPortfolioInput = {
     id?: string
     accountId: string
+    status?: string
     isPermanent?: boolean
     hasFullAccess?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -57125,6 +57159,7 @@ export namespace Prisma {
   export type PortfolioMemberCreateManyAccountInput = {
     id?: string
     portfolioId: string
+    status?: string
     isPermanent?: boolean
     hasFullAccess?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -57445,6 +57480,7 @@ export namespace Prisma {
 
   export type PortfolioMemberUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     isPermanent?: BoolFieldUpdateOperationsInput | boolean
     hasFullAccess?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -57454,6 +57490,7 @@ export namespace Prisma {
   export type PortfolioMemberUncheckedUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     portfolioId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     isPermanent?: BoolFieldUpdateOperationsInput | boolean
     hasFullAccess?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -57462,6 +57499,7 @@ export namespace Prisma {
   export type PortfolioMemberUncheckedUpdateManyWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     portfolioId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     isPermanent?: BoolFieldUpdateOperationsInput | boolean
     hasFullAccess?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -58266,6 +58304,7 @@ export namespace Prisma {
   export type PortfolioMemberCreateManyPortfolioInput = {
     id?: string
     accountId: string
+    status?: string
     isPermanent?: boolean
     hasFullAccess?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -58323,6 +58362,7 @@ export namespace Prisma {
 
   export type PortfolioMemberUpdateWithoutPortfolioInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     isPermanent?: BoolFieldUpdateOperationsInput | boolean
     hasFullAccess?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -58332,6 +58372,7 @@ export namespace Prisma {
   export type PortfolioMemberUncheckedUpdateWithoutPortfolioInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     isPermanent?: BoolFieldUpdateOperationsInput | boolean
     hasFullAccess?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
@@ -58340,6 +58381,7 @@ export namespace Prisma {
   export type PortfolioMemberUncheckedUpdateManyWithoutPortfolioInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     isPermanent?: BoolFieldUpdateOperationsInput | boolean
     hasFullAccess?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue

@@ -52,25 +52,6 @@ async function hasPendingDirectInvitation(
   );
 }
 
-async function hasPendingPortfolioInvitation(
-  senderAccountId: string,
-  recipientAccountId: string,
-  portfolioId: string,
-): Promise<boolean> {
-  const reqs = await prisma.request.findMany({
-    where: {
-      action: 'access_invitation',
-      senderId: senderAccountId,
-      recipientId: recipientAccountId,
-      status: 'pending',
-    },
-    select: { data: true },
-  });
-  return reqs.some(
-    (r) => (r.data as Record<string, unknown> | null)?.portfolioId === portfolioId,
-  );
-}
-
 /** Returns the portfolio name, or null if not found. */
 async function getPortfolioName(portfolioId: string): Promise<string | null> {
   const portfolio = await prisma.portfolio.findUnique({
@@ -85,20 +66,20 @@ type PortfolioMemberFlags = {
   isPermanent: boolean;
 };
 
-/** Returns the hasFullAccess and isPermanent flags for a portfolio member, or null if not found. */
+/** Returns the hasFullAccess and isPermanent flags for an active portfolio member, or null if not found. */
 async function getPortfolioMemberFlags(
   portfolioId: string,
   memberAccountId: string,
 ): Promise<PortfolioMemberFlags | null> {
   const member = await prisma.portfolioMember.findFirst({
-    where: { portfolioId, accountId: memberAccountId },
+    where: { portfolioId, accountId: memberAccountId, status: 'active' },
     select: { hasFullAccess: true, isPermanent: true },
   });
   return member ?? null;
 }
 
 /**
- * Returns true if there is at least one permanent full-access member in the
+ * Returns true if there is at least one active permanent full-access member in the
  * portfolio other than the given account.
  */
 async function hasOtherPermanentOwner(
@@ -110,6 +91,7 @@ async function hasOtherPermanentOwner(
       portfolioId,
       hasFullAccess: true,
       isPermanent: true,
+      status: 'active',
       accountId: { not: excludeAccountId },
     },
   });
@@ -440,17 +422,14 @@ async function MemberPortfolioRolesView({
   const accountId = await getActiveAccountId();
   if (!accountId) notFound();
 
-  const [detail, memberProfile, isPendingInvitation, targetFlags, callerFlags, portfolioName] =
-    await Promise.all([
-      getPortfolioMemberDetail(portfolioId, memberAccountId),
-      getUserProfile(memberAccountId),
-      hasPendingPortfolioInvitation(accountId, memberAccountId, portfolioId),
-      getPortfolioMemberFlags(portfolioId, memberAccountId),
-      getPortfolioMemberFlags(portfolioId, accountId),
-      getPortfolioName(portfolioId),
-    ]);
+  const [detail, memberProfile, callerFlags, portfolioName] = await Promise.all([
+    getPortfolioMemberDetail(portfolioId, memberAccountId),
+    getUserProfile(memberAccountId),
+    getPortfolioMemberFlags(portfolioId, accountId),
+    getPortfolioName(portfolioId),
+  ]);
 
-  // Profile must exist; portfolio must exist
+  // Profile and portfolio must exist
   if (!memberProfile || !portfolioName) notFound();
 
   const displayName =
@@ -460,10 +439,8 @@ async function MemberPortfolioRolesView({
 
   const userPhoto = memberProfile.accountPhoto ?? FALLBACK_PHOTO;
 
-  // Member is not in the portfolio at all (not confirmed, no pending invitation)
-  const isNotMember = !detail && !isPendingInvitation;
-
-  if (isNotMember) {
+  // ── Not a member at all — offer to invite ────────────────────────────────
+  if (!detail) {
     return (
       <div className="grid gap-6">
         <BackButton href={`/access/member?portfolio=${portfolioId}`} />
@@ -484,17 +461,25 @@ async function MemberPortfolioRolesView({
         <div className="flex justify-start">
           <InviteButton
             displayName={displayName}
-            confirmDescription={`This will send a portfolio membership invitation to ${displayName}. They will join with no roles assigned initially.`}
+            confirmDescription={`This will invite ${displayName} to portfolio "${portfolioName}". They will join with no roles assigned initially.`}
             action={inviteToPortfolio.bind(null, portfolioId, memberAccountId)}
-            redirectTo={`/access/member?portfolio=${portfolioId}`}
+            redirectTo={`/access/role?member=${memberAccountId}&portfolio=${portfolioId}`}
           />
         </div>
       </div>
     );
   }
 
-  // Member has a pending invitation but is not yet confirmed
-  if (!detail && isPendingInvitation) {
+  // ── Invited — show invitation state ──────────────────────────────────────
+  if (detail.status === 'invited' || detail.status === 'expired') {
+    const isExpired = detail.status === 'expired';
+    const expiresOn = detail.invitationExpiresOn
+      ? new Date(detail.invitationExpiresOn)
+      : null;
+    const formattedExpiry = expiresOn
+      ? expiresOn.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+      : null;
+
     return (
       <div className="grid gap-6">
         <BackButton href={`/access/member?portfolio=${portfolioId}`} />
@@ -505,31 +490,55 @@ async function MemberPortfolioRolesView({
           description={
             <>
               <span className="font-medium text-foreground">{displayName}</span> has been invited
-              to portfolio <span className="font-medium text-foreground">{portfolioName}</span>
+              to portfolio <span className="font-medium text-foreground">{detail.portfolioName}</span>
             </>
           }
         />
 
-        <InvitedBanner
-          message={`An invitation has been sent to ${displayName}. Waiting for them to accept.`}
-        />
+        {isExpired ? (
+          <div className="flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3">
+            <Clock className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
+            <p className="text-sm text-destructive">
+              This invitation expired{formattedExpiry ? ` on ${formattedExpiry}` : ''} and can no longer be accepted.
+            </p>
+          </div>
+        ) : (
+          <InvitedBanner
+            message={`Invitation pending${formattedExpiry ? ` — expires ${formattedExpiry}` : ''}. Waiting for ${displayName} to accept.`}
+          />
+        )}
 
-        <div className="flex justify-start">
+        <div className="flex gap-2">
+          {/* Cancel invitation (remove the invited row) */}
           <RemoveMemberButton
-            label="Cancel Invitation"
-            confirmTitle="Cancel invitation?"
-            confirmDescription={`This will cancel the pending invitation for ${displayName} to join portfolio "${portfolioName}".`}
+            label={isExpired ? 'Remove Expired Invitation' : 'Cancel Invitation'}
+            confirmTitle={isExpired ? 'Remove expired invitation?' : 'Cancel invitation?'}
+            confirmDescription={
+              isExpired
+                ? `This will remove the expired invitation for ${displayName} from portfolio "${detail.portfolioName}".`
+                : `This will cancel the pending invitation for ${displayName} to join portfolio "${detail.portfolioName}".`
+            }
             action={cancelPortfolioInvitation.bind(null, portfolioId, memberAccountId)}
-            redirectTo={`/access/member?portfolio=${portfolioId}`}
+            redirectTo={`/access/role?member=${memberAccountId}&portfolio=${portfolioId}`}
             variant="outline"
           />
+          {/* Re-invite if expired */}
+          {isExpired && (
+            <InviteButton
+              displayName={displayName}
+              confirmDescription={`This will send a new invitation to ${displayName} to join portfolio "${detail.portfolioName}".`}
+              action={inviteToPortfolio.bind(null, portfolioId, memberAccountId)}
+              redirectTo={`/access/role?member=${memberAccountId}&portfolio=${portfolioId}`}
+            />
+          )}
         </div>
       </div>
     );
   }
 
-  // Confirmed member — detail is guaranteed non-null here
+  // ── Active confirmed member ───────────────────────────────────────────────
   const isSelfView = memberAccountId === accountId;
+  const targetFlags = await getPortfolioMemberFlags(portfolioId, memberAccountId);
   const targetIsPermanentOwner =
     targetFlags?.hasFullAccess === true && targetFlags?.isPermanent === true;
   const callerIsPermanentOwner =
@@ -566,15 +575,15 @@ async function MemberPortfolioRolesView({
           <>
             Role assigned to{' '}
             <span className="font-medium text-foreground">{displayName}</span> on portfolio{' '}
-            <span className="font-medium text-foreground">{detail!.portfolioName}</span>
+            <span className="font-medium text-foreground">{detail.portfolioName}</span>
           </>
         }
       />
 
-      {detail!.roles.length > 0 ? (
+      {detail.roles.length > 0 ? (
         <Card>
           <CardContent className="divide-y p-0">
-            {detail!.roles.map((role, i) => (
+            {detail.roles.map((role, i) => (
               <RoleCard
                 key={`${role.roleId}-${i}`}
                 platformLabel={role.assetType.replace(/_/g, ' ')}
@@ -596,8 +605,8 @@ async function MemberPortfolioRolesView({
             confirmTitle={isSelfView ? 'Leave portfolio?' : 'Remove from portfolio?'}
             confirmDescription={
               isSelfView
-                ? `You will be removed from portfolio "${detail!.portfolioName}" and lose all your asset roles within it.`
-                : `This will remove ${displayName} from portfolio "${detail!.portfolioName}" and revoke all their asset roles within it.`
+                ? `You will be removed from portfolio "${detail.portfolioName}" and lose all your asset roles within it.`
+                : `This will remove ${displayName} from portfolio "${detail.portfolioName}" and revoke all their asset roles within it.`
             }
             action={removePortfolioMember.bind(null, portfolioId, memberAccountId)}
             redirectTo={isSelfView ? '/access' : `/access/member?portfolio=${portfolioId}`}

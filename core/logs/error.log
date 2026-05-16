@@ -3684,3 +3684,213 @@ The column `(not available)` does not exist in the current database.
     at async getConnectedApplications (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_26d1a2fb._.js:640:29)
     at async DataAndPrivacyPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__ac91919b._.js:426:40)
 --------------------------------------------------------------------------------
+[2026-05-16T05:38:13.002Z] [database] [auto] [getAccessAssetGroup:e9d26e24-1ed2-496f-9563-92f77abacb01] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.portfolioMember.findFirst()` invocation:
+
+{
+  where: {
+    portfolioId: "e9d26e24-1ed2-496f-9563-92f77abacb01",
+    accountId: "d7169b8d-df72-4284-89fc-ed3f27950ac7",
+    status: "active",
+    ~~~~~~
+?   AND?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[],
+?   OR?: PortfolioMemberWhereInput[],
+?   NOT?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[],
+?   id?: StringFilter | String,
+?   isPermanent?: BoolFilter | Boolean,
+?   hasFullAccess?: BoolFilter | Boolean,
+?   details?: JsonNullableFilter,
+?   account?: AccountScalarRelationFilter | AccountWhereInput,
+?   portfolio?: PortfolioScalarRelationFilter | PortfolioWhereInput
+  },
+  select: {
+    id: true
+  }
+}
+
+Unknown argument `status`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async canAccessGroup (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_7667c30a._.js:1893:20)
+    at async getAccessAssetGroup (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_7667c30a._.js:1942:25)
+    at async PortfolioDetail (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__508e9439._.js:620:19)
+--------------------------------------------------------------------------------
+[2026-05-16T05:38:22.952Z] [database] [auto] [getAccessAssetGroup:e9d26e24-1ed2-496f-9563-92f77abacb01] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.portfolioMember.findFirst()` invocation:
+
+{
+  where: {
+    portfolioId: "e9d26e24-1ed2-496f-9563-92f77abacb01",
+    accountId: "d7169b8d-df72-4284-89fc-ed3f27950ac7",
+    status: "active",
+    ~~~~~~
+?   AND?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[],
+?   OR?: PortfolioMemberWhereInput[],
+?   NOT?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[],
+?   id?: StringFilter | String,
+?   isPermanent?: BoolFilter | Boolean,
+?   hasFullAccess?: BoolFilter | Boolean,
+?   details?: JsonNullableFilter,
+?   account?: AccountScalarRelationFilter | AccountWhereInput,
+?   portfolio?: PortfolioScalarRelationFilter | PortfolioWhereInput
+  },
+  select: {
+    id: true
+  }
+}
+
+Unknown argument `status`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async canAccessGroup (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_7667c30a._.js:1893:20)
+    at async getAccessAssetGroup (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_7667c30a._.js:1942:25)
+    at async PortfolioDetail (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__508e9439._.js:620:19)
+--------------------------------------------------------------------------------
+[2026-05-16T05:38:34.636Z] [database] [auto] [getAccessAssetGroup:e9d26e24-1ed2-496f-9563-92f77abacb01] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.portfolioMember.findFirst()` invocation:
+
+{
+  where: {
+    portfolioId: "e9d26e24-1ed2-496f-9563-92f77abacb01",
+    accountId: "d7169b8d-df72-4284-89fc-ed3f27950ac7",
+    status: "active",
+    ~~~~~~
+?   AND?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[],
+?   OR?: PortfolioMemberWhereInput[],
+?   NOT?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[],
+?   id?: StringFilter | String,
+?   isPermanent?: BoolFilter | Boolean,
+?   hasFullAccess?: BoolFilter | Boolean,
+?   details?: JsonNullableFilter,
+?   account?: AccountScalarRelationFilter | AccountWhereInput,
+?   portfolio?: PortfolioScalarRelationFilter | PortfolioWhereInput
+  },
+  select: {
+    id: true
+  }
+}
+
+Unknown argument `status`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async canAccessGroup (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_7667c30a._.js:1893:20)
+    at async getAccessAssetGroup (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_7667c30a._.js:1942:25)
+    at async PortfolioDetail (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__508e9439._.js:620:19)
+--------------------------------------------------------------------------------
+[2026-05-16T05:38:44.865Z] [database] [auto] [getAccessAssetGroup:e9d26e24-1ed2-496f-9563-92f77abacb01] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.portfolioMember.findFirst()` invocation:
+
+{
+  where: {
+    portfolioId: "e9d26e24-1ed2-496f-9563-92f77abacb01",
+    accountId: "d7169b8d-df72-4284-89fc-ed3f27950ac7",
+    status: "active",
+    ~~~~~~
+?   AND?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[],
+?   OR?: PortfolioMemberWhereInput[],
+?   NOT?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[],
+?   id?: StringFilter | String,
+?   isPermanent?: BoolFilter | Boolean,
+?   hasFullAccess?: BoolFilter | Boolean,
+?   details?: JsonNullableFilter,
+?   account?: AccountScalarRelationFilter | AccountWhereInput,
+?   portfolio?: PortfolioScalarRelationFilter | PortfolioWhereInput
+  },
+  select: {
+    id: true
+  }
+}
+
+Unknown argument `status`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async canAccessGroup (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_7667c30a._.js:1893:20)
+    at async getAccessAssetGroup (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_7667c30a._.js:1942:25)
+    at async PortfolioDetail (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__508e9439._.js:620:19)
+--------------------------------------------------------------------------------
+[2026-05-16T05:38:58.648Z] [database] [auto] [getAccessAssetGroup:e9d26e24-1ed2-496f-9563-92f77abacb01] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.portfolioMember.findFirst()` invocation:
+
+{
+  where: {
+    portfolioId: "e9d26e24-1ed2-496f-9563-92f77abacb01",
+    accountId: "d7169b8d-df72-4284-89fc-ed3f27950ac7",
+    status: "active",
+    ~~~~~~
+?   AND?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[],
+?   OR?: PortfolioMemberWhereInput[],
+?   NOT?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[],
+?   id?: StringFilter | String,
+?   isPermanent?: BoolFilter | Boolean,
+?   hasFullAccess?: BoolFilter | Boolean,
+?   details?: JsonNullableFilter,
+?   account?: AccountScalarRelationFilter | AccountWhereInput,
+?   portfolio?: PortfolioScalarRelationFilter | PortfolioWhereInput
+  },
+  select: {
+    id: true
+  }
+}
+
+Unknown argument `status`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async canAccessGroup (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_7667c30a._.js:1893:20)
+    at async getAccessAssetGroup (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_7667c30a._.js:1942:25)
+    at async PortfolioDetail (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__508e9439._.js:620:19)
+--------------------------------------------------------------------------------
+[2026-05-16T05:39:11.557Z] [database] [auto] [getAccessAssetGroup:e9d26e24-1ed2-496f-9563-92f77abacb01] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.portfolioMember.findFirst()` invocation:
+
+{
+  where: {
+    portfolioId: "e9d26e24-1ed2-496f-9563-92f77abacb01",
+    accountId: "d7169b8d-df72-4284-89fc-ed3f27950ac7",
+    status: "active",
+    ~~~~~~
+?   AND?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[],
+?   OR?: PortfolioMemberWhereInput[],
+?   NOT?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[],
+?   id?: StringFilter | String,
+?   isPermanent?: BoolFilter | Boolean,
+?   hasFullAccess?: BoolFilter | Boolean,
+?   details?: JsonNullableFilter,
+?   account?: AccountScalarRelationFilter | AccountWhereInput,
+?   portfolio?: PortfolioScalarRelationFilter | PortfolioWhereInput
+  },
+  select: {
+    id: true
+  }
+}
+
+Unknown argument `status`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async canAccessGroup (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_7667c30a._.js:1893:20)
+    at async getAccessAssetGroup (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_7667c30a._.js:1942:25)
+    at async PortfolioDetail (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__508e9439._.js:620:19)
+--------------------------------------------------------------------------------

@@ -58,12 +58,14 @@ function normalizeDetails(value?: string): string | null {
 
 /**
  * Function canAccessGroup.
+ * Only active members (status = 'active') can access the group.
  */
 async function canAccessGroup(groupId: string, accountId: string): Promise<boolean> {
   const member = await prisma.portfolioMember.findFirst({
     where: {
       portfolioId: groupId,
       accountId,
+      status: 'active',
     },
     select: { id: true },
   });
@@ -207,10 +209,11 @@ export async function createAssetGroup(input: { name: string; details?: string }
 /**
  * Function addAssetGroupMember.
  *
- * Sends a portfolio membership invitation to the target account.
- * Invited members always start with isPermanent: false and hasFullAccess: false.
- * The invitation expires 7 days from now; the expiry is stored in the Request
- * data JSON so it can be checked when the invitation is displayed or acted on.
+ * Invites an account to a portfolio by creating a PortfolioMember row with
+ * status 'invited'. The invitation expires 7 days from now (stored in
+ * details.expiresOn). Invited members always start with isPermanent: false
+ * and hasFullAccess: false — a permanent full-access member can promote them
+ * later via updatePortfolioMemberFlags.
  */
 export async function addAssetGroupMember(input: {
   groupId: string;
@@ -241,43 +244,34 @@ export async function addAssetGroupMember(input: {
       return { success: false, error: 'You cannot invite yourself.' };
     }
 
-    // Prevent duplicate membership
-    const alreadyMember = await prisma.portfolioMember.findFirst({
+    // Prevent duplicate — any existing row (active, invited, or expired)
+    const existing = await prisma.portfolioMember.findFirst({
       where: { portfolioId: input.groupId, accountId: normalizedMemberId },
-      select: { id: true },
+      select: { id: true, status: true },
     });
-    if (alreadyMember) {
-      return { success: false, error: 'This account is already a member of the portfolio.' };
-    }
-
-    // Prevent duplicate pending invitation
-    const existingInvitation = await prisma.request.findFirst({
-      where: {
-        action: 'access_invitation',
-        recipientId: normalizedMemberId,
-        status: 'pending',
-      },
-      select: { id: true, data: true },
-    });
-    if (
-      existingInvitation &&
-      (existingInvitation.data as Record<string, unknown> | null)?.portfolioId === input.groupId
-    ) {
-      return { success: false, error: 'An invitation has already been sent to this account.' };
+    if (existing) {
+      if (existing.status === 'active') {
+        return { success: false, error: 'This account is already a member of the portfolio.' };
+      }
+      if (existing.status === 'invited') {
+        return { success: false, error: 'An invitation has already been sent to this account.' };
+      }
+      // expired — remove the stale row so a fresh invite can be created
+      await prisma.portfolioMember.delete({ where: { id: existing.id } });
     }
 
     // Invitation expires 7 days from now
     const expiresOn = new Date();
     expiresOn.setDate(expiresOn.getDate() + 7);
 
-    await prisma.request.create({
+    await prisma.portfolioMember.create({
       data: {
-        action: 'access_invitation',
-        senderId: accountId,
-        recipientId: normalizedMemberId,
-        status: 'pending',
-        data: {
-          portfolioId: input.groupId,
+        portfolioId: input.groupId,
+        accountId: normalizedMemberId,
+        status: 'invited',
+        isPermanent: false,
+        hasFullAccess: false,
+        details: {
           isPermanent: false,
           hasFullAccess: false,
           expiresOn: expiresOn.toISOString(),
@@ -287,6 +281,7 @@ export async function addAssetGroupMember(input: {
 
     revalidatePath('/access');
     revalidatePath(`/access/member?portfolio=${input.groupId}`);
+    revalidatePath(`/access/role?portfolio=${input.groupId}&member=${normalizedMemberId}`);
     return { success: true };
   } catch (error) {
     await logError('database', error, `addAssetGroupMember:${input.groupId}`);
@@ -338,23 +333,32 @@ export async function updatePortfolioMemberFlags(input: {
     // Load the target member
     const member = await prisma.portfolioMember.findFirst({
       where: { id: input.memberId, portfolioId: input.groupId },
-      select: { id: true, accountId: true, details: true },
+      select: { id: true, accountId: true, status: true, details: true },
     });
 
     if (!member) {
       return { success: false, error: 'Member not found in this portfolio.' };
     }
 
-    // Check if the invitation has expired (stored in details.expiresOn)
+    // Expired invitations cannot be updated
     const details = member.details as Record<string, unknown> | null;
-    const expiresOnRaw = details?.expiresOn;
-    if (expiresOnRaw) {
-      const expiresOn = new Date(expiresOnRaw as string);
-      if (!Number.isNaN(expiresOn.getTime()) && expiresOn < new Date()) {
-        return {
-          success: false,
-          error: 'This invitation has expired and can no longer be updated.',
-        };
+    if (member.status === 'expired') {
+      return {
+        success: false,
+        error: 'This invitation has expired and can no longer be updated.',
+      };
+    }
+    // Also check details.expiresOn for invited members in case status hasn't been synced
+    if (member.status === 'invited') {
+      const expiresOnRaw = details?.expiresOn;
+      if (expiresOnRaw) {
+        const expiresOn = new Date(expiresOnRaw as string);
+        if (!Number.isNaN(expiresOn.getTime()) && expiresOn < new Date()) {
+          return {
+            success: false,
+            error: 'This invitation has expired and can no longer be updated.',
+          };
+        }
       }
     }
 
@@ -585,16 +589,25 @@ export async function removeAssetGroupMember(input: {
     const [member, callerMember] = await Promise.all([
       prisma.portfolioMember.findFirst({
         where: { id: input.memberId, portfolioId: input.groupId },
-        select: { id: true, accountId: true, hasFullAccess: true, isPermanent: true },
+        select: { id: true, accountId: true, hasFullAccess: true, isPermanent: true, status: true },
       }),
       prisma.portfolioMember.findFirst({
-        where: { portfolioId: input.groupId, accountId },
+        where: { portfolioId: input.groupId, accountId, status: 'active' },
         select: { hasFullAccess: true, isPermanent: true },
       }),
     ]);
 
     if (!member) {
       return { success: false, error: 'Member not found in this portfolio.' };
+    }
+
+    // Invited members can be removed (invitation cancelled) without further checks.
+    if (member.status === 'invited') {
+      await prisma.portfolioMember.delete({ where: { id: member.id } });
+      revalidatePath('/access');
+      revalidatePath(`/access/member?portfolio=${input.groupId}`);
+      revalidatePath(`/access/role?portfolio=${input.groupId}&member=${member.accountId}`);
+      return { success: true };
     }
 
     const targetIsPermanentOwner = member.hasFullAccess && member.isPermanent;
@@ -620,6 +633,7 @@ export async function removeAssetGroupMember(input: {
           portfolioId: input.groupId,
           hasFullAccess: true,
           isPermanent: true,
+          status: 'active',
           accountId: { not: accountId },
         },
       });

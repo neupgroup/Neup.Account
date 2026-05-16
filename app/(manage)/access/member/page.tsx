@@ -4,8 +4,8 @@ import { BackButton } from '@/components/ui/back-button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Shield, ChevronRight, Clock } from '@/components/icons';
-import { addMemberToAssetGroupFromForm } from '@/services/manage/access/actions';
-import { getPortfolioMembers, getDirectMembers } from '@/services/manage/access';import { getActiveAccountId } from '@/core/auth/verify';
+import { getPortfolioMembers, getDirectMembers } from '@/services/manage/access';
+import { getActiveAccountId } from '@/core/auth/verify';
 import { AddMemberForm } from '../_components/add-member-form';
 import { AddUserForm } from '../add-user-form';
 import { FlowLink } from '@/components/ui/flow-link';
@@ -17,12 +17,11 @@ type PageProps = {
 
 // ── Status badge ──────────────────────────────────────────────────────────────
 
-function StatusBadge({ status }: { status: 'active' | 'invited' | 'on_hold' | 'expired' }) {
+function StatusBadge({ status }: { status: 'active' | 'invited' | 'expired' }) {
   if (status === 'active') return null;
 
   const config = {
     invited: { label: 'Invited', variant: 'outline' as const, className: 'text-amber-600 border-amber-300 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-800 dark:text-amber-400' },
-    on_hold: { label: 'On Hold', variant: 'outline' as const, className: 'text-orange-600 border-orange-300 bg-orange-50 dark:bg-orange-950/30 dark:border-orange-800 dark:text-orange-400' },
     expired: { label: 'Expired', variant: 'outline' as const, className: 'text-muted-foreground border-border' },
   }[status];
 
@@ -46,9 +45,11 @@ function MemberRow({
   displayName: string;
   accountPhoto?: string;
   roleCount: number;
-  status: 'active' | 'invited' | 'on_hold' | 'expired';
+  status: 'active' | 'invited' | 'expired';
 }) {
   const isInvited = status === 'invited';
+  const isExpired = status === 'expired';
+  const isPending = isInvited || isExpired;
 
   return (
     <FlowLink
@@ -56,7 +57,7 @@ function MemberRow({
       className="flex items-center gap-4 py-4 px-4 hover:bg-muted/50 transition-colors"
     >
       <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full overflow-hidden ${isInvited ? 'bg-amber-100 dark:bg-amber-950/40' : 'bg-muted'}`}>
-        {accountPhoto ? (
+        {accountPhoto && !isPending ? (
           <Image
             src={accountPhoto}
             alt={displayName}
@@ -66,6 +67,8 @@ function MemberRow({
           />
         ) : isInvited ? (
           <Clock className="h-4 w-4 text-amber-500" />
+        ) : isExpired ? (
+          <Clock className="h-4 w-4 text-muted-foreground" />
         ) : (
           <span className="text-sm font-medium text-muted-foreground">
             {displayName.charAt(0).toUpperCase()}
@@ -73,12 +76,14 @@ function MemberRow({
         )}
       </span>
       <div className="min-w-0 flex-grow">
-        <p className={`font-medium truncate ${isInvited ? 'text-muted-foreground' : 'text-foreground'}`}>
+        <p className={`font-medium truncate ${isPending ? 'text-muted-foreground' : 'text-foreground'}`}>
           {displayName}
         </p>
         <p className="text-sm text-muted-foreground">
           {isInvited
             ? 'Invitation pending'
+            : isExpired
+            ? 'Invitation expired'
             : roleCount === 0
             ? 'No roles assigned'
             : `${roleCount} role${roleCount !== 1 ? 's' : ''} assigned`}
