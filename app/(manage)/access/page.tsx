@@ -28,7 +28,7 @@ async function PortfolioDetail({ id }: { id: string }) {
       backHref="/access"
       membersHref={`/access/member?portfolio=${id}`}
       assetsHref={`/access/asset?portfolio=${id}`}
-      applicationsHref="/access/application"
+      applicationsHref="/access/appconnection"
       allAssetsHref={`/access/asset?portfolio=${id}`}
     />
   );
@@ -60,7 +60,7 @@ export default async function AccessControlPage({ searchParams }: PageProps) {
       description="Direct access grants on this account."
       membersHref="/access/member"
       assetsHref="/access/asset"
-      applicationsHref="/access/application"
+      applicationsHref="/access/appconnection"
       allAssetsHref="/access/asset"
     >
       {/* Section 2 — Portfolios */}

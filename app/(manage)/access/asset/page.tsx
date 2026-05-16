@@ -208,7 +208,7 @@ async function AssetList({ portfolioId }: { portfolioId: string }) {
       {/* Application shortcut */}
       {group.assets.some((a) => ['application', 'app'].includes(a.assetType.toLowerCase())) && (
         <FlowLink
-          href={`/access/application?portfolio=${portfolioId}`}
+          href={`/access/appconnection?portfolio=${portfolioId}`}
           className="flex items-center justify-between gap-4 rounded-lg border px-4 py-3 hover:bg-muted/40 transition-colors"
         >
           <div className="flex items-center gap-3 min-w-0">
