@@ -20,7 +20,7 @@ export default async function ApplicationsPage() {
   return (
     <div className="grid gap-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Applications</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Application Connections</h1>
         <p className="text-muted-foreground">
           Applications you have connected to your account.
         </p>
@@ -54,7 +54,7 @@ export default async function ApplicationsPage() {
             return (
               <FlowLink
                 key={app.id}
-                href={`/data/applications/${app.id}`}
+                href={`/data/appconnection/${app.id}`}
                 className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
               >
                 <div className="flex min-w-0 items-center gap-3">

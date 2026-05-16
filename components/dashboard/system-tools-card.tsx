@@ -22,7 +22,7 @@ const managementItems = [
         permission: 'root.requests.view',
     },
     {
-        href: '/data/applications?mode=root',
+        href: '/data/appconnection?mode=root',
         label: 'Applications',
         description: 'Approve, reject, block, or activate applications.',
         icon: AppWindow,

@@ -86,7 +86,7 @@ export async function createAppCapability(input: {
       select: { id: true, name: true, description: true, scope: true },
     });
 
-    revalidatePath(`/data/applications/${input.appId}`);
+    revalidatePath(`/data/appconnection/${input.appId}`);
     return { success: true, capability: record };
   } catch (error) {
     await logError('database', error, `createAppCapability:${input.appId}`);
@@ -121,7 +121,7 @@ export async function updateAppCapability(input: {
       select: { id: true, name: true, description: true, scope: true },
     });
 
-    revalidatePath(`/data/applications/${input.appId}`);
+    revalidatePath(`/data/appconnection/${input.appId}`);
     return { success: true, capability: record };
   } catch (error) {
     await logError('database', error, `updateAppCapability:${input.appId}`);
@@ -138,7 +138,7 @@ export async function deleteAppCapability(input: {
 
   try {
     await prisma.authzCapability.delete({ where: { id: input.capabilityId } });
-    revalidatePath(`/data/applications/${input.appId}`);
+    revalidatePath(`/data/appconnection/${input.appId}`);
     return { success: true };
   } catch (error) {
     await logError('database', error, `deleteAppCapability:${input.appId}`);
@@ -246,7 +246,7 @@ export async function createAppRole(input: {
       roles.find((r) => r.id === role.id) ?? { ...role, capabilities: [] }
     );
 
-    revalidatePath(`/data/applications/${input.appId}`);
+    revalidatePath(`/data/appconnection/${input.appId}`);
     return { success: true, role: fullRole };
   } catch (error) {
     await logError('database', error, `createAppRole:${input.appId}`);
@@ -291,7 +291,7 @@ export async function updateAppRoleCapabilities(input: {
       }
     });
 
-    revalidatePath(`/data/applications/${input.appId}`);
+    revalidatePath(`/data/appconnection/${input.appId}`);
     return { success: true };
   } catch (error) {
     await logError('database', error, `updateAppRoleCapabilities:${input.appId}`);
@@ -308,7 +308,7 @@ export async function deleteAppRole(input: {
 
   try {
     await prisma.authzRole.delete({ where: { id: input.roleId } });
-    revalidatePath(`/data/applications/${input.appId}`);
+    revalidatePath(`/data/appconnection/${input.appId}`);
     return { success: true };
   } catch (error) {
     await logError('database', error, `deleteAppRole:${input.appId}`);

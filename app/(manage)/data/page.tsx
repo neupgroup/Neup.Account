@@ -37,9 +37,9 @@ export default async function DataAndPrivacyPage() {
         },
         {
             icon: AppWindow,
-            title: "Applications",
+            title: "Application Connections",
             description: "Manage your applications and connected application access.",
-            href: "/data/applications",
+            href: "/data/appconnection",
         },
     ];
 

@@ -75,7 +75,7 @@ export default async function ApplicationAccessPage() {
                   <div className="flex shrink-0 items-center gap-2 pt-0.5">
                     <StatusBadge status={app.status} />
                     <FlowLink
-                      href={`/data/applications/${app.id}`}
+                      href={`/data/appconnection/${app.id}`}
                       className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
                     >
                       <ExternalLink className="h-3 w-3" />
@@ -203,7 +203,7 @@ export default async function ApplicationAccessPage() {
               <p className="text-xs text-muted-foreground mt-1 max-w-xs">
                 Connect to an application from the{' '}
                 <a
-                  href="/data/applications"
+                  href="/data/appconnection"
                   className="underline underline-offset-2 hover:text-foreground transition-colors"
                 >
                   Applications

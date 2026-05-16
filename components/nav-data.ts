@@ -43,7 +43,7 @@ export const navItems = {
             description: "See your data and the way we use it.",
         },
         { 
-            href: "/applications", 
+            href: "/application", 
             label: "Applications", 
             description: "Manage and administer your applications.",
         },
@@ -66,7 +66,7 @@ export const navItems = {
     managementNav: [
         { href: "/manage", label: "Dashboard", description: "Admin dashboard — accounts, apps, and system overview." },
         { href: "/manage/requests", label: "Requests", description: "Review and act on pending user requests." },
-        { href: "/data/applications?mode=root", label: "Applications", description: "Approve, reject, block, or activate applications." },
+        { href: "/data/appconnection?mode=root", label: "Applications", description: "Approve, reject, block, or activate applications." },
         { href: "/cleanup", label: "Cleanup", description: "Delete expired guest accounts and their associated data." },
         { href: "/config", label: "Configurations", description: "Manage payment settings and footer social accounts." },
     ],

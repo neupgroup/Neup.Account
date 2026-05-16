@@ -80,7 +80,7 @@ export async function saveAuthzWebhookUrl(input: {
       }
     }
 
-    revalidatePath(`/data/applications/${input.appId}`);
+    revalidatePath(`/data/appconnection/${input.appId}`);
     return { success: true };
   } catch (error) {
     await logError('database', error, `saveAuthzWebhookUrl:${input.appId}`);

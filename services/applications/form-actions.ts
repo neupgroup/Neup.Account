@@ -244,14 +244,14 @@ export async function updateApplicationInfo(
 }
 
 // ---------------------------------------------------------------------------
-// Connected-only loader (for /data/applications)
+// Connected-only loader (for /data/appconnection)
 // ---------------------------------------------------------------------------
 
 /**
  * Function getConnectedApplicationsPageData.
  *
  * Returns only the "Using" section — ApplicationConnections for the personal account.
- * Used by /data/applications which now shows only connected apps.
+ * Used by /data/appconnection which now shows only connected apps.
  */
 export async function getConnectedApplicationsPageData(): Promise<{
   apps: FlatAppItem[];

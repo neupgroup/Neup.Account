@@ -115,7 +115,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
           </div>
         </div>
         <Button variant="outline" asChild className="shrink-0">
-          <FlowLink href="/data/applications">Back</FlowLink>
+          <FlowLink href="/data/appconnection">Back</FlowLink>
         </Button>
       </div>
 
@@ -246,7 +246,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
             <h2 className="text-xl font-semibold tracking-tight">Manage Application</h2>
             <div className="overflow-hidden rounded-2xl border bg-card">
               <FlowLink
-                href={`/data/applications/${id}/meta`}
+                href={`/data/appconnection/${id}/meta`}
                 className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
               >
                 <div className="min-w-0">
@@ -257,7 +257,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
               </FlowLink>
 
               <FlowLink
-                href={`/data/applications/${id}/status`}
+                href={`/data/appconnection/${id}/status`}
                 className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
               >
                 <div className="min-w-0">
@@ -268,7 +268,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
               </FlowLink>
 
               <FlowLink
-                href={`/data/applications/${id}/capability`}
+                href={`/data/appconnection/${id}/capability`}
                 className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
               >
                 <div className="min-w-0">
@@ -279,7 +279,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
               </FlowLink>
 
               <FlowLink
-                href={`/data/applications/${id}/roles`}
+                href={`/data/appconnection/${id}/roles`}
                 className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
               >
                 <div className="min-w-0">
@@ -290,7 +290,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
               </FlowLink>
 
               <FlowLink
-                href={`/data/applications/${id}/access`}
+                href={`/data/appconnection/${id}/access`}
                 className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
               >
                 <div className="min-w-0">
@@ -301,7 +301,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
               </FlowLink>
 
               <FlowLink
-                href={`/data/applications/${id}/ownership`}
+                href={`/data/appconnection/${id}/ownership`}
                 className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
               >
                 <div className="min-w-0">
@@ -312,7 +312,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
               </FlowLink>
 
               <FlowLink
-                href={`/data/applications/${id}/silent-sso-origins`}
+                href={`/data/appconnection/${id}/silent-sso-origins`}
                 className="group flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-muted/40 sm:px-5"
               >
                 <div className="min-w-0">
@@ -348,7 +348,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
       {!details.canDelete && (
         <div className="overflow-hidden rounded-2xl border bg-card">
           <FlowLink
-            href={`/data/applications/${id}/access`}
+            href={`/data/appconnection/${id}/access`}
             className="group flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-muted/40 sm:px-5"
           >
             <div className="min-w-0">
