@@ -245,6 +245,16 @@ model SystemError {
   @@map("system_error")
 }
 
+model ApplicationProvider {
+  id            String        @id @default(uuid())
+  providerName  String        @map("provider_name")
+  providerSite  String        @map("provider_site")
+  secretHash    String        @map("secret_hash")
+  applications  Application[]
+
+  @@map("application_provider")
+}
+
 model Application {
   id             String                  @id(map: "applications_pkey")
   name           String
@@ -257,6 +267,8 @@ model Application {
   status         String                  @default("development")
   isInternal     Boolean                 @default(false) @map("is_internal")
   details        Json?
+  providerId     String?                 @map("provider_id")
+  provider       ApplicationProvider?    @relation(fields: [providerId], references: [id], map: "application_provider_id_fkey")
   connections    ApplicationConnection[]
   bridge         ApplicationBridge[]
   policies       ApplicationPolicy[]
