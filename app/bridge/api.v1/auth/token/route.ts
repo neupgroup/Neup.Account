@@ -4,34 +4,37 @@ import { issueAccountToken } from '@/services/auth/accountJwt';
 export const dynamic = 'force-dynamic';
 
 /**
- * POST /bridge/api.v1/auth/token
+ * POST /account/bridge/api.v1/auth/token
  *
  * Issues a signed JWT for external API access.
  *
- * This is called after the silent auth flow completes and the client has
- * received the user's aid, sid, and skey (e.g. via the silent auth code
- * exchange or from the session cookies on a first-party page).
+ * Called after the silent auth flow completes and the caller has the user's
+ * aid, sid, and skey (from the silent auth code exchange or session cookies).
  *
- * The issued JWT embeds aid, sid, skey and is signed with the application's
- * appSecret (HS256). It can then be passed as a Bearer token to
- * POST /bridge/api.v1/me to retrieve full account information.
+ * The issued JWT contains only { cid, iat, exp }:
+ *   cid — ApplicationConnection.id (stable link between account and app)
+ *   iat — issued-at Unix timestamp
+ *   exp — expiry Unix timestamp (7 days from issue)
+ *
+ * The JWT is signed with Application.appSecret (HS256).
+ * Pass it as a Bearer token to POST /account/bridge/api.v1/me.
  *
  * Request body:
  * {
  *   aid:   string  — account ID
  *   sid:   string  — session ID
  *   skey:  string  — session key
- *   appId: string  — application ID (used to look up the signing secret)
+ *   appId: string  — application ID
  * }
  *
  * Response (200):
  * {
  *   success: true,
- *   token:   string  — signed JWT
+ *   token:   string  — signed JWT  { cid, iat, exp }
  *   exp:     number  — Unix timestamp when the token expires
  * }
  *
- * Error responses: 400 (missing params), 401 (invalid session), 404 (app not found), 500
+ * Errors: 400 (missing params), 401 (invalid session), 404 (app not found), 500
  */
 export async function POST(request: NextRequest) {
   let body: { aid?: string; sid?: string; skey?: string; appId?: string };

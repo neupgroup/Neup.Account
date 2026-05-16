@@ -28,12 +28,12 @@ Third-party app                        neupgroup.com/account
       │◀────────────────────────────────────────│
       │                                          │
       │  4. POST /account/bridge/api.v1/auth/token
-      │────────────────────────────────────────▶│  validate aid+sid+skey, issue JWT
+      │────────────────────────────────────────▶│  validate aid+sid+skey, issue JWT { cid, iat, exp }
       │◀────────────────────────────────────────│  { token, exp }
       │                                          │
       │  5. POST /account/bridge/api.v1/me       │
       │  Authorization: Bearer <token>           │
-      │────────────────────────────────────────▶│  verify JWT, re-validate session
+      │────────────────────────────────────────▶│  verify JWT, resolve connection → account data
       │◀────────────────────────────────────────│  { account, brandAccounts, accessibleAccounts }
 ```
 
@@ -143,16 +143,11 @@ Content-Type: application/json
 }
 ```
 
-You now have the user's `accountId`. To get the full account details including
-brand accounts and accessible accounts, proceed to steps 4 and 5.
+You now have the user's `aid`, `sid`, `skey`. Proceed to step 4 to get a JWT.
 
 ---
 
 ## Step 4 — Issue an account JWT
-
-Use the `aid`, `sid`, `skey` values. These come from:
-- The session cookies on a first-party page (read server-side), **or**
-- A prior call to `/account/bridge/api.v1/auth/grant` for external app sessions.
 
 ```http
 POST https://neupgroup.com/account/bridge/api.v1/auth/token
@@ -167,19 +162,27 @@ Content-Type: application/json
 ```
 
 **What the server does:**
-1. Looks up `AuthnSession` by `sid` and verifies `accountId === aid` and `key === skey` and `validTill > now`.
-2. Upserts an `ApplicationConnection` for `(aid, appId)`.
-3. Signs a JWT (HS256) with `Application.appSecret`:
-   ```json
-   { "aid": "...", "sid": "...", "skey": "...", "appId": "...", "iat": 0, "exp": 0 }
-   ```
+1. Validates `aid`/`sid`/`skey` against `AuthnSession` in the database.
+2. Upserts an `ApplicationConnection` for `(aid, appId)` and gets its `id`.
+3. Signs a JWT (HS256, using `Application.appSecret`) with only three claims:
+
+```json
+{
+  "cid": "<ApplicationConnection.id>",
+  "iat": 1748000000,
+  "exp": 1748604800
+}
+```
+
+`cid` is the stable identifier for the link between this account and your app.
+The JWT contains no account data — it's a credential, not a data carrier.
 
 **Response (200):**
 ```json
 {
   "success": true,
   "token":   "<signed JWT>",
-  "exp":     1748000000
+  "exp":     1748604800
 }
 ```
 
@@ -192,33 +195,64 @@ Content-Type: application/json
 | 404 | `app_not_found` | Application not found or has no appSecret |
 | 500 | `internal_server_error` | Unexpected error |
 
-**Token lifetime:** 7 days. Re-issue by calling this endpoint again with fresh
-session credentials.
+**Token lifetime:** 7 days. Re-issue by calling this endpoint again.
 
 ---
 
 ## Step 5 — Get account info
 
-Pass the JWT as a Bearer token. The server verifies the signature **and**
-re-validates the embedded session against the database on every request.
+### Mode A — Bearer JWT (external / third-party apps)
+
+Pass the JWT issued in step 4 as a Bearer token.
 
 ```http
 POST https://neupgroup.com/account/bridge/api.v1/me
 Authorization: Bearer <token>
 ```
 
-**Response (200):**
+The server verifies the JWT signature, resolves the `ApplicationConnection`
+from `cid`, and returns account data.
+
+### Mode B — Session triplet (Neup Group internal apps)
+
+Internal apps that already hold `aid`/`sid`/`skey` can skip the token step
+entirely. Pass the session triplet in the body and the app ID as a query param.
+
+```http
+POST https://neupgroup.com/account/bridge/api.v1/me?app_id=your-app-id
+Content-Type: application/json
+
+{
+  "aid":  "<account ID>",
+  "sid":  "<session ID>",
+  "skey": "<session key>"
+}
+```
+
+The server validates the session directly against the database. An
+`ApplicationConnection` is created automatically if one doesn't exist.
+
+---
+
+### Response (200) — both modes
+
+The `account` object only includes fields that your application has declared
+in its access configuration (`Application.details.access`). Fields not in
+that list are omitted entirely.
+
 ```json
 {
   "success": true,
   "account": {
-    "id":           "uuid",
-    "neupId":       "username",
-    "displayName":  "Jane Smith",
-    "displayImage": "https://...",
-    "accountType":  "individual",
-    "verified":     true,
-    "status":       "active"
+    "connectionId":  "<ApplicationConnection.id>",
+    "accountId":     "uuid",
+    "displayName":   "Jane Smith",
+    "displayImage":  "https://...",
+    "accountType":   "individual",
+    "neupid":        "janesmith",
+    "firstName":     "Jane",
+    "lastName":      "Smith",
+    "lastActive":    "2026-05-17T10:00:00.000Z"
   },
   "brandAccounts": [
     {
@@ -254,23 +288,33 @@ Authorization: Bearer <token>
 }
 ```
 
-**Fields:**
+**Configurable `account` fields:**
 
 | Field | Description |
 |-------|-------------|
-| `account` | The logged-in user's own profile |
-| `brandAccounts` | Brand and branch accounts the user has been granted access to |
-| `accessibleAccounts` | All accounts the user can act on (includes brands, branches, dependents, delegated) |
-| `capabilities` | The specific capabilities the user holds on each account |
+| `connectionId` | The `ApplicationConnection.id` for this account+app pair |
+| `accountId` | The account's UUID |
+| `displayName` | Resolved display name (brand name or personal name) |
+| `displayImage` | Profile image URL |
+| `accountType` | `individual`, `brand`, `branch`, `dependent`, `guest` |
+| `lastActive` | ISO timestamp of the most recent activity |
+| `neupid` | The account's primary NeupID handle |
+| `firstName` | Individual profile first name |
+| `lastName` | Individual profile last name |
+| `middleName` | Individual profile middle name |
+| `dateBirth` | Date of birth (`YYYY-MM-DD`) |
+| `age` | Computed age in years |
+| `isMinor` | `true` if age < 18 |
+| `gender` | Gender from individual profile |
 
 **Error responses:**
 
 | Status | Error | Meaning |
 |--------|-------|---------|
-| 400 | `missing_token` | No Authorization header |
+| 400 | `missing_token` / `invalid_request` | No auth provided or malformed body |
 | 401 | `invalid_token` | JWT signature invalid or malformed |
-| 401 | `token_expired` | JWT has expired — re-issue via /account/bridge/api.v1/auth/token |
-| 401 | `session_invalid` | Session was revoked after token was issued |
+| 401 | `token_expired` | JWT has expired — re-issue via `/account/bridge/api.v1/auth/token` |
+| 401 | `invalid_session` | Session not found, expired, or credentials mismatch |
 | 401 | `account_not_found` | Account no longer exists |
 | 403 | `account_blocked` | Account is currently blocked |
 | 500 | `internal_server_error` | Unexpected error |
@@ -279,18 +323,18 @@ Authorization: Bearer <token>
 
 ## Security notes
 
+- **The JWT contains no account data.** Only `cid` (connection ID), `iat`, and `exp`.
+  Account data is always fetched fresh from the database on each `/me` call.
 - **appSecret is never exposed to the browser.** Token issuance and verification
   happen server-to-server only.
-- **Session re-validation on every /me call.** Even if a JWT is valid, if the
-  underlying session has been revoked (logout, admin action), the request is
-  rejected with `session_invalid`.
 - **PKCE protects the code exchange.** The `codeChallenge` / `codeVerifier` pair
   ensures only the party that initiated the silent auth can exchange the code.
 - **Origin validation.** The `whoisthis` iframe only responds to origins
   registered in `ApplicationBridge` with `type: 'silentSsoOrigin'`.
 - **ApplicationConnection is created automatically.** As soon as a user
-  successfully completes silent auth, the connection is recorded — no separate
-  "connect" step is needed.
+  successfully completes silent auth or calls `/me`, the connection is recorded.
+- **Access fields are app-scoped.** Each app only receives the account fields it
+  has declared. Undeclared fields are never included in the response.
 
 ---
 
@@ -301,5 +345,6 @@ Authorization: Bearer <token>
 | `https://neupgroup.com/account/bridge/silent.v1/init` | GET (iframe) | none | Initialize guest cookie |
 | `https://neupgroup.com/account/bridge/silent.v1/auth/whoisthis` | GET (iframe) | session cookie | Check auth, get code |
 | `https://neupgroup.com/account/bridge/silent.v1/auth/exchange` | POST (server) | appId + appSecret | Exchange code for identity |
-| `https://neupgroup.com/account/bridge/api.v1/auth/token` | POST (server) | aid + sid + skey | Issue account JWT |
-| `https://neupgroup.com/account/bridge/api.v1/me` | POST (server) | Bearer JWT | Get full account info |
+| `https://neupgroup.com/account/bridge/api.v1/auth/token` | POST (server) | aid + sid + skey | Issue JWT `{ cid, iat, exp }` |
+| `https://neupgroup.com/account/bridge/api.v1/me` | POST (server) | Bearer JWT | Get account info (external apps) |
+| `https://neupgroup.com/account/bridge/api.v1/me?app_id=<id>` | POST (server) | aid + sid + skey | Get account info (Neup Group apps) |
