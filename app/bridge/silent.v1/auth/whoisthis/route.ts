@@ -11,6 +11,7 @@ import {
   issueSilentAuthCode,
   signIdentityJwt,
   buildIdentityDetails,
+  ensureApplicationConnection,
 } from '@/services/auth/silent-sso';
 
 export const dynamic = 'force-dynamic';
@@ -161,6 +162,10 @@ export async function GET(request: NextRequest): Promise<Response> {
 
   // 8. Authenticated — issue code for server exchange
   if (isAuthenticated && accountId && sessionId) {
+    // Create (or confirm) the ApplicationConnection so this app appears in the
+    // user's connected-apps list immediately after silent auth succeeds.
+    await ensureApplicationConnection(accountId, appId);
+
     const { searchParams } = new URL(request.url);
     const codeChallenge = searchParams.get('codeChallenge') ?? undefined;
     const codeChallengeMethod = searchParams.get('codeChallengeMethod') ?? undefined;
