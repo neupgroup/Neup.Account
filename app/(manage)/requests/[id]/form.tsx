@@ -1,13 +1,9 @@
-
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
 import { useToast } from '@/core/hooks/use-toast';
-import { approveNeupIdRequest, denyNeupIdRequest } from '@/services/manage/requests/neupid';
-import type { PendingNeupIdRequest } from '@/services/manage/requests/neupid';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,103 +14,204 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Loader2, Terminal } from 'lucide-react';
+} from '@/components/ui/alert-dialog';
+import { Loader2 } from 'lucide-react';
 import { redirectInApp } from '@/services/navigation';
+import type { UnifiedRequest } from '@/services/manage/requests/all';
 
+// Per-type server actions
+import { approveNeupIdRequest, denyNeupIdRequest } from '@/services/manage/requests/neupid';
+import { processDisplayNameRequest } from '@/services/manage/requests/display-name';
+import { approveKycRequest, rejectKycRequest } from '@/services/manage/requests/kyc';
+import { grantVerification, revokeVerification } from '@/services/manage/verifications';
+import { approveAccountDeletion, cancelAccountDeletion } from '@/services/manage/requests/deletion';
+import { approveApplicationChangeRequest, denyApplicationChangeRequest } from '@/services/applications/change-requests';
 
-export function RequestDecisionForm({ request }: { request: PendingNeupIdRequest }) {
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const router = useRouter();
-    const { toast } = useToast();
+type Props = { request: UnifiedRequest };
 
-    const handleApprove = async () => {
-        setIsSubmitting(true);
-        const result = await approveNeupIdRequest(request.id, request.accountId, request.requestedNeupId);
-        if (result.success) {
-            toast({ title: "Success", description: "Request approved successfully.", className: "bg-accent text-accent-foreground" });
-            redirectInApp(router, '/manage/requests');
-            router.refresh();
-        } else {
-            toast({ variant: "destructive", title: "Error", description: result.error });
-            setIsSubmitting(false);
-        }
-    };
+export function RequestActionForm({ request }: Props) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const { toast } = useToast();
 
-    const handleDeny = async () => {
-        setIsSubmitting(true);
-        const result = await denyNeupIdRequest(request.id);
-        if (result.success) {
-            toast({ title: "Success", description: "Request denied successfully." });
-            redirectInApp(router, '/manage/requests');
-            router.refresh();
-        } else {
-            toast({ variant: "destructive", title: "Error", description: result.error });
-            setIsSubmitting(false);
-        }
-    };
-    
-    if (request.status !== 'pending') {
-        return (
-             <Alert>
-                <Terminal className="h-4 w-4" />
-                <AlertTitle>Request Processed</AlertTitle>
-                <AlertDescription>
-                    This request has already been {request.status}. No further action can be taken.
-                </AlertDescription>
-            </Alert>
-        )
+  const done = (success: boolean, message: string) => {
+    if (success) {
+      toast({ title: 'Done', description: message });
+      redirectInApp(router, '/requests');
+      router.refresh();
+    } else {
+      toast({ variant: 'destructive', title: 'Error', description: message });
+      setIsSubmitting(false);
     }
+  };
 
-    return (
-        <div className="flex space-x-4">
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button disabled={isSubmitting} className="bg-accent text-accent-foreground hover:bg-accent/90">
-                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Approve
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Are you sure you want to approve?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This will grant the NeupID <span className="font-bold font-mono">{request.requestedNeupId}</span> to the user. This action cannot be undone.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleApprove} className="bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting}>
-                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Confirm Approval
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-            
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="destructive" disabled={isSubmitting}>
-                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Deny
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Are you sure you want to deny?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This will permanently deny the request for the NeupID <span className="font-bold font-mono">{request.requestedNeupId}</span>. This action cannot be undone.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleDeny} className="bg-destructive text-destructive-foreground hover:bg-destructive/90" disabled={isSubmitting}>
-                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Confirm Denial
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-        </div>
-    );
+  const handleApprove = async () => {
+    setIsSubmitting(true);
+    const d = request.data;
+
+    switch (request.type) {
+      case 'neupid_request': {
+        const result = await approveNeupIdRequest(
+          request.id,
+          String(d.accountId ?? ''),
+          String(d.requestedId ?? ''),
+        );
+        done(result.success, result.error ?? 'NeupID request approved.');
+        break;
+      }
+      case 'display_name_request': {
+        const result = await processDisplayNameRequest(
+          request.id,
+          String(d.accountId ?? ''),
+          String(d.requestedDisplayName ?? ''),
+          true,
+        );
+        done(result.success, result.error ?? 'Display name approved.');
+        break;
+      }
+      case 'kyc_request': {
+        const result = await approveKycRequest(request.id, String(d.accountId ?? ''));
+        done(result.success, result.error ?? 'KYC approved.');
+        break;
+      }
+      case 'kycVerification': {
+        const result = await grantVerification(String(d.accountId ?? ''), {
+          reason: String(d.reason ?? 'Approved by admin.'),
+          category: String(d.category ?? 'Standard'),
+        });
+        done(result.success, result.error ?? 'Verification granted.');
+        break;
+      }
+      case 'applicationChange': {
+        const result = await approveApplicationChangeRequest(request.id);
+        done(result.success, result.error ?? 'Application changes applied.');
+        break;
+      }
+      case 'accountDeletion': {
+        const result = await approveAccountDeletion(String(d.accountId ?? ''));
+        done(result.success, result.error ?? 'Account deleted.');
+        break;
+      }
+      default:
+        done(false, `No approve handler for type "${request.type}".`);
+    }
+  };
+
+  const handleDeny = async () => {
+    setIsSubmitting(true);
+    const d = request.data;
+
+    switch (request.type) {
+      case 'neupid_request': {
+        const result = await denyNeupIdRequest(request.id);
+        done(result.success, result.error ?? 'NeupID request denied.');
+        break;
+      }
+      case 'display_name_request': {
+        const result = await processDisplayNameRequest(
+          request.id,
+          String(d.accountId ?? ''),
+          String(d.requestedDisplayName ?? ''),
+          false,
+        );
+        done(result.success, result.error ?? 'Display name request rejected.');
+        break;
+      }
+      case 'kyc_request': {
+        const result = await rejectKycRequest(
+          request.id,
+          String(d.accountId ?? ''),
+          'Rejected by admin.',
+        );
+        done(result.success, result.error ?? 'KYC rejected.');
+        break;
+      }
+      case 'kycVerification': {
+        const result = await revokeVerification(
+          String(d.accountId ?? ''),
+          'Revoked by admin.',
+        );
+        done(result.success, result.error ?? 'Verification revoked.');
+        break;
+      }
+      case 'applicationChange': {
+        const result = await denyApplicationChangeRequest(request.id);
+        done(result.success, result.error ?? 'Application change request denied.');
+        break;
+      }
+      case 'accountDeletion': {
+        const result = await cancelAccountDeletion(String(d.accountId ?? ''));
+        done(result.success, result.error ?? 'Deletion request cancelled.');
+        break;
+      }
+      default:
+        done(false, `No deny handler for type "${request.type}".`);
+    }
+  };
+
+  const denyLabel = request.type === 'accountDeletion' ? 'Cancel Request' : 'Deny';
+  const denyDescription =
+    request.type === 'accountDeletion'
+      ? 'This will cancel the deletion request and reactivate the account.'
+      : 'This will reject the request. The change will not be applied.';
+  const approveDescription =
+    request.type === 'accountDeletion'
+      ? 'This will permanently delete the account and all associated data. This cannot be undone.'
+      : 'This will approve and apply the request immediately.';
+
+  return (
+    <div className="flex gap-3">
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button disabled={isSubmitting}>
+            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Approve
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Approve this request?</AlertDialogTitle>
+            <AlertDialogDescription>{approveDescription}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleApprove} disabled={isSubmitting}>
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Confirm
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant={request.type === 'accountDeletion' ? 'outline' : 'destructive'} disabled={isSubmitting}>
+            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {denyLabel}
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{denyLabel}?</AlertDialogTitle>
+            <AlertDialogDescription>{denyDescription}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeny}
+              disabled={isSubmitting}
+              className={
+                request.type === 'accountDeletion'
+                  ? undefined
+                  : 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
+              }
+            >
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Confirm
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  );
 }

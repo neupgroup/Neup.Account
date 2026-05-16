@@ -1,97 +1,145 @@
-
-
-import { Card, CardContent } from "@/components/ui/card";
-import { Wallet, ShieldCheck, UserCheck, FileText, Ban, Trash2, AppWindow } from "@/components/icons";
-import React from "react";
+import { Suspense } from 'react';
 import { checkPermissions } from '@/services/user';
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ListItem } from "@/components/ui/list-item";
-import { UserCircle } from "lucide-react";
+import { getAllRequests, REQUEST_TYPE_LABELS } from '@/services/manage/requests/all';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Ban, ChevronRight } from '@/components/icons';
+import { FlowLink } from '@/components/ui/flow-link';
+import Link from 'next/link';
+import { cn } from '@/core/helpers/utils';
 
-export default async function RequestsManagementPage() {
-    const canView = await checkPermissions(['root.requests.view']);
+type Props = {
+  searchParams: Promise<{ type?: string; application?: string }>;
+};
 
-    if (!canView) {
-        return (
-            <Alert variant="destructive">
-                <Ban className="h-4 w-4" />
-                <AlertTitle>Permission Denied</AlertTitle>
-                <AlertDescription>
-                    You do not have permission to view this page.
-                </AlertDescription>
-            </Alert>
-        );
-    }
+const statusVariant: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
+  pending:  'secondary',
+  approved: 'default',
+  denied:   'destructive',
+  rejected: 'destructive',
+  revoked:  'destructive',
+  active:   'default',
+};
 
-    const features = [
-        {
-            icon: UserCheck,
-            title: "NeupID Approvals",
-            description: "Approve or deny requests for new NeupIDs from existing users.",
-            href: "/manage/requests/neupid",
-        },
-         {
-            icon: UserCircle,
-            title: "Display Name Requests",
-            description: "Review and approve custom display names requested by users.",
-            href: "/manage/requests/display-name",
-        },
-        {
-            icon: ShieldCheck,
-            title: "KYC Approval",
-            description: "Review and process pending KYC document submissions.",
-            href: "/manage/requests/kyc",
-        },
-        {
-            icon: ShieldCheck,
-            title: "Verification Requests",
-            description: "Review and process user verification requests.",
-            href: "/manage/requests/verifications",
-        },
-        {
-            icon: Wallet,
-            title: "Payment Verification",
-            description: "Verify manual payments made for services like Neup.Pro.",
-            href: "/manage/requests/payment",
-        },
-         {
-            icon: FileText,
-            title: "Report Management",
-            description: "Address reports filed by users against other users.",
-            href: "/manage/requests/report",
-        },
-        {
-            icon: Trash2,
-            title: "Deletion Requests",
-            description: "Manage and process account deletion requests.",
-            href: "/manage/requests/deletion",
-        },
-        {
-            icon: AppWindow,
-            title: "Application Changes",
-            description: "Review and approve application edit requests submitted by owners.",
-            href: "/requests/application-changes",
-        },
-    ];
+const TYPE_FILTERS = [
+  { label: 'All',                key: undefined },
+  { label: 'NeupID',             key: 'neupid_request' },
+  { label: 'Display Name',       key: 'display_name_request' },
+  { label: 'KYC',                key: 'kyc_request' },
+  { label: 'KYC Verification',   key: 'kycVerification' },
+  { label: 'App Changes',        key: 'applicationChange' },
+  { label: 'Account Deletion',   key: 'accountDeletion' },
+];
 
+async function RequestsList({ type, application }: { type?: string; application?: string }) {
+  const canView = await checkPermissions(['root.requests.view']);
+
+  if (!canView) {
     return (
-        <div className="grid gap-8">
-            <div>
-                <h1 className="text-3xl font-bold tracking-tight">Requests Management</h1>
-                <p className="text-muted-foreground">
-                    Review and act on pending requests, verifications, and reports.
-                </p>
-            </div>
-            
-            <div className="space-y-2">
-                 <Card>
-                    <CardContent className="divide-y p-2">
-                        {features.map((feature, index) => (
-                            <ListItem key={index} {...feature} />
-                        ))}
-                    </CardContent>
-                </Card>
-            </div>
-        </div>
+      <Alert variant="destructive">
+        <Ban className="h-4 w-4" />
+        <AlertTitle>Permission Denied</AlertTitle>
+        <AlertDescription>You do not have permission to view requests.</AlertDescription>
+      </Alert>
     );
+  }
+
+  const requests = await getAllRequests({ type, application });
+
+  if (requests.length === 0) {
+    return (
+      <Card>
+        <CardContent className="py-16 text-center text-muted-foreground text-sm">
+          No requests found{type ? ` for type "${REQUEST_TYPE_LABELS[type] ?? type}"` : ''}.
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <Card>
+      <CardContent className="p-0">
+        <div className="divide-y">
+          {requests.map((req) => (
+            <FlowLink
+              key={req.id}
+              href={`/requests/${req.id}`}
+              className="group flex items-center justify-between gap-4 px-5 py-4 transition-colors hover:bg-muted/40"
+            >
+              <div className="min-w-0 space-y-0.5">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Badge variant="outline" className="text-xs shrink-0">
+                    {req.typeLabel}
+                  </Badge>
+                  <Badge
+                    variant={statusVariant[req.status] ?? 'outline'}
+                    className="capitalize text-xs shrink-0"
+                  >
+                    {req.status}
+                  </Badge>
+                </div>
+                <p className="text-sm font-medium truncate">{req.summary}</p>
+                <p className="text-xs text-muted-foreground">
+                  {req.submittedBy}{req.submittedAt ? ` · ${req.submittedAt}` : ''}
+                </p>
+              </div>
+              <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+            </FlowLink>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+export default async function RequestsPage({ searchParams }: Props) {
+  const { type, application } = await searchParams;
+
+  return (
+    <div className="grid gap-6">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Requests</h1>
+        <p className="text-muted-foreground">
+          All requests across every type — pending and processed.
+        </p>
+      </div>
+
+      {/* Type filter tabs */}
+      <div className="flex flex-wrap gap-2">
+        {TYPE_FILTERS.map((filter) => {
+          const isActive = filter.key === type || (!filter.key && !type);
+          const href = filter.key
+            ? `/requests?type=${filter.key}${application ? `&application=${application}` : ''}`
+            : `/requests${application ? `?application=${application}` : ''}`;
+          return (
+            <Link
+              key={filter.label}
+              href={href}
+              className={cn(
+                'rounded-full border px-3 py-1 text-sm transition-colors',
+                isActive
+                  ? 'bg-foreground text-background border-foreground'
+                  : 'bg-background text-muted-foreground hover:bg-muted hover:text-foreground'
+              )}
+            >
+              {filter.label}
+            </Link>
+          );
+        })}
+      </div>
+
+      <Suspense
+        fallback={
+          <Card>
+            <CardContent className="py-16 text-center text-muted-foreground text-sm">
+              Loading...
+            </CardContent>
+          </Card>
+        }
+      >
+        <RequestsList type={type} application={application} />
+      </Suspense>
+    </div>
+  );
 }
