@@ -205,7 +205,7 @@ export async function getApplicationUsers(params: {
       },
     };
   } catch (error) {
-    await logError('bridge', error, `application/users:${appId}`);
+    await logError('auth', error, `application/users:${appId}`);
     return {
       status: 500,
       body: { success: false, error: 'Internal server error.' },

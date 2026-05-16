@@ -214,7 +214,7 @@ export async function getApplicationAccess(params: {
       },
     };
   } catch (error) {
-    await logError('bridge', error, `application/access:${appId}`);
+    await logError('auth', error, `application/access:${appId}`);
     return {
       status: 500,
       body: { success: false, error: 'Internal server error.' },
