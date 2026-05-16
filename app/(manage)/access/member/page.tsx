@@ -17,17 +17,21 @@ type PageProps = {
 
 // ── Status badge ──────────────────────────────────────────────────────────────
 
-function StatusBadge({ status }: { status: 'active' | 'invited' | 'expired' }) {
+function StatusBadge({ status }: { status: 'active' | 'invited' | 'on_hold' | 'expired' }) {
   if (status === 'active') return null;
 
-  const config = {
-    invited: { label: 'Invited', variant: 'outline' as const, className: 'text-amber-600 border-amber-300 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-800 dark:text-amber-400' },
-    expired: { label: 'Expired', variant: 'outline' as const, className: 'text-muted-foreground border-border' },
-  }[status];
+  const config: Record<string, { label: string; variant: 'outline'; className: string }> = {
+    invited:  { label: 'Invited',  variant: 'outline', className: 'text-amber-600 border-amber-300 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-800 dark:text-amber-400' },
+    on_hold:  { label: 'On Hold',  variant: 'outline', className: 'text-orange-600 border-orange-300 bg-orange-50 dark:bg-orange-950/30 dark:border-orange-800 dark:text-orange-400' },
+    expired:  { label: 'Expired',  variant: 'outline', className: 'text-muted-foreground border-border' },
+  };
+
+  const c = config[status];
+  if (!c) return null;
 
   return (
-    <Badge variant={config.variant} className={`text-xs shrink-0 ${config.className}`}>
-      {config.label}
+    <Badge variant={c.variant} className={`text-xs shrink-0 ${c.className}`}>
+      {c.label}
     </Badge>
   );
 }
@@ -45,7 +49,7 @@ function MemberRow({
   displayName: string;
   accountPhoto?: string;
   roleCount: number;
-  status: 'active' | 'invited' | 'expired';
+  status: 'active' | 'invited' | 'on_hold' | 'expired';
 }) {
   const isInvited = status === 'invited';
   const isExpired = status === 'expired';

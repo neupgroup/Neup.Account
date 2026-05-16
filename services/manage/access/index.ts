@@ -765,8 +765,8 @@ export type PortfolioMemberSummary = {
   displayName: string;
   accountPhoto?: string;
   roleCount: number;
-  /** Grant status — 'active' for confirmed members, 'invited' for pending invitations. */
-  status: 'active' | 'invited' | 'on_hold' | 'expired';
+  /** Member status — 'active' for confirmed members, 'invited' for pending invitations, 'expired' for lapsed invitations. */
+  status: 'active' | 'invited' | 'expired';
   /** For invited members: when the invitation expires (ISO string). */
   invitationExpiresOn?: string;
 };
