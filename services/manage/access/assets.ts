@@ -206,67 +206,178 @@ export async function createAssetGroup(input: { name: string; details?: string }
 
 /**
  * Function addAssetGroupMember.
+ *
+ * Sends a portfolio membership invitation to the target account.
+ * Invited members always start with isPermanent: false and hasFullAccess: false.
+ * The invitation expires 7 days from now; the expiry is stored in the Request
+ * data JSON so it can be checked when the invitation is displayed or acted on.
  */
 export async function addAssetGroupMember(input: {
   groupId: string;
   member: string;
-  isPermanent?: boolean;
-  validTill?: string;
-  hasFullPermit?: boolean;
 }) {
   const accountId = await getActiveAccountId();
   if (!accountId) {
     return { success: false, error: 'Not authenticated.' };
   }
 
-  const validTillDate = input.validTill ? new Date(input.validTill) : undefined;
-
-  const parsed = addMemberSchema.safeParse({
-    groupId: input.groupId,
-    member: input.member,
-    isPermanent: Boolean(input.isPermanent),
-    validTill: validTillDate,
-    hasFullPermit: Boolean(input.hasFullPermit),
-  });
-
-  if (!parsed.success) {
-    return { success: false, error: parsed.error.flatten().fieldErrors.member?.[0] || 'Invalid member input.' };
-  }
-
-  if (!parsed.data.isPermanent && !parsed.data.validTill) {
-    return { success: false, error: 'Set valid till date or mark as permanent.' };
+  const memberPattern = /^(account:)?[^\s:]+$/;
+  if (!input.groupId || !input.member || !memberPattern.test(input.member)) {
+    return { success: false, error: 'Invalid member input.' };
   }
 
   try {
-    const allowed = await canAccessGroup(parsed.data.groupId, accountId);
+    const allowed = await canAccessGroup(input.groupId, accountId);
     if (!allowed) {
       return { success: false, error: 'Permission denied.' };
     }
 
-    const normalizedMemberId = parsed.data.member.startsWith('account:')
-      ? parsed.data.member.slice('account:'.length)
-      : parsed.data.member;
+    const normalizedMemberId = input.member.startsWith('account:')
+      ? input.member.slice('account:'.length)
+      : input.member;
 
-    await prisma.portfolioMember.create({
+    // Prevent inviting self
+    if (normalizedMemberId === accountId) {
+      return { success: false, error: 'You cannot invite yourself.' };
+    }
+
+    // Prevent duplicate membership
+    const alreadyMember = await prisma.portfolioMember.findFirst({
+      where: { portfolioId: input.groupId, accountId: normalizedMemberId },
+      select: { id: true },
+    });
+    if (alreadyMember) {
+      return { success: false, error: 'This account is already a member of the portfolio.' };
+    }
+
+    // Prevent duplicate pending invitation
+    const existingInvitation = await prisma.request.findFirst({
+      where: {
+        action: 'access_invitation',
+        recipientId: normalizedMemberId,
+        status: 'pending',
+      },
+      select: { id: true, data: true },
+    });
+    if (
+      existingInvitation &&
+      (existingInvitation.data as Record<string, unknown> | null)?.portfolioId === input.groupId
+    ) {
+      return { success: false, error: 'An invitation has already been sent to this account.' };
+    }
+
+    // Invitation expires 7 days from now
+    const expiresOn = new Date();
+    expiresOn.setDate(expiresOn.getDate() + 7);
+
+    await prisma.request.create({
       data: {
-        portfolioId: parsed.data.groupId,
-        accountId: normalizedMemberId,
-        isPermanent: parsed.data.isPermanent,
-        hasFullAccess: parsed.data.hasFullPermit,
-        details: {
-          isPermanent: parsed.data.isPermanent,
-          removesOn: parsed.data.isPermanent ? null : parsed.data.validTill || null,
-          hasFullAccess: parsed.data.hasFullPermit,
+        action: 'access_invitation',
+        senderId: accountId,
+        recipientId: normalizedMemberId,
+        status: 'pending',
+        data: {
+          portfolioId: input.groupId,
+          isPermanent: false,
+          hasFullAccess: false,
+          expiresOn: expiresOn.toISOString(),
         },
       },
     });
 
     revalidatePath('/access');
-    revalidatePath(`/access/${parsed.data.groupId}`);
+    revalidatePath(`/access/member?portfolio=${input.groupId}`);
     return { success: true };
   } catch (error) {
     await logError('database', error, `addAssetGroupMember:${input.groupId}`);
-    return { success: false, error: 'Failed to add member.' };
+    return { success: false, error: 'Failed to send invitation.' };
+  }
+}
+
+
+/**
+ * Function updatePortfolioMemberFlags.
+ *
+ * Updates the isPermanent and hasFullAccess flags on a confirmed portfolio member.
+ *
+ * Security rules:
+ * - The caller must have hasFullAccess: true AND isPermanent: true.
+ * - The target member must be a confirmed member (not just invited).
+ * - If the member was originally invited and the invitation has expired
+ *   (details.expiresOn is in the past), the update is blocked.
+ */
+export async function updatePortfolioMemberFlags(input: {
+  groupId: string;
+  memberId: string;
+  isPermanent: boolean;
+  hasFullAccess: boolean;
+}): Promise<{ success: boolean; error?: string }> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) {
+    return { success: false, error: 'Not authenticated.' };
+  }
+
+  if (!input.groupId || !input.memberId) {
+    return { success: false, error: 'Missing required fields.' };
+  }
+
+  try {
+    // Caller must be a permanent full-access member
+    const callerMember = await prisma.portfolioMember.findFirst({
+      where: { portfolioId: input.groupId, accountId },
+      select: { hasFullAccess: true, isPermanent: true },
+    });
+
+    if (!callerMember?.hasFullAccess || !callerMember?.isPermanent) {
+      return {
+        success: false,
+        error: 'Only a permanent full-access member can update member flags.',
+      };
+    }
+
+    // Load the target member
+    const member = await prisma.portfolioMember.findFirst({
+      where: { id: input.memberId, portfolioId: input.groupId },
+      select: { id: true, accountId: true, details: true },
+    });
+
+    if (!member) {
+      return { success: false, error: 'Member not found in this portfolio.' };
+    }
+
+    // Check if the invitation has expired (stored in details.expiresOn)
+    const details = member.details as Record<string, unknown> | null;
+    const expiresOnRaw = details?.expiresOn;
+    if (expiresOnRaw) {
+      const expiresOn = new Date(expiresOnRaw as string);
+      if (!Number.isNaN(expiresOn.getTime()) && expiresOn < new Date()) {
+        return {
+          success: false,
+          error: 'This invitation has expired and can no longer be updated.',
+        };
+      }
+    }
+
+    await prisma.portfolioMember.update({
+      where: { id: member.id },
+      data: {
+        isPermanent: input.isPermanent,
+        hasFullAccess: input.hasFullAccess,
+        details: {
+          ...(details ?? {}),
+          isPermanent: input.isPermanent,
+          hasFullAccess: input.hasFullAccess,
+        },
+      },
+    });
+
+    revalidatePath('/access');
+    revalidatePath(`/access/member?portfolio=${input.groupId}`);
+    revalidatePath(`/access/role?portfolio=${input.groupId}&member=${member.accountId}`);
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `updatePortfolioMemberFlags:${input.groupId}:${input.memberId}`);
+    return { success: false, error: 'Failed to update member flags.' };
   }
 }
 

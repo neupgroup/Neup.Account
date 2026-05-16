@@ -1,18 +1,19 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { addAssetGroupMember, addAssetToGroup, assignAssetMemberRole, removeAssetFromGroup, removeAssetGroupMember, bulkAssignAssetRoles } from '@/services/manage/access/assets';
+import { addAssetGroupMember, addAssetToGroup, assignAssetMemberRole, removeAssetFromGroup, removeAssetGroupMember, bulkAssignAssetRoles, updatePortfolioMemberFlags } from '@/services/manage/access/assets';
 
 /**
  * Function addMemberToAssetGroupFromForm.
+ *
+ * Sends a portfolio membership invitation. Invited members always start with
+ * isPermanent: false and hasFullAccess: false — those flags can only be
+ * updated later by a permanent full-access member.
  */
 export async function addMemberToAssetGroupFromForm(groupId: string, formData: FormData) {
   await addAssetGroupMember({
     groupId,
     member: String(formData.get('member') || ''),
-    isPermanent: formData.get('isPermanent') === 'on',
-    validTill: String(formData.get('validTill') || ''),
-    hasFullPermit: formData.get('hasFullPermit') === 'on',
   });
 
   redirect(`/access/member?portfolio=${groupId}`);
@@ -97,4 +98,24 @@ export async function bulkAssignPermissionsFromForm(groupId: string, formData: F
   });
 
   redirect(`/access/assign?portfolio=${groupId}`);
+}
+
+
+/**
+ * Function updatePortfolioMemberFlagsFromForm.
+ *
+ * Updates isPermanent and hasFullAccess on a confirmed portfolio member.
+ * Only callable by a permanent full-access member.
+ */
+export async function updatePortfolioMemberFlagsFromForm(
+  groupId: string,
+  memberAccountId: string,
+  formData: FormData,
+): Promise<{ success: boolean; error?: string }> {
+  return updatePortfolioMemberFlags({
+    groupId,
+    memberId: String(formData.get('memberId') || ''),
+    isPermanent: formData.get('isPermanent') === 'on',
+    hasFullAccess: formData.get('hasFullAccess') === 'on',
+  });
 }

@@ -764,6 +764,8 @@ export type PortfolioMemberSummary = {
   roleCount: number;
   /** Grant status — 'active' for confirmed members, 'invited' for pending invitations. */
   status: 'active' | 'invited' | 'on_hold' | 'expired';
+  /** For invited members: when the invitation expires (ISO string). */
+  invitationExpiresOn?: string;
 };
 
 /**
@@ -834,18 +836,23 @@ export async function getPortfolioMembers(
     });
 
     const invitedMembers = await Promise.all(
-      invitedForPortfolio.map(async ({ recipientId }) => {
+      invitedForPortfolio.map(async ({ recipientId, data }) => {
         const profile = await getUserProfile(recipientId);
         const displayName =
           profile?.nameDisplay ||
           `${profile?.nameFirst ?? ''} ${profile?.nameLast ?? ''}`.trim() ||
           recipientId;
+        const invData = data as Record<string, unknown> | null;
+        const expiresOnRaw = invData?.expiresOn;
+        const invitationExpiresOn =
+          typeof expiresOnRaw === 'string' ? expiresOnRaw : undefined;
         return {
           accountId: recipientId,
           displayName,
           accountPhoto: profile?.accountPhoto,
           roleCount: 0,
           status: 'invited' as const,
+          invitationExpiresOn,
         };
       })
     );
