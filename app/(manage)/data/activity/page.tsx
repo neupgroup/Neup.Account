@@ -35,15 +35,23 @@ const statusVariantMap: { [key: string]: "default" | "destructive" | "secondary"
     Alert: "destructive",
 }
 
-function DataActivityPageComponent({ after }: { after?: string }) {
+function DataActivityPageComponent({ after, applicationId }: { after?: string; applicationId?: string }) {
     const [canView, setCanView] = useState(false);
     const [loading, setLoading] = useState(true);
     const [logs, setLogs] = useState<UserActivityLog[]>([]);
     const [page, setPage] = useState(1);
-    const [pageHistory, setPageHistory] = useState<(string | undefined)[]>([undefined]); // History of 'after' IDs
+    const [pageHistory, setPageHistory] = useState<(string | undefined)[]>([undefined]);
     const [hasNextPage, setHasNextPage] = useState(false);
 
     const router = useRouter();
+
+    const buildUrl = (startAfter?: string) => {
+        const params = new URLSearchParams();
+        if (applicationId) params.set('application', applicationId);
+        if (startAfter) params.set('after', startAfter);
+        const qs = params.toString();
+        return `/data/activity${qs ? `?${qs}` : ''}`;
+    };
 
     const fetchData = useCallback(async (startAfter?: string) => {
         const hasPerm = await checkPermissions(['security.recent_activities.view']);
@@ -54,11 +62,14 @@ function DataActivityPageComponent({ after }: { after?: string }) {
         }
 
         setLoading(true);
-        const { logs, hasNextPage: newHasNextPage } = await getActivities({ startAfter });
+        const { logs, hasNextPage: newHasNextPage } = await getActivities({
+            startAfter,
+            targetId: applicationId,
+        });
         setLogs(logs as any[]);
         setHasNextPage(newHasNextPage);
         setLoading(false);
-    }, []);
+    }, [applicationId]);
 
     useEffect(() => {
         fetchData(after);
@@ -67,7 +78,7 @@ function DataActivityPageComponent({ after }: { after?: string }) {
     if (!canView && !loading) {
         return (
             <div className="space-y-4">
-                <BackButton href="/manage/data" />
+                <BackButton href="/data" />
                 <Alert variant="destructive">
                     <Ban className="h-4 w-4" />
                     <AlertTitle>Permission Denied</AlertTitle>
@@ -85,7 +96,7 @@ function DataActivityPageComponent({ after }: { after?: string }) {
             const newHistory = [...pageHistory, lastId];
             setPageHistory(newHistory);
             setPage(p => p + 1);
-            redirectInApp(router, `/manage/data/activity?after=${lastId}`);
+            redirectInApp(router, buildUrl(lastId));
         }
     };
 
@@ -94,17 +105,22 @@ function DataActivityPageComponent({ after }: { after?: string }) {
         const prevAfterId = prevPageHistory[prevPageHistory.length - 1];
         setPageHistory(prevPageHistory);
         setPage(p => p - 1);
-        const url = prevAfterId ? `/manage/data/activity?after=${prevAfterId}` : '/manage/data/activity';
-        redirectInApp(router, url);
+        redirectInApp(router, buildUrl(prevAfterId));
     };
+
+    const backHref = applicationId ? `/application/${applicationId}` : '/data';
 
     return (
         <div className="grid gap-8">
             <div>
-                <BackButton href="/manage/data" />
-                <h1 className="text-3xl font-bold tracking-tight mt-4">Your Account Activity</h1>
+                <BackButton href={backHref} />
+                <h1 className="text-3xl font-bold tracking-tight mt-4">
+                    {applicationId ? 'Application Activity' : 'Your Account Activity'}
+                </h1>
                 <p className="text-muted-foreground">
-                    View a log of recent actions performed on your account.
+                    {applicationId
+                        ? 'Activity log for this application — changes, requests, and status events.'
+                        : 'View a log of recent actions performed on your account.'}
                 </p>
             </div>
             <Card>
@@ -142,7 +158,7 @@ function DataActivityPageComponent({ after }: { after?: string }) {
                              ) : (
                                 <TableRow>
                                     <TableCell colSpan={3} className="text-center h-24">
-                                        No successful activities found.
+                                        No activity found.
                                     </TableCell>
                                 </TableRow>
                              )}
@@ -167,5 +183,6 @@ function DataActivityPageComponent({ after }: { after?: string }) {
 export default function DataActivityPage() {
     const searchParams = useSearchParams();
     const after = searchParams.get('after') || undefined;
-    return <DataActivityPageComponent after={after} />;
+    const applicationId = searchParams.get('application') || undefined;
+    return <DataActivityPageComponent after={after} applicationId={applicationId} />;
 }

@@ -5,6 +5,8 @@ import { PrimaryHeader } from '@/components/ui/primary-header';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ShieldAlert } from 'lucide-react';
 import { AppEditForm } from '@/app/(manage)/application/_components/app-edit-form';
+import prisma from '@/core/helpers/prisma';
+import { getActiveAccountId } from '@/core/auth/verify';
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -47,6 +49,15 @@ export default async function ApplicationEditPage({ params }: Props) {
         initialIcon={details.icon}
         initialWebsite={details.website}
         initialStatus={details.status ?? 'development'}
+        hasPendingRequest={await (async () => {
+          const accountId = await getActiveAccountId();
+          if (!accountId) return false;
+          const existing = await prisma.request.findFirst({
+            where: { action: 'applicationChange', status: 'pending', senderId: accountId },
+            select: { id: true },
+          });
+          return !!existing;
+        })()}
       />
     </div>
   );

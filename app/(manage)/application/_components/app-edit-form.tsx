@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useToast } from '@/core/hooks/use-toast';
-import { updateAppEdit } from '@/services/applications/manage';
+import { submitApplicationChangeRequest } from '@/services/applications/change-requests';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -18,7 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Loader2 } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Loader2, Clock } from 'lucide-react';
 
 const schema = z.object({
   name: z.string().trim().min(1, 'Name is required.').max(120, 'Name must be 120 characters or fewer.'),
@@ -51,6 +52,7 @@ type Props = {
   initialIcon?: string;
   initialWebsite?: string;
   initialStatus: string;
+  hasPendingRequest?: boolean;
 };
 
 export function AppEditForm({
@@ -60,6 +62,7 @@ export function AppEditForm({
   initialIcon,
   initialWebsite,
   initialStatus,
+  hasPendingRequest = false,
 }: Props) {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
@@ -77,9 +80,12 @@ export function AppEditForm({
 
   const onSubmit = (values: FormValues) => {
     startTransition(async () => {
-      const result = await updateAppEdit({ appId, ...values });
+      const result = await submitApplicationChangeRequest({ appId, ...values });
       if (result.success) {
-        toast({ title: 'Saved', description: 'Application updated.' });
+        toast({
+          title: 'Change request submitted',
+          description: 'Your changes are pending review. They will be applied once approved.',
+        });
       } else if (result.fieldErrors) {
         for (const [field, message] of Object.entries(result.fieldErrors)) {
           form.setError(field as keyof FormValues, { message });
@@ -91,9 +97,20 @@ export function AppEditForm({
   };
 
   return (
-    <Card>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+    <div className="grid gap-4">
+      {hasPendingRequest && (
+        <Alert>
+          <Clock className="h-4 w-4" />
+          <AlertTitle>Pending review</AlertTitle>
+          <AlertDescription>
+            You have a change request awaiting approval. Submitting a new one is not possible until the current request is reviewed.
+          </AlertDescription>
+        </Alert>
+      )}
+
+      <Card>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
           <CardHeader>
             <CardTitle>Application Details</CardTitle>
             <CardDescription>Update the name, description, icon, website, and publication status.</CardDescription>
@@ -184,13 +201,14 @@ export function AppEditForm({
           </CardContent>
 
           <CardFooter>
-            <Button type="submit" disabled={isPending}>
+            <Button type="submit" disabled={isPending || hasPendingRequest}>
               {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Save Changes
+              {hasPendingRequest ? 'Request Pending' : 'Submit for Approval'}
             </Button>
           </CardFooter>
         </form>
       </Form>
     </Card>
+    </div>
   );
 }

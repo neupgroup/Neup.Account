@@ -1,7 +1,7 @@
 
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Wallet, ShieldCheck, UserCheck, FileText, Ban, Trash2 } from "@/components/icons";
+import { Wallet, ShieldCheck, UserCheck, FileText, Ban, Trash2, AppWindow } from "@/components/icons";
 import React from "react";
 import { checkPermissions } from '@/services/user';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -65,7 +65,13 @@ export default async function RequestsManagementPage() {
             title: "Deletion Requests",
             description: "Manage and process account deletion requests.",
             href: "/manage/requests/deletion",
-        }
+        },
+        {
+            icon: AppWindow,
+            title: "Application Changes",
+            description: "Review and approve application edit requests submitted by owners.",
+            href: "/requests/application-changes",
+        },
     ];
 
     return (

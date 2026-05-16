@@ -56,6 +56,8 @@ export async function logActivity(
 type GetActivitiesParams = {
   startAfter?: string;
   forCurrentUser?: boolean;
+  /** When set, only returns activity logs where targetAccountId equals this value (e.g. an appId). */
+  targetId?: string;
 };
 
 type GetActivitiesResponse = {
@@ -65,13 +67,16 @@ type GetActivitiesResponse = {
 
 // Fetches a paginated list of activity logs, ordered by most recent first.
 // If forCurrentUser is true, only logs where the actor is the current account are returned.
+// If targetId is set, only logs where targetAccountId equals that value are returned (e.g. app-scoped logs).
 // Uses cursor-based pagination via startAfter (the ID of the last seen log).
-export async function getActivities({ startAfter: startAfterDocId, forCurrentUser = false }: GetActivitiesParams): Promise<GetActivitiesResponse> {
+export async function getActivities({ startAfter: startAfterDocId, forCurrentUser = false, targetId }: GetActivitiesParams): Promise<GetActivitiesResponse> {
     try {
         const currentAccountId = await getActiveAccountId();
         
         const where: any = {};
-        if (forCurrentUser) {
+        if (targetId) {
+            where.targetAccountId = targetId;
+        } else if (forCurrentUser) {
             if (!currentAccountId) {
                  return { logs: [], hasNextPage: false };
             }

@@ -167,11 +167,22 @@ export default async function ApplicationDetailPage({ params }: Props) {
 
           <FlowLink
             href={`/application/${id}/ownership`}
-            className="group flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-muted/40 sm:px-5"
+            className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 sm:px-5"
           >
             <div className="min-w-0">
               <p className="font-medium">Ownership</p>
               <p className="text-sm text-muted-foreground">View who owns and has access to this application.</p>
+            </div>
+            <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+          </FlowLink>
+
+          <FlowLink
+            href={`/data/activity?application=${id}`}
+            className="group flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
+          >
+            <div className="min-w-0">
+              <p className="font-medium">Logs</p>
+              <p className="text-sm text-muted-foreground">View activity and change history for this application.</p>
             </div>
             <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
           </FlowLink>
