@@ -39,7 +39,7 @@ function AppRow({ app, showStatus }: { app: FlatAppItem; showStatus?: boolean })
   const Icon = iconFor(app.icon);
   return (
     <FlowLink
-      href={`/data/applications/${app.id}`}
+      href={`/applications/${app.id}`}
       className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
     >
       <div className="flex min-w-0 items-center gap-3">
@@ -68,7 +68,7 @@ function AppRow({ app, showStatus }: { app: FlatAppItem; showStatus?: boolean })
 function CreateAppRow() {
   return (
     <FlowLink
-      href="/data/applications/add"
+      href="/applications/add"
       className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
     >
       <div className="flex min-w-0 items-center gap-3">

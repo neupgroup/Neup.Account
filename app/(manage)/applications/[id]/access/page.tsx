@@ -25,14 +25,13 @@ export default async function ApplicationAccessPage({ params }: Props) {
   return (
     <div className="grid gap-8">
       <div className="space-y-4">
-        <BackButton href={`/data/applications/${id}`} />
+        <BackButton href={`/applications/${id}`} />
         <PrimaryHeader
           title="Access & Permissions"
           description={`Manage your access to ${details.name}.`}
         />
       </div>
 
-      {/* Current access summary */}
       {access && (
         <Card>
           <CardHeader>
@@ -71,7 +70,6 @@ export default async function ApplicationAccessPage({ params }: Props) {
         </Card>
       )}
 
-      {/* Add / edit form */}
       <Card>
         <CardHeader>
           <CardTitle>{isConnected ? 'Update Permissions' : 'Connect to Application'}</CardTitle>

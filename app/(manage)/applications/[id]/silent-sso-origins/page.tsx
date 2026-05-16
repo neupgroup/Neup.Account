@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { FlowLink } from '@/components/ui/flow-link';
 import { Button } from '@/components/ui/button';
@@ -11,17 +10,13 @@ import {
   removeSilentSsoOrigin,
 } from '@/services/applications/manage';
 
-type SilentSsoOriginsPageProps = {
-  params: Promise<{ id: string }>;
-};
+type Props = { params: Promise<{ id: string }> };
 
-export default async function SilentSsoOriginsPage({ params }: SilentSsoOriginsPageProps) {
+export default async function SilentSsoOriginsPage({ params }: Props) {
   const { id } = await params;
 
   const details = await getApplicationDetailsForViewer(id);
-  if (!details) {
-    notFound();
-  }
+  if (!details) notFound();
 
   const origins = await getSilentSsoOrigins(id);
 
@@ -46,7 +41,7 @@ export default async function SilentSsoOriginsPage({ params }: SilentSsoOriginsP
           </p>
         </div>
         <Button variant="outline" asChild>
-          <FlowLink href={`/data/applications/${id}`}>Back</FlowLink>
+          <FlowLink href={`/applications/${id}`}>Back</FlowLink>
         </Button>
       </div>
 

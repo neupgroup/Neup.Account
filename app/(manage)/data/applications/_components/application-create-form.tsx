@@ -31,7 +31,7 @@ export function ApplicationCreateForm() {
       return;
     }
 
-    router.push(`/data/applications/${result.appId}`);
+    router.push(`/applications/${result.appId}`);
     router.refresh();
   };
 

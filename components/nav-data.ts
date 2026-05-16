@@ -43,6 +43,11 @@ export const navItems = {
             description: "See your data and the way we use it.",
         },
         { 
+            href: "/applications", 
+            label: "Applications", 
+            description: "Manage and administer your applications.",
+        },
+        { 
             href: "/access", 
             label: "Access & Control", 
             description: "Manage who you share data and services with.",

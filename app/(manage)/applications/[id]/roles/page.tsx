@@ -20,7 +20,7 @@ export default async function ApplicationRolesPage({ params }: Props) {
     return (
       <div className="grid gap-8">
         <div className="space-y-4">
-          <BackButton href={`/data/applications/${id}`} />
+          <BackButton href={`/applications/${id}`} />
           <PrimaryHeader
             title="Roles"
             description={`Manage roles for ${details.name}.`}
@@ -44,7 +44,7 @@ export default async function ApplicationRolesPage({ params }: Props) {
   return (
     <div className="grid gap-8">
       <div className="space-y-4">
-        <BackButton href={`/data/applications/${id}`} />
+        <BackButton href={`/applications/${id}`} />
         <PrimaryHeader
           title="Roles"
           description={`Group capabilities into roles for ${details.name}.`}

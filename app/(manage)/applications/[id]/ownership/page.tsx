@@ -19,7 +19,7 @@ export default async function ApplicationOwnershipPage({ params }: Props) {
     return (
       <div className="grid gap-8">
         <div className="space-y-4">
-          <BackButton href={`/data/applications/${id}`} />
+          <BackButton href={`/applications/${id}`} />
           <PrimaryHeader title="Ownership" description="Application ownership and access." />
         </div>
         <Alert variant="destructive">
@@ -39,7 +39,7 @@ export default async function ApplicationOwnershipPage({ params }: Props) {
     return (
       <div className="grid gap-8">
         <div className="space-y-4">
-          <BackButton href={`/data/applications/${id}`} />
+          <BackButton href={`/applications/${id}`} />
           <PrimaryHeader title="Ownership" description="Application ownership and access." />
         </div>
         <Alert variant="destructive">
@@ -54,7 +54,7 @@ export default async function ApplicationOwnershipPage({ params }: Props) {
   return (
     <div className="grid gap-8">
       <div className="space-y-4">
-        <BackButton href={`/data/applications/${id}`} />
+        <BackButton href={`/applications/${id}`} />
         <PrimaryHeader
           title="Ownership"
           description={`Ownership and access details for ${details.name}.`}
@@ -68,9 +68,7 @@ export default async function ApplicationOwnershipPage({ params }: Props) {
             <Briefcase className="h-4 w-4 text-muted-foreground" />
             Portfolios
           </CardTitle>
-          <CardDescription>
-            Portfolios this application belongs to.
-          </CardDescription>
+          <CardDescription>Portfolios this application belongs to.</CardDescription>
         </CardHeader>
         <CardContent>
           {ownership.portfolios.length === 0 ? (
@@ -109,9 +107,7 @@ export default async function ApplicationOwnershipPage({ params }: Props) {
             <Crown className="h-4 w-4 text-muted-foreground" />
             Owner{ownership.owners.length !== 1 ? 's' : ''}
           </CardTitle>
-          <CardDescription>
-            Accounts with full ownership of this application.
-          </CardDescription>
+          <CardDescription>Accounts with full ownership of this application.</CardDescription>
         </CardHeader>
         <CardContent>
           {ownership.owners.length === 0 ? (
@@ -148,9 +144,7 @@ export default async function ApplicationOwnershipPage({ params }: Props) {
                       <Badge variant="outline" className="capitalize text-xs">
                         {owner.accountType}
                       </Badge>
-                      <Badge variant="default" className="text-xs">
-                        Owner
-                      </Badge>
+                      <Badge variant="default" className="text-xs">Owner</Badge>
                     </div>
                   </div>
                 );

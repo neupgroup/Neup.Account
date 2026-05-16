@@ -27,7 +27,7 @@ export default async function ApplicationStatusPage({ params }: Props) {
     return (
       <div className="grid gap-8">
         <div className="space-y-4">
-          <BackButton href={`/data/applications/${id}`} />
+          <BackButton href={`/applications/${id}`} />
           <PrimaryHeader title="Status" description="Application publication status." />
         </div>
         <Alert variant="destructive">
@@ -47,14 +47,13 @@ export default async function ApplicationStatusPage({ params }: Props) {
   return (
     <div className="grid gap-8">
       <div className="space-y-4">
-        <BackButton href={`/data/applications/${id}`} />
+        <BackButton href={`/applications/${id}`} />
         <PrimaryHeader
           title="Status"
           description={`Publication status and activity log for ${details.name}.`}
         />
       </div>
 
-      {/* Publish panel — only for owners */}
       {details.canDelete && (
         <AppPublishPanel
           appId={id}
@@ -63,7 +62,6 @@ export default async function ApplicationStatusPage({ params }: Props) {
         />
       )}
 
-      {/* Root-only: current status with admin note */}
       {details.isRootViewer && !details.canDelete && (
         <Card>
           <CardHeader>
@@ -87,7 +85,6 @@ export default async function ApplicationStatusPage({ params }: Props) {
         </Card>
       )}
 
-      {/* Activity log */}
       <Card>
         <CardHeader>
           <CardTitle>Activity Log</CardTitle>
@@ -111,11 +108,7 @@ export default async function ApplicationStatusPage({ params }: Props) {
                 return (
                   <div
                     key={entry.id}
-                    className={`
-                      flex items-start justify-between gap-4 border border-border bg-card px-4 py-3
-                      ${roundingClass}
-                      ${!isFirst ? '-mt-px' : ''}
-                    `}
+                    className={`flex items-start justify-between gap-4 border border-border bg-card px-4 py-3 ${roundingClass} ${!isFirst ? '-mt-px' : ''}`}
                   >
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium leading-snug">{entry.action}</p>

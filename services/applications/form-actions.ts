@@ -49,7 +49,7 @@ export async function getApplicationsPageData() {
 export async function deleteManagedApplicationFromDetailsPage(applicationId: string) {
   const result = await deleteManagedApplication(applicationId);
   if (result.success) {
-    redirect('/data/applications');
+    redirect('/applications');
   }
 }
 
@@ -234,11 +234,120 @@ export async function updateApplicationInfo(
       },
     });
 
-    revalidatePath('/data/applications');
-    revalidatePath(`/data/applications/${appId}`);
+    revalidatePath('/applications');
+    revalidatePath(`/applications/${appId}`);
     return { success: true };
   } catch (error) {
     await logError('database', error, `updateApplicationInfo:${appId}`);
     return { success: false, error: 'Failed to save application. Please try again.' };
   }
+}
+
+// ---------------------------------------------------------------------------
+// Connected-only loader (for /data/applications)
+// ---------------------------------------------------------------------------
+
+/**
+ * Function getConnectedApplicationsPageData.
+ *
+ * Returns only the "Using" section — ApplicationConnections for the personal account.
+ * Used by /data/applications which now shows only connected apps.
+ */
+export async function getConnectedApplicationsPageData(): Promise<{
+  apps: FlatAppItem[];
+  error: boolean;
+}> {
+  const personalAccountId = await getPersonalAccountId();
+  if (!personalAccountId) return { apps: [], error: false };
+
+  try {
+    const connections = await prisma.applicationConnection.findMany({
+      where: { accountId: personalAccountId },
+      include: { application: true },
+      orderBy: { connectedAt: 'desc' },
+    });
+
+    const apps: FlatAppItem[] = connections.map((conn) => ({
+      id: conn.application.id,
+      name: conn.application.name,
+      icon: conn.application.icon || undefined,
+      source: 'connected' as const,
+      connectedAt: conn.connectedAt.toISOString(),
+    }));
+
+    return { apps, error: false };
+  } catch (error) {
+    await logError('database', error, 'getConnectedApplicationsPageData');
+    return { apps: [], error: true };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Developer/Root loader (for /applications)
+// ---------------------------------------------------------------------------
+
+/**
+ * Function getApplicationsManagePageData.
+ *
+ * Returns Development and Root sections for the /applications page.
+ * Development is shown when the user has managed apps.
+ * Root is shown when the user has root.app.view permission.
+ */
+export async function getApplicationsManagePageData(): Promise<{
+  sections: ApplicationSection[];
+  canCreateApplication: boolean;
+  hasPartialError: boolean;
+}> {
+  const [devResult, rootResult, canCreateApplication] = await Promise.all([
+    Promise.allSettled([getManagedApplications()]),
+    Promise.allSettled([
+      (async () => {
+        const isRoot = await checkPermissions(['root.app.view']);
+        if (!isRoot) return null;
+        return prisma.application.findMany({ orderBy: { createdAt: 'desc' } });
+      })(),
+    ]),
+    checkPermissions(['root.app.create']),
+  ]);
+
+  const sections: ApplicationSection[] = [];
+  let hasPartialError = false;
+
+  // Development section
+  const devSettled = devResult[0];
+  if (devSettled.status === 'fulfilled') {
+    const managed = devSettled.value;
+    const apps: FlatAppItem[] = managed.map((app) => ({
+      id: app.id,
+      name: app.name,
+      icon: app.icon || undefined,
+      source: 'managed' as const,
+      status: app.status,
+    }));
+    sections.push({ label: 'Development', apps });
+  } else {
+    hasPartialError = true;
+    sections.push({ label: 'Development', apps: [], error: true });
+  }
+
+  // Root section
+  const rootSettled = rootResult[0];
+  if (rootSettled.status === 'fulfilled') {
+    const allApps = rootSettled.value;
+    if (allApps !== null) {
+      const apps: FlatAppItem[] = allApps.map((app) => ({
+        id: app.id,
+        name: app.name,
+        icon: app.icon || undefined,
+        source: 'root' as const,
+        status: app.status || undefined,
+      }));
+      sections.push({ label: 'Root', apps });
+    }
+  } else {
+    hasPartialError = true;
+    sections.push({ label: 'Root', apps: [], error: true });
+  }
+
+  return { sections, canCreateApplication, hasPartialError };
 }
