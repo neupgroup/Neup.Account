@@ -348,6 +348,7 @@ model ApplicationConnection {
   id          String      @id(map: "user_app_connections_pkey") @default(uuid())
   accountId   String      @map("account_id")
   appId       String      @map("app_id")
+  status      String      @default("active")
   connectedAt DateTime    @default(now()) @map("connected_at")
   details     Json?
   account     Account     @relation(fields: [accountId], references: [id], onDelete: Cascade, map: "user_app_connections_accountId_fkey")

@@ -244,6 +244,16 @@ model SystemError {
   @@map("system_error")
 }
 
+model ApplicationProvider {
+  id           String        @id @default(uuid())
+  providerName String        @map("provider_name")
+  providerSite String        @map("provider_site")
+  secretHash   String        @map("secret_hash")
+  applications Application[]
+
+  @@map("application_provider")
+}
+
 model Application {
   id                       String                    @id(map: "applications_pkey")
   name                     String
@@ -256,6 +266,8 @@ model Application {
   status                   String                    @default("development")
   isInternal               Boolean                   @default(false) @map("is_internal")
   details                  Json?
+  providerId               String?                   @map("provider_id")
+  provider                 ApplicationProvider?      @relation(fields: [providerId], references: [id], map: "application_provider_id_fkey")
   connections              ApplicationConnection[]
   bridge                   ApplicationBridge[]
   policies                 ApplicationPolicy[]
@@ -332,6 +344,7 @@ model ApplicationConnection {
   id          String      @id(map: "user_app_connections_pkey") @default(uuid())
   accountId   String      @map("account_id")
   appId       String      @map("app_id")
+  status      String      @default("active")
   connectedAt DateTime    @default(now()) @map("connected_at")
   details     Json?
   account     Account     @relation(fields: [accountId], references: [id], onDelete: Cascade, map: "user_app_connections_accountId_fkey")

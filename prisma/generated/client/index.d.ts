@@ -94,6 +94,11 @@ export type AuthnSession = $Result.DefaultSelection<Prisma.$AuthnSessionPayload>
  */
 export type SystemError = $Result.DefaultSelection<Prisma.$SystemErrorPayload>
 /**
+ * Model ApplicationProvider
+ * 
+ */
+export type ApplicationProvider = $Result.DefaultSelection<Prisma.$ApplicationProviderPayload>
+/**
  * Model Application
  * 
  */
@@ -471,6 +476,16 @@ export class PrismaClient<
     * ```
     */
   get systemError(): Prisma.SystemErrorDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.applicationProvider`: Exposes CRUD operations for the **ApplicationProvider** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ApplicationProviders
+    * const applicationProviders = await prisma.applicationProvider.findMany()
+    * ```
+    */
+  get applicationProvider(): Prisma.ApplicationProviderDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.application`: Exposes CRUD operations for the **Application** model.
@@ -1081,6 +1096,7 @@ export namespace Prisma {
     AuthnMethod: 'AuthnMethod',
     AuthnSession: 'AuthnSession',
     SystemError: 'SystemError',
+    ApplicationProvider: 'ApplicationProvider',
     Application: 'Application',
     Portfolio: 'Portfolio',
     PortfolioAsset: 'PortfolioAsset',
@@ -1112,7 +1128,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "systemConfig" | "authnRequest" | "activity" | "notification" | "request" | "family" | "familyMember" | "verification" | "contact" | "neupId" | "authnMethod" | "authnSession" | "systemError" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "accountOwnership" | "applicationConnection" | "applicationBridge" | "applicationPolicy" | "authzCapability" | "authzRole" | "authzRoleCapability" | "authzAccountAccessGrant" | "authzAssetsAccessGrant" | "permit" | "authzAppAccessGrant" | "identity"
+      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "systemConfig" | "authnRequest" | "activity" | "notification" | "request" | "family" | "familyMember" | "verification" | "contact" | "neupId" | "authnMethod" | "authnSession" | "systemError" | "applicationProvider" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "accountOwnership" | "applicationConnection" | "applicationBridge" | "applicationPolicy" | "authzCapability" | "authzRole" | "authzRoleCapability" | "authzAccountAccessGrant" | "authzAssetsAccessGrant" | "permit" | "authzAppAccessGrant" | "identity"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2297,6 +2313,80 @@ export namespace Prisma {
           count: {
             args: Prisma.SystemErrorCountArgs<ExtArgs>
             result: $Utils.Optional<SystemErrorCountAggregateOutputType> | number
+          }
+        }
+      }
+      ApplicationProvider: {
+        payload: Prisma.$ApplicationProviderPayload<ExtArgs>
+        fields: Prisma.ApplicationProviderFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ApplicationProviderFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationProviderPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ApplicationProviderFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationProviderPayload>
+          }
+          findFirst: {
+            args: Prisma.ApplicationProviderFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationProviderPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ApplicationProviderFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationProviderPayload>
+          }
+          findMany: {
+            args: Prisma.ApplicationProviderFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationProviderPayload>[]
+          }
+          create: {
+            args: Prisma.ApplicationProviderCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationProviderPayload>
+          }
+          createMany: {
+            args: Prisma.ApplicationProviderCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ApplicationProviderCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationProviderPayload>[]
+          }
+          delete: {
+            args: Prisma.ApplicationProviderDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationProviderPayload>
+          }
+          update: {
+            args: Prisma.ApplicationProviderUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationProviderPayload>
+          }
+          deleteMany: {
+            args: Prisma.ApplicationProviderDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ApplicationProviderUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ApplicationProviderUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationProviderPayload>[]
+          }
+          upsert: {
+            args: Prisma.ApplicationProviderUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationProviderPayload>
+          }
+          aggregate: {
+            args: Prisma.ApplicationProviderAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApplicationProvider>
+          }
+          groupBy: {
+            args: Prisma.ApplicationProviderGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationProviderGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ApplicationProviderCountArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationProviderCountAggregateOutputType> | number
           }
         }
       }
@@ -3608,6 +3698,7 @@ export namespace Prisma {
     authnMethod?: AuthnMethodOmit
     authnSession?: AuthnSessionOmit
     systemError?: SystemErrorOmit
+    applicationProvider?: ApplicationProviderOmit
     application?: ApplicationOmit
     portfolio?: PortfolioOmit
     portfolioAsset?: PortfolioAssetOmit
@@ -3956,6 +4047,37 @@ export namespace Prisma {
    */
   export type FamilyCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FamilyMemberWhereInput
+  }
+
+
+  /**
+   * Count Type ApplicationProviderCountOutputType
+   */
+
+  export type ApplicationProviderCountOutputType = {
+    applications: number
+  }
+
+  export type ApplicationProviderCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    applications?: boolean | ApplicationProviderCountOutputTypeCountApplicationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ApplicationProviderCountOutputType without action
+   */
+  export type ApplicationProviderCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationProviderCountOutputType
+     */
+    select?: ApplicationProviderCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ApplicationProviderCountOutputType without action
+   */
+  export type ApplicationProviderCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationWhereInput
   }
 
 
@@ -22114,6 +22236,1063 @@ export namespace Prisma {
 
 
   /**
+   * Model ApplicationProvider
+   */
+
+  export type AggregateApplicationProvider = {
+    _count: ApplicationProviderCountAggregateOutputType | null
+    _min: ApplicationProviderMinAggregateOutputType | null
+    _max: ApplicationProviderMaxAggregateOutputType | null
+  }
+
+  export type ApplicationProviderMinAggregateOutputType = {
+    id: string | null
+    providerName: string | null
+    providerSite: string | null
+    secretHash: string | null
+  }
+
+  export type ApplicationProviderMaxAggregateOutputType = {
+    id: string | null
+    providerName: string | null
+    providerSite: string | null
+    secretHash: string | null
+  }
+
+  export type ApplicationProviderCountAggregateOutputType = {
+    id: number
+    providerName: number
+    providerSite: number
+    secretHash: number
+    _all: number
+  }
+
+
+  export type ApplicationProviderMinAggregateInputType = {
+    id?: true
+    providerName?: true
+    providerSite?: true
+    secretHash?: true
+  }
+
+  export type ApplicationProviderMaxAggregateInputType = {
+    id?: true
+    providerName?: true
+    providerSite?: true
+    secretHash?: true
+  }
+
+  export type ApplicationProviderCountAggregateInputType = {
+    id?: true
+    providerName?: true
+    providerSite?: true
+    secretHash?: true
+    _all?: true
+  }
+
+  export type ApplicationProviderAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationProvider to aggregate.
+     */
+    where?: ApplicationProviderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationProviders to fetch.
+     */
+    orderBy?: ApplicationProviderOrderByWithRelationInput | ApplicationProviderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ApplicationProviderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationProviders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationProviders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ApplicationProviders
+    **/
+    _count?: true | ApplicationProviderCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ApplicationProviderMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ApplicationProviderMaxAggregateInputType
+  }
+
+  export type GetApplicationProviderAggregateType<T extends ApplicationProviderAggregateArgs> = {
+        [P in keyof T & keyof AggregateApplicationProvider]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApplicationProvider[P]>
+      : GetScalarType<T[P], AggregateApplicationProvider[P]>
+  }
+
+
+
+
+  export type ApplicationProviderGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationProviderWhereInput
+    orderBy?: ApplicationProviderOrderByWithAggregationInput | ApplicationProviderOrderByWithAggregationInput[]
+    by: ApplicationProviderScalarFieldEnum[] | ApplicationProviderScalarFieldEnum
+    having?: ApplicationProviderScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ApplicationProviderCountAggregateInputType | true
+    _min?: ApplicationProviderMinAggregateInputType
+    _max?: ApplicationProviderMaxAggregateInputType
+  }
+
+  export type ApplicationProviderGroupByOutputType = {
+    id: string
+    providerName: string
+    providerSite: string
+    secretHash: string
+    _count: ApplicationProviderCountAggregateOutputType | null
+    _min: ApplicationProviderMinAggregateOutputType | null
+    _max: ApplicationProviderMaxAggregateOutputType | null
+  }
+
+  type GetApplicationProviderGroupByPayload<T extends ApplicationProviderGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ApplicationProviderGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ApplicationProviderGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ApplicationProviderGroupByOutputType[P]>
+            : GetScalarType<T[P], ApplicationProviderGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ApplicationProviderSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    providerName?: boolean
+    providerSite?: boolean
+    secretHash?: boolean
+    applications?: boolean | ApplicationProvider$applicationsArgs<ExtArgs>
+    _count?: boolean | ApplicationProviderCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationProvider"]>
+
+  export type ApplicationProviderSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    providerName?: boolean
+    providerSite?: boolean
+    secretHash?: boolean
+  }, ExtArgs["result"]["applicationProvider"]>
+
+  export type ApplicationProviderSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    providerName?: boolean
+    providerSite?: boolean
+    secretHash?: boolean
+  }, ExtArgs["result"]["applicationProvider"]>
+
+  export type ApplicationProviderSelectScalar = {
+    id?: boolean
+    providerName?: boolean
+    providerSite?: boolean
+    secretHash?: boolean
+  }
+
+  export type ApplicationProviderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "providerName" | "providerSite" | "secretHash", ExtArgs["result"]["applicationProvider"]>
+  export type ApplicationProviderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    applications?: boolean | ApplicationProvider$applicationsArgs<ExtArgs>
+    _count?: boolean | ApplicationProviderCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ApplicationProviderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ApplicationProviderIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $ApplicationProviderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ApplicationProvider"
+    objects: {
+      applications: Prisma.$ApplicationPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      providerName: string
+      providerSite: string
+      secretHash: string
+    }, ExtArgs["result"]["applicationProvider"]>
+    composites: {}
+  }
+
+  type ApplicationProviderGetPayload<S extends boolean | null | undefined | ApplicationProviderDefaultArgs> = $Result.GetResult<Prisma.$ApplicationProviderPayload, S>
+
+  type ApplicationProviderCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ApplicationProviderFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ApplicationProviderCountAggregateInputType | true
+    }
+
+  export interface ApplicationProviderDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ApplicationProvider'], meta: { name: 'ApplicationProvider' } }
+    /**
+     * Find zero or one ApplicationProvider that matches the filter.
+     * @param {ApplicationProviderFindUniqueArgs} args - Arguments to find a ApplicationProvider
+     * @example
+     * // Get one ApplicationProvider
+     * const applicationProvider = await prisma.applicationProvider.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ApplicationProviderFindUniqueArgs>(args: SelectSubset<T, ApplicationProviderFindUniqueArgs<ExtArgs>>): Prisma__ApplicationProviderClient<$Result.GetResult<Prisma.$ApplicationProviderPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ApplicationProvider that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ApplicationProviderFindUniqueOrThrowArgs} args - Arguments to find a ApplicationProvider
+     * @example
+     * // Get one ApplicationProvider
+     * const applicationProvider = await prisma.applicationProvider.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ApplicationProviderFindUniqueOrThrowArgs>(args: SelectSubset<T, ApplicationProviderFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ApplicationProviderClient<$Result.GetResult<Prisma.$ApplicationProviderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationProvider that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationProviderFindFirstArgs} args - Arguments to find a ApplicationProvider
+     * @example
+     * // Get one ApplicationProvider
+     * const applicationProvider = await prisma.applicationProvider.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ApplicationProviderFindFirstArgs>(args?: SelectSubset<T, ApplicationProviderFindFirstArgs<ExtArgs>>): Prisma__ApplicationProviderClient<$Result.GetResult<Prisma.$ApplicationProviderPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationProvider that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationProviderFindFirstOrThrowArgs} args - Arguments to find a ApplicationProvider
+     * @example
+     * // Get one ApplicationProvider
+     * const applicationProvider = await prisma.applicationProvider.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ApplicationProviderFindFirstOrThrowArgs>(args?: SelectSubset<T, ApplicationProviderFindFirstOrThrowArgs<ExtArgs>>): Prisma__ApplicationProviderClient<$Result.GetResult<Prisma.$ApplicationProviderPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ApplicationProviders that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationProviderFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ApplicationProviders
+     * const applicationProviders = await prisma.applicationProvider.findMany()
+     * 
+     * // Get first 10 ApplicationProviders
+     * const applicationProviders = await prisma.applicationProvider.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const applicationProviderWithIdOnly = await prisma.applicationProvider.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ApplicationProviderFindManyArgs>(args?: SelectSubset<T, ApplicationProviderFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationProviderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ApplicationProvider.
+     * @param {ApplicationProviderCreateArgs} args - Arguments to create a ApplicationProvider.
+     * @example
+     * // Create one ApplicationProvider
+     * const ApplicationProvider = await prisma.applicationProvider.create({
+     *   data: {
+     *     // ... data to create a ApplicationProvider
+     *   }
+     * })
+     * 
+     */
+    create<T extends ApplicationProviderCreateArgs>(args: SelectSubset<T, ApplicationProviderCreateArgs<ExtArgs>>): Prisma__ApplicationProviderClient<$Result.GetResult<Prisma.$ApplicationProviderPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ApplicationProviders.
+     * @param {ApplicationProviderCreateManyArgs} args - Arguments to create many ApplicationProviders.
+     * @example
+     * // Create many ApplicationProviders
+     * const applicationProvider = await prisma.applicationProvider.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ApplicationProviderCreateManyArgs>(args?: SelectSubset<T, ApplicationProviderCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ApplicationProviders and returns the data saved in the database.
+     * @param {ApplicationProviderCreateManyAndReturnArgs} args - Arguments to create many ApplicationProviders.
+     * @example
+     * // Create many ApplicationProviders
+     * const applicationProvider = await prisma.applicationProvider.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ApplicationProviders and only return the `id`
+     * const applicationProviderWithIdOnly = await prisma.applicationProvider.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ApplicationProviderCreateManyAndReturnArgs>(args?: SelectSubset<T, ApplicationProviderCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationProviderPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ApplicationProvider.
+     * @param {ApplicationProviderDeleteArgs} args - Arguments to delete one ApplicationProvider.
+     * @example
+     * // Delete one ApplicationProvider
+     * const ApplicationProvider = await prisma.applicationProvider.delete({
+     *   where: {
+     *     // ... filter to delete one ApplicationProvider
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ApplicationProviderDeleteArgs>(args: SelectSubset<T, ApplicationProviderDeleteArgs<ExtArgs>>): Prisma__ApplicationProviderClient<$Result.GetResult<Prisma.$ApplicationProviderPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ApplicationProvider.
+     * @param {ApplicationProviderUpdateArgs} args - Arguments to update one ApplicationProvider.
+     * @example
+     * // Update one ApplicationProvider
+     * const applicationProvider = await prisma.applicationProvider.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ApplicationProviderUpdateArgs>(args: SelectSubset<T, ApplicationProviderUpdateArgs<ExtArgs>>): Prisma__ApplicationProviderClient<$Result.GetResult<Prisma.$ApplicationProviderPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ApplicationProviders.
+     * @param {ApplicationProviderDeleteManyArgs} args - Arguments to filter ApplicationProviders to delete.
+     * @example
+     * // Delete a few ApplicationProviders
+     * const { count } = await prisma.applicationProvider.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ApplicationProviderDeleteManyArgs>(args?: SelectSubset<T, ApplicationProviderDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationProviders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationProviderUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ApplicationProviders
+     * const applicationProvider = await prisma.applicationProvider.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ApplicationProviderUpdateManyArgs>(args: SelectSubset<T, ApplicationProviderUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationProviders and returns the data updated in the database.
+     * @param {ApplicationProviderUpdateManyAndReturnArgs} args - Arguments to update many ApplicationProviders.
+     * @example
+     * // Update many ApplicationProviders
+     * const applicationProvider = await prisma.applicationProvider.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ApplicationProviders and only return the `id`
+     * const applicationProviderWithIdOnly = await prisma.applicationProvider.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ApplicationProviderUpdateManyAndReturnArgs>(args: SelectSubset<T, ApplicationProviderUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationProviderPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ApplicationProvider.
+     * @param {ApplicationProviderUpsertArgs} args - Arguments to update or create a ApplicationProvider.
+     * @example
+     * // Update or create a ApplicationProvider
+     * const applicationProvider = await prisma.applicationProvider.upsert({
+     *   create: {
+     *     // ... data to create a ApplicationProvider
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ApplicationProvider we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ApplicationProviderUpsertArgs>(args: SelectSubset<T, ApplicationProviderUpsertArgs<ExtArgs>>): Prisma__ApplicationProviderClient<$Result.GetResult<Prisma.$ApplicationProviderPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ApplicationProviders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationProviderCountArgs} args - Arguments to filter ApplicationProviders to count.
+     * @example
+     * // Count the number of ApplicationProviders
+     * const count = await prisma.applicationProvider.count({
+     *   where: {
+     *     // ... the filter for the ApplicationProviders we want to count
+     *   }
+     * })
+    **/
+    count<T extends ApplicationProviderCountArgs>(
+      args?: Subset<T, ApplicationProviderCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ApplicationProviderCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ApplicationProvider.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationProviderAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ApplicationProviderAggregateArgs>(args: Subset<T, ApplicationProviderAggregateArgs>): Prisma.PrismaPromise<GetApplicationProviderAggregateType<T>>
+
+    /**
+     * Group by ApplicationProvider.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationProviderGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ApplicationProviderGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ApplicationProviderGroupByArgs['orderBy'] }
+        : { orderBy?: ApplicationProviderGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ApplicationProviderGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApplicationProviderGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ApplicationProvider model
+   */
+  readonly fields: ApplicationProviderFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ApplicationProvider.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ApplicationProviderClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    applications<T extends ApplicationProvider$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationProvider$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ApplicationProvider model
+   */
+  interface ApplicationProviderFieldRefs {
+    readonly id: FieldRef<"ApplicationProvider", 'String'>
+    readonly providerName: FieldRef<"ApplicationProvider", 'String'>
+    readonly providerSite: FieldRef<"ApplicationProvider", 'String'>
+    readonly secretHash: FieldRef<"ApplicationProvider", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ApplicationProvider findUnique
+   */
+  export type ApplicationProviderFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationProvider
+     */
+    select?: ApplicationProviderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationProvider
+     */
+    omit?: ApplicationProviderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationProviderInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationProvider to fetch.
+     */
+    where: ApplicationProviderWhereUniqueInput
+  }
+
+  /**
+   * ApplicationProvider findUniqueOrThrow
+   */
+  export type ApplicationProviderFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationProvider
+     */
+    select?: ApplicationProviderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationProvider
+     */
+    omit?: ApplicationProviderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationProviderInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationProvider to fetch.
+     */
+    where: ApplicationProviderWhereUniqueInput
+  }
+
+  /**
+   * ApplicationProvider findFirst
+   */
+  export type ApplicationProviderFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationProvider
+     */
+    select?: ApplicationProviderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationProvider
+     */
+    omit?: ApplicationProviderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationProviderInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationProvider to fetch.
+     */
+    where?: ApplicationProviderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationProviders to fetch.
+     */
+    orderBy?: ApplicationProviderOrderByWithRelationInput | ApplicationProviderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationProviders.
+     */
+    cursor?: ApplicationProviderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationProviders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationProviders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationProviders.
+     */
+    distinct?: ApplicationProviderScalarFieldEnum | ApplicationProviderScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationProvider findFirstOrThrow
+   */
+  export type ApplicationProviderFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationProvider
+     */
+    select?: ApplicationProviderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationProvider
+     */
+    omit?: ApplicationProviderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationProviderInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationProvider to fetch.
+     */
+    where?: ApplicationProviderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationProviders to fetch.
+     */
+    orderBy?: ApplicationProviderOrderByWithRelationInput | ApplicationProviderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationProviders.
+     */
+    cursor?: ApplicationProviderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationProviders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationProviders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationProviders.
+     */
+    distinct?: ApplicationProviderScalarFieldEnum | ApplicationProviderScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationProvider findMany
+   */
+  export type ApplicationProviderFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationProvider
+     */
+    select?: ApplicationProviderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationProvider
+     */
+    omit?: ApplicationProviderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationProviderInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationProviders to fetch.
+     */
+    where?: ApplicationProviderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationProviders to fetch.
+     */
+    orderBy?: ApplicationProviderOrderByWithRelationInput | ApplicationProviderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ApplicationProviders.
+     */
+    cursor?: ApplicationProviderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationProviders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationProviders.
+     */
+    skip?: number
+    distinct?: ApplicationProviderScalarFieldEnum | ApplicationProviderScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationProvider create
+   */
+  export type ApplicationProviderCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationProvider
+     */
+    select?: ApplicationProviderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationProvider
+     */
+    omit?: ApplicationProviderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationProviderInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ApplicationProvider.
+     */
+    data: XOR<ApplicationProviderCreateInput, ApplicationProviderUncheckedCreateInput>
+  }
+
+  /**
+   * ApplicationProvider createMany
+   */
+  export type ApplicationProviderCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ApplicationProviders.
+     */
+    data: ApplicationProviderCreateManyInput | ApplicationProviderCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ApplicationProvider createManyAndReturn
+   */
+  export type ApplicationProviderCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationProvider
+     */
+    select?: ApplicationProviderSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationProvider
+     */
+    omit?: ApplicationProviderOmit<ExtArgs> | null
+    /**
+     * The data used to create many ApplicationProviders.
+     */
+    data: ApplicationProviderCreateManyInput | ApplicationProviderCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ApplicationProvider update
+   */
+  export type ApplicationProviderUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationProvider
+     */
+    select?: ApplicationProviderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationProvider
+     */
+    omit?: ApplicationProviderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationProviderInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ApplicationProvider.
+     */
+    data: XOR<ApplicationProviderUpdateInput, ApplicationProviderUncheckedUpdateInput>
+    /**
+     * Choose, which ApplicationProvider to update.
+     */
+    where: ApplicationProviderWhereUniqueInput
+  }
+
+  /**
+   * ApplicationProvider updateMany
+   */
+  export type ApplicationProviderUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ApplicationProviders.
+     */
+    data: XOR<ApplicationProviderUpdateManyMutationInput, ApplicationProviderUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationProviders to update
+     */
+    where?: ApplicationProviderWhereInput
+    /**
+     * Limit how many ApplicationProviders to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationProvider updateManyAndReturn
+   */
+  export type ApplicationProviderUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationProvider
+     */
+    select?: ApplicationProviderSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationProvider
+     */
+    omit?: ApplicationProviderOmit<ExtArgs> | null
+    /**
+     * The data used to update ApplicationProviders.
+     */
+    data: XOR<ApplicationProviderUpdateManyMutationInput, ApplicationProviderUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationProviders to update
+     */
+    where?: ApplicationProviderWhereInput
+    /**
+     * Limit how many ApplicationProviders to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationProvider upsert
+   */
+  export type ApplicationProviderUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationProvider
+     */
+    select?: ApplicationProviderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationProvider
+     */
+    omit?: ApplicationProviderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationProviderInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ApplicationProvider to update in case it exists.
+     */
+    where: ApplicationProviderWhereUniqueInput
+    /**
+     * In case the ApplicationProvider found by the `where` argument doesn't exist, create a new ApplicationProvider with this data.
+     */
+    create: XOR<ApplicationProviderCreateInput, ApplicationProviderUncheckedCreateInput>
+    /**
+     * In case the ApplicationProvider was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ApplicationProviderUpdateInput, ApplicationProviderUncheckedUpdateInput>
+  }
+
+  /**
+   * ApplicationProvider delete
+   */
+  export type ApplicationProviderDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationProvider
+     */
+    select?: ApplicationProviderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationProvider
+     */
+    omit?: ApplicationProviderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationProviderInclude<ExtArgs> | null
+    /**
+     * Filter which ApplicationProvider to delete.
+     */
+    where: ApplicationProviderWhereUniqueInput
+  }
+
+  /**
+   * ApplicationProvider deleteMany
+   */
+  export type ApplicationProviderDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationProviders to delete
+     */
+    where?: ApplicationProviderWhereInput
+    /**
+     * Limit how many ApplicationProviders to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationProvider.applications
+   */
+  export type ApplicationProvider$applicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Application
+     */
+    select?: ApplicationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Application
+     */
+    omit?: ApplicationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationInclude<ExtArgs> | null
+    where?: ApplicationWhereInput
+    orderBy?: ApplicationOrderByWithRelationInput | ApplicationOrderByWithRelationInput[]
+    cursor?: ApplicationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationScalarFieldEnum | ApplicationScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationProvider without action
+   */
+  export type ApplicationProviderDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationProvider
+     */
+    select?: ApplicationProviderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationProvider
+     */
+    omit?: ApplicationProviderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationProviderInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Application
    */
 
@@ -22133,6 +23312,7 @@ export namespace Prisma {
     createdAt: Date | null
     status: string | null
     isInternal: boolean | null
+    providerId: string | null
   }
 
   export type ApplicationMaxAggregateOutputType = {
@@ -22145,6 +23325,7 @@ export namespace Prisma {
     createdAt: Date | null
     status: string | null
     isInternal: boolean | null
+    providerId: string | null
   }
 
   export type ApplicationCountAggregateOutputType = {
@@ -22159,6 +23340,7 @@ export namespace Prisma {
     status: number
     isInternal: number
     details: number
+    providerId: number
     _all: number
   }
 
@@ -22173,6 +23355,7 @@ export namespace Prisma {
     createdAt?: true
     status?: true
     isInternal?: true
+    providerId?: true
   }
 
   export type ApplicationMaxAggregateInputType = {
@@ -22185,6 +23368,7 @@ export namespace Prisma {
     createdAt?: true
     status?: true
     isInternal?: true
+    providerId?: true
   }
 
   export type ApplicationCountAggregateInputType = {
@@ -22199,6 +23383,7 @@ export namespace Prisma {
     status?: true
     isInternal?: true
     details?: true
+    providerId?: true
     _all?: true
   }
 
@@ -22286,6 +23471,7 @@ export namespace Prisma {
     status: string
     isInternal: boolean
     details: JsonValue | null
+    providerId: string | null
     _count: ApplicationCountAggregateOutputType | null
     _min: ApplicationMinAggregateOutputType | null
     _max: ApplicationMaxAggregateOutputType | null
@@ -22317,6 +23503,8 @@ export namespace Prisma {
     status?: boolean
     isInternal?: boolean
     details?: boolean
+    providerId?: boolean
+    provider?: boolean | Application$providerArgs<ExtArgs>
     connections?: boolean | Application$connectionsArgs<ExtArgs>
     bridge?: boolean | Application$bridgeArgs<ExtArgs>
     policies?: boolean | Application$policiesArgs<ExtArgs>
@@ -22340,6 +23528,8 @@ export namespace Prisma {
     status?: boolean
     isInternal?: boolean
     details?: boolean
+    providerId?: boolean
+    provider?: boolean | Application$providerArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
   export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -22354,6 +23544,8 @@ export namespace Prisma {
     status?: boolean
     isInternal?: boolean
     details?: boolean
+    providerId?: boolean
+    provider?: boolean | Application$providerArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
   export type ApplicationSelectScalar = {
@@ -22368,10 +23560,12 @@ export namespace Prisma {
     status?: boolean
     isInternal?: boolean
     details?: boolean
+    providerId?: boolean
   }
 
-  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "icon" | "website" | "appSecret" | "createdAt" | "endpoints" | "status" | "isInternal" | "details", ExtArgs["result"]["application"]>
+  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "icon" | "website" | "appSecret" | "createdAt" | "endpoints" | "status" | "isInternal" | "details" | "providerId", ExtArgs["result"]["application"]>
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    provider?: boolean | Application$providerArgs<ExtArgs>
     connections?: boolean | Application$connectionsArgs<ExtArgs>
     bridge?: boolean | Application$bridgeArgs<ExtArgs>
     policies?: boolean | Application$policiesArgs<ExtArgs>
@@ -22382,12 +23576,17 @@ export namespace Prisma {
     identities?: boolean | Application$identitiesArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type ApplicationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    provider?: boolean | Application$providerArgs<ExtArgs>
+  }
+  export type ApplicationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    provider?: boolean | Application$providerArgs<ExtArgs>
+  }
 
   export type $ApplicationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Application"
     objects: {
+      provider: Prisma.$ApplicationProviderPayload<ExtArgs> | null
       connections: Prisma.$ApplicationConnectionPayload<ExtArgs>[]
       bridge: Prisma.$ApplicationBridgePayload<ExtArgs>[]
       policies: Prisma.$ApplicationPolicyPayload<ExtArgs>[]
@@ -22409,6 +23608,7 @@ export namespace Prisma {
       status: string
       isInternal: boolean
       details: Prisma.JsonValue | null
+      providerId: string | null
     }, ExtArgs["result"]["application"]>
     composites: {}
   }
@@ -22803,6 +24003,7 @@ export namespace Prisma {
    */
   export interface Prisma__ApplicationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    provider<T extends Application$providerArgs<ExtArgs> = {}>(args?: Subset<T, Application$providerArgs<ExtArgs>>): Prisma__ApplicationProviderClient<$Result.GetResult<Prisma.$ApplicationProviderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     connections<T extends Application$connectionsArgs<ExtArgs> = {}>(args?: Subset<T, Application$connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     bridge<T extends Application$bridgeArgs<ExtArgs> = {}>(args?: Subset<T, Application$bridgeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationBridgePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     policies<T extends Application$policiesArgs<ExtArgs> = {}>(args?: Subset<T, Application$policiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPolicyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -22851,6 +24052,7 @@ export namespace Prisma {
     readonly status: FieldRef<"Application", 'String'>
     readonly isInternal: FieldRef<"Application", 'Boolean'>
     readonly details: FieldRef<"Application", 'Json'>
+    readonly providerId: FieldRef<"Application", 'String'>
   }
     
 
@@ -23100,6 +24302,10 @@ export namespace Prisma {
      */
     data: ApplicationCreateManyInput | ApplicationCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -23170,6 +24376,10 @@ export namespace Prisma {
      * Limit how many Applications to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -23236,6 +24446,25 @@ export namespace Prisma {
      * Limit how many Applications to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Application.provider
+   */
+  export type Application$providerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationProvider
+     */
+    select?: ApplicationProviderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationProvider
+     */
+    omit?: ApplicationProviderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationProviderInclude<ExtArgs> | null
+    where?: ApplicationProviderWhereInput
   }
 
   /**
@@ -27870,6 +29099,7 @@ export namespace Prisma {
     id: string | null
     accountId: string | null
     appId: string | null
+    status: string | null
     connectedAt: Date | null
   }
 
@@ -27877,6 +29107,7 @@ export namespace Prisma {
     id: string | null
     accountId: string | null
     appId: string | null
+    status: string | null
     connectedAt: Date | null
   }
 
@@ -27884,6 +29115,7 @@ export namespace Prisma {
     id: number
     accountId: number
     appId: number
+    status: number
     connectedAt: number
     details: number
     _all: number
@@ -27894,6 +29126,7 @@ export namespace Prisma {
     id?: true
     accountId?: true
     appId?: true
+    status?: true
     connectedAt?: true
   }
 
@@ -27901,6 +29134,7 @@ export namespace Prisma {
     id?: true
     accountId?: true
     appId?: true
+    status?: true
     connectedAt?: true
   }
 
@@ -27908,6 +29142,7 @@ export namespace Prisma {
     id?: true
     accountId?: true
     appId?: true
+    status?: true
     connectedAt?: true
     details?: true
     _all?: true
@@ -27989,6 +29224,7 @@ export namespace Prisma {
     id: string
     accountId: string
     appId: string
+    status: string
     connectedAt: Date
     details: JsonValue | null
     _count: ApplicationConnectionCountAggregateOutputType | null
@@ -28014,6 +29250,7 @@ export namespace Prisma {
     id?: boolean
     accountId?: boolean
     appId?: boolean
+    status?: boolean
     connectedAt?: boolean
     details?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
@@ -28024,6 +29261,7 @@ export namespace Prisma {
     id?: boolean
     accountId?: boolean
     appId?: boolean
+    status?: boolean
     connectedAt?: boolean
     details?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
@@ -28034,6 +29272,7 @@ export namespace Prisma {
     id?: boolean
     accountId?: boolean
     appId?: boolean
+    status?: boolean
     connectedAt?: boolean
     details?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
@@ -28044,11 +29283,12 @@ export namespace Prisma {
     id?: boolean
     accountId?: boolean
     appId?: boolean
+    status?: boolean
     connectedAt?: boolean
     details?: boolean
   }
 
-  export type ApplicationConnectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "appId" | "connectedAt" | "details", ExtArgs["result"]["applicationConnection"]>
+  export type ApplicationConnectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "appId" | "status" | "connectedAt" | "details", ExtArgs["result"]["applicationConnection"]>
   export type ApplicationConnectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
@@ -28072,6 +29312,7 @@ export namespace Prisma {
       id: string
       accountId: string
       appId: string
+      status: string
       connectedAt: Date
       details: Prisma.JsonValue | null
     }, ExtArgs["result"]["applicationConnection"]>
@@ -28502,6 +29743,7 @@ export namespace Prisma {
     readonly id: FieldRef<"ApplicationConnection", 'String'>
     readonly accountId: FieldRef<"ApplicationConnection", 'String'>
     readonly appId: FieldRef<"ApplicationConnection", 'String'>
+    readonly status: FieldRef<"ApplicationConnection", 'String'>
     readonly connectedAt: FieldRef<"ApplicationConnection", 'DateTime'>
     readonly details: FieldRef<"ApplicationConnection", 'Json'>
   }
@@ -40231,6 +41473,16 @@ export namespace Prisma {
   export type SystemErrorScalarFieldEnum = (typeof SystemErrorScalarFieldEnum)[keyof typeof SystemErrorScalarFieldEnum]
 
 
+  export const ApplicationProviderScalarFieldEnum: {
+    id: 'id',
+    providerName: 'providerName',
+    providerSite: 'providerSite',
+    secretHash: 'secretHash'
+  };
+
+  export type ApplicationProviderScalarFieldEnum = (typeof ApplicationProviderScalarFieldEnum)[keyof typeof ApplicationProviderScalarFieldEnum]
+
+
   export const ApplicationScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -40242,7 +41494,8 @@ export namespace Prisma {
     endpoints: 'endpoints',
     status: 'status',
     isInternal: 'isInternal',
-    details: 'details'
+    details: 'details',
+    providerId: 'providerId'
   };
 
   export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
@@ -40297,6 +41550,7 @@ export namespace Prisma {
     id: 'id',
     accountId: 'accountId',
     appId: 'appId',
+    status: 'status',
     connectedAt: 'connectedAt',
     details: 'details'
   };
@@ -41664,6 +42918,56 @@ export namespace Prisma {
     ipAddress?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
   }
 
+  export type ApplicationProviderWhereInput = {
+    AND?: ApplicationProviderWhereInput | ApplicationProviderWhereInput[]
+    OR?: ApplicationProviderWhereInput[]
+    NOT?: ApplicationProviderWhereInput | ApplicationProviderWhereInput[]
+    id?: StringFilter<"ApplicationProvider"> | string
+    providerName?: StringFilter<"ApplicationProvider"> | string
+    providerSite?: StringFilter<"ApplicationProvider"> | string
+    secretHash?: StringFilter<"ApplicationProvider"> | string
+    applications?: ApplicationListRelationFilter
+  }
+
+  export type ApplicationProviderOrderByWithRelationInput = {
+    id?: SortOrder
+    providerName?: SortOrder
+    providerSite?: SortOrder
+    secretHash?: SortOrder
+    applications?: ApplicationOrderByRelationAggregateInput
+  }
+
+  export type ApplicationProviderWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ApplicationProviderWhereInput | ApplicationProviderWhereInput[]
+    OR?: ApplicationProviderWhereInput[]
+    NOT?: ApplicationProviderWhereInput | ApplicationProviderWhereInput[]
+    providerName?: StringFilter<"ApplicationProvider"> | string
+    providerSite?: StringFilter<"ApplicationProvider"> | string
+    secretHash?: StringFilter<"ApplicationProvider"> | string
+    applications?: ApplicationListRelationFilter
+  }, "id">
+
+  export type ApplicationProviderOrderByWithAggregationInput = {
+    id?: SortOrder
+    providerName?: SortOrder
+    providerSite?: SortOrder
+    secretHash?: SortOrder
+    _count?: ApplicationProviderCountOrderByAggregateInput
+    _max?: ApplicationProviderMaxOrderByAggregateInput
+    _min?: ApplicationProviderMinOrderByAggregateInput
+  }
+
+  export type ApplicationProviderScalarWhereWithAggregatesInput = {
+    AND?: ApplicationProviderScalarWhereWithAggregatesInput | ApplicationProviderScalarWhereWithAggregatesInput[]
+    OR?: ApplicationProviderScalarWhereWithAggregatesInput[]
+    NOT?: ApplicationProviderScalarWhereWithAggregatesInput | ApplicationProviderScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ApplicationProvider"> | string
+    providerName?: StringWithAggregatesFilter<"ApplicationProvider"> | string
+    providerSite?: StringWithAggregatesFilter<"ApplicationProvider"> | string
+    secretHash?: StringWithAggregatesFilter<"ApplicationProvider"> | string
+  }
+
   export type ApplicationWhereInput = {
     AND?: ApplicationWhereInput | ApplicationWhereInput[]
     OR?: ApplicationWhereInput[]
@@ -41679,6 +42983,8 @@ export namespace Prisma {
     status?: StringFilter<"Application"> | string
     isInternal?: BoolFilter<"Application"> | boolean
     details?: JsonNullableFilter<"Application">
+    providerId?: StringNullableFilter<"Application"> | string | null
+    provider?: XOR<ApplicationProviderNullableScalarRelationFilter, ApplicationProviderWhereInput> | null
     connections?: ApplicationConnectionListRelationFilter
     bridge?: ApplicationBridgeListRelationFilter
     policies?: ApplicationPolicyListRelationFilter
@@ -41701,6 +43007,8 @@ export namespace Prisma {
     status?: SortOrder
     isInternal?: SortOrder
     details?: SortOrderInput | SortOrder
+    providerId?: SortOrderInput | SortOrder
+    provider?: ApplicationProviderOrderByWithRelationInput
     connections?: ApplicationConnectionOrderByRelationAggregateInput
     bridge?: ApplicationBridgeOrderByRelationAggregateInput
     policies?: ApplicationPolicyOrderByRelationAggregateInput
@@ -41726,6 +43034,8 @@ export namespace Prisma {
     status?: StringFilter<"Application"> | string
     isInternal?: BoolFilter<"Application"> | boolean
     details?: JsonNullableFilter<"Application">
+    providerId?: StringNullableFilter<"Application"> | string | null
+    provider?: XOR<ApplicationProviderNullableScalarRelationFilter, ApplicationProviderWhereInput> | null
     connections?: ApplicationConnectionListRelationFilter
     bridge?: ApplicationBridgeListRelationFilter
     policies?: ApplicationPolicyListRelationFilter
@@ -41748,6 +43058,7 @@ export namespace Prisma {
     status?: SortOrder
     isInternal?: SortOrder
     details?: SortOrderInput | SortOrder
+    providerId?: SortOrderInput | SortOrder
     _count?: ApplicationCountOrderByAggregateInput
     _max?: ApplicationMaxOrderByAggregateInput
     _min?: ApplicationMinOrderByAggregateInput
@@ -41768,6 +43079,7 @@ export namespace Prisma {
     status?: StringWithAggregatesFilter<"Application"> | string
     isInternal?: BoolWithAggregatesFilter<"Application"> | boolean
     details?: JsonNullableWithAggregatesFilter<"Application">
+    providerId?: StringNullableWithAggregatesFilter<"Application"> | string | null
   }
 
   export type PortfolioWhereInput = {
@@ -42024,6 +43336,7 @@ export namespace Prisma {
     id?: StringFilter<"ApplicationConnection"> | string
     accountId?: StringFilter<"ApplicationConnection"> | string
     appId?: StringFilter<"ApplicationConnection"> | string
+    status?: StringFilter<"ApplicationConnection"> | string
     connectedAt?: DateTimeFilter<"ApplicationConnection"> | Date | string
     details?: JsonNullableFilter<"ApplicationConnection">
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
@@ -42034,6 +43347,7 @@ export namespace Prisma {
     id?: SortOrder
     accountId?: SortOrder
     appId?: SortOrder
+    status?: SortOrder
     connectedAt?: SortOrder
     details?: SortOrderInput | SortOrder
     account?: AccountOrderByWithRelationInput
@@ -42048,6 +43362,7 @@ export namespace Prisma {
     NOT?: ApplicationConnectionWhereInput | ApplicationConnectionWhereInput[]
     accountId?: StringFilter<"ApplicationConnection"> | string
     appId?: StringFilter<"ApplicationConnection"> | string
+    status?: StringFilter<"ApplicationConnection"> | string
     connectedAt?: DateTimeFilter<"ApplicationConnection"> | Date | string
     details?: JsonNullableFilter<"ApplicationConnection">
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
@@ -42058,6 +43373,7 @@ export namespace Prisma {
     id?: SortOrder
     accountId?: SortOrder
     appId?: SortOrder
+    status?: SortOrder
     connectedAt?: SortOrder
     details?: SortOrderInput | SortOrder
     _count?: ApplicationConnectionCountOrderByAggregateInput
@@ -42072,6 +43388,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"ApplicationConnection"> | string
     accountId?: StringWithAggregatesFilter<"ApplicationConnection"> | string
     appId?: StringWithAggregatesFilter<"ApplicationConnection"> | string
+    status?: StringWithAggregatesFilter<"ApplicationConnection"> | string
     connectedAt?: DateTimeWithAggregatesFilter<"ApplicationConnection"> | Date | string
     details?: JsonNullableWithAggregatesFilter<"ApplicationConnection">
   }
@@ -43945,6 +45262,59 @@ export namespace Prisma {
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type ApplicationProviderCreateInput = {
+    id?: string
+    providerName: string
+    providerSite: string
+    secretHash: string
+    applications?: ApplicationCreateNestedManyWithoutProviderInput
+  }
+
+  export type ApplicationProviderUncheckedCreateInput = {
+    id?: string
+    providerName: string
+    providerSite: string
+    secretHash: string
+    applications?: ApplicationUncheckedCreateNestedManyWithoutProviderInput
+  }
+
+  export type ApplicationProviderUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    providerName?: StringFieldUpdateOperationsInput | string
+    providerSite?: StringFieldUpdateOperationsInput | string
+    secretHash?: StringFieldUpdateOperationsInput | string
+    applications?: ApplicationUpdateManyWithoutProviderNestedInput
+  }
+
+  export type ApplicationProviderUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    providerName?: StringFieldUpdateOperationsInput | string
+    providerSite?: StringFieldUpdateOperationsInput | string
+    secretHash?: StringFieldUpdateOperationsInput | string
+    applications?: ApplicationUncheckedUpdateManyWithoutProviderNestedInput
+  }
+
+  export type ApplicationProviderCreateManyInput = {
+    id?: string
+    providerName: string
+    providerSite: string
+    secretHash: string
+  }
+
+  export type ApplicationProviderUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    providerName?: StringFieldUpdateOperationsInput | string
+    providerSite?: StringFieldUpdateOperationsInput | string
+    secretHash?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationProviderUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    providerName?: StringFieldUpdateOperationsInput | string
+    providerSite?: StringFieldUpdateOperationsInput | string
+    secretHash?: StringFieldUpdateOperationsInput | string
+  }
+
   export type ApplicationCreateInput = {
     id: string
     name: string
@@ -43957,6 +45327,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
@@ -43979,6 +45350,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
@@ -44001,6 +45373,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
@@ -44023,6 +45396,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
@@ -44045,6 +45419,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: string | null
   }
 
   export type ApplicationUpdateManyMutationInput = {
@@ -44073,6 +45448,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PortfolioCreateInput = {
@@ -44327,6 +45703,7 @@ export namespace Prisma {
 
   export type ApplicationConnectionCreateInput = {
     id?: string
+    status?: string
     connectedAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
     account: AccountCreateNestedOneWithoutAppConnectionsInput
@@ -44337,12 +45714,14 @@ export namespace Prisma {
     id?: string
     accountId: string
     appId: string
+    status?: string
     connectedAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ApplicationConnectionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
     account?: AccountUpdateOneRequiredWithoutAppConnectionsNestedInput
@@ -44353,6 +45732,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
   }
@@ -44361,12 +45741,14 @@ export namespace Prisma {
     id?: string
     accountId: string
     appId: string
+    status?: string
     connectedAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ApplicationConnectionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
   }
@@ -44375,6 +45757,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
   }
@@ -45934,6 +47317,42 @@ export namespace Prisma {
     ipAddress?: SortOrder
   }
 
+  export type ApplicationListRelationFilter = {
+    every?: ApplicationWhereInput
+    some?: ApplicationWhereInput
+    none?: ApplicationWhereInput
+  }
+
+  export type ApplicationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ApplicationProviderCountOrderByAggregateInput = {
+    id?: SortOrder
+    providerName?: SortOrder
+    providerSite?: SortOrder
+    secretHash?: SortOrder
+  }
+
+  export type ApplicationProviderMaxOrderByAggregateInput = {
+    id?: SortOrder
+    providerName?: SortOrder
+    providerSite?: SortOrder
+    secretHash?: SortOrder
+  }
+
+  export type ApplicationProviderMinOrderByAggregateInput = {
+    id?: SortOrder
+    providerName?: SortOrder
+    providerSite?: SortOrder
+    secretHash?: SortOrder
+  }
+
+  export type ApplicationProviderNullableScalarRelationFilter = {
+    is?: ApplicationProviderWhereInput | null
+    isNot?: ApplicationProviderWhereInput | null
+  }
+
   export type ApplicationBridgeListRelationFilter = {
     every?: ApplicationBridgeWhereInput
     some?: ApplicationBridgeWhereInput
@@ -45996,6 +47415,7 @@ export namespace Prisma {
     status?: SortOrder
     isInternal?: SortOrder
     details?: SortOrder
+    providerId?: SortOrder
   }
 
   export type ApplicationMaxOrderByAggregateInput = {
@@ -46008,6 +47428,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     status?: SortOrder
     isInternal?: SortOrder
+    providerId?: SortOrder
   }
 
   export type ApplicationMinOrderByAggregateInput = {
@@ -46020,6 +47441,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     status?: SortOrder
     isInternal?: SortOrder
+    providerId?: SortOrder
   }
 
   export type PortfolioAssetListRelationFilter = {
@@ -46151,6 +47573,7 @@ export namespace Prisma {
     id?: SortOrder
     accountId?: SortOrder
     appId?: SortOrder
+    status?: SortOrder
     connectedAt?: SortOrder
     details?: SortOrder
   }
@@ -46159,6 +47582,7 @@ export namespace Prisma {
     id?: SortOrder
     accountId?: SortOrder
     appId?: SortOrder
+    status?: SortOrder
     connectedAt?: SortOrder
   }
 
@@ -46166,6 +47590,7 @@ export namespace Prisma {
     id?: SortOrder
     accountId?: SortOrder
     appId?: SortOrder
+    status?: SortOrder
     connectedAt?: SortOrder
   }
 
@@ -47820,6 +49245,54 @@ export namespace Prisma {
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutErrorLogsInput, AccountUpdateWithoutErrorLogsInput>, AccountUncheckedUpdateWithoutErrorLogsInput>
   }
 
+  export type ApplicationCreateNestedManyWithoutProviderInput = {
+    create?: XOR<ApplicationCreateWithoutProviderInput, ApplicationUncheckedCreateWithoutProviderInput> | ApplicationCreateWithoutProviderInput[] | ApplicationUncheckedCreateWithoutProviderInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutProviderInput | ApplicationCreateOrConnectWithoutProviderInput[]
+    createMany?: ApplicationCreateManyProviderInputEnvelope
+    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+  }
+
+  export type ApplicationUncheckedCreateNestedManyWithoutProviderInput = {
+    create?: XOR<ApplicationCreateWithoutProviderInput, ApplicationUncheckedCreateWithoutProviderInput> | ApplicationCreateWithoutProviderInput[] | ApplicationUncheckedCreateWithoutProviderInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutProviderInput | ApplicationCreateOrConnectWithoutProviderInput[]
+    createMany?: ApplicationCreateManyProviderInputEnvelope
+    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+  }
+
+  export type ApplicationUpdateManyWithoutProviderNestedInput = {
+    create?: XOR<ApplicationCreateWithoutProviderInput, ApplicationUncheckedCreateWithoutProviderInput> | ApplicationCreateWithoutProviderInput[] | ApplicationUncheckedCreateWithoutProviderInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutProviderInput | ApplicationCreateOrConnectWithoutProviderInput[]
+    upsert?: ApplicationUpsertWithWhereUniqueWithoutProviderInput | ApplicationUpsertWithWhereUniqueWithoutProviderInput[]
+    createMany?: ApplicationCreateManyProviderInputEnvelope
+    set?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    disconnect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    delete?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    update?: ApplicationUpdateWithWhereUniqueWithoutProviderInput | ApplicationUpdateWithWhereUniqueWithoutProviderInput[]
+    updateMany?: ApplicationUpdateManyWithWhereWithoutProviderInput | ApplicationUpdateManyWithWhereWithoutProviderInput[]
+    deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
+  }
+
+  export type ApplicationUncheckedUpdateManyWithoutProviderNestedInput = {
+    create?: XOR<ApplicationCreateWithoutProviderInput, ApplicationUncheckedCreateWithoutProviderInput> | ApplicationCreateWithoutProviderInput[] | ApplicationUncheckedCreateWithoutProviderInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutProviderInput | ApplicationCreateOrConnectWithoutProviderInput[]
+    upsert?: ApplicationUpsertWithWhereUniqueWithoutProviderInput | ApplicationUpsertWithWhereUniqueWithoutProviderInput[]
+    createMany?: ApplicationCreateManyProviderInputEnvelope
+    set?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    disconnect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    delete?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    update?: ApplicationUpdateWithWhereUniqueWithoutProviderInput | ApplicationUpdateWithWhereUniqueWithoutProviderInput[]
+    updateMany?: ApplicationUpdateManyWithWhereWithoutProviderInput | ApplicationUpdateManyWithWhereWithoutProviderInput[]
+    deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
+  }
+
+  export type ApplicationProviderCreateNestedOneWithoutApplicationsInput = {
+    create?: XOR<ApplicationProviderCreateWithoutApplicationsInput, ApplicationProviderUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: ApplicationProviderCreateOrConnectWithoutApplicationsInput
+    connect?: ApplicationProviderWhereUniqueInput
+  }
+
   export type ApplicationConnectionCreateNestedManyWithoutApplicationInput = {
     create?: XOR<ApplicationConnectionCreateWithoutApplicationInput, ApplicationConnectionUncheckedCreateWithoutApplicationInput> | ApplicationConnectionCreateWithoutApplicationInput[] | ApplicationConnectionUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutApplicationInput | ApplicationConnectionCreateOrConnectWithoutApplicationInput[]
@@ -47930,6 +49403,16 @@ export namespace Prisma {
     connectOrCreate?: IdentityCreateOrConnectWithoutApplicationInput | IdentityCreateOrConnectWithoutApplicationInput[]
     createMany?: IdentityCreateManyApplicationInputEnvelope
     connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+  }
+
+  export type ApplicationProviderUpdateOneWithoutApplicationsNestedInput = {
+    create?: XOR<ApplicationProviderCreateWithoutApplicationsInput, ApplicationProviderUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: ApplicationProviderCreateOrConnectWithoutApplicationsInput
+    upsert?: ApplicationProviderUpsertWithoutApplicationsInput
+    disconnect?: ApplicationProviderWhereInput | boolean
+    delete?: ApplicationProviderWhereInput | boolean
+    connect?: ApplicationProviderWhereUniqueInput
+    update?: XOR<XOR<ApplicationProviderUpdateToOneWithWhereWithoutApplicationsInput, ApplicationProviderUpdateWithoutApplicationsInput>, ApplicationProviderUncheckedUpdateWithoutApplicationsInput>
   }
 
   export type ApplicationConnectionUpdateManyWithoutApplicationNestedInput = {
@@ -49326,6 +50809,7 @@ export namespace Prisma {
 
   export type ApplicationConnectionCreateWithoutAccountInput = {
     id?: string
+    status?: string
     connectedAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
     application: ApplicationCreateNestedOneWithoutConnectionsInput
@@ -49334,6 +50818,7 @@ export namespace Prisma {
   export type ApplicationConnectionUncheckedCreateWithoutAccountInput = {
     id?: string
     appId: string
+    status?: string
     connectedAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
   }
@@ -50188,6 +51673,7 @@ export namespace Prisma {
     id?: StringFilter<"ApplicationConnection"> | string
     accountId?: StringFilter<"ApplicationConnection"> | string
     appId?: StringFilter<"ApplicationConnection"> | string
+    status?: StringFilter<"ApplicationConnection"> | string
     connectedAt?: DateTimeFilter<"ApplicationConnection"> | Date | string
     details?: JsonNullableFilter<"ApplicationConnection">
   }
@@ -52998,8 +54484,116 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
+  export type ApplicationCreateWithoutProviderInput = {
+    id: string
+    name: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    appSecret?: string | null
+    createdAt?: Date | string
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    isInternal?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
+    bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
+    policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
+    authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
+    authzRoles?: AuthzRoleCreateNestedManyWithoutApplicationInput
+    authzAccountAccessGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutApplicationInput
+    authzAppAccessGrants?: AuthzAppAccessGrantCreateNestedManyWithoutApplicationInput
+    identities?: IdentityCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationUncheckedCreateWithoutProviderInput = {
+    id: string
+    name: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    appSecret?: string | null
+    createdAt?: Date | string
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    isInternal?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
+    bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
+    policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
+    authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
+    authzRoles?: AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput
+    authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
+    authzAppAccessGrants?: AuthzAppAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCreateOrConnectWithoutProviderInput = {
+    where: ApplicationWhereUniqueInput
+    create: XOR<ApplicationCreateWithoutProviderInput, ApplicationUncheckedCreateWithoutProviderInput>
+  }
+
+  export type ApplicationCreateManyProviderInputEnvelope = {
+    data: ApplicationCreateManyProviderInput | ApplicationCreateManyProviderInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ApplicationUpsertWithWhereUniqueWithoutProviderInput = {
+    where: ApplicationWhereUniqueInput
+    update: XOR<ApplicationUpdateWithoutProviderInput, ApplicationUncheckedUpdateWithoutProviderInput>
+    create: XOR<ApplicationCreateWithoutProviderInput, ApplicationUncheckedCreateWithoutProviderInput>
+  }
+
+  export type ApplicationUpdateWithWhereUniqueWithoutProviderInput = {
+    where: ApplicationWhereUniqueInput
+    data: XOR<ApplicationUpdateWithoutProviderInput, ApplicationUncheckedUpdateWithoutProviderInput>
+  }
+
+  export type ApplicationUpdateManyWithWhereWithoutProviderInput = {
+    where: ApplicationScalarWhereInput
+    data: XOR<ApplicationUpdateManyMutationInput, ApplicationUncheckedUpdateManyWithoutProviderInput>
+  }
+
+  export type ApplicationScalarWhereInput = {
+    AND?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
+    OR?: ApplicationScalarWhereInput[]
+    NOT?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
+    id?: StringFilter<"Application"> | string
+    name?: StringFilter<"Application"> | string
+    description?: StringNullableFilter<"Application"> | string | null
+    icon?: StringNullableFilter<"Application"> | string | null
+    website?: StringNullableFilter<"Application"> | string | null
+    appSecret?: StringNullableFilter<"Application"> | string | null
+    createdAt?: DateTimeFilter<"Application"> | Date | string
+    endpoints?: JsonNullableFilter<"Application">
+    status?: StringFilter<"Application"> | string
+    isInternal?: BoolFilter<"Application"> | boolean
+    details?: JsonNullableFilter<"Application">
+    providerId?: StringNullableFilter<"Application"> | string | null
+  }
+
+  export type ApplicationProviderCreateWithoutApplicationsInput = {
+    id?: string
+    providerName: string
+    providerSite: string
+    secretHash: string
+  }
+
+  export type ApplicationProviderUncheckedCreateWithoutApplicationsInput = {
+    id?: string
+    providerName: string
+    providerSite: string
+    secretHash: string
+  }
+
+  export type ApplicationProviderCreateOrConnectWithoutApplicationsInput = {
+    where: ApplicationProviderWhereUniqueInput
+    create: XOR<ApplicationProviderCreateWithoutApplicationsInput, ApplicationProviderUncheckedCreateWithoutApplicationsInput>
+  }
+
   export type ApplicationConnectionCreateWithoutApplicationInput = {
     id?: string
+    status?: string
     connectedAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
     account: AccountCreateNestedOneWithoutAppConnectionsInput
@@ -53008,6 +54602,7 @@ export namespace Prisma {
   export type ApplicationConnectionUncheckedCreateWithoutApplicationInput = {
     id?: string
     accountId: string
+    status?: string
     connectedAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
   }
@@ -53212,6 +54807,31 @@ export namespace Prisma {
   export type IdentityCreateManyApplicationInputEnvelope = {
     data: IdentityCreateManyApplicationInput | IdentityCreateManyApplicationInput[]
     skipDuplicates?: boolean
+  }
+
+  export type ApplicationProviderUpsertWithoutApplicationsInput = {
+    update: XOR<ApplicationProviderUpdateWithoutApplicationsInput, ApplicationProviderUncheckedUpdateWithoutApplicationsInput>
+    create: XOR<ApplicationProviderCreateWithoutApplicationsInput, ApplicationProviderUncheckedCreateWithoutApplicationsInput>
+    where?: ApplicationProviderWhereInput
+  }
+
+  export type ApplicationProviderUpdateToOneWithWhereWithoutApplicationsInput = {
+    where?: ApplicationProviderWhereInput
+    data: XOR<ApplicationProviderUpdateWithoutApplicationsInput, ApplicationProviderUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type ApplicationProviderUpdateWithoutApplicationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    providerName?: StringFieldUpdateOperationsInput | string
+    providerSite?: StringFieldUpdateOperationsInput | string
+    secretHash?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationProviderUncheckedUpdateWithoutApplicationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    providerName?: StringFieldUpdateOperationsInput | string
+    providerSite?: StringFieldUpdateOperationsInput | string
+    secretHash?: StringFieldUpdateOperationsInput | string
   }
 
   export type ApplicationConnectionUpsertWithWhereUniqueWithoutApplicationInput = {
@@ -54362,6 +55982,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
     authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
@@ -54383,6 +56004,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: string | null
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
     authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
@@ -54503,6 +56125,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
     authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
@@ -54524,6 +56147,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
     authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
@@ -54545,6 +56169,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
     authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
@@ -54566,6 +56191,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
     authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
@@ -54603,6 +56229,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
     authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
@@ -54624,6 +56251,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
     authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
@@ -54645,6 +56273,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
     authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
@@ -54666,6 +56295,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
     authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
@@ -54703,6 +56333,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
     authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
@@ -54724,6 +56355,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
     authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
@@ -54745,6 +56377,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
@@ -54766,6 +56399,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
@@ -54831,6 +56465,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
@@ -54852,6 +56487,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
@@ -54902,6 +56538,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
@@ -54923,6 +56560,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
@@ -55072,6 +56710,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
@@ -55093,6 +56732,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
@@ -55467,6 +57107,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
@@ -55488,6 +57129,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
@@ -55751,6 +57393,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
@@ -55772,6 +57415,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
@@ -56474,6 +58118,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
@@ -56495,6 +58140,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
@@ -56740,6 +58386,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
@@ -56761,6 +58408,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
@@ -57014,6 +58662,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
@@ -57035,6 +58684,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
@@ -57072,6 +58722,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
@@ -57093,6 +58744,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
@@ -57105,6 +58757,7 @@ export namespace Prisma {
   export type ApplicationConnectionCreateManyAccountInput = {
     id?: string
     appId: string
+    status?: string
     connectedAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
   }
@@ -57318,6 +58971,7 @@ export namespace Prisma {
 
   export type ApplicationConnectionUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
     application?: ApplicationUpdateOneRequiredWithoutConnectionsNestedInput
@@ -57326,6 +58980,7 @@ export namespace Prisma {
   export type ApplicationConnectionUncheckedUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
   }
@@ -57333,6 +58988,7 @@ export namespace Prisma {
   export type ApplicationConnectionUncheckedUpdateManyWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
   }
@@ -58032,9 +59688,82 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
   }
 
+  export type ApplicationCreateManyProviderInput = {
+    id: string
+    name: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    appSecret?: string | null
+    createdAt?: Date | string
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    isInternal?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type ApplicationUpdateWithoutProviderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
+    bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
+    policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
+    authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
+    authzRoles?: AuthzRoleUpdateManyWithoutApplicationNestedInput
+    authzAccountAccessGrants?: AuthzAccountAccessGrantUpdateManyWithoutApplicationNestedInput
+    authzAppAccessGrants?: AuthzAppAccessGrantUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateWithoutProviderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
+    bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
+    policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
+    authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
+    authzRoles?: AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput
+    authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
+    authzAppAccessGrants?: AuthzAppAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateManyWithoutProviderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
   export type ApplicationConnectionCreateManyApplicationInput = {
     id?: string
     accountId: string
+    status?: string
     connectedAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
   }
@@ -58097,6 +59826,7 @@ export namespace Prisma {
 
   export type ApplicationConnectionUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
     account?: AccountUpdateOneRequiredWithoutAppConnectionsNestedInput
@@ -58105,6 +59835,7 @@ export namespace Prisma {
   export type ApplicationConnectionUncheckedUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
   }
@@ -58112,6 +59843,7 @@ export namespace Prisma {
   export type ApplicationConnectionUncheckedUpdateManyWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
   }

@@ -94,7 +94,7 @@ export async function addUserApplicationAccess(input: { appId: string; permissio
       await tx.applicationConnection.upsert({
         where: { accountId_appId: { accountId, appId } },
         update: {},
-        create: { accountId, appId },
+        create: { accountId, appId, status: 'active' },
       });
 
       await tx.authzAccountAccessGrant.deleteMany({

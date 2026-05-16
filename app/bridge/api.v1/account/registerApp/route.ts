@@ -57,16 +57,25 @@ export async function GET(request: NextRequest) {
     // Check if the connection already exists
     const existing = await prisma.applicationConnection.findUnique({
       where: { accountId_appId: { accountId, appId } },
-      select: { id: true },
+      select: { id: true, status: true },
     });
 
     if (existing) {
+      // If the connection was previously in 'inactive_invited' state, the user
+      // has now actively connected — upgrade to 'active'.
+      if (existing.status === 'inactive_invited') {
+        await prisma.applicationConnection.update({
+          where: { accountId_appId: { accountId, appId } },
+          data: { status: 'active' },
+        });
+      }
       return NextResponse.json({ success: true, created: false }, { status: 200 });
     }
 
-    // Create the new connection
+    // Create the new connection — status 'active' because the application
+    // called this endpoint, meaning the account exists and is live.
     await prisma.applicationConnection.create({
-      data: { accountId, appId },
+      data: { accountId, appId, status: 'active' },
     });
 
     return NextResponse.json({ success: true, created: true }, { status: 201 });

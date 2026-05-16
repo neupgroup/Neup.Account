@@ -171,7 +171,7 @@ export async function assignAppAccessToAccount(input: {
   appId: string;
   targetAccountId: string;
   roleIds: string[];
-}): Promise<{ success: boolean; error?: string }> {
+}): Promise<{ success: boolean; invited?: boolean; appName?: string; error?: string }> {
   const ownerAccountId = await getActiveAccountId();
   if (!ownerAccountId) return { success: false, error: 'Not authenticated.' };
 
@@ -184,15 +184,23 @@ export async function assignAppAccessToAccount(input: {
 
   try {
     // Verify the app exists
-    const app = await prisma.application.findUnique({ where: { id: appId }, select: { id: true } });
+    const app = await prisma.application.findUnique({ where: { id: appId }, select: { id: true, name: true } });
     if (!app) return { success: false, error: 'Application not found.' };
 
-    // Upsert an ApplicationConnection for the target so they appear as a user
-    await prisma.applicationConnection.upsert({
+    // Check if the target already has an active connection to this app.
+    // If not, create one with status 'inactive_invited' — they've been granted
+    // access but haven't connected to the app themselves yet.
+    const existingConnection = await prisma.applicationConnection.findUnique({
       where: { accountId_appId: { accountId: targetAccountId, appId } },
-      update: {},
-      create: { accountId: targetAccountId, appId },
+      select: { id: true, status: true },
     });
+
+    if (!existingConnection) {
+      await prisma.applicationConnection.create({
+        data: { accountId: targetAccountId, appId, status: 'inactive_invited' },
+      });
+    }
+    // If a connection already exists, leave its status untouched.
 
     // Remove existing grants from this owner to this target on this app, then re-create
     await prisma.$transaction(async (tx) => {
@@ -212,7 +220,13 @@ export async function assignAppAccessToAccount(input: {
     });
 
     revalidatePath('/access/application');
-    return { success: true };
+    // Let the caller know if this was a fresh invite (no prior connection)
+    // so the UI can show the "user doesn't have an account on <app> yet" notice.
+    return {
+      success: true,
+      invited: !existingConnection,
+      appName: app.name,
+    };
   } catch (error) {
     await logError('database', error, `assignAppAccessToAccount:${appId}:${targetAccountId}`);
     return { success: false, error: 'Failed to assign access.' };

@@ -277,6 +277,13 @@ exports.Prisma.SystemErrorScalarFieldEnum = {
   ipAddress: 'ipAddress'
 };
 
+exports.Prisma.ApplicationProviderScalarFieldEnum = {
+  id: 'id',
+  providerName: 'providerName',
+  providerSite: 'providerSite',
+  secretHash: 'secretHash'
+};
+
 exports.Prisma.ApplicationScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -288,7 +295,8 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   endpoints: 'endpoints',
   status: 'status',
   isInternal: 'isInternal',
-  details: 'details'
+  details: 'details',
+  providerId: 'providerId'
 };
 
 exports.Prisma.PortfolioScalarFieldEnum = {
@@ -328,6 +336,7 @@ exports.Prisma.ApplicationConnectionScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
   appId: 'appId',
+  status: 'status',
   connectedAt: 'connectedAt',
   details: 'details'
 };
@@ -480,6 +489,7 @@ exports.Prisma.ModelName = {
   AuthnMethod: 'AuthnMethod',
   AuthnSession: 'AuthnSession',
   SystemError: 'SystemError',
+  ApplicationProvider: 'ApplicationProvider',
   Application: 'Application',
   Portfolio: 'Portfolio',
   PortfolioAsset: 'PortfolioAsset',
