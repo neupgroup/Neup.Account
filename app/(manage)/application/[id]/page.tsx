@@ -4,10 +4,9 @@ import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { getApplicationDetailsForViewerV2 } from '@/services/applications/manage';
+import { getApplicationDetailsForViewerV2, getApplicationUserStats, getSilentSsoOrigins } from '@/services/applications/manage';
 import { deleteManagedApplicationFromDetailsPage } from '@/services/applications/form-actions';
-import { getSilentSsoOrigins } from '@/services/applications/manage';
-import { AppWindow, Building, BarChart, Share2, ExternalLink, ChevronRight, type LucideIcon } from '@/components/icons';
+import { AppWindow, Building, BarChart, Share2, ExternalLink, ChevronRight, Users, UserPlus, ArrowLeft, type LucideIcon } from '@/components/icons';
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -65,15 +64,27 @@ export default async function ApplicationDetailPage({ params }: Props) {
   const Icon = iconFor(details.icon);
   const deleteAction = deleteManagedApplicationFromDetailsPage.bind(null, id);
 
-  const silentSsoOrigins = details.canDelete ? await getSilentSsoOrigins(id) : [];
+  const [silentSsoOrigins, userStats] = await Promise.all([
+    details.canDelete ? getSilentSsoOrigins(id) : Promise.resolve([]),
+    getApplicationUserStats(id),
+  ]);
 
-  const accessItems = details.hasUsedApp ? details.accessedData : details.configuredAccess;
   const termsTitle = details.hasUsedApp ? 'Terms agreed by user' : 'Terms to agree before using app';
 
   return (
     <div className="grid gap-6">
+      {/* Back */}
+      <div>
+        <Button variant="ghost" size="sm" asChild className="-ml-2 gap-1.5 text-muted-foreground">
+          <FlowLink href="/application">
+            <ArrowLeft className="h-4 w-4" />
+            Back
+          </FlowLink>
+        </Button>
+      </div>
+
       {/* Header */}
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start gap-4">
         <div className="flex items-center gap-3">
           <span className="flex h-12 w-12 items-center justify-center rounded-xl border bg-muted/40 shrink-0">
             <Icon className="h-5 w-5 text-muted-foreground" />
@@ -104,31 +115,26 @@ export default async function ApplicationDetailPage({ params }: Props) {
             )}
           </div>
         </div>
-        <Button variant="outline" asChild className="shrink-0">
-          <FlowLink href="/application">Back</FlowLink>
-        </Button>
       </div>
 
-      {/* Data access */}
+      {/* User Stats */}
       <Card>
-        <CardHeader>
-          <CardTitle>Data Access</CardTitle>
-          <CardDescription>
-            {details.hasUsedApp
-              ? 'Data this app has accessed for your account.'
-              : 'Data this app will access if you use it.'}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {accessItems.length > 0 ? (
-            <ul className="list-disc pl-5 text-sm">
-              {accessItems.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-sm text-muted-foreground">No access fields listed.</p>
-          )}
+        <CardContent className="grid p-0 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x">
+          {[
+            { label: 'Total Users', value: userStats?.total ?? 0, description: 'All connected accounts', icon: Users },
+            { label: 'Last 24 Hours', value: userStats?.last24h ?? 0, description: 'New connections today', icon: UserPlus },
+            { label: 'Last 7 Days', value: userStats?.lastWeek ?? 0, description: 'New connections this week', icon: UserPlus },
+            { label: 'Last 30 Days', value: userStats?.lastMonth ?? 0, description: 'New connections this month', icon: UserPlus },
+          ].map(({ label, value, description, icon: Icon }) => (
+            <div key={label} className="p-6">
+              <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <h3 className="text-sm font-medium">{label}</h3>
+                <Icon className="h-4 w-4 text-muted-foreground" />
+              </div>
+              <div className="text-2xl font-bold">{value.toLocaleString()}</div>
+              <p className="text-xs text-muted-foreground">{description}</p>
+            </div>
+          ))}
         </CardContent>
       </Card>
 
@@ -257,17 +263,6 @@ export default async function ApplicationDetailPage({ params }: Props) {
             <div className="min-w-0">
               <p className="font-medium">Roles</p>
               <p className="text-sm text-muted-foreground">Group capabilities into roles for access grants.</p>
-            </div>
-            <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-          </FlowLink>
-
-          <FlowLink
-            href={`/application/${id}/access`}
-            className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
-          >
-            <div className="min-w-0">
-              <p className="font-medium">Access &amp; Permissions</p>
-              <p className="text-sm text-muted-foreground">Manage your account's access to this application.</p>
             </div>
             <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
           </FlowLink>

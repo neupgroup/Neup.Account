@@ -3894,3 +3894,238 @@ Unknown argument `status`. Available options are marked with ?.
     at async getAccessAssetGroup (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_7667c30a._.js:1942:25)
     at async PortfolioDetail (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__508e9439._.js:620:19)
 --------------------------------------------------------------------------------
+[2026-05-16T16:43:34.079Z] [database] [auto] [getApplicationUserStats:c7160ad5-26d7-4983-9456-4e79a5bb8506] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.authzAccountAccessGrant.count()` invocation:
+
+{
+  select: {
+    _count: {
+      select: {
+        _all: true
+      }
+    }
+  },
+  where: {
+    appId: "c7160ad5-26d7-4983-9456-4e79a5bb8506",
+    createdAt: {
+    ~~~~~~~~~
+      gte: new Date("2026-05-15T16:43:34.048Z")
+    },
+?   AND?: AuthzAccountAccessGrantWhereInput | AuthzAccountAccessGrantWhereInput[],
+?   OR?: AuthzAccountAccessGrantWhereInput[],
+?   NOT?: AuthzAccountAccessGrantWhereInput | AuthzAccountAccessGrantWhereInput[],
+?   id?: StringFilter | String,
+?   ownerAccountId?: StringFilter | String,
+?   targetAccountId?: StringFilter | String,
+?   roleId?: StringFilter | String,
+?   portfolioId?: StringNullableFilter | String | Null,
+?   status?: EnumAuthzGrantStatusFilter | AuthzGrantStatus,
+?   owner?: AccountScalarRelationFilter | AccountWhereInput,
+?   target?: AccountScalarRelationFilter | AccountWhereInput,
+?   role?: AuthzRoleScalarRelationFilter | AuthzRoleWhereInput,
+?   application?: ApplicationScalarRelationFilter | ApplicationWhereInput,
+?   portfolio?: PortfolioNullableScalarRelationFilter | PortfolioWhereInput | Null
+  }
+}
+
+Unknown argument `createdAt`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getApplicationUserStats (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_5a78b058._.js:2204:55)
+    at async Promise.all (index 1)
+    at async ApplicationDetailPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f04b3073._.js:347:43)
+--------------------------------------------------------------------------------
+[2026-05-16T16:43:46.147Z] [database] [auto] [getApplicationUserStats:c7160ad5-26d7-4983-9456-4e79a5bb8506] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.authzAccountAccessGrant.count()` invocation:
+
+{
+  select: {
+    _count: {
+      select: {
+        _all: true
+      }
+    }
+  },
+  where: {
+    appId: "c7160ad5-26d7-4983-9456-4e79a5bb8506",
+    createdAt: {
+    ~~~~~~~~~
+      gte: new Date("2026-05-15T16:43:46.129Z")
+    },
+?   AND?: AuthzAccountAccessGrantWhereInput | AuthzAccountAccessGrantWhereInput[],
+?   OR?: AuthzAccountAccessGrantWhereInput[],
+?   NOT?: AuthzAccountAccessGrantWhereInput | AuthzAccountAccessGrantWhereInput[],
+?   id?: StringFilter | String,
+?   ownerAccountId?: StringFilter | String,
+?   targetAccountId?: StringFilter | String,
+?   roleId?: StringFilter | String,
+?   portfolioId?: StringNullableFilter | String | Null,
+?   status?: EnumAuthzGrantStatusFilter | AuthzGrantStatus,
+?   owner?: AccountScalarRelationFilter | AccountWhereInput,
+?   target?: AccountScalarRelationFilter | AccountWhereInput,
+?   role?: AuthzRoleScalarRelationFilter | AuthzRoleWhereInput,
+?   application?: ApplicationScalarRelationFilter | ApplicationWhereInput,
+?   portfolio?: PortfolioNullableScalarRelationFilter | PortfolioWhereInput | Null
+  }
+}
+
+Unknown argument `createdAt`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getApplicationUserStats (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_5a78b058._.js:2204:55)
+    at async Promise.all (index 1)
+    at async ApplicationDetailPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f04b3073._.js:348:43)
+--------------------------------------------------------------------------------
+[2026-05-16T16:43:56.055Z] [database] [auto] [getApplicationUserStats:c7160ad5-26d7-4983-9456-4e79a5bb8506] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.authzAccountAccessGrant.count()` invocation:
+
+{
+  select: {
+    _count: {
+      select: {
+        _all: true
+      }
+    }
+  },
+  where: {
+    appId: "c7160ad5-26d7-4983-9456-4e79a5bb8506",
+    createdAt: {
+    ~~~~~~~~~
+      gte: new Date("2026-05-15T16:43:56.035Z")
+    },
+?   AND?: AuthzAccountAccessGrantWhereInput | AuthzAccountAccessGrantWhereInput[],
+?   OR?: AuthzAccountAccessGrantWhereInput[],
+?   NOT?: AuthzAccountAccessGrantWhereInput | AuthzAccountAccessGrantWhereInput[],
+?   id?: StringFilter | String,
+?   ownerAccountId?: StringFilter | String,
+?   targetAccountId?: StringFilter | String,
+?   roleId?: StringFilter | String,
+?   portfolioId?: StringNullableFilter | String | Null,
+?   status?: EnumAuthzGrantStatusFilter | AuthzGrantStatus,
+?   owner?: AccountScalarRelationFilter | AccountWhereInput,
+?   target?: AccountScalarRelationFilter | AccountWhereInput,
+?   role?: AuthzRoleScalarRelationFilter | AuthzRoleWhereInput,
+?   application?: ApplicationScalarRelationFilter | ApplicationWhereInput,
+?   portfolio?: PortfolioNullableScalarRelationFilter | PortfolioWhereInput | Null
+  }
+}
+
+Unknown argument `createdAt`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getApplicationUserStats (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_5a78b058._.js:2204:55)
+    at async Promise.all (index 1)
+    at async ApplicationDetailPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f04b3073._.js:348:43)
+--------------------------------------------------------------------------------
+[2026-05-16T16:44:29.267Z] [database] [auto] [getApplicationUserStats:c7160ad5-26d7-4983-9456-4e79a5bb8506] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.authzAccountAccessGrant.count()` invocation:
+
+{
+  select: {
+    _count: {
+      select: {
+        _all: true
+      }
+    }
+  },
+  where: {
+    appId: "c7160ad5-26d7-4983-9456-4e79a5bb8506",
+    createdAt: {
+    ~~~~~~~~~
+      gte: new Date("2026-05-15T16:44:29.250Z")
+    },
+?   AND?: AuthzAccountAccessGrantWhereInput | AuthzAccountAccessGrantWhereInput[],
+?   OR?: AuthzAccountAccessGrantWhereInput[],
+?   NOT?: AuthzAccountAccessGrantWhereInput | AuthzAccountAccessGrantWhereInput[],
+?   id?: StringFilter | String,
+?   ownerAccountId?: StringFilter | String,
+?   targetAccountId?: StringFilter | String,
+?   roleId?: StringFilter | String,
+?   portfolioId?: StringNullableFilter | String | Null,
+?   status?: EnumAuthzGrantStatusFilter | AuthzGrantStatus,
+?   owner?: AccountScalarRelationFilter | AccountWhereInput,
+?   target?: AccountScalarRelationFilter | AccountWhereInput,
+?   role?: AuthzRoleScalarRelationFilter | AuthzRoleWhereInput,
+?   application?: ApplicationScalarRelationFilter | ApplicationWhereInput,
+?   portfolio?: PortfolioNullableScalarRelationFilter | PortfolioWhereInput | Null
+  }
+}
+
+Unknown argument `createdAt`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getApplicationUserStats (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_5a78b058._.js:2204:55)
+    at async Promise.all (index 1)
+    at async ApplicationDetailPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f04b3073._.js:348:43)
+--------------------------------------------------------------------------------
+[2026-05-16T16:45:44.376Z] [database] [auto] [getApplicationUserStats:c7160ad5-26d7-4983-9456-4e79a5bb8506] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.authzAccountAccessGrant.count()` invocation:
+
+{
+  select: {
+    _count: {
+      select: {
+        _all: true
+      }
+    }
+  },
+  where: {
+    appId: "c7160ad5-26d7-4983-9456-4e79a5bb8506",
+    createdAt: {
+    ~~~~~~~~~
+      gte: new Date("2026-05-15T16:45:44.363Z")
+    },
+?   AND?: AuthzAccountAccessGrantWhereInput | AuthzAccountAccessGrantWhereInput[],
+?   OR?: AuthzAccountAccessGrantWhereInput[],
+?   NOT?: AuthzAccountAccessGrantWhereInput | AuthzAccountAccessGrantWhereInput[],
+?   id?: StringFilter | String,
+?   ownerAccountId?: StringFilter | String,
+?   targetAccountId?: StringFilter | String,
+?   roleId?: StringFilter | String,
+?   portfolioId?: StringNullableFilter | String | Null,
+?   status?: EnumAuthzGrantStatusFilter | AuthzGrantStatus,
+?   owner?: AccountScalarRelationFilter | AccountWhereInput,
+?   target?: AccountScalarRelationFilter | AccountWhereInput,
+?   role?: AuthzRoleScalarRelationFilter | AuthzRoleWhereInput,
+?   application?: ApplicationScalarRelationFilter | ApplicationWhereInput,
+?   portfolio?: PortfolioNullableScalarRelationFilter | PortfolioWhereInput | Null
+  }
+}
+
+Unknown argument `createdAt`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getApplicationUserStats (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_5a78b058._.js:2204:55)
+    at async Promise.all (index 1)
+    at async ApplicationDetailPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f04b3073._.js:348:43)
+--------------------------------------------------------------------------------

@@ -1404,3 +1404,46 @@ export async function getAppOwnershipData(appId: string): Promise<AppOwnershipDa
     return null;
   }
 }
+
+// ---------------------------------------------------------------------------
+// User stats
+// ---------------------------------------------------------------------------
+
+export type ApplicationUserStats = {
+  total: number;
+  last24h: number;
+  lastWeek: number;
+  lastMonth: number;
+};
+
+/**
+ * Returns user counts for an application based on ApplicationConnection records.
+ * Accessible to any authenticated user who can view the application.
+ */
+export async function getApplicationUserStats(appId: string): Promise<ApplicationUserStats | null> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) return null;
+
+  // Verify the app exists and the caller has at least view access
+  const authorization = await getApplicationAuthorization(accountId, appId);
+  if (!authorization.exists || !authorization.canView) return null;
+
+  try {
+    const now = new Date();
+    const minus24h = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    const minus7d = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const minus30d = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+    const [total, last24h, lastWeek, lastMonth] = await Promise.all([
+      prisma.applicationConnection.count({ where: { appId } }),
+      prisma.applicationConnection.count({ where: { appId, connectedAt: { gte: minus24h } } }),
+      prisma.applicationConnection.count({ where: { appId, connectedAt: { gte: minus7d } } }),
+      prisma.applicationConnection.count({ where: { appId, connectedAt: { gte: minus30d } } }),
+    ]);
+
+    return { total, last24h, lastWeek, lastMonth };
+  } catch (error) {
+    await logError('database', error, `getApplicationUserStats:${appId}`);
+    return null;
+  }
+}
