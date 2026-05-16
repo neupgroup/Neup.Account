@@ -29,7 +29,7 @@ async function getAssetMembers(portfolioId: string, portfolioAssetId: string, ac
   });
   if (!member) return null;
 
-  const asset = await prisma.portfolioAsset.findFirst({
+  const asset = await prisma.asset.findFirst({
     where: { id: portfolioAssetId, portfolioId },
     select: { id: true, assetId: true, assetType: true },
   });
@@ -216,7 +216,7 @@ async function AssetList({ portfolioId }: { portfolioId: string }) {
               <AppWindow className="h-4 w-4 text-muted-foreground" />
             </span>
             <div className="min-w-0">
-              <p className="text-sm font-medium">View Applications</p>
+              <p className="text-sm font-medium">Application Connection</p>
               <p className="text-xs text-muted-foreground">
                 See members and roles per application
               </p>
@@ -310,7 +310,7 @@ async function ApplicationAssetView({ applicationId }: { applicationId: string }
 
   // Find a portfolioAsset row where assetId = applicationId and the current
   // user is a member of that portfolio.
-  const portfolioAsset = await prisma.portfolioAsset.findFirst({
+  const portfolioAsset = await prisma.asset.findFirst({
     where: {
       assetId: applicationId,
       assetType: { in: ['application', 'app'] },
