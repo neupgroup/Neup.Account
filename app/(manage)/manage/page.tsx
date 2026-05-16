@@ -153,11 +153,22 @@ function AccountsPageInner() {
     const [loading, startTransition]        = useTransition();
     const [permissionDenied, setPermissionDenied] = useState(false);
 
-    // Seed search from URL ?q=
+    // Seed search, filter, and sort from URL params
     useEffect(() => {
         const q = searchParams.get('q') || '';
         setSearch(q);
         setDebouncedSearch(q);
+
+        const f = searchParams.get('filter') as AccountFilterTab | null;
+        if (f && FILTER_TABS.some((t) => t.value === f)) {
+            setActiveTab(f);
+        }
+
+        const s = searchParams.get('sort') as AccountSortKey | null;
+        const validSorts: AccountSortKey[] = ['newest', 'oldest', 'name_asc', 'name_desc', 'last_active'];
+        if (s && validSorts.includes(s)) {
+            setSort(s);
+        }
     }, [searchParams]);
 
     // Debounce search input — reset to page 1 on change
