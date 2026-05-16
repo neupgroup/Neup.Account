@@ -1447,3 +1447,143 @@ export async function getApplicationUserStats(appId: string): Promise<Applicatio
     return null;
   }
 }
+
+// ---------------------------------------------------------------------------
+// Application users (paginated)
+// ---------------------------------------------------------------------------
+
+export type AppUserStatus = 'active' | 'creationRequired' | 'deactivated';
+export type AppUserSortKey = 'newest' | 'oldest' | 'name_asc' | 'name_desc';
+
+export type AppUserEntry = {
+  accountId: string;
+  displayName: string | null;
+  displayImage: string | null;
+  accountType: string;
+  isVerified: boolean;
+  connectedAt: Date;
+  status: string | null;
+};
+
+export type AppUsersPage = {
+  users: AppUserEntry[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+};
+
+/**
+ * Returns a paginated list of accounts connected to an application.
+ * Supports filtering by status and connectedAt window, plus sorting.
+ * Accessible to the app owner and root viewers.
+ */
+export async function getApplicationUsersPaginated(params: {
+  appId: string;
+  page: number;
+  pageSize?: number;
+  search?: string;
+  status?: AppUserStatus;
+  activeSince?: '1d' | '7d' | '30d';
+  sort?: AppUserSortKey;
+}): Promise<AppUsersPage> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) return { users: [], total: 0, page: 1, pageSize: 10, totalPages: 0 };
+
+  const isRootViewer = await checkPermissions(['root.app.view']);
+  const isOwner = await isApplicationOwnerForAccount(accountId, params.appId);
+  if (!isRootViewer && !isOwner) return { users: [], total: 0, page: 1, pageSize: 10, totalPages: 0 };
+
+  const { appId, page, pageSize = 20, search = '', status, activeSince, sort = 'newest' } = params;
+
+  try {
+    const now = new Date();
+    const sinceMap: Record<string, number> = { '1d': 1, '7d': 7, '30d': 30 };
+    const sinceDate = activeSince
+      ? new Date(now.getTime() - sinceMap[activeSince] * 24 * 60 * 60 * 1000)
+      : undefined;
+
+    // Map AppUserStatus to account status values
+    const statusMap: Record<AppUserStatus, string | null> = {
+      active: 'active',
+      deactivated: 'deactivated',
+      creationRequired: null, // accounts with no status set
+    };
+
+    const connectionWhere: Record<string, unknown> = { appId };
+    if (sinceDate) connectionWhere.connectedAt = { gte: sinceDate };
+
+    // Fetch connections with joined account data
+    const orderByMap: Record<AppUserSortKey, object> = {
+      newest:    { connectedAt: 'desc' },
+      oldest:    { connectedAt: 'asc' },
+      name_asc:  { account: { displayName: 'asc' } },
+      name_desc: { account: { displayName: 'desc' } },
+    };
+
+    const accountWhere: Record<string, unknown> = {};
+    if (status === 'creationRequired') {
+      accountWhere.status = null;
+    } else if (status) {
+      accountWhere.status = statusMap[status];
+    }
+    if (search) {
+      accountWhere.OR = [
+        { displayName: { contains: search, mode: 'insensitive' } },
+        { id: { contains: search, mode: 'insensitive' } },
+        { neupIds: { some: { neupId: { contains: search, mode: 'insensitive' } } } },
+      ];
+    }
+
+    if (Object.keys(accountWhere).length > 0) {
+      connectionWhere.account = accountWhere;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const whereArg = connectionWhere as any;
+
+    const [total, rows] = await Promise.all([
+      prisma.applicationConnection.count({ where: whereArg }),
+      prisma.applicationConnection.findMany({
+        where: whereArg,
+        orderBy: orderByMap[sort],
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        select: {
+          connectedAt: true,
+          account: {
+            select: {
+              id: true,
+              displayName: true,
+              displayImage: true,
+              accountType: true,
+              isVerified: true,
+              status: true,
+            },
+          },
+        },
+      }),
+    ]);
+
+    const users: AppUserEntry[] = rows.map((r) => ({
+      accountId: r.account.id,
+      displayName: r.account.displayName,
+      displayImage: r.account.displayImage,
+      accountType: r.account.accountType,
+      isVerified: r.account.isVerified,
+      connectedAt: r.connectedAt,
+      status: r.account.status,
+    }));
+
+    return {
+      users,
+      total,
+      page,
+      pageSize,
+      totalPages: Math.ceil(total / pageSize),
+    };
+  } catch (error) {
+    await logError('database', error, `getApplicationUsersPaginated:${appId}`);
+    return { users: [], total: 0, page: 1, pageSize: 10, totalPages: 0 };
+  }
+}

@@ -224,6 +224,17 @@ export default async function ApplicationDetailPage({ params }: Props) {
         <h2 className="text-xl font-semibold tracking-tight">Manage Application</h2>
         <div className="overflow-hidden rounded-2xl border bg-card">
           <FlowLink
+            href={`/application/${id}/users`}
+            className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
+          >
+            <div className="min-w-0">
+              <p className="font-medium">Users</p>
+              <p className="text-sm text-muted-foreground">View all accounts connected to this application.</p>
+            </div>
+            <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+          </FlowLink>
+
+          <FlowLink
             href={`/application/${id}/meta`}
             className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
           >
