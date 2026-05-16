@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { FlowLink } from '@/components/ui/flow-link';
 import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -18,34 +17,6 @@ function iconFor(appIcon?: string): LucideIcon {
     'share-2': Share2,
   };
   return appIcon ? (appIconMap[appIcon] || AppWindow) : AppWindow;
-}
-
-function LinkOrDisabledButton({
-  href,
-  enabledLabel,
-  disabledLabel,
-  enabled,
-}: {
-  href?: string;
-  enabledLabel: string;
-  disabledLabel: string;
-  enabled: boolean;
-}) {
-  if (!href || !enabled) {
-    return (
-      <Button variant="outline" size="sm" disabled>
-        {disabledLabel}
-      </Button>
-    );
-  }
-  return (
-    <Button variant="outline" size="sm" asChild>
-      <Link href={href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2">
-        {enabledLabel}
-        <ExternalLink className="h-4 w-4" />
-      </Link>
-    </Button>
-  );
 }
 
 const statusVariant: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
@@ -68,8 +39,6 @@ export default async function ApplicationDetailPage({ params }: Props) {
     details.canDelete ? getSilentSsoOrigins(id) : Promise.resolve([]),
     getApplicationUserStats(id),
   ]);
-
-  const termsTitle = details.hasUsedApp ? 'Terms agreed by user' : 'Terms to agree before using app';
 
   return (
     <div className="grid gap-6">
@@ -135,87 +104,6 @@ export default async function ApplicationDetailPage({ params }: Props) {
               <p className="text-xs text-muted-foreground">{description}</p>
             </div>
           ))}
-        </CardContent>
-      </Card>
-
-      {/* Terms / policies */}
-      <Card>
-        <CardHeader>
-          <CardTitle>{termsTitle}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {details.policies.length > 0 ? (
-            <div className="space-y-3">
-              {details.policies.map((policy) => (
-                <div key={policy.name} className="rounded-md border p-3">
-                  <p className="font-medium text-sm">{policy.name}</p>
-                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">{policy.policy}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-muted-foreground">No terms published by this app.</p>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Account actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Account Actions</CardTitle>
-          <CardDescription>Actions are enabled when you have used this app.</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <p className="text-sm font-medium">Logout</p>
-            <div className="flex flex-wrap gap-2">
-              <LinkOrDisabledButton
-                href={details.endpoints.logoutPage}
-                enabled={details.hasUsedApp}
-                enabledLabel="Open logout page"
-                disabledLabel="Logout page unavailable"
-              />
-              <LinkOrDisabledButton
-                href={details.endpoints.logoutApi}
-                enabled={details.hasUsedApp}
-                enabledLabel="Open logout API"
-                disabledLabel="Logout API unavailable"
-              />
-            </div>
-          </div>
-          <div className="space-y-2">
-            <p className="text-sm font-medium">Account Deletion</p>
-            <div className="flex flex-wrap gap-2">
-              <LinkOrDisabledButton
-                href={details.endpoints.dataDeletionPage}
-                enabled={details.hasUsedApp}
-                enabledLabel="Open deletion page"
-                disabledLabel="Deletion page unavailable"
-              />
-              <LinkOrDisabledButton
-                href={details.endpoints.dataDeletionApi}
-                enabled={details.hasUsedApp}
-                enabledLabel="Open deletion API"
-                disabledLabel="Deletion API unavailable"
-              />
-            </div>
-          </div>
-          <div className="space-y-2">
-            <p className="text-sm font-medium">Account Block</p>
-            <div className="flex flex-wrap gap-2">
-              <LinkOrDisabledButton
-                href={details.endpoints.accountBlockApi}
-                enabled={details.hasUsedApp}
-                enabledLabel="Open block API"
-                disabledLabel="Block API unavailable"
-              />
-            </div>
-            {details.endpoints.accountBlock && (
-              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                {details.endpoints.accountBlock}
-              </p>
-            )}
-          </div>
         </CardContent>
       </Card>
 
