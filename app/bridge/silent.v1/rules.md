@@ -36,16 +36,20 @@ All postMessage payloads must include a `type` field prefixed with
 `neupid:silent_` to avoid collisions with other postMessage listeners on the
 parent page.
 
-| Route   | type                    |
-|---------|-------------------------|
-| `init`  | `neupid:silent_init`    |
-| `whoisthis` | `neupid:silent_auth` |
+| Route       | type                   |
+|-------------|------------------------|
+| `whoisthis` | `neupid:silent_auth`   |
 
-### 5. init is the entry point
-`/bridge/silent.v1/init` must be called first by any third-party app before
-calling `whoisthis` or `exchange`. It initializes the guest cookie
-(`auth_account`) for the session. Without it, subsequent silent SSO calls
-may fail due to a missing cookie.
+### 5. whoisthis is the single entry point
+`/bridge/silent.v1/auth/whoisthis` is the only iframe endpoint third-party
+apps need to load. It handles everything:
+- Initializes the guest cookie (`auth_account`) if none exists
+- Returns an unauthenticated JWT when the user is a guest
+- Returns an authenticated JWT + code when the user is logged in
+
+There is no separate `/init` step. The init logic (`resolveGuestAccount`)
+runs automatically inside `whoisthis`, as well as on all auth endpoints and
+callback endpoints.
 
 ### 6. No redirects
 `silent.v1` routes must never redirect. A redirect breaks the iframe flow.

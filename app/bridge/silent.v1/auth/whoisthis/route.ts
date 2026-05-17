@@ -55,10 +55,14 @@ function buildHtmlResponse(payload: object, targetOrigin: string): Response {
 /**
  * GET /bridge/silent.v1/auth/whoisthis
  *
- * Always issues a signed JWT with an ssid — regardless of whether the user
- * is logged in or not. The guest account (guest_acc cookie) is the stable
- * device identifier. When authenticated, the guest account is linked to the
- * real account.
+ * The single silent-auth entry point. Handles everything:
+ *   - Initializes the guest cookie if nothing exists (replaces the old /init endpoint)
+ *   - Returns an unauthenticated JWT when the user is a guest
+ *   - Returns an authenticated JWT + code when the user is logged in
+ *
+ * Third-party apps load this as a single iframe — no separate init step needed.
+ * The init logic (resolveGuestAccount) runs automatically here, as well as on
+ * all auth endpoints and callback endpoints.
  */
 export async function GET(request: NextRequest): Promise<Response> {
   // 1. Resolve origin
@@ -117,7 +121,8 @@ export async function GET(request: NextRequest): Promise<Response> {
     }
   }
 
-  // 5. Resolve guest account (creates or links it, writes to auth_acc)
+  // 5. Initialize guest account if needed (this is the init step — runs automatically here).
+  // If the user is authenticated, link the guest to the real account.
   await resolveGuestAccount(isAuthenticated ? (accountId || null) : null);
 
   // Read the guest account ID from auth_acc (the def:1 account with no nid)
