@@ -564,6 +564,7 @@ export async function getManagedApplication(appId: string): Promise<ManagedAppli
           createdAt: true,
           appSecret: true,
           responseFields: true,
+          details: true,
           policies: true,
           endpoints: true,
         },
@@ -583,7 +584,11 @@ export async function getManagedApplication(appId: string): Promise<ManagedAppli
       name: application.name,
       createdAt: application.createdAt,
       hasSecretKey: Boolean(application.appSecret),
-      access: normalizeAccess(application.responseFields).filter((field) => responseAccessSet.has(field)),
+      access: normalizeAccess(
+        application.responseFields.length > 0
+          ? application.responseFields
+          : (application as any).details?.access ?? [],
+      ).filter((field) => responseAccessSet.has(field)),
       policies: normalizePolicies(application.policies),
       endpoints: normalizeEndpoints(application.endpoints),
       authzWebhookUrl: authzWebhookRecord?.value ?? null,
@@ -667,9 +672,19 @@ export async function saveApplicationAccess(input: { appId: string; access: Appl
 
     const sanitizedAccess = parsed.data.access.filter((field) => responseAccessSet.has(field));
 
+    const existing = await prisma.application.findUnique({
+      where: { id: parsed.data.appId },
+      select: { details: true },
+    });
+
+    const existingDetails =
+      existing?.details && typeof existing.details === 'object'
+        ? (existing.details as Record<string, unknown>)
+        : {};
+
     const result = await prisma.application.updateMany({
       where: { id: parsed.data.appId },
-      data: { responseFields: sanitizedAccess },
+      data: { responseFields: sanitizedAccess, details: { ...existingDetails, access: sanitizedAccess } },
     });
 
     if (result.count === 0) {
@@ -1737,9 +1752,21 @@ export async function saveAppConfig(
   if (!canEdit) return { success: false, error: 'Only the application owner can configure this application.' };
 
   try {
+    const existing = await prisma.application.findUnique({
+      where: { id: appId },
+      select: { details: true },
+    });
+
+    const existingDetails =
+      existing?.details && typeof existing.details === 'object'
+        ? (existing.details as Record<string, unknown>)
+        : {};
+
     const updateData: Record<string, unknown> = {
       responseFields: sanitizedAccess,
       tokenFields: sanitizedTokenFields,
+      // Backward-compat: keep legacy JSON in sync until all callers are migrated.
+      details: { ...existingDetails, access: sanitizedAccess, token_fields: sanitizedTokenFields },
     };
     if (secretKey && secretKey.trim().length >= 16) {
       updateData.appSecret = secretKey.trim();
@@ -1782,7 +1809,7 @@ export async function getAppConfigData(appId: string): Promise<{
     const [app, origins] = await Promise.all([
       prisma.application.findUnique({
         where: { id: appId },
-        select: { appSecret: true, responseFields: true, tokenFields: true, status: true },
+        select: { appSecret: true, responseFields: true, tokenFields: true, details: true, status: true },
       }),
       prisma.applicationBridge.findMany({
         where: { appId, type: 'silentSsoOrigin' },
@@ -1793,10 +1820,19 @@ export async function getAppConfigData(appId: string): Promise<{
 
     if (!app) return null;
 
+    const legacyDetails = app.details && typeof app.details === 'object'
+      ? (app.details as Record<string, unknown>)
+      : {};
+
+    const responseFieldSource =
+      app.responseFields.length > 0 ? app.responseFields : (legacyDetails as any).access ?? [];
+    const tokenFieldSource =
+      app.tokenFields.length > 0 ? app.tokenFields : (legacyDetails as any).token_fields ?? [];
+
     return {
       hasSecretKey: Boolean(app.appSecret),
-      access: normalizeAccess(app.responseFields).filter((field) => responseAccessSet.has(field)),
-      tokenFields: normalizeAccess(app.tokenFields).filter((field) => tokenFieldSet.has(field)),
+      access: normalizeAccess(responseFieldSource).filter((field) => responseAccessSet.has(field)),
+      tokenFields: normalizeAccess(tokenFieldSource).filter((field) => tokenFieldSet.has(field)),
       silentSsoOrigins: origins,
       status: app.status ?? 'development',
     };
