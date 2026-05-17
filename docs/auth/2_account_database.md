@@ -91,8 +91,8 @@ If the client app wants to save more than just `aid`, it can fetch profile infor
 
 Common options in this repo are:
 
-- `GET /api.v1/profile` using `tempToken` and `appId`
-- `GET /api.v1/profile` using persistent external session headers
+- `GET /bridge/api.v1/profile` using `tempToken` and `appId`
+- `GET /bridge/api.v1/profile` using persistent external session headers
 
 Those profile responses can include fields such as:
 
