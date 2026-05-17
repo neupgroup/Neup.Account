@@ -18,14 +18,12 @@ export async function bridgeBuildGrantRedirect(input: {
   if (!authenticatesTo) {
     const errorUrl = new URL('/auth/start', requestUrl);
     errorUrl.searchParams.set('error', 'invalid_request');
-    errorUrl.searchParams.set('error_description', 'The required "authenticatesTo" parameter was not provided.');
     return { redirectTo: errorUrl.toString() };
   }
 
   if (!appId) {
     const errorUrl = new URL('/auth/start', requestUrl);
     errorUrl.searchParams.set('error', 'missing_app_id');
-    errorUrl.searchParams.set('error_description', 'An application ID (appId) must be provided.');
     return { redirectTo: errorUrl.toString() };
   }
 
@@ -36,7 +34,6 @@ export async function bridgeBuildGrantRedirect(input: {
   } catch {
     const errorUrl = new URL('/auth/start', requestUrl);
     errorUrl.searchParams.set('error', 'invalid_redirect');
-    errorUrl.searchParams.set('error_description', 'The authenticatesTo parameter is not a valid URL.');
     return { redirectTo: errorUrl.toString() };
   }
 
@@ -52,7 +49,6 @@ export async function bridgeBuildGrantRedirect(input: {
 
     if (!application || !application.appSecret) {
       finalRedirectUrl.searchParams.set('error', 'invalid_app');
-      finalRedirectUrl.searchParams.set('error_description', 'The provided application ID is invalid or not fully configured.');
       return { redirectTo: finalRedirectUrl.toString() };
     }
 
@@ -67,7 +63,6 @@ export async function bridgeBuildGrantRedirect(input: {
 
     if (!authenticatesToRecord) {
       finalRedirectUrl.searchParams.set('error', 'invalid_redirect');
-      finalRedirectUrl.searchParams.set('error_description', 'The authenticatesTo URL is not registered for this application.');
       return { redirectTo: finalRedirectUrl.toString() };
     }
 
@@ -116,7 +111,6 @@ export async function bridgeBuildGrantRedirect(input: {
   } catch (error) {
     await logError('database', error, 'bridge_build_grant_redirect');
     finalRedirectUrl.searchParams.set('error', 'internal_server_error');
-    finalRedirectUrl.searchParams.set('error_description', 'An unexpected error occurred during handshake.');
     return { redirectTo: finalRedirectUrl.toString() };
   }
 }
