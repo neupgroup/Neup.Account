@@ -296,6 +296,7 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   status: 'status',
   isInternal: 'isInternal',
   details: 'details',
+  party: 'party',
   providerId: 'providerId'
 };
 

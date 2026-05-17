@@ -23298,8 +23298,18 @@ export namespace Prisma {
 
   export type AggregateApplication = {
     _count: ApplicationCountAggregateOutputType | null
+    _avg: ApplicationAvgAggregateOutputType | null
+    _sum: ApplicationSumAggregateOutputType | null
     _min: ApplicationMinAggregateOutputType | null
     _max: ApplicationMaxAggregateOutputType | null
+  }
+
+  export type ApplicationAvgAggregateOutputType = {
+    party: number | null
+  }
+
+  export type ApplicationSumAggregateOutputType = {
+    party: number | null
   }
 
   export type ApplicationMinAggregateOutputType = {
@@ -23312,6 +23322,7 @@ export namespace Prisma {
     createdAt: Date | null
     status: string | null
     isInternal: boolean | null
+    party: number | null
     providerId: string | null
   }
 
@@ -23325,6 +23336,7 @@ export namespace Prisma {
     createdAt: Date | null
     status: string | null
     isInternal: boolean | null
+    party: number | null
     providerId: string | null
   }
 
@@ -23340,10 +23352,19 @@ export namespace Prisma {
     status: number
     isInternal: number
     details: number
+    party: number
     providerId: number
     _all: number
   }
 
+
+  export type ApplicationAvgAggregateInputType = {
+    party?: true
+  }
+
+  export type ApplicationSumAggregateInputType = {
+    party?: true
+  }
 
   export type ApplicationMinAggregateInputType = {
     id?: true
@@ -23355,6 +23376,7 @@ export namespace Prisma {
     createdAt?: true
     status?: true
     isInternal?: true
+    party?: true
     providerId?: true
   }
 
@@ -23368,6 +23390,7 @@ export namespace Prisma {
     createdAt?: true
     status?: true
     isInternal?: true
+    party?: true
     providerId?: true
   }
 
@@ -23383,6 +23406,7 @@ export namespace Prisma {
     status?: true
     isInternal?: true
     details?: true
+    party?: true
     providerId?: true
     _all?: true
   }
@@ -23425,6 +23449,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ApplicationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ApplicationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ApplicationMinAggregateInputType
@@ -23455,6 +23491,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ApplicationCountAggregateInputType | true
+    _avg?: ApplicationAvgAggregateInputType
+    _sum?: ApplicationSumAggregateInputType
     _min?: ApplicationMinAggregateInputType
     _max?: ApplicationMaxAggregateInputType
   }
@@ -23471,8 +23509,11 @@ export namespace Prisma {
     status: string
     isInternal: boolean
     details: JsonValue | null
+    party: number
     providerId: string | null
     _count: ApplicationCountAggregateOutputType | null
+    _avg: ApplicationAvgAggregateOutputType | null
+    _sum: ApplicationSumAggregateOutputType | null
     _min: ApplicationMinAggregateOutputType | null
     _max: ApplicationMaxAggregateOutputType | null
   }
@@ -23503,6 +23544,7 @@ export namespace Prisma {
     status?: boolean
     isInternal?: boolean
     details?: boolean
+    party?: boolean
     providerId?: boolean
     provider?: boolean | Application$providerArgs<ExtArgs>
     connections?: boolean | Application$connectionsArgs<ExtArgs>
@@ -23528,6 +23570,7 @@ export namespace Prisma {
     status?: boolean
     isInternal?: boolean
     details?: boolean
+    party?: boolean
     providerId?: boolean
     provider?: boolean | Application$providerArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
@@ -23544,6 +23587,7 @@ export namespace Prisma {
     status?: boolean
     isInternal?: boolean
     details?: boolean
+    party?: boolean
     providerId?: boolean
     provider?: boolean | Application$providerArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
@@ -23560,10 +23604,11 @@ export namespace Prisma {
     status?: boolean
     isInternal?: boolean
     details?: boolean
+    party?: boolean
     providerId?: boolean
   }
 
-  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "icon" | "website" | "appSecret" | "createdAt" | "endpoints" | "status" | "isInternal" | "details" | "providerId", ExtArgs["result"]["application"]>
+  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "icon" | "website" | "appSecret" | "createdAt" | "endpoints" | "status" | "isInternal" | "details" | "party" | "providerId", ExtArgs["result"]["application"]>
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     provider?: boolean | Application$providerArgs<ExtArgs>
     connections?: boolean | Application$connectionsArgs<ExtArgs>
@@ -23608,6 +23653,7 @@ export namespace Prisma {
       status: string
       isInternal: boolean
       details: Prisma.JsonValue | null
+      party: number
       providerId: string | null
     }, ExtArgs["result"]["application"]>
     composites: {}
@@ -24052,6 +24098,7 @@ export namespace Prisma {
     readonly status: FieldRef<"Application", 'String'>
     readonly isInternal: FieldRef<"Application", 'Boolean'>
     readonly details: FieldRef<"Application", 'Json'>
+    readonly party: FieldRef<"Application", 'Int'>
     readonly providerId: FieldRef<"Application", 'String'>
   }
     
@@ -41495,6 +41542,7 @@ export namespace Prisma {
     status: 'status',
     isInternal: 'isInternal',
     details: 'details',
+    party: 'party',
     providerId: 'providerId'
   };
 
@@ -41786,6 +41834,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
    * Reference to a field of type 'AuthzGrantStatus'
    */
   export type EnumAuthzGrantStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthzGrantStatus'>
@@ -41800,16 +41862,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
+   * Reference to a field of type 'Float'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
 
 
   /**
-   * Reference to a field of type 'Int[]'
+   * Reference to a field of type 'Float[]'
    */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -42983,6 +43045,7 @@ export namespace Prisma {
     status?: StringFilter<"Application"> | string
     isInternal?: BoolFilter<"Application"> | boolean
     details?: JsonNullableFilter<"Application">
+    party?: IntFilter<"Application"> | number
     providerId?: StringNullableFilter<"Application"> | string | null
     provider?: XOR<ApplicationProviderNullableScalarRelationFilter, ApplicationProviderWhereInput> | null
     connections?: ApplicationConnectionListRelationFilter
@@ -43007,6 +43070,7 @@ export namespace Prisma {
     status?: SortOrder
     isInternal?: SortOrder
     details?: SortOrderInput | SortOrder
+    party?: SortOrder
     providerId?: SortOrderInput | SortOrder
     provider?: ApplicationProviderOrderByWithRelationInput
     connections?: ApplicationConnectionOrderByRelationAggregateInput
@@ -43034,6 +43098,7 @@ export namespace Prisma {
     status?: StringFilter<"Application"> | string
     isInternal?: BoolFilter<"Application"> | boolean
     details?: JsonNullableFilter<"Application">
+    party?: IntFilter<"Application"> | number
     providerId?: StringNullableFilter<"Application"> | string | null
     provider?: XOR<ApplicationProviderNullableScalarRelationFilter, ApplicationProviderWhereInput> | null
     connections?: ApplicationConnectionListRelationFilter
@@ -43058,10 +43123,13 @@ export namespace Prisma {
     status?: SortOrder
     isInternal?: SortOrder
     details?: SortOrderInput | SortOrder
+    party?: SortOrder
     providerId?: SortOrderInput | SortOrder
     _count?: ApplicationCountOrderByAggregateInput
+    _avg?: ApplicationAvgOrderByAggregateInput
     _max?: ApplicationMaxOrderByAggregateInput
     _min?: ApplicationMinOrderByAggregateInput
+    _sum?: ApplicationSumOrderByAggregateInput
   }
 
   export type ApplicationScalarWhereWithAggregatesInput = {
@@ -43079,6 +43147,7 @@ export namespace Prisma {
     status?: StringWithAggregatesFilter<"Application"> | string
     isInternal?: BoolWithAggregatesFilter<"Application"> | boolean
     details?: JsonNullableWithAggregatesFilter<"Application">
+    party?: IntWithAggregatesFilter<"Application"> | number
     providerId?: StringNullableWithAggregatesFilter<"Application"> | string | null
   }
 
@@ -45327,6 +45396,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
@@ -45350,6 +45420,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
@@ -45373,6 +45444,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
@@ -45396,6 +45468,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
@@ -45419,6 +45492,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     providerId?: string | null
   }
 
@@ -45434,6 +45508,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
   }
 
   export type ApplicationUncheckedUpdateManyInput = {
@@ -45448,6 +45523,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -47348,6 +47424,17 @@ export namespace Prisma {
     secretHash?: SortOrder
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type ApplicationProviderNullableScalarRelationFilter = {
     is?: ApplicationProviderWhereInput | null
     isNot?: ApplicationProviderWhereInput | null
@@ -47415,7 +47502,12 @@ export namespace Prisma {
     status?: SortOrder
     isInternal?: SortOrder
     details?: SortOrder
+    party?: SortOrder
     providerId?: SortOrder
+  }
+
+  export type ApplicationAvgOrderByAggregateInput = {
+    party?: SortOrder
   }
 
   export type ApplicationMaxOrderByAggregateInput = {
@@ -47428,6 +47520,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     status?: SortOrder
     isInternal?: SortOrder
+    party?: SortOrder
     providerId?: SortOrder
   }
 
@@ -47441,7 +47534,28 @@ export namespace Prisma {
     createdAt?: SortOrder
     status?: SortOrder
     isInternal?: SortOrder
+    party?: SortOrder
     providerId?: SortOrder
+  }
+
+  export type ApplicationSumOrderByAggregateInput = {
+    party?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type AssetListRelationFilter = {
@@ -49405,6 +49519,14 @@ export namespace Prisma {
     connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type ApplicationProviderUpdateOneWithoutApplicationsNestedInput = {
     create?: XOR<ApplicationProviderCreateWithoutApplicationsInput, ApplicationProviderUncheckedCreateWithoutApplicationsInput>
     connectOrCreate?: ApplicationProviderCreateOrConnectWithoutApplicationsInput
@@ -50744,6 +50866,33 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedEnumAuthzGrantStatusFilter<$PrismaModel = never> = {
@@ -54496,6 +54645,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
@@ -54518,6 +54668,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
@@ -54569,6 +54720,7 @@ export namespace Prisma {
     status?: StringFilter<"Application"> | string
     isInternal?: BoolFilter<"Application"> | boolean
     details?: JsonNullableFilter<"Application">
+    party?: IntFilter<"Application"> | number
     providerId?: StringNullableFilter<"Application"> | string | null
   }
 
@@ -55982,6 +56134,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
@@ -56004,6 +56157,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     providerId?: string | null
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
@@ -56125,6 +56279,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
@@ -56147,6 +56302,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
@@ -56169,6 +56325,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
@@ -56191,6 +56348,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
@@ -56229,6 +56387,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
@@ -56251,6 +56410,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
@@ -56273,6 +56433,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
@@ -56295,6 +56456,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
@@ -56333,6 +56495,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
@@ -56355,6 +56518,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
@@ -56377,6 +56541,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
@@ -56399,6 +56564,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
@@ -56465,6 +56631,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
@@ -56487,6 +56654,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
@@ -56538,6 +56706,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
@@ -56560,6 +56729,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
@@ -56710,6 +56880,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
@@ -56732,6 +56903,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
@@ -57107,6 +57279,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
@@ -57129,6 +57302,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
@@ -57393,6 +57567,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
@@ -57415,6 +57590,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
@@ -58118,6 +58294,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
@@ -58140,6 +58317,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
@@ -58386,6 +58564,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
@@ -58408,6 +58587,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
@@ -58662,6 +58842,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
@@ -58684,6 +58865,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
     providerId?: string | null
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
@@ -58722,6 +58904,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
@@ -58744,6 +58927,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
@@ -59700,6 +59884,7 @@ export namespace Prisma {
     status?: string
     isInternal?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: number
   }
 
   export type ApplicationUpdateWithoutProviderInput = {
@@ -59714,6 +59899,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
@@ -59736,6 +59922,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
@@ -59758,6 +59945,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
+    party?: IntFieldUpdateOperationsInput | number
   }
 
   export type ApplicationConnectionCreateManyApplicationInput = {
