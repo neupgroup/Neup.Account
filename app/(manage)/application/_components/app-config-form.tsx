@@ -6,14 +6,19 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useToast } from '@/core/hooks/use-toast';
 import { saveAppConfig, addSilentSsoOrigin, removeSilentSsoOrigin } from '@/services/applications/manage';
-import { applicationAccessFields, type ApplicationAccessField } from '@/services/applications/types';
+import {
+  applicationResponseFields,
+  applicationTokenFields,
+  type ApplicationAccessField,
+  type ApplicationResponseField,
+  type ApplicationTokenField,
+} from '@/services/applications/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Badge } from '@/components/ui/badge';
-import { Loader2, Eye, EyeOff, Plus, Trash2, KeyRound, Database, Globe } from 'lucide-react';
+import { Loader2, Eye, EyeOff, Plus, Trash2, KeyRound, Database, Globe, Variable } from 'lucide-react';
 
 // ---------------------------------------------------------------------------
 // Field labels
@@ -49,10 +54,17 @@ const schema = z.object({
     })
     .optional()
     .or(z.literal('')),
-  access: z.array(z.enum(applicationAccessFields)).default([]),
+  access: z.array(z.enum(applicationResponseFields)).default([]),
+  tokenFields: z.array(z.enum(applicationTokenFields)).default([]),
 });
 
 type FormValues = z.infer<typeof schema>;
+
+const responseFieldSet = new Set<ApplicationAccessField>(applicationResponseFields);
+const isResponseField = (field: ApplicationAccessField): field is ApplicationResponseField => responseFieldSet.has(field);
+
+const tokenFieldSet = new Set<ApplicationAccessField>(applicationTokenFields);
+const isTokenField = (field: ApplicationAccessField): field is ApplicationTokenField => tokenFieldSet.has(field);
 
 // ---------------------------------------------------------------------------
 // Props
@@ -62,6 +74,7 @@ type Props = {
   appId: string;
   hasSecretKey: boolean;
   initialAccess: ApplicationAccessField[];
+  initialTokenFields: ApplicationAccessField[];
   initialOrigins: Array<{ id: string; value: string }>;
 };
 
@@ -69,7 +82,7 @@ type Props = {
 // Component
 // ---------------------------------------------------------------------------
 
-export function AppConfigForm({ appId, hasSecretKey, initialAccess, initialOrigins }: Props) {
+export function AppConfigForm({ appId, hasSecretKey, initialAccess, initialTokenFields, initialOrigins }: Props) {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
   const [isOriginPending, startOriginTransition] = useTransition();
@@ -81,7 +94,8 @@ export function AppConfigForm({ appId, hasSecretKey, initialAccess, initialOrigi
     resolver: zodResolver(schema),
     defaultValues: {
       secretKey: '',
-      access: initialAccess,
+      access: initialAccess.filter(isResponseField),
+      tokenFields: initialTokenFields.filter(isTokenField),
     },
   });
 
@@ -91,6 +105,7 @@ export function AppConfigForm({ appId, hasSecretKey, initialAccess, initialOrigi
         appId,
         secretKey: values.secretKey || undefined,
         access: values.access,
+        tokenFields: values.tokenFields,
       });
       if (result.success) {
         toast({ title: 'Saved', description: 'Configuration updated.' });
@@ -207,7 +222,7 @@ export function AppConfigForm({ appId, hasSecretKey, initialAccess, initialOrigi
                 render={() => (
                   <FormItem>
                     <div className="grid gap-3 sm:grid-cols-2">
-                      {(applicationAccessFields as readonly ApplicationAccessField[]).map((field) => {
+                      {(applicationResponseFields as readonly ApplicationResponseField[]).map((field) => {
                         const meta = fieldLabels[field];
                         return (
                           <FormField
@@ -238,6 +253,85 @@ export function AppConfigForm({ appId, hasSecretKey, initialAccess, initialOrigi
                           />
                         );
                       })}
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+            <CardFooter>
+              <Button type="submit" disabled={isPending}>
+                {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Save Configuration
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* Token fields (JWT only) */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <Variable className="h-4 w-4 text-muted-foreground" />
+                <CardTitle>JWT Token Fields</CardTitle>
+              </div>
+              <CardDescription>
+                Select which fields are embedded in the issued JWT. These fields are not included in the API response payload.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <FormField
+                control={form.control}
+                name="tokenFields"
+                render={() => (
+                  <FormItem>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {(applicationTokenFields as readonly ApplicationTokenField[]).map((tokenField) => {
+                        const meta = fieldLabels[tokenField];
+                        return (
+                          <FormField
+                            key={tokenField}
+                            control={form.control}
+                            name="tokenFields"
+                            render={({ field: formField }) => (
+                              <FormItem className="flex items-start gap-3 rounded-lg border p-3">
+                                <FormControl>
+                                  <Checkbox
+                                    checked={formField.value?.includes(tokenField)}
+                                    onCheckedChange={(checked) => {
+                                      const current = formField.value ?? [];
+                                      formField.onChange(
+                                        checked
+                                          ? [...current, tokenField]
+                                          : current.filter((v) => v !== tokenField),
+                                      );
+                                    }}
+                                  />
+                                </FormControl>
+                                <div className="space-y-0.5 leading-none">
+                                  <FormLabel className="font-medium cursor-pointer">{meta.label}</FormLabel>
+                                  <p className="text-xs text-muted-foreground">{meta.description}</p>
+                                </div>
+                              </FormItem>
+                            )}
+                          />
+                        );
+                      })}
+
+                      <div className="flex items-start gap-3 rounded-lg border p-3">
+                        <Checkbox checked disabled aria-label="Issued On is always included in JWT" />
+                        <div className="space-y-0.5 leading-none">
+                          <p className="text-sm font-medium">Issued On</p>
+                          <p className="text-xs text-muted-foreground">JWT issued-at timestamp (<code className="text-xs">iat</code>).</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-3 rounded-lg border p-3">
+                        <Checkbox checked disabled aria-label="Expires On is always included in JWT" />
+                        <div className="space-y-0.5 leading-none">
+                          <p className="text-sm font-medium">Expires On</p>
+                          <p className="text-xs text-muted-foreground">JWT expiry timestamp (<code className="text-xs">exp</code>).</p>
+                        </div>
+                      </div>
                     </div>
                     <FormMessage />
                   </FormItem>

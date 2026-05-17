@@ -39,7 +39,7 @@ export default async function ApplicationConfigPage({ params }: Props) {
         <BackButton href={`/application/${id}`} />
         <PrimaryHeader
           title="Configuration"
-          description={`API secret, response fields, and SSO origins for ${details.name}.`}
+          description={`API secret, response fields, token fields, and SSO origins for ${details.name}.`}
         />
       </div>
 
@@ -47,6 +47,7 @@ export default async function ApplicationConfigPage({ params }: Props) {
         appId={id}
         hasSecretKey={config.hasSecretKey}
         initialAccess={config.access}
+        initialTokenFields={config.tokenFields}
         initialOrigins={config.silentSsoOrigins}
       />
     </div>

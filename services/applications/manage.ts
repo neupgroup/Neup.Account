@@ -9,6 +9,8 @@ import { checkPermissions } from '@/services/user';
 import { logError } from '@/core/helpers/logger';
 import {
   applicationAccessFields,
+  applicationResponseFields,
+  applicationTokenFields,
   type Application,
   type ApplicationAccessField,
   type ApplicationEndpointConfig,
@@ -16,6 +18,9 @@ import {
   type ManagedApplication,
   type ApplicationDetailsV2,
 } from '@/services/applications/types';
+
+const responseAccessSet = new Set<ApplicationAccessField>(applicationResponseFields);
+const tokenFieldSet = new Set<ApplicationAccessField>(applicationTokenFields);
 
 const createApplicationSchema = z.object({
   name: z.string().trim().min(1, 'Application name is required.').max(120, 'Application name is too long.'),
@@ -251,7 +256,7 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
           name: true,
           description: true,
           icon: true,
-          details: true,
+          responseFields: true,
           policies: true,
           endpoints: true,
         },
@@ -267,7 +272,7 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
 
     if (!application) return null;
 
-    const configuredAccess = normalizeAccess((application as any).details?.access ?? []);
+    const configuredAccess = normalizeAccess(application.responseFields).filter((field) => responseAccessSet.has(field));
     const policies = normalizePolicies(application.policies);
     const endpoints = normalizeEndpoints(application.endpoints);
 
@@ -558,7 +563,7 @@ export async function getManagedApplication(appId: string): Promise<ManagedAppli
           name: true,
           createdAt: true,
           appSecret: true,
-          details: true,
+          responseFields: true,
           policies: true,
           endpoints: true,
         },
@@ -578,7 +583,7 @@ export async function getManagedApplication(appId: string): Promise<ManagedAppli
       name: application.name,
       createdAt: application.createdAt,
       hasSecretKey: Boolean(application.appSecret),
-      access: normalizeAccess((application as any).details?.access ?? []),
+      access: normalizeAccess(application.responseFields).filter((field) => responseAccessSet.has(field)),
       policies: normalizePolicies(application.policies),
       endpoints: normalizeEndpoints(application.endpoints),
       authzWebhookUrl: authzWebhookRecord?.value ?? null,
@@ -660,13 +665,11 @@ export async function saveApplicationAccess(input: { appId: string; access: Appl
       return { success: false, error: 'Permission denied.' };
     }
 
+    const sanitizedAccess = parsed.data.access.filter((field) => responseAccessSet.has(field));
+
     const result = await prisma.application.updateMany({
-      where: {
-        id: parsed.data.appId,
-      },
-      data: {
-        details: { access: parsed.data.access },
-      },
+      where: { id: parsed.data.appId },
+      data: { responseFields: sanitizedAccess },
     });
 
     if (result.count === 0) {
@@ -1001,7 +1004,7 @@ export async function getApplicationDetailsForViewerV2(appId: string): Promise<A
         website: true,
         status: true,
         isInternal: true,
-        details: true,
+        responseFields: true,
         policies: true,
         endpoints: true,
       },
@@ -1043,7 +1046,7 @@ export async function getApplicationDetailsForViewerV2(appId: string): Promise<A
         })
       : [];
 
-    const configuredAccess = normalizeAccess((application as any).details?.access ?? []);
+    const configuredAccess = normalizeAccess(application.responseFields).filter((field) => responseAccessSet.has(field));
     const policies = normalizePolicies(application.policies);
     const endpoints = normalizeEndpoints(application.endpoints);
     const accessedData = Array.from(new Set(appSessions.map((row) => row.roleId)));
@@ -1702,6 +1705,7 @@ const saveAppConfigSchema = z.object({
   appId: z.string().min(1),
   secretKey: z.string().min(16, 'Secret must be at least 16 characters.').optional().or(z.literal('')),
   access: z.array(z.enum(applicationAccessFields)).default([]),
+  tokenFields: z.array(z.enum(applicationTokenFields)).default([]),
 });
 
 /**
@@ -1725,14 +1729,17 @@ export async function saveAppConfig(
     return { success: false, fieldErrors };
   }
 
-  const { appId, secretKey, access } = parsed.data;
+  const { appId, secretKey, access, tokenFields } = parsed.data;
+  const sanitizedAccess = access.filter((field) => responseAccessSet.has(field));
+  const sanitizedTokenFields = tokenFields.filter((field) => tokenFieldSet.has(field));
 
   const canEdit = await isApplicationOwnerForAccount(accountId, appId);
   if (!canEdit) return { success: false, error: 'Only the application owner can configure this application.' };
 
   try {
     const updateData: Record<string, unknown> = {
-      details: { access },
+      responseFields: sanitizedAccess,
+      tokenFields: sanitizedTokenFields,
     };
     if (secretKey && secretKey.trim().length >= 16) {
       updateData.appSecret = secretKey.trim();
@@ -1761,6 +1768,7 @@ export async function saveAppConfig(
 export async function getAppConfigData(appId: string): Promise<{
   hasSecretKey: boolean;
   access: ApplicationAccessField[];
+  tokenFields: ApplicationAccessField[];
   silentSsoOrigins: Array<{ id: string; value: string }>;
   status: string;
 } | null> {
@@ -1774,7 +1782,7 @@ export async function getAppConfigData(appId: string): Promise<{
     const [app, origins] = await Promise.all([
       prisma.application.findUnique({
         where: { id: appId },
-        select: { appSecret: true, details: true, status: true },
+        select: { appSecret: true, responseFields: true, tokenFields: true, status: true },
       }),
       prisma.applicationBridge.findMany({
         where: { appId, type: 'silentSsoOrigin' },
@@ -1787,7 +1795,8 @@ export async function getAppConfigData(appId: string): Promise<{
 
     return {
       hasSecretKey: Boolean(app.appSecret),
-      access: normalizeAccess((app as any).details?.access ?? []),
+      access: normalizeAccess(app.responseFields).filter((field) => responseAccessSet.has(field)),
+      tokenFields: normalizeAccess(app.tokenFields).filter((field) => tokenFieldSet.has(field)),
       silentSsoOrigins: origins,
       status: app.status ?? 'development',
     };

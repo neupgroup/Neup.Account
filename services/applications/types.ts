@@ -19,6 +19,33 @@ export const applicationAccessFields = [
 
 export type ApplicationAccessField = (typeof applicationAccessFields)[number];
 
+// ---------------------------------------------------------------------------
+// Config UI groupings
+// ---------------------------------------------------------------------------
+
+// Fields the application owner can toggle for API "response" payloads.
+export const applicationResponseFields = [
+  'displayName',
+  'lastActive',
+  'dateBirth',
+  'age',
+  'gender',
+  'isMinor',
+] as const satisfies readonly ApplicationAccessField[];
+
+export type ApplicationResponseField = (typeof applicationResponseFields)[number];
+
+// JWT fields an application can request to be included in issued tokens.
+// Note: issuedOn/expiresOn are always included and are not configurable.
+export const applicationTokenFields = [
+  'connectionId',
+  'accountId',
+  'accountType',
+  'neupid',
+] as const satisfies readonly ApplicationAccessField[];
+
+export type ApplicationTokenField = (typeof applicationTokenFields)[number];
+
 export type Application = {
   id: string;
   name: string;

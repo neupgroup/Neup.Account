@@ -265,6 +265,8 @@ model Application {
   endpoints                Json?
   status                   String                    @default("development")
   isInternal               Boolean                   @default(false) @map("is_internal")
+  responseFields           String[]                  @default([]) @map("response_fields")
+  tokenFields              String[]                  @default([]) @map("token_fields")
   details                  Json?
   party                    Int                       @default(1)
   providerId               String?                   @map("provider_id")

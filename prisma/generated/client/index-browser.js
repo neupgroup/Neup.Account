@@ -295,6 +295,8 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   endpoints: 'endpoints',
   status: 'status',
   isInternal: 'isInternal',
+  responseFields: 'responseFields',
+  tokenFields: 'tokenFields',
   details: 'details',
   party: 'party',
   providerId: 'providerId'

@@ -23351,6 +23351,8 @@ export namespace Prisma {
     endpoints: number
     status: number
     isInternal: number
+    responseFields: number
+    tokenFields: number
     details: number
     party: number
     providerId: number
@@ -23405,6 +23407,8 @@ export namespace Prisma {
     endpoints?: true
     status?: true
     isInternal?: true
+    responseFields?: true
+    tokenFields?: true
     details?: true
     party?: true
     providerId?: true
@@ -23508,6 +23512,8 @@ export namespace Prisma {
     endpoints: JsonValue | null
     status: string
     isInternal: boolean
+    responseFields: string[]
+    tokenFields: string[]
     details: JsonValue | null
     party: number
     providerId: string | null
@@ -23543,6 +23549,8 @@ export namespace Prisma {
     endpoints?: boolean
     status?: boolean
     isInternal?: boolean
+    responseFields?: boolean
+    tokenFields?: boolean
     details?: boolean
     party?: boolean
     providerId?: boolean
@@ -23569,6 +23577,8 @@ export namespace Prisma {
     endpoints?: boolean
     status?: boolean
     isInternal?: boolean
+    responseFields?: boolean
+    tokenFields?: boolean
     details?: boolean
     party?: boolean
     providerId?: boolean
@@ -23586,6 +23596,8 @@ export namespace Prisma {
     endpoints?: boolean
     status?: boolean
     isInternal?: boolean
+    responseFields?: boolean
+    tokenFields?: boolean
     details?: boolean
     party?: boolean
     providerId?: boolean
@@ -23603,12 +23615,14 @@ export namespace Prisma {
     endpoints?: boolean
     status?: boolean
     isInternal?: boolean
+    responseFields?: boolean
+    tokenFields?: boolean
     details?: boolean
     party?: boolean
     providerId?: boolean
   }
 
-  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "icon" | "website" | "appSecret" | "createdAt" | "endpoints" | "status" | "isInternal" | "details" | "party" | "providerId", ExtArgs["result"]["application"]>
+  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "icon" | "website" | "appSecret" | "createdAt" | "endpoints" | "status" | "isInternal" | "responseFields" | "tokenFields" | "details" | "party" | "providerId", ExtArgs["result"]["application"]>
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     provider?: boolean | Application$providerArgs<ExtArgs>
     connections?: boolean | Application$connectionsArgs<ExtArgs>
@@ -23652,6 +23666,8 @@ export namespace Prisma {
       endpoints: Prisma.JsonValue | null
       status: string
       isInternal: boolean
+      responseFields: string[]
+      tokenFields: string[]
       details: Prisma.JsonValue | null
       party: number
       providerId: string | null
@@ -24097,6 +24113,8 @@ export namespace Prisma {
     readonly endpoints: FieldRef<"Application", 'Json'>
     readonly status: FieldRef<"Application", 'String'>
     readonly isInternal: FieldRef<"Application", 'Boolean'>
+    readonly responseFields: FieldRef<"Application", 'String[]'>
+    readonly tokenFields: FieldRef<"Application", 'String[]'>
     readonly details: FieldRef<"Application", 'Json'>
     readonly party: FieldRef<"Application", 'Int'>
     readonly providerId: FieldRef<"Application", 'String'>
@@ -41541,6 +41559,8 @@ export namespace Prisma {
     endpoints: 'endpoints',
     status: 'status',
     isInternal: 'isInternal',
+    responseFields: 'responseFields',
+    tokenFields: 'tokenFields',
     details: 'details',
     party: 'party',
     providerId: 'providerId'
@@ -43044,6 +43064,8 @@ export namespace Prisma {
     endpoints?: JsonNullableFilter<"Application">
     status?: StringFilter<"Application"> | string
     isInternal?: BoolFilter<"Application"> | boolean
+    responseFields?: StringNullableListFilter<"Application">
+    tokenFields?: StringNullableListFilter<"Application">
     details?: JsonNullableFilter<"Application">
     party?: IntFilter<"Application"> | number
     providerId?: StringNullableFilter<"Application"> | string | null
@@ -43069,6 +43091,8 @@ export namespace Prisma {
     endpoints?: SortOrderInput | SortOrder
     status?: SortOrder
     isInternal?: SortOrder
+    responseFields?: SortOrder
+    tokenFields?: SortOrder
     details?: SortOrderInput | SortOrder
     party?: SortOrder
     providerId?: SortOrderInput | SortOrder
@@ -43097,6 +43121,8 @@ export namespace Prisma {
     endpoints?: JsonNullableFilter<"Application">
     status?: StringFilter<"Application"> | string
     isInternal?: BoolFilter<"Application"> | boolean
+    responseFields?: StringNullableListFilter<"Application">
+    tokenFields?: StringNullableListFilter<"Application">
     details?: JsonNullableFilter<"Application">
     party?: IntFilter<"Application"> | number
     providerId?: StringNullableFilter<"Application"> | string | null
@@ -43122,6 +43148,8 @@ export namespace Prisma {
     endpoints?: SortOrderInput | SortOrder
     status?: SortOrder
     isInternal?: SortOrder
+    responseFields?: SortOrder
+    tokenFields?: SortOrder
     details?: SortOrderInput | SortOrder
     party?: SortOrder
     providerId?: SortOrderInput | SortOrder
@@ -43146,6 +43174,8 @@ export namespace Prisma {
     endpoints?: JsonNullableWithAggregatesFilter<"Application">
     status?: StringWithAggregatesFilter<"Application"> | string
     isInternal?: BoolWithAggregatesFilter<"Application"> | boolean
+    responseFields?: StringNullableListFilter<"Application">
+    tokenFields?: StringNullableListFilter<"Application">
     details?: JsonNullableWithAggregatesFilter<"Application">
     party?: IntWithAggregatesFilter<"Application"> | number
     providerId?: StringNullableWithAggregatesFilter<"Application"> | string | null
@@ -45395,6 +45425,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
@@ -45419,6 +45451,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     providerId?: string | null
@@ -45443,6 +45477,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
@@ -45467,6 +45503,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45491,6 +45529,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     providerId?: string | null
@@ -45507,6 +45547,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
   }
@@ -45522,6 +45564,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -47424,6 +47468,14 @@ export namespace Prisma {
     secretHash?: SortOrder
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -47501,6 +47553,8 @@ export namespace Prisma {
     endpoints?: SortOrder
     status?: SortOrder
     isInternal?: SortOrder
+    responseFields?: SortOrder
+    tokenFields?: SortOrder
     details?: SortOrder
     party?: SortOrder
     providerId?: SortOrder
@@ -47946,14 +48000,6 @@ export namespace Prisma {
     portfolio_id?: SortOrder
     app_id?: SortOrder
     asset_type?: SortOrder
-  }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
   }
 
   export type PermitCountOrderByAggregateInput = {
@@ -49401,6 +49447,14 @@ export namespace Prisma {
     deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
   }
 
+  export type ApplicationCreateresponseFieldsInput = {
+    set: string[]
+  }
+
+  export type ApplicationCreatetokenFieldsInput = {
+    set: string[]
+  }
+
   export type ApplicationProviderCreateNestedOneWithoutApplicationsInput = {
     create?: XOR<ApplicationProviderCreateWithoutApplicationsInput, ApplicationProviderUncheckedCreateWithoutApplicationsInput>
     connectOrCreate?: ApplicationProviderCreateOrConnectWithoutApplicationsInput
@@ -49517,6 +49571,16 @@ export namespace Prisma {
     connectOrCreate?: IdentityCreateOrConnectWithoutApplicationInput | IdentityCreateOrConnectWithoutApplicationInput[]
     createMany?: IdentityCreateManyApplicationInputEnvelope
     connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+  }
+
+  export type ApplicationUpdateresponseFieldsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ApplicationUpdatetokenFieldsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -54644,6 +54708,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
@@ -54667,6 +54733,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
@@ -54719,6 +54787,8 @@ export namespace Prisma {
     endpoints?: JsonNullableFilter<"Application">
     status?: StringFilter<"Application"> | string
     isInternal?: BoolFilter<"Application"> | boolean
+    responseFields?: StringNullableListFilter<"Application">
+    tokenFields?: StringNullableListFilter<"Application">
     details?: JsonNullableFilter<"Application">
     party?: IntFilter<"Application"> | number
     providerId?: StringNullableFilter<"Application"> | string | null
@@ -56133,6 +56203,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
@@ -56156,6 +56228,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     providerId?: string | null
@@ -56278,6 +56352,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
@@ -56301,6 +56377,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56324,6 +56402,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
@@ -56347,6 +56427,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     providerId?: string | null
@@ -56386,6 +56468,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
@@ -56409,6 +56493,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56432,6 +56518,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
@@ -56455,6 +56543,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     providerId?: string | null
@@ -56494,6 +56584,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
@@ -56517,6 +56609,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56540,6 +56634,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
@@ -56563,6 +56659,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     providerId?: string | null
@@ -56630,6 +56728,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
@@ -56653,6 +56753,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56705,6 +56807,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
@@ -56728,6 +56832,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     providerId?: string | null
@@ -56879,6 +56985,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
@@ -56902,6 +57010,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57278,6 +57388,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
@@ -57301,6 +57413,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     providerId?: string | null
@@ -57566,6 +57680,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
@@ -57589,6 +57705,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58293,6 +58411,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
@@ -58316,6 +58436,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     providerId?: string | null
@@ -58563,6 +58685,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
@@ -58586,6 +58710,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58841,6 +58967,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     provider?: ApplicationProviderCreateNestedOneWithoutApplicationsInput
@@ -58864,6 +58992,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
     providerId?: string | null
@@ -58903,6 +59033,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     provider?: ApplicationProviderUpdateOneWithoutApplicationsNestedInput
@@ -58926,6 +59058,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59883,6 +60017,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     isInternal?: boolean
+    responseFields?: ApplicationCreateresponseFieldsInput | string[]
+    tokenFields?: ApplicationCreatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: number
   }
@@ -59898,6 +60034,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
@@ -59921,6 +60059,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
@@ -59944,6 +60084,8 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     isInternal?: BoolFieldUpdateOperationsInput | boolean
+    responseFields?: ApplicationUpdateresponseFieldsInput | string[]
+    tokenFields?: ApplicationUpdatetokenFieldsInput | string[]
     details?: NullableJsonNullValueInput | InputJsonValue
     party?: IntFieldUpdateOperationsInput | number
   }

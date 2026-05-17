@@ -214,7 +214,7 @@ export async function getAuthSignPageData(
 					description: true,
 					website: true,
 					icon: true,
-					details: true,
+					responseFields: true,
 					policies: true,
 				},
 		  })
@@ -226,7 +226,7 @@ export async function getAuthSignPageData(
 			name: application.name,
 			description: application.description,
 			website: application.website,
-			access: normalizeAccess((application.details as Record<string, unknown> | null)?.access ?? []),
+			access: normalizeAccess(application.responseFields),
 			policies: normalizePolicies(application.policies),
 		}
 		: null;
