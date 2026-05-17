@@ -267,6 +267,7 @@ model Application {
   status         String                  @default("development")
   isInternal     Boolean                 @default(false) @map("is_internal")
   details        Json?
+  party          Int                     @default(1)
   providerId     String?                 @map("provider_id")
   provider       ApplicationProvider?    @relation(fields: [providerId], references: [id], map: "application_provider_id_fkey")
   connections    ApplicationConnection[]
