@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npx next dev --turbopack --experimental-https --port 2226",
-    "build": "next build",
-    "build:strict": "eslint . && npm run typecheck && next build",
+    "build": "npx prisma generate && npx next build",
     "start": "next start --port 2226",
     "seed": "tsx prisma/seed.ts",
     "grant-root": "tsx prisma/grant-root.ts",
