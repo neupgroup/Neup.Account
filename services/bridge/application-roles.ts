@@ -120,53 +120,64 @@ export async function getApplicationRoles(params: {
         status: 200,
         body: {
           success: true,
-          columns: ['roleId', 'roleName', 'roleDescription', 'roleScope', 'capabilities'],
+          columns: ['roleId', 'roleName', 'roleDescription', 'roleScope', 'pushed', 'capabilities'],
           data: [],
           meta: { total: 0, returned: 0, startedAt: null, endedAt: null },
         },
       };
     }
 
-    // 4. Count total
-    const total = await prisma.authzRole.count({
-      where: {
+    const { total, roles } = await prisma.$transaction(async (tx) => {
+      const where = {
         appId,
+        pushed: false,
         ...(allowedRoleIds ? { id: { in: allowedRoleIds } } : {}),
-      },
-    });
+      };
 
-    // 5. Fetch roles with their capability maps
-    const roles = await prisma.authzRole.findMany({
-      where: {
-        appId,
-        ...(allowedRoleIds ? { id: { in: allowedRoleIds } } : {}),
-      },
-      ...(cursorId
-        ? { cursor: { id: cursorId }, skip: 1 }
-        : { skip }),
-      take,
-      orderBy: { name: 'asc' },
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        scope: true,
-        roleMaps: {
-          select: {
-            id: true,
-            scope: true,
-            denormalizedCapability: true,
-            capability: {
-              select: {
-                id: true,
-                name: true,
-                description: true,
-                scope: true,
+      // 4. Count total (unpushed only)
+      const total = await tx.authzRole.count({ where });
+
+      // 5. Fetch roles with their capability maps (unpushed only)
+      const roles = await tx.authzRole.findMany({
+        where,
+        ...(cursorId
+          ? { cursor: { id: cursorId }, skip: 1 }
+          : { skip }),
+        take,
+        orderBy: { name: 'asc' },
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          scope: true,
+          pushed: true,
+          roleMaps: {
+            select: {
+              id: true,
+              scope: true,
+              denormalizedCapability: true,
+              capability: {
+                select: {
+                  id: true,
+                  name: true,
+                  description: true,
+                  scope: true,
+                },
               },
             },
           },
         },
-      },
+      });
+
+      // Mark returned roles as pushed (best-effort within txn)
+      if (roles.length > 0) {
+        await tx.authzRole.updateMany({
+          where: { appId, id: { in: roles.map((r) => r.id) } },
+          data: { pushed: true },
+        });
+      }
+
+      return { total, roles };
     });
 
     // 6. Shape rows — capabilities are denormalized inline
@@ -175,6 +186,7 @@ export async function getApplicationRoles(params: {
       'roleName',
       'roleDescription',
       'roleScope',
+      'pushed',
       'capabilities',
     ];
 
@@ -183,6 +195,7 @@ export async function getApplicationRoles(params: {
       roleName: r.name,
       roleDescription: r.description,
       roleScope: r.scope,
+      pushed: true,
       capabilities: r.roleMaps.map((m) => ({
         roleCapabilityId: m.id,
         capabilityId: m.capability.id,

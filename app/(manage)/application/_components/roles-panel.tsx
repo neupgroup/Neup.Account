@@ -11,6 +11,7 @@ import {
   deleteAppRole,
   updateAppRoleCapabilities,
   pushAuthzToWebhook,
+  clearAuthzPushStatus,
   type AppCapability,
   type AppRole,
 } from '@/services/applications/authz-manage';
@@ -34,6 +35,7 @@ export function RolesPanel({ appId, initialRoles, capabilities, hasWebhook }: Pr
   const [editingCapIds, setEditingCapIds] = useState<string[]>([]);
   const [editPending, setEditPending] = useState(false);
   const [pushPending, setPushPending] = useState(false);
+  const [clearPending, setClearPending] = useState(false);
 
   const handleAddRole = async () => {
     const name = newRoleName.trim();
@@ -103,6 +105,27 @@ export function RolesPanel({ appId, initialRoles, capabilities, hasWebhook }: Pr
       return;
     }
     toast({ title: 'Pushed', description: `${result.pushed} role-capability mapping${result.pushed === 1 ? '' : 's'} sent to webhook.` });
+  };
+
+  const handleClearPushStatus = async () => {
+    const ok = window.confirm(
+      'Clear push status for this application?\n\nThis will reset pushed=false for all roles and access grants, so external apps can re-sync.'
+    );
+    if (!ok) return;
+
+    setClearPending(true);
+    const result = await clearAuthzPushStatus(appId);
+    setClearPending(false);
+
+    if (!result.success) {
+      toast({ variant: 'destructive', title: 'Failed', description: result.error || 'Could not clear push status.' });
+      return;
+    }
+
+    toast({
+      title: 'Push status cleared',
+      description: `Reset ${result.cleared.roles} role${result.cleared.roles === 1 ? '' : 's'} and ${result.cleared.access} access grant${result.cleared.access === 1 ? '' : 's'}.`,
+    });
   };
 
   return (
@@ -247,6 +270,23 @@ export function RolesPanel({ appId, initialRoles, capabilities, hasWebhook }: Pr
           </p>
           <Button type="button" onClick={handlePush} disabled={pushPending || !hasWebhook}>
             {pushPending ? 'Pushing...' : 'Push All to App'}
+          </Button>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Reset Push Status</CardTitle>
+          <CardDescription>
+            Clears the <code className="rounded bg-muted px-1 py-0.5 text-xs">pushed</code> flag on roles and access grants for this application.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <p className="text-sm text-muted-foreground">
+            Use this if your client’s synced authz data is corrupted and you need to re-sync from scratch.
+          </p>
+          <Button type="button" variant="outline" onClick={handleClearPushStatus} disabled={clearPending}>
+            {clearPending ? 'Clearing...' : 'Clear Push Status'}
           </Button>
         </CardContent>
       </Card>

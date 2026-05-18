@@ -408,6 +408,7 @@ model AuthzRole {
   description  String?
   appId        String?                   @map("app_id")
   scope        String?
+  pushed       Boolean                   @default(false)
   application  Application?              @relation(fields: [appId], references: [id])
   roleMaps     AuthzRoleCapability[]
   grants       AuthzAccountAccessGrant[]
@@ -505,6 +506,7 @@ model AuthzAppAccessGrant {
   roleId          String           @map("role_id")
   portfolioId     String?          @map("portfolio_id")
   status          AuthzGrantStatus @default(active)
+  pushed          Boolean          @default(false)
 
   application   Application @relation(fields: [appId], references: [id], map: "authz_app_access_grant_app_id_fkey")
   account       Account     @relation("AuthzAppGrantOwner", fields: [accountId], references: [id], map: "authz_app_access_grant_account_id_fkey")

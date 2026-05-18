@@ -374,7 +374,8 @@ exports.Prisma.AuthzRoleScalarFieldEnum = {
   name: 'name',
   description: 'description',
   appId: 'appId',
-  scope: 'scope'
+  scope: 'scope',
+  pushed: 'pushed'
 };
 
 exports.Prisma.AuthzRoleCapabilityScalarFieldEnum = {
@@ -426,7 +427,8 @@ exports.Prisma.AuthzAppAccessGrantScalarFieldEnum = {
   targetAccountId: 'targetAccountId',
   roleId: 'roleId',
   portfolioId: 'portfolioId',
-  status: 'status'
+  status: 'status',
+  pushed: 'pushed'
 };
 
 exports.Prisma.IdentityScalarFieldEnum = {

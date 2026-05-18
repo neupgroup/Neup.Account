@@ -128,64 +128,79 @@ export async function getApplicationAccess(params: {
       where.ownerAccountId = forAccount;
     }
 
-    // 3. Count total
-    const total = await prisma.authzAppAccessGrant.count({
-      where,
-    });
+    // Unpushed only
+    where.pushed = false;
 
-    // 4. Fetch grants with related data
-    const grants = await prisma.authzAppAccessGrant.findMany({
-      where,
-      ...(cursorId
-        ? { cursor: { id: cursorId }, skip: 1 }
-        : { skip }),
-      take,
-      orderBy: { id: 'asc' },
-      select: {
-        id: true,
-        status: true,
-        portfolioId: true,
-        account: {
-          select: {
-            id: true,
-            displayName: true,
-            accountType: true,
+    const { total, grants } = await prisma.$transaction(async (tx) => {
+      // 3. Count total (unpushed only)
+      const total = await tx.authzAppAccessGrant.count({ where });
+
+      // 4. Fetch grants with related data (unpushed only)
+      const grants = await tx.authzAppAccessGrant.findMany({
+        where,
+        ...(cursorId
+          ? { cursor: { id: cursorId }, skip: 1 }
+          : { skip }),
+        take,
+        orderBy: { id: 'asc' },
+        select: {
+          id: true,
+          status: true,
+          pushed: true,
+          portfolioId: true,
+          account: {
+            select: {
+              id: true,
+              displayName: true,
+              accountType: true,
+            },
           },
-        },
-        targetAccount: {
-          select: {
-            id: true,
-            displayName: true,
-            accountType: true,
+          targetAccount: {
+            select: {
+              id: true,
+              displayName: true,
+              accountType: true,
+            },
           },
-        },
-        role: {
-          select: {
-            id: true,
-            name: true,
-            description: true,
-            scope: true,
-            roleMaps: {
-              select: {
-                capability: {
-                  select: {
-                    id: true,
-                    name: true,
-                    scope: true,
+          role: {
+            select: {
+              id: true,
+              name: true,
+              description: true,
+              scope: true,
+              roleMaps: {
+                select: {
+                  capability: {
+                    select: {
+                      id: true,
+                      name: true,
+                      scope: true,
+                    },
                   },
+                  denormalizedCapability: true,
                 },
-                denormalizedCapability: true,
               },
             },
           },
         },
-      },
+      });
+
+      // Mark returned grants as pushed
+      if (grants.length > 0) {
+        await tx.authzAppAccessGrant.updateMany({
+          where: { appId, id: { in: grants.map((g) => g.id) } },
+          data: { pushed: true },
+        });
+      }
+
+      return { total, grants };
     });
 
     // 5. Shape rows
     const columns = [
       'grantId',
       'status',
+      'pushed',
       'ownerAccountId',
       'ownerDisplayName',
       'ownerAccountType',
@@ -203,6 +218,7 @@ export async function getApplicationAccess(params: {
     const data = grants.map((g) => ({
       grantId: g.id,
       status: g.status,
+      pushed: true,
       ownerAccountId: g.account.id,
       ownerDisplayName: g.account.displayName,
       ownerAccountType: g.account.accountType,

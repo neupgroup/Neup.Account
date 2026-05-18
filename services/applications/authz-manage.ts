@@ -366,3 +366,31 @@ export async function pushAuthzToWebhook(appId: string): Promise<{
     return { success: false, pushed: 0, error: 'Failed to push data.' };
   }
 }
+
+// ---------------------------------------------------------------------------
+// Clear push status (roles + app access grants)
+// ---------------------------------------------------------------------------
+
+export async function clearAuthzPushStatus(appId: string): Promise<{
+  success: boolean;
+  cleared: { roles: number; access: number };
+  error?: string;
+}> {
+  const auth = await assertOwner(appId);
+  if ('error' in auth) return { success: false, cleared: { roles: 0, access: 0 }, error: auth.error };
+
+  try {
+    const [rolesResult, accessResult] = await prisma.$transaction([
+      prisma.authzRole.updateMany({ where: { appId }, data: { pushed: false } }),
+      prisma.authzAppAccessGrant.updateMany({ where: { appId }, data: { pushed: false } }),
+    ]);
+
+    revalidatePath(`/application/${appId}/roles`);
+    revalidatePath(`/data/appconnection/${appId}`);
+
+    return { success: true, cleared: { roles: rolesResult.count, access: accessResult.count } };
+  } catch (error) {
+    await logError('database', error, `clearAuthzPushStatus:${appId}`);
+    return { success: false, cleared: { roles: 0, access: 0 }, error: 'Failed to clear push status.' };
+  }
+}
