@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getActiveSession } from '@/core/auth/verify';
 import { getAccessableAccountsWithCapabilities } from '@/services/manage/accounts';
+import { resolveAppTokenAuth } from '@/services/auth/appTokenAuth';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,15 +28,32 @@ export const dynamic = 'force-dynamic';
  */
 export async function GET(_request: NextRequest) {
     const session = await getActiveSession();
+    let accountId: string | null = session?.accountId ?? null;
 
-    if (!session) {
-        return NextResponse.json(
-            { success: false, error: 'Unauthenticated.' },
-            { status: 401 }
-        );
+    if (!accountId) {
+        const authorization = _request.headers.get('authorization') ?? '';
+        const token = authorization.toLowerCase().startsWith('bearer ')
+            ? authorization.slice('bearer '.length).trim()
+            : null;
+
+        const url = new URL(_request.url);
+        const appSecret =
+            _request.headers.get('x-app-secret') ??
+            _request.headers.get('appSecret') ??
+            url.searchParams.get('appSecret');
+
+        const resolved = await resolveAppTokenAuth({ token, appSecret });
+        if (!resolved.ok) {
+            return NextResponse.json(
+                { success: false, error: resolved.error },
+                { status: resolved.status }
+            );
+        }
+
+        accountId = resolved.accountId;
     }
 
-    const accounts = await getAccessableAccountsWithCapabilities(session.accountId);
+    const accounts = await getAccessableAccountsWithCapabilities(accountId);
 
     return NextResponse.json({
         success: true,

@@ -9,3 +9,4 @@
 - `docs/silent-auth-token-flow.md` — Silent SSO iframe → `postMessage` token flow.
 - `docs/auth/silent-sso-integration-guide.md` — quick Silent SSO integration steps.
 - `docs/external-app-api.md` — external app server APIs (users/roles/access).
+- `docs/profile.md` — external app APIs for accessible accounts (accounts/brands/dependents).
