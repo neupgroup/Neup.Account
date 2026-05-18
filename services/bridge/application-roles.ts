@@ -58,6 +58,7 @@ function clampLimit(raw: string | null): number {
 export async function getApplicationRoles(params: {
   appId: string | null;
   appSecret: string | null;
+  account: string | null;
   start: string | null;
   end: string | null;
   startFrom: string | null;
@@ -65,7 +66,7 @@ export async function getApplicationRoles(params: {
   fromDate: string | null;
   toDate: string | null;
 }): Promise<ApplicationRolesResult> {
-  const { appId, appSecret, start, end, startFrom, limit } = params;
+  const { appId, appSecret, account, start, end, startFrom, limit } = params;
 
   // 1. Validate credentials
   if (!appId || !appSecret) {
@@ -103,12 +104,43 @@ export async function getApplicationRoles(params: {
       take = Number.isFinite(endIdx) && endIdx > skip ? Math.min(endIdx - skip, PAGE_LIMIT) : PAGE_LIMIT;
     }
 
-    // 3. Count total
-    const total = await prisma.authzRole.count({ where: { appId } });
+    // 3. If account filter is provided, restrict roles to those granted to that account in this app.
+    let allowedRoleIds: string[] | null = null;
+    if (account) {
+      const grantRoleRows = await prisma.authzAppAccessGrant.findMany({
+        where: { appId, targetAccountId: account },
+        select: { roleId: true },
+        distinct: ['roleId'],
+      });
+      allowedRoleIds = grantRoleRows.map((r) => r.roleId);
+    }
 
-    // 4. Fetch roles with their capability maps
+    if (allowedRoleIds && allowedRoleIds.length === 0) {
+      return {
+        status: 200,
+        body: {
+          success: true,
+          columns: ['roleId', 'roleName', 'roleDescription', 'roleScope', 'capabilities'],
+          data: [],
+          meta: { total: 0, returned: 0, startedAt: null, endedAt: null },
+        },
+      };
+    }
+
+    // 4. Count total
+    const total = await prisma.authzRole.count({
+      where: {
+        appId,
+        ...(allowedRoleIds ? { id: { in: allowedRoleIds } } : {}),
+      },
+    });
+
+    // 5. Fetch roles with their capability maps
     const roles = await prisma.authzRole.findMany({
-      where: { appId },
+      where: {
+        appId,
+        ...(allowedRoleIds ? { id: { in: allowedRoleIds } } : {}),
+      },
       ...(cursorId
         ? { cursor: { id: cursorId }, skip: 1 }
         : { skip }),
@@ -137,7 +169,7 @@ export async function getApplicationRoles(params: {
       },
     });
 
-    // 5. Shape rows — capabilities are denormalized inline
+    // 6. Shape rows — capabilities are denormalized inline
     const columns = [
       'roleId',
       'roleName',

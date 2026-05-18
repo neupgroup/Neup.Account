@@ -45,6 +45,7 @@ export async function GET(request: NextRequest) {
   const result = await getApplicationRoles({
     appId:     sp.get('appId'),
     appSecret: sp.get('appSecret'),
+    account:   sp.get('account'),
     start:     sp.get('start'),
     end:       sp.get('end'),
     startFrom: sp.get('startFrom'),

@@ -59,6 +59,7 @@ function clampLimit(raw: string | null): number {
 export async function getApplicationAccess(params: {
   appId: string | null;
   appSecret: string | null;
+  account: string | null;
   start: string | null;
   end: string | null;
   startFrom: string | null;
@@ -66,7 +67,7 @@ export async function getApplicationAccess(params: {
   fromDate: string | null;
   toDate: string | null;
 }): Promise<ApplicationAccessResult> {
-  const { appId, appSecret, start, end, startFrom, limit } = params;
+  const { appId, appSecret, account, start, end, startFrom, limit } = params;
 
   // 1. Validate credentials
   if (!appId || !appSecret) {
@@ -105,11 +106,19 @@ export async function getApplicationAccess(params: {
     }
 
     // 3. Count total
-    const total = await prisma.authzAppAccessGrant.count({ where: { appId } });
+    const total = await prisma.authzAppAccessGrant.count({
+      where: {
+        appId,
+        ...(account ? { targetAccountId: account } : {}),
+      },
+    });
 
     // 4. Fetch grants with related data
     const grants = await prisma.authzAppAccessGrant.findMany({
-      where: { appId },
+      where: {
+        appId,
+        ...(account ? { targetAccountId: account } : {}),
+      },
       ...(cursorId
         ? { cursor: { id: cursorId }, skip: 1 }
         : { skip }),

@@ -49,6 +49,7 @@ export async function GET(request: NextRequest) {
   const result = await getApplicationAccess({
     appId:     sp.get('appId'),
     appSecret: sp.get('appSecret'),
+    account:   sp.get('account'),
     start:     sp.get('start'),
     end:       sp.get('end'),
     startFrom: sp.get('startFrom'),
