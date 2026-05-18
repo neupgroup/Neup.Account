@@ -16,7 +16,7 @@ If you need the full response schemas and pagination details, also see `docs/ext
 
 All endpoints on this page require your application credentials passed as query parameters:
 
-- `appId` — your application ID
+- `app` — your application ID
 - `appSecret` — your application secret
 
 Requests with invalid credentials are rejected with `401`.
@@ -31,7 +31,7 @@ Requests with invalid credentials are rejected with `401`.
 
 ```http
 GET /account/bridge/api.v1/application/users
-  ?appId=YOUR_APP_ID
+  ?app=YOUR_APP_ID
   &appSecret=YOUR_APP_SECRET
 ```
 
@@ -47,7 +47,7 @@ Pagination examples:
 ```http
 # Offset pagination (first 100 rows)
 GET /account/bridge/api.v1/application/users
-  ?appId=YOUR_APP_ID
+  ?app=YOUR_APP_ID
   &appSecret=YOUR_APP_SECRET
   &start=0
   &end=100
@@ -56,7 +56,7 @@ GET /account/bridge/api.v1/application/users
 ```http
 # Cursor pagination (next page) — use meta.endedAt from the previous response
 GET /account/bridge/api.v1/application/users
-  ?appId=YOUR_APP_ID
+  ?app=YOUR_APP_ID
   &appSecret=YOUR_APP_SECRET
   &startFrom=<connectionId>
   &limit=100
@@ -65,7 +65,7 @@ GET /account/bridge/api.v1/application/users
 ```http
 # Date filtered (connectedAt)
 GET /account/bridge/api.v1/application/users
-  ?appId=YOUR_APP_ID
+  ?app=YOUR_APP_ID
   &appSecret=YOUR_APP_SECRET
   &fromDate=2025-01-01
   &toDate=2026-01-01
@@ -79,7 +79,7 @@ GET /account/bridge/api.v1/application/users
 
 ```http
 GET /account/bridge/api.v1/application/roles
-  ?appId=YOUR_APP_ID
+  ?app=YOUR_APP_ID
   &appSecret=YOUR_APP_SECRET
 ```
 
@@ -96,7 +96,7 @@ Pagination examples:
 ```http
 # Offset pagination
 GET /account/bridge/api.v1/application/roles
-  ?appId=YOUR_APP_ID
+  ?app=YOUR_APP_ID
   &appSecret=YOUR_APP_SECRET
   &start=0
   &end=100
@@ -105,7 +105,7 @@ GET /account/bridge/api.v1/application/roles
 ```http
 # Cursor pagination (next page) — use meta.endedAt from the previous response
 GET /account/bridge/api.v1/application/roles
-  ?appId=YOUR_APP_ID
+  ?app=YOUR_APP_ID
   &appSecret=YOUR_APP_SECRET
   &startFrom=<roleId>
   &limit=100
@@ -114,7 +114,7 @@ GET /account/bridge/api.v1/application/roles
 ```http
 # Roles granted to one account in this app
 GET /account/bridge/api.v1/application/roles
-  ?appId=YOUR_APP_ID
+  ?app=YOUR_APP_ID
   &appSecret=YOUR_APP_SECRET
   &account=<accountId>
 ```
@@ -127,7 +127,7 @@ GET /account/bridge/api.v1/application/roles
 
 ```http
 GET /account/bridge/api.v1/application/access
-  ?appId=YOUR_APP_ID
+  ?app=YOUR_APP_ID
   &appSecret=YOUR_APP_SECRET
 ```
 
@@ -144,7 +144,7 @@ Pagination examples:
 ```http
 # Offset pagination
 GET /account/bridge/api.v1/application/access
-  ?appId=YOUR_APP_ID
+  ?app=YOUR_APP_ID
   &appSecret=YOUR_APP_SECRET
   &start=0
   &end=100
@@ -153,7 +153,7 @@ GET /account/bridge/api.v1/application/access
 ```http
 # Cursor pagination (next page) — use meta.endedAt from the previous response
 GET /account/bridge/api.v1/application/access
-  ?appId=YOUR_APP_ID
+  ?app=YOUR_APP_ID
   &appSecret=YOUR_APP_SECRET
   &startFrom=<grantId>
   &limit=100
@@ -162,7 +162,7 @@ GET /account/bridge/api.v1/application/access
 ```http
 # Access grants granted to one account in this app
 GET /account/bridge/api.v1/application/access
-  ?appId=YOUR_APP_ID
+  ?app=YOUR_APP_ID
   &appSecret=YOUR_APP_SECRET
   &account=<accountId>
 ```

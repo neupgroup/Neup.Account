@@ -103,7 +103,13 @@ export async function GET(request: NextRequest): Promise<Response> {
 
   // 3. Resolve appId
   const { searchParams } = new URL(request.url);
-  const queryAppId = searchParams.get('app') ?? searchParams.get('appId');
+  if (searchParams.has('appId')) {
+    return buildHtmlResponse(
+      { type: MESSAGE_TYPE, success: false, reason: 'invalid_request' },
+      origin || '*'
+    );
+  }
+  const queryAppId = searchParams.get('app');
 
   // If ?app is missing, treat this as the base account system / first-party usage.
   // Only allow first-party origins (*.neupgroup.com) in this mode.

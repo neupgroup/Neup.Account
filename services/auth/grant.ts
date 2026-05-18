@@ -10,8 +10,8 @@ function externalLoginType(appId: string) {
   return `${EXTERNAL_LOGIN_PREFIX}${appId}`;
 }
 
-function resolveAppId(input: { app?: string; appId?: string }): string | null {
-  const raw = (input.app || input.appId || '').trim();
+function resolveAppId(input: { app?: string }): string | null {
+  const raw = (input.app || '').trim();
   return raw ? raw : null;
 }
 
@@ -33,9 +33,14 @@ async function resolveAccountGrant(accountId: string, appId: string): Promise<{ 
 export async function bridgeIssueGrant(input: {
   tempToken?: string;
   app?: string;
-  appId?: string; // legacy
 }): Promise<{ status: number; body: Record<string, any> }> {
   const { tempToken } = input;
+  if ((input as any).appId) {
+    return {
+      status: 400,
+      body: { success: false, error: 'invalid_request', error_description: 'Use `app` (not `appId`).' },
+    };
+  }
   const appId = resolveAppId(input);
 
   if (!tempToken || !appId) {
@@ -185,21 +190,34 @@ export async function bridgeRefreshGrant(input: {
   aid?: string;
   skey?: string;
   app?: string;
-  appId?: string; // legacy
 }): Promise<{ status: number; body: Record<string, any> }> {
+  if ((input as any).appId) {
+    return {
+      status: 400,
+      body: { success: false, error: 'invalid_request', error_description: 'Use `app` (not `appId`).' },
+    };
+  }
   const appId = resolveAppId(input);
 
   try {
     // Token-based refresh (docs/authentication.md): { token } (+ optional ?app=)
     if (input.token) {
-      if (!appId) {
+      // Accept token-only by decoding appId without verification first.
+      let resolvedAppId = appId;
+      if (!resolvedAppId) {
+        const decodedUnverified = jwt.decode(input.token) as any;
+        const tokenAppId = typeof decodedUnverified?.appId === 'string' ? decodedUnverified.appId : null;
+        resolvedAppId = tokenAppId || null;
+      }
+
+      if (!resolvedAppId) {
         return {
           status: 400,
           body: { success: false, error: 'invalid_request', error_description: 'Missing app' },
         };
       }
 
-      const application = await prisma.application.findUnique({ where: { id: appId }, select: { appSecret: true } });
+      const application = await prisma.application.findUnique({ where: { id: resolvedAppId }, select: { appSecret: true } });
       if (!application?.appSecret) {
         return {
           status: 404,
@@ -221,7 +239,7 @@ export async function bridgeRefreshGrant(input: {
       const sid = typeof payload?.sid === 'string' ? payload.sid : null;
       const tokenAppId = typeof payload?.appId === 'string' ? payload.appId : null;
 
-      if (!aid || !sid || (tokenAppId && tokenAppId !== appId)) {
+      if (!aid || !sid || (tokenAppId && tokenAppId !== resolvedAppId)) {
         return {
           status: 401,
           body: { success: false, error: 'invalid_grant', error_description: 'Grant not found, expired, or tampered' },
@@ -232,7 +250,7 @@ export async function bridgeRefreshGrant(input: {
         where: {
           id: sid,
           accountId: aid,
-          loginType: externalLoginType(appId),
+          loginType: externalLoginType(resolvedAppId),
           validTill: { gt: new Date() },
         },
         select: { id: true, accountId: true, validTill: true, lastLoggedIn: true },
@@ -245,7 +263,7 @@ export async function bridgeRefreshGrant(input: {
         };
       }
 
-      const { role: roleName, permissions } = await resolveAccountGrant(aid, appId);
+      const { role: roleName, permissions } = await resolveAccountGrant(aid, resolvedAppId);
 
       const sessionExpSeconds = 60 * 60 * 24 * 7;
       const newSessionExpiresOn = new Date();
@@ -258,7 +276,7 @@ export async function bridgeRefreshGrant(input: {
       const newPayload: any = {
         aid,
         sid,
-        appId,
+        appId: resolvedAppId,
         role: roleName,
         iat,
         exp: jwtExp,
@@ -392,8 +410,13 @@ export async function bridgeCheckGrant(input: {
   sid?: string;
   skey?: string;
   app?: string;
-  appId?: string; // legacy
 }): Promise<{ status: number; body: Record<string, any> }> {
+  if ((input as any).appId) {
+    return {
+      status: 400,
+      body: { success: false, error: 'invalid_request', error_description: 'Use `app` (not `appId`).' },
+    };
+  }
   const { aid, sid, skey } = input;
   const appId = resolveAppId(input);
 

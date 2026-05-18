@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
  * user identity. Rejects requests from browser origins (i.e., any Origin
  * header that matches a registered silentSsoOrigin).
  *
- * Body: { appId, appSecret, code, codeVerifier? }
+ * Body: { app, appSecret, code, codeVerifier? }
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   // 1. Reject browser-origin requests
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   // 2. Parse and validate body
-  let body: { appId?: string; appSecret?: string; code?: string; codeVerifier?: string };
+  let body: { app?: string; appSecret?: string; code?: string; codeVerifier?: string; appId?: string };
   try {
     body = await request.json();
   } catch {
@@ -36,17 +36,24 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
   }
 
-  const { appId, appSecret, code, codeVerifier } = body;
-
-  if (!appId || !appSecret || !code) {
+  if (body.appId) {
     return NextResponse.json(
-      { success: false, error: 'invalid_request', error_description: 'appId, appSecret, and code are required' },
+      { success: false, error: 'invalid_request', error_description: 'Use `app` (not `appId`).' },
+      { status: 400 }
+    );
+  }
+
+  const { app, appSecret, code, codeVerifier } = body;
+
+  if (!app || !appSecret || !code) {
+    return NextResponse.json(
+      { success: false, error: 'invalid_request', error_description: 'app, appSecret, and code are required' },
       { status: 400 }
     );
   }
 
   // 3. Delegate to service
-  const result = await exchangeSilentAuthCode(appId, appSecret, code, codeVerifier);
+  const result = await exchangeSilentAuthCode(app, appSecret, code, codeVerifier);
 
   return NextResponse.json(result.body, { status: result.status });
 }

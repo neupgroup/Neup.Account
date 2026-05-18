@@ -37,7 +37,7 @@ export const dynamic = 'force-dynamic';
  * Errors: 400 (missing params), 401 (invalid session), 404 (app not found), 500
  */
 export async function POST(request: NextRequest) {
-  let body: { aid?: string; sid?: string; skey?: string; app?: string; appId?: string };
+  let body: { aid?: string; sid?: string; skey?: string; app?: string };
 
   try {
     body = await request.json();
@@ -48,11 +48,18 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  if ((body as any).appId) {
+    return NextResponse.json(
+      { success: false, error: 'invalid_request', error_description: 'Use `app` (not `appId`).' },
+      { status: 400 }
+    );
+  }
+
   const result = await issueAccountToken({
     aid: body.aid,
     sid: body.sid,
     skey: body.skey,
-    appId: body.app ?? body.appId,
+    appId: body.app,
   });
   return NextResponse.json(result.body, { status: result.status });
 }

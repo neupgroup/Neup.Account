@@ -10,8 +10,8 @@ function externalLoginType(appId: string) {
   return `${EXTERNAL_LOGIN_PREFIX}${appId}`;
 }
 
-function resolveAppId(input: { app?: string; appId?: string }): string | null {
-  const raw = (input.app || input.appId || '').trim();
+function resolveAppId(input: { app?: string }): string | null {
+  const raw = (input.app || '').trim();
   return raw ? raw : null;
 }
 
@@ -22,8 +22,10 @@ function resolveAppId(input: { app?: string; appId?: string }): string | null {
 export async function bridgeValidateToken(input: {
   token?: string;
   app?: string;
-  appId?: string; // legacy
 }): Promise<{ status: number; body: { success: boolean; error?: string; reason?: string } }> {
+  if ((input as any).appId) {
+    return { status: 400, body: { success: false, error: 'invalid_request' } };
+  }
   const token = input.token?.trim();
   if (!token) {
     return { status: 400, body: { success: false, error: 'invalid_request' } };
@@ -100,8 +102,10 @@ export async function bridgeValidateToken(input: {
 export async function bridgeExpireToken(input: {
   token?: string;
   app?: string;
-  appId?: string; // legacy
 }): Promise<{ status: number; body: { success: boolean; error?: string; message?: string } }> {
+  if ((input as any).appId) {
+    return { status: 400, body: { success: false, error: 'invalid_request' } };
+  }
   const token = input.token?.trim();
   if (!token) {
     return { status: 400, body: { success: false, error: 'invalid_request' } };
@@ -170,4 +174,3 @@ export async function bridgeExpireToken(input: {
 
   return { status: 200, body: { success: true, message: 'Signed out successfully.' } };
 }
-

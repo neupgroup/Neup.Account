@@ -13,7 +13,7 @@ export async function bridgeBuildGrantRedirect(input: {
 }): Promise<{ redirectTo: string }> {
   const { requestUrl, pathname, searchParams } = input;
   const authenticatesTo = searchParams.get('authenticatesTo');
-  const appId = searchParams.get('app') || searchParams.get('appId');
+  const appId = searchParams.get('app');
 
   if (!authenticatesTo) {
     const errorUrl = new URL('/auth/start', requestUrl);
@@ -21,9 +21,17 @@ export async function bridgeBuildGrantRedirect(input: {
     return { redirectTo: errorUrl.toString() };
   }
 
+  // Do not accept legacy appId query param — use `app`.
+  if (searchParams.has('appId')) {
+    const errorUrl = new URL('/auth/start', requestUrl);
+    errorUrl.searchParams.set('error', 'invalid_request');
+    errorUrl.searchParams.set('error_description', 'Use ?app=... instead of ?appId=...');
+    return { redirectTo: errorUrl.toString() };
+  }
+
   if (!appId) {
     const errorUrl = new URL('/auth/start', requestUrl);
-    errorUrl.searchParams.set('error', 'missing_app_id');
+    errorUrl.searchParams.set('error', 'missing_app');
     return { redirectTo: errorUrl.toString() };
   }
 
@@ -39,7 +47,7 @@ export async function bridgeBuildGrantRedirect(input: {
 
   const finalRedirectUrl = new URL(authenticatesTo);
   searchParams.forEach((value, key) => {
-    if (key !== 'authenticatesTo' && key !== 'appId' && key !== 'app') {
+    if (key !== 'authenticatesTo' && key !== 'app') {
       finalRedirectUrl.searchParams.set(key, value);
     }
   });
@@ -73,9 +81,7 @@ export async function bridgeBuildGrantRedirect(input: {
       // /auth/sign will then redirect to signin/signup with backsTo parameter
       const signPageUrl = new URL('/auth/sign', requestUrl);
       signPageUrl.searchParams.set('authenticatesTo', authenticatesTo);
-      // Use `app` in the URL (docs/authentication.md) but keep `appId` compatibility.
       signPageUrl.searchParams.set('app', appId);
-      signPageUrl.searchParams.set('appId', appId);
       return { redirectTo: signPageUrl.toString() };
     }
 

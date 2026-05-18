@@ -41,9 +41,15 @@ export const dynamic = 'force-dynamic';
  */
 export async function GET(request: NextRequest) {
   const sp = request.nextUrl.searchParams;
+  if (sp.has('appId')) {
+    return NextResponse.json(
+      { success: false, error: 'invalid_request', error_description: 'Use `app` (not `appId`).' },
+      { status: 400 }
+    );
+  }
 
   const result = await getApplicationRoles({
-    appId:     sp.get('appId'),
+    appId:     sp.get('app'),
     appSecret: sp.get('appSecret'),
     account:   sp.get('account'),
     start:     sp.get('start'),

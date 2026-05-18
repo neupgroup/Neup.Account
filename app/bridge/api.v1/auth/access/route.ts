@@ -10,11 +10,17 @@ export const dynamic = 'force-dynamic';
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
+  if (searchParams.has('appId')) {
+    return NextResponse.json(
+      { success: false, error: 'invalid_request', error_description: 'Use `app` (not `appId`).' },
+      { status: 400 }
+    );
+  }
   const result = await bridgeGetAuthAccess({
     aid: searchParams.get('aid'),
     sid: searchParams.get('sid'),
     skey: searchParams.get('skey'),
-    appId: searchParams.get('app') ?? searchParams.get('appId'),
+    appId: searchParams.get('app'),
   });
   return NextResponse.json(result.body, { status: result.status });
 }

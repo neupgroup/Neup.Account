@@ -15,6 +15,12 @@ export const dynamic = 'force-dynamic';
  */
 export async function POST(request: NextRequest) {
   const sp = request.nextUrl.searchParams;
+  if (sp.has('appId')) {
+    return NextResponse.json(
+      { success: false, error: 'invalid_request', error_description: 'Use `app` (not `appId`).' },
+      { status: 400 }
+    );
+  }
 
   let body: { token?: string };
   try {
@@ -29,9 +35,7 @@ export async function POST(request: NextRequest) {
   const result = await bridgeExpireToken({
     token: body.token,
     app: sp.get('app') ?? undefined,
-    appId: sp.get('appId') ?? undefined,
   });
 
   return NextResponse.json(result.body, { status: result.status });
 }
-

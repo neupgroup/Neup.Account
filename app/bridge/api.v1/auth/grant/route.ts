@@ -22,12 +22,17 @@ export async function PATCH(request: NextRequest) {
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
+  if (searchParams.has('appId')) {
+    return NextResponse.json(
+      { success: false, error: 'invalid_request', error_description: 'Use `app` (not `appId`).' },
+      { status: 400 }
+    );
+  }
   const result = await bridgeCheckGrant({
     aid: searchParams.get('aid') ?? undefined,
     sid: searchParams.get('sid') ?? undefined,
     skey: searchParams.get('skey') ?? undefined,
     app: searchParams.get('app') ?? undefined,
-    appId: searchParams.get('appId') ?? undefined,
   });
   return NextResponse.json(result.body, { status: result.status });
 }

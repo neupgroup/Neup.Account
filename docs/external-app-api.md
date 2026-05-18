@@ -16,14 +16,14 @@ Every endpoint requires your app credentials passed as query parameters.
 
 | Parameter  | Required | Description |
 |------------|----------|-------------|
-| `appId`    | yes      | Your application ID |
+| `app`      | yes      | Your application ID |
 | `appSecret`| yes      | Your application secret |
 
 Requests with missing or invalid credentials are rejected immediately.
 
 | Status | Error | Meaning |
 |--------|-------|---------|
-| 400 | — | `appId` or `appSecret` not provided |
+| 400 | — | `app` or `appSecret` not provided |
 | 401 | `Invalid application credentials.` | Credentials do not match |
 
 ---
@@ -126,7 +126,7 @@ profile data.
 
 ```http
 GET /account/bridge/api.v1/application/users
-  ?appId=your-app-id
+  ?app=your-app-id
   &appSecret=your-app-secret
   &start=0
   &end=100
@@ -200,7 +200,7 @@ inline on each role.
 
 ```http
 GET /account/bridge/api.v1/application/roles
-  ?appId=your-app-id
+  ?app=your-app-id
   &appSecret=your-app-secret
   &start=0
   &end=100
@@ -277,7 +277,7 @@ by whom — with the role's capabilities denormalized inline.
 
 ```http
 GET /account/bridge/api.v1/application/access
-  ?appId=your-app-id
+  ?app=your-app-id
   &appSecret=your-app-secret
   &start=0
   &end=100
@@ -377,7 +377,7 @@ GET /account/bridge/api.v1/application/access
 | `GET /bridge/api.v1/application/access` | `AuthzAppAccessGrant` rows | — | `grantId` |
 
 All endpoints:
-- Require `appId` + `appSecret`
+- Require `app` + `appSecret`
 - Return at most 100 rows per call
 - Support both offset (`start`/`end`) and cursor (`startFrom`/`limit`) pagination
 - Include `columns`, `data`, and `meta` in every response

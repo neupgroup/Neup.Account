@@ -29,7 +29,10 @@ async function resolveRequestOrigin(request: NextRequest): Promise<string | null
 
 export async function OPTIONS(request: NextRequest) {
   const sp = request.nextUrl.searchParams;
-  const appId = sp.get('appId')?.trim() || '';
+  if (sp.has('appId')) {
+    return new NextResponse(null, { status: 400 });
+  }
+  const appId = sp.get('app')?.trim() || '';
   const origin = await resolveRequestOrigin(request);
 
   // If this is a browser-origin request, only allow it from a registered Silent SSO Origin.
@@ -83,7 +86,14 @@ export async function OPTIONS(request: NextRequest) {
 export async function GET(request: NextRequest) {
   const sp = request.nextUrl.searchParams;
 
-  const appId = sp.get('appId')?.trim() || '';
+  if (sp.has('appId')) {
+    return NextResponse.json(
+      { success: false, error: 'invalid_request', error_description: 'Use `app` (not `appId`).' },
+      { status: 400 }
+    );
+  }
+
+  const appId = sp.get('app')?.trim() || '';
   const origin = await resolveRequestOrigin(request);
 
   // If called from a browser origin, require that origin to be registered as a Silent SSO Origin for this app.

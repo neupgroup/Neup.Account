@@ -11,3 +11,4 @@
 - `docs/external-app-api.md` — external app server APIs (users/roles/access).
 - `docs/profile.md` — external app APIs for accessible accounts (accounts/brands/dependents).
 - `docs/application.md` — external app application APIs (users/roles/access index).
+- `docs/auth.md` — auth endpoint reference (what to call when).
