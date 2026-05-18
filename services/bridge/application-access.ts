@@ -59,7 +59,8 @@ function clampLimit(raw: string | null): number {
 export async function getApplicationAccess(params: {
   appId: string | null;
   appSecret: string | null;
-  account: string | null;
+  accountId: string | null;
+  forAccount: string | null;
   start: string | null;
   end: string | null;
   startFrom: string | null;
@@ -67,7 +68,7 @@ export async function getApplicationAccess(params: {
   fromDate: string | null;
   toDate: string | null;
 }): Promise<ApplicationAccessResult> {
-  const { appId, appSecret, account, start, end, startFrom, limit } = params;
+  const { appId, appSecret, accountId, forAccount, start, end, startFrom, limit } = params;
 
   // 1. Validate credentials
   if (!appId || !appSecret) {
@@ -105,20 +106,36 @@ export async function getApplicationAccess(params: {
       take = Number.isFinite(endIdx) && endIdx > skip ? Math.min(endIdx - skip, PAGE_LIMIT) : PAGE_LIMIT;
     }
 
+    // Filtering semantics (when accountId is provided):
+    // - include BOTH directions:
+    //   A) grants that were granted TO the account (targetAccountId = accountId)
+    //   B) grants that the account granted to others (ownerAccountId = accountId)
+    // This intentionally does not filter by portfolioId (portfolio or non-portfolio grants are included).
+    const where: any = { appId };
+
+    if (accountId && forAccount) {
+      where.OR = [
+        { targetAccountId: accountId, ownerAccountId: forAccount },
+        { ownerAccountId: accountId, targetAccountId: forAccount },
+      ];
+    } else if (accountId) {
+      where.OR = [
+        { targetAccountId: accountId },
+        { ownerAccountId: accountId },
+      ];
+    } else if (forAccount) {
+      // If only forAccount is provided, treat it as a strict owner filter.
+      where.ownerAccountId = forAccount;
+    }
+
     // 3. Count total
     const total = await prisma.authzAppAccessGrant.count({
-      where: {
-        appId,
-        ...(account ? { targetAccountId: account } : {}),
-      },
+      where,
     });
 
     // 4. Fetch grants with related data
     const grants = await prisma.authzAppAccessGrant.findMany({
-      where: {
-        appId,
-        ...(account ? { targetAccountId: account } : {}),
-      },
+      where,
       ...(cursorId
         ? { cursor: { id: cursorId }, skip: 1 }
         : { skip }),

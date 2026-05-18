@@ -338,6 +338,42 @@ GET /account/bridge/api.v1/application/access
 }
 ```
 
+### POST /bridge/api.v1/application/access (filter by account)
+
+Returns access grants **involving one specific account** (both directions):
+
+- grants that were granted **to** the account (`targetAccountId = accountId`)
+- grants that the account granted **to others** (`ownerAccountId = accountId`)
+
+This endpoint does **not** accept `?account=` in the query string. Use the request body instead.
+
+**Example request (all grants involving an account):**
+
+```http
+POST /account/bridge/api.v1/application/access
+  ?app=your-app-id
+  &appSecret=your-app-secret
+content-type: application/json
+
+{
+  "accountId": "target-account-uuid"
+}
+```
+
+**Example request (restrict to grants between two accounts, either direction):**
+
+```http
+POST /account/bridge/api.v1/application/access
+  ?app=your-app-id
+  &appSecret=your-app-secret
+content-type: application/json
+
+{
+  "accountId": "target-account-uuid",
+  "forAccount": "other-account-uuid"
+}
+```
+
 **Column reference:**
 
 | Column | Type | Description |

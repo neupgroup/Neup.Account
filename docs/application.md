@@ -136,8 +136,6 @@ Optional query parameters:
 - Pagination:
   - Offset: `start`, `end`
   - Cursor: `startFrom`, `limit`
-- Optional filter:
-  - `account` — when provided, returns access grants in this app where `targetAccountId = account` (i.e. all access granted to that user in this app).
 
 Pagination examples:
 
@@ -160,9 +158,26 @@ GET /account/bridge/api.v1/application/access
 ```
 
 ```http
-# Access grants granted to one account in this app
-GET /account/bridge/api.v1/application/access
+# Access grants involving one account (both directions) — body-based filter
+POST /account/bridge/api.v1/application/access
   ?app=YOUR_APP_ID
   &appSecret=YOUR_APP_SECRET
-  &account=<accountId>
+content-type: application/json
+
+{
+  "accountId": "<accountId>"
+}
+```
+
+```http
+# Access grants between two accounts (either direction)
+POST /account/bridge/api.v1/application/access
+  ?app=YOUR_APP_ID
+  &appSecret=YOUR_APP_SECRET
+content-type: application/json
+
+{
+  "accountId": "<accountId>",
+  "forAccount": "<otherAccountId>"
+}
 ```
