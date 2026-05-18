@@ -26,6 +26,7 @@ export async function GET(request: NextRequest) {
     aid: searchParams.get('aid') ?? undefined,
     sid: searchParams.get('sid') ?? undefined,
     skey: searchParams.get('skey') ?? undefined,
+    app: searchParams.get('app') ?? undefined,
     appId: searchParams.get('appId') ?? undefined,
   });
   return NextResponse.json(result.body, { status: result.status });

@@ -10,6 +10,11 @@ function externalLoginType(appId: string) {
   return `${EXTERNAL_LOGIN_PREFIX}${appId}`;
 }
 
+function resolveAppId(input: { app?: string; appId?: string }): string | null {
+  const raw = (input.app || input.appId || '').trim();
+  return raw ? raw : null;
+}
+
 // Resolves the role name and permission set for an account in the context of an external app.
 async function resolveAccountGrant(accountId: string, appId: string): Promise<{ role: string; permissions: string[] }> {
   const [account, permissions, isRoot] = await Promise.all([
@@ -27,14 +32,16 @@ async function resolveAccountGrant(accountId: string, appId: string): Promise<{ 
  */
 export async function bridgeIssueGrant(input: {
   tempToken?: string;
-  appId?: string;
+  app?: string;
+  appId?: string; // legacy
 }): Promise<{ status: number; body: Record<string, any> }> {
-  const { tempToken, appId } = input;
+  const { tempToken } = input;
+  const appId = resolveAppId(input);
 
   if (!tempToken || !appId) {
     return {
       status: 400,
-      body: { error: 'invalid_request', error_description: 'Missing tempToken or appId' },
+      body: { success: false, error: 'invalid_request', error_description: 'Missing tempToken or app' },
     };
   }
 
@@ -70,7 +77,7 @@ export async function bridgeIssueGrant(input: {
     if (!request.accountId || request.expiresAt <= now || requestAppId !== appId) {
       return {
         status: 401,
-        body: { error: 'invalid_token', error_description: 'Token not found, expired, or already used' },
+        body: { success: false, error: 'invalid_token', error_description: 'Token not found, expired, or already used' },
       };
     }
 
@@ -104,7 +111,7 @@ export async function bridgeIssueGrant(input: {
     if (!application || !application.appSecret) {
       return {
         status: 500,
-        body: { error: 'invalid_app', error_description: 'Application configuration error' },
+        body: { success: false, error: 'invalid_app', error_description: 'Application configuration error' },
       };
     }
 
@@ -147,9 +154,12 @@ export async function bridgeIssueGrant(input: {
     return {
       status: 200,
       body: {
+        success: true,
         aid: request.accountId,
         sid: externalSession.id,
         skey,
+        // Docs prefer `token`; keep `jwt` for backward compatibility.
+        token: signed,
         jwt: signed,
         exp: jwtExp,
         role: roleName,
@@ -160,7 +170,7 @@ export async function bridgeIssueGrant(input: {
     await logError('auth', error, 'bridge_issue_grant');
     return {
       status: 500,
-      body: { error: 'internal_server_error', error_description: 'An unexpected error occurred' },
+      body: { success: false, error: 'internal_server_error', error_description: 'An unexpected error occurred' },
     };
   }
 }
@@ -170,21 +180,128 @@ export async function bridgeIssueGrant(input: {
  * Function bridgeRefreshGrant.
  */
 export async function bridgeRefreshGrant(input: {
+  token?: string;
   sid?: string;
   aid?: string;
   skey?: string;
-  appId?: string;
+  app?: string;
+  appId?: string; // legacy
 }): Promise<{ status: number; body: Record<string, any> }> {
-  const { sid, aid, skey, appId } = input;
-
-  if (!sid || !aid || !skey || !appId) {
-    return {
-      status: 400,
-      body: { error: 'invalid_request', error_description: 'Missing sid, aid, skey, or appId' },
-    };
-  }
+  const appId = resolveAppId(input);
 
   try {
+    // Token-based refresh (docs/authentication.md): { token } (+ optional ?app=)
+    if (input.token) {
+      if (!appId) {
+        return {
+          status: 400,
+          body: { success: false, error: 'invalid_request', error_description: 'Missing app' },
+        };
+      }
+
+      const application = await prisma.application.findUnique({ where: { id: appId }, select: { appSecret: true } });
+      if (!application?.appSecret) {
+        return {
+          status: 404,
+          body: { success: false, error: 'app_not_found', error_description: 'Application not found or has no secret configured' },
+        };
+      }
+
+      let payload: any;
+      try {
+        payload = jwt.verify(input.token, application.appSecret);
+      } catch {
+        return {
+          status: 401,
+          body: { success: false, error: 'invalid_grant', error_description: 'Grant not found, expired, or tampered' },
+        };
+      }
+
+      const aid = typeof payload?.aid === 'string' ? payload.aid : null;
+      const sid = typeof payload?.sid === 'string' ? payload.sid : null;
+      const tokenAppId = typeof payload?.appId === 'string' ? payload.appId : null;
+
+      if (!aid || !sid || (tokenAppId && tokenAppId !== appId)) {
+        return {
+          status: 401,
+          body: { success: false, error: 'invalid_grant', error_description: 'Grant not found, expired, or tampered' },
+        };
+      }
+
+      const appSession = await prisma.authnSession.findFirst({
+        where: {
+          id: sid,
+          accountId: aid,
+          loginType: externalLoginType(appId),
+          validTill: { gt: new Date() },
+        },
+        select: { id: true, accountId: true, validTill: true, lastLoggedIn: true },
+      });
+
+      if (!appSession) {
+        return {
+          status: 401,
+          body: { success: false, error: 'invalid_session', error_description: 'Session not found or expired' },
+        };
+      }
+
+      const { role: roleName, permissions } = await resolveAccountGrant(aid, appId);
+
+      const sessionExpSeconds = 60 * 60 * 24 * 7;
+      const newSessionExpiresOn = new Date();
+      newSessionExpiresOn.setSeconds(newSessionExpiresOn.getSeconds() + sessionExpSeconds);
+
+      const jwtExpSeconds = 60 * 7;
+      const iat = Math.floor(Date.now() / 1000);
+      const jwtExp = iat + jwtExpSeconds;
+
+      const newPayload: any = {
+        aid,
+        sid,
+        appId,
+        role: roleName,
+        iat,
+        exp: jwtExp,
+      };
+
+      if (permissions.length > 0) {
+        newPayload.per = permissions;
+      }
+
+      const newToken = jwt.sign(newPayload, application.appSecret);
+
+      await prisma.authnSession.update({
+        where: { id: sid },
+        data: {
+          validTill: newSessionExpiresOn,
+          lastLoggedIn: new Date(),
+        },
+      });
+
+      return {
+        status: 200,
+        body: {
+          success: true,
+          aid,
+          sid,
+          token: newToken,
+          jwt: newToken,
+          exp: jwtExp,
+          role: roleName,
+          ...(permissions.length > 0 ? { per: permissions } : {}),
+        },
+      };
+    }
+
+    // Legacy refresh: { aid, sid, skey, appId }
+    const { sid, aid, skey } = input;
+    if (!sid || !aid || !skey || !appId) {
+      return {
+        status: 400,
+        body: { success: false, error: 'invalid_request', error_description: 'Missing sid, aid, skey, or app' },
+      };
+    }
+
     const appSession = await prisma.authnSession.findFirst({
       where: {
         id: sid,
@@ -199,7 +316,7 @@ export async function bridgeRefreshGrant(input: {
     if (!appSession) {
       return {
         status: 401,
-        body: { error: 'invalid_session', error_description: 'Session not found or expired' },
+        body: { success: false, error: 'invalid_session', error_description: 'Session not found or expired' },
       };
     }
 
@@ -230,7 +347,7 @@ export async function bridgeRefreshGrant(input: {
     if (!application?.appSecret) {
       return {
         status: 500,
-        body: { error: 'invalid_app', error_description: 'Application configuration error' },
+        body: { success: false, error: 'invalid_app', error_description: 'Application configuration error' },
       };
     }
 
@@ -247,8 +364,10 @@ export async function bridgeRefreshGrant(input: {
     return {
       status: 200,
       body: {
+        success: true,
         aid,
         sid,
+        token: newToken,
         jwt: newToken,
         exp: jwtExp,
         role: roleName,
@@ -259,7 +378,7 @@ export async function bridgeRefreshGrant(input: {
     await logError('auth', error, 'bridge_refresh_grant');
     return {
       status: 500,
-      body: { error: 'internal_server_error', error_description: 'An unexpected error occurred' },
+      body: { success: false, error: 'internal_server_error', error_description: 'An unexpected error occurred' },
     };
   }
 }
@@ -272,14 +391,16 @@ export async function bridgeCheckGrant(input: {
   aid?: string;
   sid?: string;
   skey?: string;
-  appId?: string;
+  app?: string;
+  appId?: string; // legacy
 }): Promise<{ status: number; body: Record<string, any> }> {
-  const { aid, sid, skey, appId } = input;
+  const { aid, sid, skey } = input;
+  const appId = resolveAppId(input);
 
   if (!aid || !sid || !skey || !appId) {
     return {
       status: 400,
-      body: { error: 'invalid_request', error_description: 'Missing aid, sid, skey, or appId' },
+      body: { success: false, error: 'invalid_request', error_description: 'Missing aid, sid, skey, or app' },
     };
   }
 
@@ -298,7 +419,7 @@ export async function bridgeCheckGrant(input: {
     if (!appSession) {
       return {
         status: 401,
-        body: { error: 'invalid_grant', error_description: 'Grant not found or expired' },
+        body: { success: false, error: 'invalid_grant', error_description: 'Grant not found or expired' },
       };
     }
 

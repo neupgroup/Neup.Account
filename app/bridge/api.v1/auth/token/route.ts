@@ -37,7 +37,7 @@ export const dynamic = 'force-dynamic';
  * Errors: 400 (missing params), 401 (invalid session), 404 (app not found), 500
  */
 export async function POST(request: NextRequest) {
-  let body: { aid?: string; sid?: string; skey?: string; appId?: string };
+  let body: { aid?: string; sid?: string; skey?: string; app?: string; appId?: string };
 
   try {
     body = await request.json();
@@ -48,6 +48,11 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const result = await issueAccountToken(body);
+  const result = await issueAccountToken({
+    aid: body.aid,
+    sid: body.sid,
+    skey: body.skey,
+    appId: body.app ?? body.appId,
+  });
   return NextResponse.json(result.body, { status: result.status });
 }

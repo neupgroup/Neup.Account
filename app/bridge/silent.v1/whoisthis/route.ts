@@ -4,7 +4,6 @@ import { getAccounts } from '@/core/auth/accounts';
 import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
 import { resolveGuestAccount } from '@/services/auth/guestAccount';
-import jwt from 'jsonwebtoken';
 import {
   checkRateLimit,
   validateSilentSsoOrigin,
@@ -19,6 +18,9 @@ export const dynamic = 'force-dynamic';
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+const MESSAGE_TYPE = 'neupid:silentAuth';
+const BASE_APP_ID = 'neup.account';
 
 function buildHtmlResponse(payload: object, targetOrigin: string): Response {
   const payloadJson = JSON.stringify(payload)
@@ -37,7 +39,7 @@ function buildHtmlResponse(payload: object, targetOrigin: string): Response {
     var payload = JSON.parse(el.getAttribute('data-payload'));
     window.parent.postMessage(payload, ${JSON.stringify(targetOrigin)});
   } catch(e) {
-    window.parent.postMessage({ type: 'neupid:silent_auth', success: false, reason: 'internal_error' }, ${JSON.stringify(targetOrigin)});
+    window.parent.postMessage({ type: ${JSON.stringify(MESSAGE_TYPE)}, success: false, reason: 'internal_error' }, ${JSON.stringify(targetOrigin)});
   }
 })();
 </script>
@@ -74,16 +76,11 @@ const TOKEN_TTL_SECONDS = 60 * 60 * 24 * 7;
  *
  * Responds via postMessage with:
  * {
- *   type:     'neupid:silent_auth',
+ *   type:     'neupid:silentAuth',
  *   success:  boolean,
- *   token:    { cid, aid?, iat, exp }   — aid included only for party 1 or 2
- *   response: { ...account info }       — empty object when unauthenticated
+ *   token:    { cid, iat, exp }
+ *   response: { ...account info }       — empty object when unauthenticated/guest
  * }
- *
- * Party rules (Application.party):
- *   1 or 2 → token includes { cid, aid, iat, exp }
- *   3 or 4 → token includes { cid, iat, exp }  (aid omitted)
- *
  * When the token expires the caller reloads this iframe to get a fresh one.
  */
 export async function GET(request: NextRequest): Promise<Response> {
@@ -99,65 +96,89 @@ export async function GET(request: NextRequest): Promise<Response> {
   // 2. Rate limit
   if (!checkRateLimit(origin || 'unknown')) {
     return buildHtmlResponse(
-      { type: 'neupid:silent_auth', success: false, reason: 'rate_limited' },
+      { type: MESSAGE_TYPE, success: false, reason: 'rate_limited' },
       origin || '*'
     );
   }
 
-  // 3. Origin validation
+  // 3. Resolve appId
+  const { searchParams } = new URL(request.url);
+  const queryAppId = searchParams.get('app') ?? searchParams.get('appId');
+
+  // If ?app is missing, treat this as the base account system / first-party usage.
+  // Only allow first-party origins (*.neupgroup.com) in this mode.
+  let appId: string;
+  let targetOrigin: string;
+
   if (!origin) {
     return buildHtmlResponse(
-      { type: 'neupid:silent_auth', success: false, reason: 'origin_not_registered' },
+      { type: MESSAGE_TYPE, success: false, reason: 'origin_not_registered' },
       '*'
     );
   }
 
-  const { valid, appId: originAppId } = await validateSilentSsoOrigin(origin);
-  if (!valid || !originAppId) {
-    return buildHtmlResponse(
-      { type: 'neupid:silent_auth', success: false, reason: 'origin_not_registered' },
-      '*'
-    );
-  }
-
-  // 4. Optionally override appId via ?app= query param (must still match the
-  //    registered origin's app to prevent cross-app token issuance).
-  const { searchParams } = new URL(request.url);
-  const queryAppId = searchParams.get('app');
-  const appId = queryAppId ?? originAppId;
-
-  if (queryAppId && queryAppId !== originAppId) {
-    return buildHtmlResponse(
-      { type: 'neupid:silent_auth', success: false, reason: 'app_mismatch' },
-      new URL(origin).origin
-    );
-  }
-
-  const targetOrigin = new URL(origin).origin;
-
-  // 5. Load application (need appSecret + party)
-  let application: { appSecret: string | null; party: number } | null;
   try {
-    application = await prisma.application.findUnique({
+    const originUrl = new URL(origin);
+    targetOrigin = originUrl.origin;
+
+    if (!queryAppId) {
+      const host = originUrl.hostname;
+      const isFirstPartyHost = host === 'neupgroup.com' || host.endsWith('.neupgroup.com');
+      const isHttps = originUrl.protocol === 'https:';
+
+      if (!isHttps || !isFirstPartyHost) {
+        return buildHtmlResponse(
+          { type: MESSAGE_TYPE, success: false, reason: 'origin_not_registered' },
+          '*'
+        );
+      }
+
+      appId = BASE_APP_ID;
+    } else {
+      // Different-domain apps must be registered as silent SSO origins.
+      const { valid, appId: originAppId } = await validateSilentSsoOrigin(origin);
+      if (!valid || !originAppId) {
+        return buildHtmlResponse(
+          { type: MESSAGE_TYPE, success: false, reason: 'origin_not_registered' },
+          '*'
+        );
+      }
+
+      if (queryAppId !== originAppId) {
+        return buildHtmlResponse(
+          { type: MESSAGE_TYPE, success: false, reason: 'app_mismatch' },
+          targetOrigin
+        );
+      }
+
+      appId = queryAppId;
+    }
+  } catch {
+    return buildHtmlResponse(
+      { type: MESSAGE_TYPE, success: false, reason: 'origin_not_registered' },
+      '*'
+    );
+  }
+
+  // 4. Ensure app exists
+  try {
+    const application = await prisma.application.findUnique({
       where: { id: appId },
-      select: { appSecret: true, party: true },
+      select: { id: true },
     });
+    if (!application) {
+      return buildHtmlResponse(
+        { type: MESSAGE_TYPE, success: false, reason: 'app_not_found' },
+        targetOrigin
+      );
+    }
   } catch (error) {
     await logError('auth', error, 'whoisthis_load_application');
     return buildHtmlResponse(
-      { type: 'neupid:silent_auth', success: false, reason: 'internal_error' },
+      { type: MESSAGE_TYPE, success: false, reason: 'internal_error' },
       targetOrigin
     );
   }
-
-  if (!application || !application.appSecret) {
-    return buildHtmlResponse(
-      { type: 'neupid:silent_auth', success: false, reason: 'app_not_found' },
-      targetOrigin
-    );
-  }
-
-  const { appSecret, party } = application;
 
   // 6. Session check
   const { accountId, sessionId, sessionKey } = await getSessionCookies();
@@ -189,7 +210,7 @@ export async function GET(request: NextRequest): Promise<Response> {
 
   if (!guestAccountId) {
     return buildHtmlResponse(
-      { type: 'neupid:silent_auth', success: false, reason: 'internal_error' },
+      { type: MESSAGE_TYPE, success: false, reason: 'internal_error' },
       targetOrigin
     );
   }
@@ -201,14 +222,12 @@ export async function GET(request: NextRequest): Promise<Response> {
   } catch (error) {
     await logError('auth', error, 'whoisthis_resolve_identity');
     return buildHtmlResponse(
-      { type: 'neupid:silent_auth', success: false, reason: 'internal_error' },
+      { type: MESSAGE_TYPE, success: false, reason: 'internal_error' },
       targetOrigin
     );
   }
 
   // 9. Build token payload based on party
-  //    Party 1 or 2 → include aid (account ID)
-  //    Party 3 or 4 → omit aid
   const iat = Math.floor(Date.now() / 1000);
   const exp = iat + TOKEN_TTL_SECONDS;
 
@@ -229,28 +248,11 @@ export async function GET(request: NextRequest): Promise<Response> {
     }
   }
 
-  const includeAid = party === 1 || party === 2;
-
   const tokenPayload: Record<string, unknown> = {
     cid: cid ?? identity.id,
     iat,
     exp,
   };
-
-  if (includeAid && isAuthenticated && accountId) {
-    tokenPayload.aid = accountId;
-  }
-
-  let signedToken: string;
-  try {
-    signedToken = jwt.sign(tokenPayload, appSecret, { algorithm: 'HS256' });
-  } catch (error) {
-    await logError('auth', error, 'whoisthis_sign_token');
-    return buildHtmlResponse(
-      { type: 'neupid:silent_auth', success: false, reason: 'internal_error' },
-      targetOrigin
-    );
-  }
 
   // 10. Build response (account info) — only when authenticated
   let response: Record<string, unknown> = {};
@@ -274,8 +276,8 @@ export async function GET(request: NextRequest): Promise<Response> {
   // 11. Return result
   return buildHtmlResponse(
     {
-      type: 'neupid:silent_auth',
-      success: isAuthenticated,
+      type: MESSAGE_TYPE,
+      success: true,
       token: tokenPayload,
       response,
     },

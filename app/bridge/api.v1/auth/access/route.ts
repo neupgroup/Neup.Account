@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     aid: searchParams.get('aid'),
     sid: searchParams.get('sid'),
     skey: searchParams.get('skey'),
-    appId: searchParams.get('appId'),
+    appId: searchParams.get('app') ?? searchParams.get('appId'),
   });
   return NextResponse.json(result.body, { status: result.status });
 }

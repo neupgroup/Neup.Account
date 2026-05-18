@@ -13,7 +13,7 @@ export async function bridgeBuildGrantRedirect(input: {
 }): Promise<{ redirectTo: string }> {
   const { requestUrl, pathname, searchParams } = input;
   const authenticatesTo = searchParams.get('authenticatesTo');
-  const appId = searchParams.get('appId');
+  const appId = searchParams.get('app') || searchParams.get('appId');
 
   if (!authenticatesTo) {
     const errorUrl = new URL('/auth/start', requestUrl);
@@ -39,7 +39,7 @@ export async function bridgeBuildGrantRedirect(input: {
 
   const finalRedirectUrl = new URL(authenticatesTo);
   searchParams.forEach((value, key) => {
-    if (key !== 'authenticatesTo' && key !== 'appId') {
+    if (key !== 'authenticatesTo' && key !== 'appId' && key !== 'app') {
       finalRedirectUrl.searchParams.set(key, value);
     }
   });
@@ -73,6 +73,8 @@ export async function bridgeBuildGrantRedirect(input: {
       // /auth/sign will then redirect to signin/signup with backsTo parameter
       const signPageUrl = new URL('/auth/sign', requestUrl);
       signPageUrl.searchParams.set('authenticatesTo', authenticatesTo);
+      // Use `app` in the URL (docs/authentication.md) but keep `appId` compatibility.
+      signPageUrl.searchParams.set('app', appId);
       signPageUrl.searchParams.set('appId', appId);
       return { redirectTo: signPageUrl.toString() };
     }
