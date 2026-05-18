@@ -9,7 +9,6 @@ import { Suspense } from 'react';
 import { UrlErrorBanner } from '@/components/ui/url-error-banner';
 import { PersistentBacksTo } from '@/components/persistent-backs-to';
 import { HeaderV1 } from '@/components/layout/header.v1';
-import { FooterV1 } from '@/components/layout/footer.v1';
 import { getSiteLogoUrl } from '@/services/manage/site/logo';
 
 export const metadata: Metadata = {
@@ -40,7 +39,6 @@ export default async function RootLayout({
             <div className="flex min-h-screen flex-col">
               <HeaderV1 logoUrl={logoUrl} />
               <main className="flex-1">{children}</main>
-              <FooterV1 />
             </div>
             <Toaster />
             <Suspense>

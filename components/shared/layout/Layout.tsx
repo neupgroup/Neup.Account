@@ -1,6 +1,5 @@
 import React from 'react';
 import { HeaderV1 } from '@/components/layout/header.v1';
-import { FooterV1 } from '@/components/layout/footer.v1';
 import { Sidebar } from '../sidebar';
 import { Body } from '../body';
 
@@ -22,7 +21,6 @@ export const Layout = ({ children }: LayoutProps) => {
                     </div>
                 </div>
             </div>
-            <FooterV1 />
         </div>
     );
 };
