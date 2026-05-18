@@ -23,6 +23,27 @@ If you are building a public integration, use this page to choose the right flow
 
 ---
 
+## Understanding common for everything
+
+When you get token regardless of whatever the authentication mechanism you use and regardless of the component you use. What you need to understand is that the token will be passed on to you. Token is always signed using a private key and you need to use the public key to get the data that is signed. You will use a public key to get the database if you need to process the signed data again.
+
+The public key (the one used to get the data back from the signed version) is:
+
+========> Start >>>>>>>
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2aPJSyu08S/7ywvvaSwz
+Ett4kSQ0mU0vQe1hjmcjYCcX+FtJA82yS1bm3T2ccFc0J1B2lMr1rmMo2BM/W/pZ
+ESKN2xB568lwfiuN6lGBc2j9oJaNC+65w8XEfNAKNMw2IjQA1O8o74TnQab1pUq2
+rz7WdFr3F9+PRM4TeNKTv0JrnhUPl8ccrKiC4ETKbk9ryci3GsVRT5/8JWKXWW2M
+/BtSM7D+1n/X+wMwNGV4wQNBXzSD8/f1caWJ6kOkUwjerwkjKSpYqZrSXv9TeZit
+U16H58h/5Q6hSaBaLQ9VNyTdAFj2gdQghZnOnioG485VZKCK9PO/MZ0VPTvOavel
+cQIDAQAB
+-----END PUBLIC KEY-----
+========> End >>>>>>>>>
+
+
+
+
 ## 1. Authentication using Redirect Handshake
 
 Use this flow when your application needs to **sign a user in** to your own system by delegating authentication to Neup.Account.
