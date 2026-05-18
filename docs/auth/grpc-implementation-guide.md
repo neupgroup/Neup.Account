@@ -8,7 +8,7 @@ This guide explains how to verify a NeupID user session from another application
 
 Use gRPC when your app is a **trusted internal backend** that needs to verify a user's identity with low latency. It is a direct backend-to-backend call — never call it from browser JavaScript.
 
-Use the REST `whoami` endpoint instead if your app is browser-based or cross-origin. See the whoami section at the bottom of this guide.
+Use the REST `whoisthis` endpoint instead if your app is browser-based or cross-origin. See the REST section at the bottom of this guide.
 
 ---
 
@@ -351,20 +351,20 @@ Possible error values:
 
 ---
 
-## Alternative: REST whoami endpoint
+## Alternative: REST whoisthis endpoint
 
 If your app is browser-based or cross-origin and cannot use gRPC, use the REST endpoint instead. It reads the NeupID session cookie directly from the browser request — no session triplet needed on your side.
 
-**Endpoint:** `GET /bridge/api.v1/auth/whoami`
+**Endpoint:** `GET /bridge/api.v1/auth/whoisthis`
 
 **Requirements:**
 - The request must include cookies (`credentials: 'include'`)
-- Your site's origin must be registered as an `authenticatesTo` URL for an application in the NeupID system
+- Your site's origin must be registered as an `authenticatesTo` URL for the resolved appId (matching by hostname)
 
 **Browser usage:**
 
 ```js
-const res = await fetch('https://neupid-domain.com/bridge/api.v1/auth/whoami', {
+const res = await fetch('https://neupid-domain.com/bridge/api.v1/auth/whoisthis', {
   method: 'GET',
   credentials: 'include',
 });

@@ -15,7 +15,7 @@ If you are integrating authentication for another application, start with `docs/
 - **You need an app-scoped API bearer token (JWT):** `POST /bridge/api.v1/auth/token`
 - **You need to validate or expire a token (server-to-server):** `POST /bridge/api.v1/auth/validate`, `POST /bridge/api.v1/auth/expire`
 - **You need internal session keepalive / logout (cookie triplet):** `POST /bridge/api.v1/auth/session`, `DELETE /bridge/api.v1/auth/session`
-- **You need cross-origin “who am I?” using cookies:** `GET /bridge/api.v1/auth/whoami`
+- **You need cross-origin “who am I?” using cookies:** `GET /bridge/api.v1/auth/whoisthis`
 - **You need application analytics (users/roles/access):** `GET /bridge/api.v1/application/users|roles|access` (see `docs/application.md`)
 
 ---
@@ -169,9 +169,29 @@ content-type: application/json
 
 ## Cross-origin “who am I?” (cookies)
 
-### GET `/bridge/api.v1/auth/whoami`
+### GET `/bridge/api.v1/auth/whoisthis`
 
-**When to use:** a browser app wants to read the currently logged-in user identity using cookies (`credentials: 'include'`), but only if the browser origin is registered as an `authenticatesTo` origin.
+**When to use:**
+- You want to read the currently logged-in Neup.Account identity from the browser using the Neup.Account session cookie.
+- **Cross-origin:** only allowed if your site's origin is registered as an `authenticatesTo` origin **for that app**.
+
+Notes:
+- If you open the URL directly in a tab (same-site navigation) while logged in, it returns JSON.
+- If you call it from JavaScript (`fetch`) across origins, you must:
+  - send a `token` (either the Neup.Account `auth_account` cookie via `credentials: 'include'`, or an `Authorization: Bearer ...` token)
+  - have your origin registered as an `authenticatesTo` URL for the resolved appId (from the token, defaulting to `neup.account`)
+- Origin matching is by **hostname only** (domain/subdomain). Scheme is expected to be `https`, and port + path are ignored.
+
+Example (browser):
+
+```js
+const res = await fetch('https://neupgroup.com/account/bridge/api.v1/auth/whoisthis', {
+  method: 'GET',
+  credentials: 'include',
+});
+
+const data = await res.json();
+```
 
 ---
 

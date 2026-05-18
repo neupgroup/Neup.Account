@@ -40,6 +40,12 @@ function loadPublicKey(): string | null {
   return key ? normalizePem(key) : null;
 }
 
+function requireKeys(): boolean {
+  // Only allow insecure fallbacks during local development.
+  // In production, missing keys must disable auth rather than silently weakening security.
+  return process.env.NODE_ENV === 'production';
+}
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -71,7 +77,11 @@ export async function signAccountToken(payload: AccountTokenPayload): Promise<st
   const privateKey = loadPrivateKey();
 
   if (!privateKey) {
-    // Fallback: plain base64url JSON (dev without key files)
+    if (requireKeys()) {
+      throw new Error('AUTH_PRIVATE_KEY is required in production to sign auth cookies.');
+    }
+
+    // Dev fallback: plain base64url JSON
     return `unsigned.${base64urlEncode(JSON.stringify(payload))}.nosig`;
   }
 
@@ -109,6 +119,10 @@ export async function verifyAccountToken(token: string): Promise<AccountTokenPay
 
   // Fallback unsigned token
   if (header === 'unsigned' && signature === 'nosig') {
+    if (requireKeys()) {
+      // Never accept unsigned tokens in production.
+      return null;
+    }
     try {
       return JSON.parse(base64urlDecode(body)) as AccountTokenPayload;
     } catch {
@@ -119,7 +133,12 @@ export async function verifyAccountToken(token: string): Promise<AccountTokenPay
   const publicKey = loadPublicKey();
 
   if (!publicKey) {
-    // No public key — decode without verification (dev fallback)
+    if (requireKeys()) {
+      // Without a public key we cannot safely verify signed cookies.
+      return null;
+    }
+
+    // Dev fallback: decode without verification
     try {
       return JSON.parse(base64urlDecode(body)) as AccountTokenPayload;
     } catch {
